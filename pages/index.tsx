@@ -13,6 +13,7 @@ import { CanvasComponent } from '../wegGL-components/canvas'
 import { HelperListComponent } from '../components/helperList'
 import { MobileHelperControl } from '../components/mobileHelperControl'
 import { MobileHelperList } from '../components/mobileHelperList'
+import CustomLayout from '../components/layout'
 
 
 const Home: NextPage = () => {
@@ -50,6 +51,7 @@ const Home: NextPage = () => {
                 </Suspense>
             </div>
         </main>
+        <CustomLayout/>
       </div>
       {commonState?.onMobile?
             (mobileHelperListVisible&&<MobileHelperList 

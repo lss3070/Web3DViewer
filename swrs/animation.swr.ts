@@ -6,7 +6,7 @@ import { IAnimationStateProps } from "../interfaces/swr.interface";
 let animationState:IAnimationStateProps
 
 export const useAnimationSWR=()=>{
-    const {data,mutate}=useSWR<IAnimationStateProps>(process.env.ANIMATION_STATE_KEY,()=>{
+    const {data,mutate}=useSWR<IAnimationStateProps>('animationStateKey',()=>{
         return animationState;
     });
     return{

@@ -16,6 +16,7 @@
     "@types/three": "^0.141.0",
     "antd": "^4.20.7",
     "autoprefixer": "^10.4.7",
+    "framer-motion": "^6.3.8",
     "lodash": "^4.17.21",
     "next": "12.1.6",
     "postcss": "^8.4.14",

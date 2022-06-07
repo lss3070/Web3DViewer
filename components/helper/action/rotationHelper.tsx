@@ -1,8 +1,9 @@
 import { Col, Row, Slider } from "antd";
 // import {Slider as MobileSlider} from 'antd-mobile'
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Euler, Vector3 } from "three";
 import { useCommonSWR } from "../../../swrs/common.swr";
+import SliderItem from "../../sliderItem";
 
 
 interface IRotationHelper{
@@ -17,89 +18,46 @@ export const RotationHelper=({rotation,setRotation}:IRotationHelper)=>{
     const [localRotation,setLocalRotation]=useState<Euler>(rotation);
 
     return(
-        <div className="w-72">
-            <Row align="middle" justify="center">
-                <Col span={5}>
-                   x
-                </Col>
-                <Col span={16}>
-                    {commonState?.onMobile?(
-                        <></>
-                        // <MobileSlider min={-1000} max={1000}
-                        // value={localRotation?.x}
-                        // onChange={(e)=>{
-                        //     setRotation(new Euler(+e,localRotation.y,localRotation.z))
-                        //     setLocalRotation(new Euler(+e,localRotation.y,localRotation.z))
-                        // }}
-                        // />
-                    ):
-                    (<Slider min={-1000} max={1000}
-                    value={localRotation?.x}
-                    onChange={(e)=>{
-                        setRotation(new Euler(e,localRotation.y,localRotation.z))
-                        setLocalRotation(new Euler(e,localRotation.y,localRotation.z))
-                    }}
-                    />)}
-
-                </Col>
-                <Col span={3}>
-                    {localRotation?.x}
-                </Col>
-            </Row>
-            <Row align="middle" justify="center">
-                <Col span={5}>
-                   y
-                </Col>
-                <Col span={16}>
-                    {commonState?.onMobile?(
-                        <></>
-                        // <MobileSlider min={-1000} max={1000}
-                        // value={localRotation?.y}
-                        // onChange={(e)=>{
-                        //     setRotation(new Euler(localRotation.x,+e,localRotation.z))
-                        //     setLocalRotation(new Euler(localRotation.x,+e,localRotation.z))
-                        // }}
-                        // />
-                    ):
-                    (<Slider min={-1000} max={1000}
-                    value={localRotation?.y}
-                    onChange={(e)=>{
-                        setRotation(new Euler(localRotation.x,e,localRotation.z))
-                        setLocalRotation(new Euler(localRotation.x,e,localRotation.z))
-                    }}
-                    />)}
-                </Col>
-                <Col span={3}>
-                    {localRotation?.y}
-                </Col>
-            </Row>
-            <Row>
-                <Col span={5}>
-                   z
-                </Col>
-                <Col span={16}>
-                    {commonState?.onMobile?(
-                        <></>
-                        // <MobileSlider min={-1000} max={1000}
-                        // value={localRotation?.z}
-                        // onChange={(e)=>{
-                        //     setRotation(new Euler(localRotation.x,localRotation.y,+e))
-                        //     setLocalRotation(new Euler(localRotation.x,localRotation.y,+e))
-                        // }}
-                        // />
-                    ):
-                    (<Slider min={-1000} max={1000}
-                    value={localRotation?.z}
-                    onChange={(e)=>{
-                        setRotation(new Euler(localRotation.x,localRotation.y,e))
-                        setLocalRotation(new Euler(localRotation.x,localRotation.y,e))
-                    }}
-                    />)}
-                </Col>
-                <Col span={3}>
-                    {localRotation?.z}
-                </Col>
-            </Row>
+        <div className="w-full">
+            <SliderItem
+            label='x'
+            max={1000}
+            min={-1000}
+            value={localRotation?.x}
+            sliderChangeEvent={
+                (e:number)=>setLocalRotation(new Euler(+e,localRotation.y,localRotation.z))
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                setLocalRotation(new Euler(+e.target.value,localRotation.y,localRotation.z))
+            }
+            />
+            <SliderItem
+            label='y'
+            max={1000}
+            min={-1000}
+            value={localRotation?.y}
+            sliderChangeEvent={
+                (e:number)=>setLocalRotation(new Euler(localRotation.x,e,localRotation.z))
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                setLocalRotation(new Euler(localRotation.x,+e.target.value,localRotation.z))
+            }
+            />
+            <SliderItem
+            label='z'
+            max={1000}
+            min={-1000}
+            value={localRotation?.z}
+            sliderChangeEvent={
+                (e:number)=>setLocalRotation(new Euler(localRotation.x,localRotation.y,e))
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                setLocalRotation(new Euler(localRotation.x,localRotation.y,+e.target.value))
+            }
+            />
         </div>
     )
 }

@@ -1,11 +1,12 @@
 import { Tree, Input } from "antd";
 import { DataNode, EventDataNode } from "antd/lib/tree";
-import { useEffect, useRef, useState,useCallback, SyntheticEvent, ReactChild } from "react";
+import { useEffect, useRef, useState,useCallback, SyntheticEvent, ReactChild, ReactNode } from "react";
 import { Group } from "three"
 import { Key } from "antd/lib/table/interface";
 import { useCommonSWR } from "../swrs/common.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
 import { CustomDataNode } from "../interfaces/app.interface";
+import {motion,LayoutGroup} from 'framer-motion'
 
 interface IRightList{
     list:Group;
@@ -155,25 +156,47 @@ export const TreeListComponent=()=>{
         }
     },[commonState?.groupList]);
 
+
+    const titleRender =({
+        children,
+        key,
+        title
+    }:any):ReactNode=>{
+        return(
+            <motion.li
+
+            animate={{opacity:1}}
+            exit={{opacity:0}}
+             key={key}>
+                {title.props.children[2]}
+            </motion.li>
+        )
+    }
+
     return(
         <div className={`h-full col-span-1 ${commonState?.onMobile?`py-4`:``}`}>
             {(
                 <div className="h-full w-full py-4">
                 <Search style={{marginBottom:8}} placeholder="Search" onChange={(e)=>{onChange(e)}}/>
-                <Tree
-                selectedKeys={selectList}
-                ref={treeRef}
-                multiple
-                treeData={treeData} 
-                onExpand={(expanedKeys)=>onExpand(expanedKeys)}
-                expandedKeys={expandedKeys!}
-                autoExpandParent={autoExpandParent}
-                height={commonState?.onMobile?200:undefined}
-                onClick={(e,value)=>{
-                    console.log(e);
-                    console.log(value);
-                    treeClickEvent(e,value)
-                    }}/>
+                <LayoutGroup>
+                    <motion.ul>
+                            <Tree
+                            titleRender={titleRender}
+                            selectedKeys={selectList}
+                            ref={treeRef}
+                            multiple
+                            treeData={treeData} 
+                            onExpand={(expanedKeys)=>onExpand(expanedKeys)}
+                            expandedKeys={expandedKeys!}
+                            autoExpandParent={autoExpandParent}
+                            height={commonState?.onMobile?200:undefined}
+                            onClick={(e,value)=>{
+                            console.log(e);
+                            console.log(value);
+                            treeClickEvent(e,value)
+                            }}/>
+                    </motion.ul>
+                </LayoutGroup>    
                 </div>
             )}
         </div>

@@ -12,9 +12,6 @@ import { useMeshSWR } from "../../swrs/mesh.swr";
 export const AnimationHelperComponent=()=>{
     const {Panel}=Collapse
 
-    const {commonState}=useCommonSWR()
-
-    const {meshState}=useMeshSWR()
     // const [onPosition,setOnposition]=useState<boolean>(false);
     const [position,setPosition]=useState<Vector3>(new Vector3());
     const [scale,setScale]=useState<Vector3>(new Vector3());

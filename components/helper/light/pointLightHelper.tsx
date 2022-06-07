@@ -14,7 +14,7 @@ export const PointLightHelper=()=>{
     const [colorPicker,setColorPicker]=useState<boolean>(false);
     
     return(
-        <div  className="w-72">
+        <div  className="w-full">
             <Row>
                 <Col span={6}>
                 intensity

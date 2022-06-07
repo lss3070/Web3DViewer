@@ -1,8 +1,8 @@
 import { Col, Row,Slider } from "antd";
-import {Slider as MobileSlider} from 'antd-mobile'
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import {Vector3} from 'three';
 import { useCommonSWR } from "../../../swrs/common.swr";
+import SliderItem from "../../sliderItem";
 
 
 interface IScaleProps{
@@ -15,89 +15,46 @@ export const ScaleHelper=({scale,setScale}:IScaleProps)=>{
     
     const [localScale,setLocalScale]=useState<Vector3>(scale);
     return(
-        <div className="w-72">
-            <Row align="middle" justify="center">
-                <Col span={5}>
-                   x
-                </Col>
-                <Col span={16}>
-                    {commonState?.onMobile?(
-                        <></>
-                        // <MobileSlider min={0} max={360}
-                        // value={localScale?.x}
-                        // onChange={(e)=>{
-                        //     setScale(new Vector3(+e,localScale.y,localScale.z))
-                        //     setLocalScale(new Vector3(+e,localScale.y,localScale.z))
-                        // }}
-                        // />
-                    ):
-                    (<Slider min={0} max={360}
-                    value={localScale?.x}
-                    onChange={(e)=>{
-                        setScale(new Vector3(e,localScale.y,localScale.z))
-                        setLocalScale(new Vector3(e,localScale.y,localScale.z))
-                    }}
-                    />)}
-
-                </Col>
-                <Col span={3}>
-                    {localScale?.x}
-                </Col>
-            </Row>
-            <Row align="middle" justify="center">
-                <Col span={5}>
-                   y
-                </Col>
-                <Col span={16}>
-                    {commonState?.onMobile?(
-                        <></>
-                        // <MobileSlider min={0} max={360}
-                        // value={localScale?.y}
-                        // onChange={(e)=>{
-                        //     setScale(new Vector3(localScale.x,+e,localScale.z))
-                        //     setLocalScale(new Vector3(localScale.x,+e,localScale.z))
-                        // }}
-                        // />
-                    ):
-                    (<Slider min={0} max={360}
-                    value={localScale?.y}
-                    onChange={(e)=>{
-                        setScale(new Vector3(localScale.x,e,localScale.z))
-                        setLocalScale(new Vector3(localScale.x,e,localScale.z))
-                    }}
-                    />)}
-                </Col>
-                <Col span={3}>
-                    {localScale?.y}
-                </Col>
-            </Row>
-            <Row align="middle" justify="center">
-                <Col span={5}>
-                   z
-                </Col>
-                <Col span={16}>
-                    {commonState?.onMobile?(
-                        <></>
-                        // <MobileSlider min={0} max={360}
-                        // value={localScale?.z}
-                        // onChange={(e)=>{
-                        //     setScale(new Vector3(localScale.x,localScale.y,+e))
-                        //     setLocalScale(new Vector3(localScale.x,localScale.y,+e))
-                        // }}
-                        // />
-                    ):
-                    (<Slider min={0} max={360}
-                    value={localScale?.z}
-                    onChange={(e)=>{
-                        setScale(new Vector3(localScale.x,localScale.y,e))
-                        setLocalScale(new Vector3(localScale.x,localScale.y,e))
-                    }}
-                    />)}
-                </Col>
-                <Col span={3}>
-                    {localScale?.z}
-                </Col>
-            </Row>
+        <div className="w-full">
+            <SliderItem
+            label='x'
+            max={1000}
+            min={-1000}
+            value={localScale?.x}
+            sliderChangeEvent={
+                (e:number)=>setLocalScale(new Vector3(+e,localScale.y,localScale.z))
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                setLocalScale(new Vector3(+e.target.value,localScale.y,localScale.z))
+            }
+            />
+            <SliderItem
+            label='y'
+            max={1000}
+            min={-1000}
+            value={localScale?.y}
+            sliderChangeEvent={
+                (e:number)=>setLocalScale(new Vector3(localScale.x,e,localScale.z))
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                setLocalScale(new Vector3(localScale.x,+e.target.value,localScale.z))
+            }
+            />
+            <SliderItem
+            label='z'
+            max={1000}
+            min={-1000}
+            value={localScale?.z}
+            sliderChangeEvent={
+                (e:number)=>setLocalScale(new Vector3(localScale.x,localScale.y,e))
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                setLocalScale(new Vector3(localScale.x,localScale.y,+e.target.value))
+            }
+            />
         </div>
     )
 }
