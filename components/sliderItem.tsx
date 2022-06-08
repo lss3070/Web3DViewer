@@ -1,4 +1,4 @@
-import { Input, Slider } from "antd";
+import {  Slider } from "antd";
 import { ChangeEvent } from "react";
 
 interface SliderItemProps{
@@ -16,7 +16,7 @@ const SliderItem=({
 }:SliderItemProps)=>{
     return(
         <div className="grid grid-cols-12">
-            <div className="col-span-1">
+            <div className="col-span-1 text-white text-center">
                 {label}
             </div>
             <div className="col-span-9">
@@ -26,9 +26,9 @@ const SliderItem=({
                     />
             </div>
             <div className="col-span-2">
-                <Input value={value} onChange={inputChangeEvent}/>
+                <input className="w-full text-center rounded-md"
+                 value={value} onChange={inputChangeEvent}/>
             </div>
-
         </div>
     )
 }

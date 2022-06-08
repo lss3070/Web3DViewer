@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber"
 import { useRef, useState, useEffect } from 'react';
-import {Box3, Group, Material, ObjectLoader, Vector3 } from "three"
+import {Box3, Group, Material, ObjectLoader, Scene, Vector3 } from "three"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 
@@ -26,7 +26,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const {commonState,setGroupList,setScene}=useCommonSWR();
     const {setMeshBox}=useCameraSWR();
 
-    const sceneRef = useRef<any>()
+    const sceneRef = useRef<Scene>(null)
     const [meshGroup,setMeshGroup]=useState<Group>();
 
     const fbxLoader= new FBXLoader();
@@ -34,8 +34,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const objectLoader = new ObjectLoader();
 
     useEffect(()=>{
-        console.log('!!');
-        console.log(commonState);
         if(commonState?.extension!==undefined){
             console.log(commonState.extension)
             setLoadingComplete(false);
@@ -132,20 +130,23 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 const groupLoop=(item:Group):CustomDataNode[]=>{
     let temp:CustomDataNode[]
     temp=item.children.map((groupItem):CustomDataNode=>{
+        console.log(groupItem.type)
         switch(groupItem.type){//groupItem.constructor.name
             case'Mesh':
             return {
                 key:groupItem.uuid,
+                type:groupItem.type,
                 title:groupItem.name
             }
             case'Group':
             return {
                 key:groupItem.uuid,
+                type:groupItem.type,
                 title:groupItem.name,
                 children:groupLoop(groupItem as Group)
             }
             default:
-            return {key:groupItem.uuid,title:groupItem.name};
+            return {key:groupItem.uuid,type:groupItem.type,title:groupItem.name};
         }
     })
     return temp;

@@ -14,6 +14,9 @@ import { ScaleHelper } from './helper/action/scaleHelper';
 import { VisibleHelper } from './helper/action/visibleHelper';
 import ActionHelper from './helper2/actionHelper';
 import AnimationHelper from './helper2/animationHelper';
+import CommonHelper from './helper2/commonHelper';
+import { CameraHelper } from './helper2/cameraHelper';
+
 
 const CustomLayout =()=>{
 
@@ -68,22 +71,21 @@ const CustomLayout =()=>{
     }
 
     return(
-    <div className="border rounded-md
-     absolute top-1/4 right-10 w-72 h-80
+    <div className="rounded-md border p-4
+     absolute top-1/4 right-10 w-72 h-auto
+     grid gap-5 bg-slate-500
     ">
-            <motion.ul>
-                <motion.li>
                     {/* common */}
+                    <CommonHelper openId={openId} setOpenId={setOpenId}/>
                     {/* camera */}
-                    <Category {...cameraInfo}/>
+                    <CameraHelper openId={openId} setOpenId={setOpenId}/>
                     {/* light */}
                     <Category {...lightInfo}/>
                     {/* action */}
                     <ActionHelper openId={openId} setOpenId={setOpenId}/>
                     {/* animation */}
                     <AnimationHelper openId={openId} setOpenId={setOpenId}/>
-                </motion.li>
-            </motion.ul>
+       
     </div>)
 }
 export default CustomLayout;

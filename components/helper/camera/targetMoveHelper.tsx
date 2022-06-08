@@ -1,6 +1,8 @@
 import { Col, Row, Slider } from "antd"
+import { ChangeEvent } from "react";
 import { Vector3 } from "three";
 import { useCameraSWR } from "../../../swrs/camera.swr";
+import SliderItem from "../../sliderItem";
 
 export const TargetMoveHelper=()=>{
     const {cameraState,setTarget}=useCameraSWR();
@@ -9,49 +11,46 @@ export const TargetMoveHelper=()=>{
         setTarget(new Vector3(x,y,z));
     } 
     return(
-        <div className="w-72">
-            <Row align="middle" justify="center">
-                <Col span={5}>
-                    x
-                </Col>
-                <Col span={16}>
-                    <Slider min={-1000} max={1000}
-                    value={cameraState?.target!.x}
-                    onChange={(e)=>TargetChangeEvent(e,cameraState?.target!.y!,cameraState?.target!.z!)}
-                    />
-                </Col>
-                <Col span={3}>
-                    {cameraState?.target!.x}
-                </Col>
-            </Row>
-            <Row align="middle" justify="center">
-                <Col span={5}>
-                    y
-                </Col>
-                <Col  span={16}>
-                    <Slider min={-1000} max={1000}
-                    value={cameraState?.target!.y}
-                    onChange={(e)=>TargetChangeEvent(cameraState?.target!.x!,e,cameraState?.target!.z!)}
-                    />
-                </Col>
-                <Col span={3}>
-                    {cameraState?.target!.y}
-                </Col>
-            </Row>
-            <Row>
-                <Col span={5}>
-                    z
-                </Col>
-                <Col span={16}>
-                    <Slider min={-1000} max={1000}
-                    value={cameraState?.target!.z}
-                    onChange={(e)=>TargetChangeEvent(cameraState?.target!.x!,cameraState?.target!.y!,e)}
-                    />
-                </Col>
-                <Col span={3}>
-                    {cameraState?.target!.z}
-                </Col>
-            </Row>
+        <div className="w-full">
+            <SliderItem
+            label='x'
+            max={1000}
+            min={-1000}
+            value={cameraState?.position?.x!}
+            sliderChangeEvent={
+                (e:number)=>TargetChangeEvent(e,cameraState?.target?.y!,cameraState?.target?.z!)
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                TargetChangeEvent(+e.target.value,cameraState?.target?.y!,cameraState?.target?.z!)
+            }
+            />
+            <SliderItem
+            label='y'
+            max={1000}
+            min={-1000}
+            value={cameraState?.position?.y!}
+            sliderChangeEvent={
+                (e:number)=>TargetChangeEvent(cameraState?.target?.x!,e,cameraState?.target?.z!)
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                TargetChangeEvent(cameraState?.target?.x!,+e.target.value,cameraState?.target?.z!)
+            }
+            />
+            <SliderItem
+            label='z'
+            max={1000}
+            min={-1000}
+            value={cameraState?.position?.z!}
+            sliderChangeEvent={
+                (e:number)=>TargetChangeEvent(cameraState?.target?.x!,cameraState?.target?.y!,e)
+            }
+            inputChangeEvent={
+                (e:ChangeEvent<HTMLInputElement>)=>
+                TargetChangeEvent(cameraState?.target?.x!,cameraState?.target?.y!,+e.target.value)
+            }
+            />
         </div>
     )
 }

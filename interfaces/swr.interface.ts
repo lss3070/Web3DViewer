@@ -1,8 +1,8 @@
 
-import { Box3, Mesh, Object3D, Sphere, Vector3,Color as ThreeColor } from "three";
+import { Box3, Mesh, Object3D, Sphere, Vector3,Color as ThreeColor, Scene } from "three";
 import { CustomDataNode } from "./app.interface";
 
-import { MutableRefObject } from "react";
+import { MutableRefObject, RefObject } from "react";
 
 export declare type ObjectRef = MutableRefObject<Object3D>;
 
@@ -41,7 +41,7 @@ export interface ICommonStateProps{
   filePath?:string;
   extension?:string;
   groupList?:CustomDataNode[];
-  scene?:any;
+  scene?:RefObject<Scene>;
   textAble:boolean;
   mobileHelperComponent?:JSX.Element;
   onMobile?:boolean;

@@ -1,4 +1,4 @@
-import { Html } from "@react-three/drei";
+import { Html, PointMaterial } from "@react-three/drei";
 import { useEffect, useMemo, useState, useRef, memo } from 'react';
 import { BackSide, Box3, Color, DoubleSide, FrontSide, Material, Matrix4, Mesh, PlaneGeometry, Vector3,EdgesGeometry, MeshBasicMaterial, MeshPhongMaterial, MeshStandardMaterial, MeshStandardMaterialParameters, MeshToonMaterial } from "three";
 
@@ -8,6 +8,7 @@ import { useAnimationSWR } from "../swrs/animation.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
 import { useCommonSWR } from "../swrs/common.swr";
 import { MeshHtmlComponent } from "./mesh-html";
+import { MeshMode } from "../interfaces/swr.interface";
 interface IMeshProps{
     mesh:THREE.Mesh
 }
@@ -17,6 +18,23 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
     const {animationState}=useAnimationSWR();
     const {commonState}=useCommonSWR();
+
+    const [wire,setWire]=useState<boolean>(false);
+    const [point,setPoint]=useState<boolean>(false);
+
+    useEffect(()=>{
+        switch(meshState?.meshMode){
+            case MeshMode.Default:
+                setWire(false)
+                break;
+            case MeshMode.Point:
+                setPoint(true);
+                break;
+            case MeshMode.Wire:
+                setWire(true)
+                break;
+        }
+    },[meshState?.meshMode])
 
     const meshRef=useRef<any>();
 
@@ -54,27 +72,28 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     })
 
     const switchMaterial=(material:Material,index?:number)=>{
+        
         switch(material.type){
             case 'MeshPhysicalMaterial':
-                return <meshPhysicalMaterial {...material} key={index?index:0}/>;
+                return <meshPhysicalMaterial {...material} wireframe={wire}  key={index?index:0}/>;
             case 'MeshStandardMaterial':
-                return <meshStandardMaterial {...material} key={index?index:0}/>;
+                return <meshStandardMaterial {...material} wireframe={wire}  key={index?index:0}/>;
             case 'MeshToonMaterial':
                 return <meshToonMaterial {...material} key={index?index:0}/>;
             case 'MeshNormalMaterial':
-                return <meshNormalMaterial {...material} key={index?index:0}/>;
+                return <meshNormalMaterial {...material} wireframe={wire} key={index?index:0}/>;
             case 'MeshDepthMaterial':
-                return <meshDepthMaterial {...material} key={index?index:0}/>;
+                return <meshDepthMaterial {...material} wireframe={wire}  key={index?index:0}/>;
             case 'MeshDistanceMaterial':
                 return <meshDistanceMaterial {...material} key={index?index:0}/>;
             case 'MeshBasicMaterial':
-                return <meshBasicMaterial {...material} key={index?index:0}/>
+                return <meshBasicMaterial {...material} wireframe={wire} key={index?index:0}/>
             case 'MeshMatcapMaterial':
                 return <meshMatcapMaterial {...material} key={index?index:0}/>
             case 'MeshPhongMaterial':
-                return <meshPhongMaterial {...material} key={index?index:0}/>
+                return <meshPhongMaterial {...material} wireframe={wire}  key={index?index:0}/>
             case 'MeshLambertMaterial':
-                return <meshLambertMaterial {...material} key={index?index:0}/>
+                return <meshLambertMaterial {...material} wireframe={wire}  key={index?index:0}/>
             default:
             return <meshBasicMaterial {...material}/>
         }
@@ -104,8 +123,11 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             await setSelectMesh([meshRef]);
         }
     }
+
         return(
-            <mesh ref={meshRef} 
+            <>
+            {!point?(
+                <mesh ref={meshRef} 
             onClick={meshOnClick}
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
@@ -134,7 +156,19 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                        />
                      )}
             </mesh>
-           
+            ):(
+                <points
+                geometry={mesh.geometry} >
+                    <PointMaterial
+                      color={"#000000"} 
+                     size={0.2}
+                    />
+                </points>
+            )}
+            
+    
+            </>
+            
         )
 };
 

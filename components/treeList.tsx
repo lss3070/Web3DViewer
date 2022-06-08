@@ -145,7 +145,9 @@ export const TreeListComponent=()=>{
         },[meshState?.selectMesh])
         useEffect(()=>{
             if(commonState?.groupList!==undefined){
+                
                 const list = loop(commonState?.groupList);
+                console.log(list);
                 setTreeData(list);
             }
         },[commonState,searchValue])
@@ -157,14 +159,14 @@ export const TreeListComponent=()=>{
     },[commonState?.groupList]);
 
 
-    const titleRender =({
+    const TitleComponent =({
         children,
         key,
         title
     }:any):ReactNode=>{
         return(
             <motion.li
-
+            className=" font-medium"
             animate={{opacity:1}}
             exit={{opacity:0}}
              key={key}>
@@ -174,14 +176,14 @@ export const TreeListComponent=()=>{
     }
 
     return(
-        <div className={`h-full col-span-1 ${commonState?.onMobile?`py-4`:``}`}>
+        <div className={`h-full col-span-1 `}>
             {(
-                <div className="h-full w-full py-4">
+                <div className="h-full w-full overflow-hidden">
                 <Search style={{marginBottom:8}} placeholder="Search" onChange={(e)=>{onChange(e)}}/>
                 <LayoutGroup>
                     <motion.ul>
                             <Tree
-                            titleRender={titleRender}
+                            titleRender={TitleComponent}
                             selectedKeys={selectList}
                             ref={treeRef}
                             multiple

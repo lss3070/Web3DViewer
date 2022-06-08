@@ -15,18 +15,28 @@ import { MobileHelperControl } from '../components/mobileHelperControl'
 import { MobileHelperList } from '../components/mobileHelperList'
 import CustomLayout from '../components/layout'
 
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {fab} from '@fortawesome/free-brands-svg-icons';
+import {far} from '@fortawesome/free-regular-svg-icons';
+import {fas} from '@fortawesome/free-solid-svg-icons'
+import CameraPosition from '../components/cameraPosition'
+import LoadingComponent from '../components/Loading';
 
+
+library.add(fab,far,fas)
 const Home: NextPage = () => {
-
+  library.add(fab,far,fas)
   const { meshState}= useMeshSWR();
   const {commonState,setOnMobile} = useCommonSWR()
 
+  
   const [loadingPercent,setLoadingPercent]=useState<number>(0)
   const [loadingComplete,setLoadingComplte]=useState<boolean>(true);
   const [helperVisible,sethelperVisible]=useState<boolean>(false);
   const [mobileHelperControlVisible,setMobileHelperControlVisible]=useState<boolean>(false);
   const [mobileHelperListVisible,setMobileHelperListVisible]=useState<boolean>(false);
   const [onTreeModal,setOnTreeModal]=useState<boolean>(false);
+
 
   return (
     <div className="w-full h-full grid grid-cols-10">
@@ -51,8 +61,12 @@ const Home: NextPage = () => {
                 </Suspense>
             </div>
         </main>
+        <CameraPosition/>
         <CustomLayout/>
       </div>
+      {!loadingComplete&&(
+        <LoadingComponent/>
+      )}
       {commonState?.onMobile?
             (mobileHelperListVisible&&<MobileHelperList 
                 onControl={()=>{
@@ -62,19 +76,6 @@ const Home: NextPage = () => {
                 }}/>):
             (<HelperListComponent visible={helperVisible}/>)}
             {commonState?.onMobile&&mobileHelperControlVisible&&<MobileHelperControl/>}
-
-      {/* <footer >
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer> */}
     </div>
   )
 }

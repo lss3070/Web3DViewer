@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Euler, Mesh, Vector3 } from "three";
+import { BufferGeometry, Euler, Material, Mesh, Vector3 } from "three";
 import { useCommonSWR } from "../../swrs/common.swr";
 import { useMeshSWR } from "../../swrs/mesh.swr";
 import Category, { TabCategoryProps } from "../category";
@@ -23,8 +23,9 @@ const ActionHelper=({openId,setOpenId}:ActionProps)=>{
     const [color,setColor]=useState<string>("#ffffff")
 
     let meshList = useMemo(()=>{
-        const result:Mesh[]|undefined= meshState?.selectMesh!.map((ref)=>{
-           const mesh= commonState?.scene.current.getObjectByProperty('uuid',ref.current.uuid)
+        const result:Mesh<BufferGeometry, Material | Material[]>[]|undefined= 
+        meshState?.selectMesh!.map((ref)=>{
+           const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',ref.current.uuid)! as Mesh
            return mesh
         })
         if(result&&result!.length>0){
@@ -39,6 +40,7 @@ const ActionHelper=({openId,setOpenId}:ActionProps)=>{
 
     const positionChangeEvent=(positionProps:Vector3)=>{
         setPosition(positionProps);
+        console.log(meshList);
         meshList?.forEach((mesh)=>{
             // const meshPosition = mesh.worldToLocal(position);
             mesh.position.set(positionProps.x,positionProps.y,positionProps.z);

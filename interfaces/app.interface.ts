@@ -6,6 +6,8 @@
 
 export interface  CustomDataNode {
     children?: CustomDataNode[];
+    type?:any;
+    // 'Group'|'Mesh'|'Bone'|'LineSegments'
     key: string;
     title?: string;
 }

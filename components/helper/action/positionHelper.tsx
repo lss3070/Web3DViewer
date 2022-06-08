@@ -22,11 +22,17 @@ export const PositionHelper=({position,setPosition}:IPositionHelper)=>{
             min={-1000}
             value={localPosition?.x}
             sliderChangeEvent={
-                (e:number)=>setLocalPosition(new Vector3(+e,localPosition.y,localPosition.z))
+                (e:number)=>{
+                    setPosition(new Vector3(+e,localPosition.y,localPosition.z))
+                    setLocalPosition(new Vector3(+e,localPosition.y,localPosition.z))
+                }
             }
             inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPosition(new Vector3(+e.target.value,localPosition.y,localPosition.z))
+                (e:ChangeEvent<HTMLInputElement>)=>{
+                    setPosition(new Vector3(+e.target.value,localPosition.y,localPosition.z))
+                    setLocalPosition(new Vector3(+e.target.value,localPosition.y,localPosition.z))
+                }
+               
             }
             />
             <SliderItem
@@ -35,11 +41,18 @@ export const PositionHelper=({position,setPosition}:IPositionHelper)=>{
             min={-1000}
             value={localPosition?.y}
             sliderChangeEvent={
-                (e:number)=>setLocalPosition(new Vector3(localPosition.x,+e,localPosition.z))
+                (e:number)=>{
+                    setPosition(new Vector3(localPosition.x,+e,localPosition.z))
+                    setLocalPosition(new Vector3(localPosition.x,+e,localPosition.z))
+                }
+                
             }
             inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPosition(new Vector3(localPosition.x,+e.target.value,localPosition.z))
+                (e:ChangeEvent<HTMLInputElement>)=>{
+                    setPosition(new Vector3(localPosition.x,+e.target.value,localPosition.z))
+                    setLocalPosition(new Vector3(localPosition.x,+e.target.value,localPosition.z))
+                }
+               
             }
             />
             <SliderItem
@@ -48,11 +61,18 @@ export const PositionHelper=({position,setPosition}:IPositionHelper)=>{
             min={-1000}
             value={localPosition?.z}
             sliderChangeEvent={
-                (e:number)=>setLocalPosition(new Vector3(localPosition.x,localPosition.y,e))
+                (e:number)=>{
+                    setPosition(new Vector3(localPosition.x,localPosition.y,e))
+                    setLocalPosition(new Vector3(localPosition.x,localPosition.y,e))
+                }
+                
             }
             inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPosition(new Vector3(localPosition.x,localPosition.y,+e.target.value))
+                (e:ChangeEvent<HTMLInputElement>)=>{
+                    setPosition(new Vector3(localPosition.x,localPosition.y,+e.target.value))
+                    setLocalPosition(new Vector3(localPosition.x,localPosition.y,+e.target.value))
+                }
+                
             }
             />
         </div>

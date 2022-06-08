@@ -21,6 +21,8 @@ export const MeshGroupComponent = ({meshGroup}:IMeshProps)=>{
                 case 'Bone':
                     // return (  <BoneComponent bone={groupItem as Bone}/>)
                     return (<MeshGroupComponent key={index} meshGroup={groupItem as Group}/>)
+                case 'LineSegments':
+                    return (<MeshComponent key={index} mesh={groupItem as Mesh}/>)
             }
         });
     }

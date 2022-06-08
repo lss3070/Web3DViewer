@@ -18,7 +18,7 @@ const Tab=({tabList}:ITapProps)=>{
 
     return (
         <motion.div
-        className=' bg-white h-full'
+        className=' bg-slate-400 h-full rounded-b-md px-2'
         onClick={(e)=>{
             e.stopPropagation()
         }}
@@ -35,16 +35,16 @@ const Tab=({tabList}:ITapProps)=>{
             duration:0.5,
              ease: [0.04, 0.62, 0.23, 0.98] }}
         >
-            <motion.nav className='h-9 '>
+            <motion.nav className='h-9'>
                 <ul className='flex w-full'>
                 {itemList?.map((item)=>{
                     return(
                         <li
                         className={
                             `w-full cursor-pointer flex items-center justify-center
-                            select-none bg-white relative`
+                            select-none  relative`
                         }
-                            key={item.label}
+                            key={item.index}
                             onClick={() => setSelectedTab(item)}
                             >
                             {`${item.label}`}

@@ -25,11 +25,18 @@ export const RotationHelper=({rotation,setRotation}:IRotationHelper)=>{
             min={-1000}
             value={localRotation?.x}
             sliderChangeEvent={
-                (e:number)=>setLocalRotation(new Euler(+e,localRotation.y,localRotation.z))
+                (e:number)=>{
+                    setRotation(new Euler(+e,localRotation.y,localRotation.z))
+                    setLocalRotation(new Euler(+e,localRotation.y,localRotation.z))
+                }
+                
             }
             inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalRotation(new Euler(+e.target.value,localRotation.y,localRotation.z))
+                (e:ChangeEvent<HTMLInputElement>)=>{
+                    setRotation(new Euler(+e.target.value,localRotation.y,localRotation.z))
+                    setLocalRotation(new Euler(+e.target.value,localRotation.y,localRotation.z))
+                }
+                
             }
             />
             <SliderItem
@@ -38,11 +45,17 @@ export const RotationHelper=({rotation,setRotation}:IRotationHelper)=>{
             min={-1000}
             value={localRotation?.y}
             sliderChangeEvent={
-                (e:number)=>setLocalRotation(new Euler(localRotation.x,e,localRotation.z))
+                (e:number)=>{
+                    setRotation(new Euler(localRotation.x,e,localRotation.z))
+                    setLocalRotation(new Euler(localRotation.x,e,localRotation.z))
+                }
             }
             inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalRotation(new Euler(localRotation.x,+e.target.value,localRotation.z))
+                (e:ChangeEvent<HTMLInputElement>)=>{
+                    setRotation(new Euler(localRotation.x,+e.target.value,localRotation.z))
+                    setLocalRotation(new Euler(localRotation.x,+e.target.value,localRotation.z))
+                }
+              
             }
             />
             <SliderItem
@@ -51,11 +64,17 @@ export const RotationHelper=({rotation,setRotation}:IRotationHelper)=>{
             min={-1000}
             value={localRotation?.z}
             sliderChangeEvent={
-                (e:number)=>setLocalRotation(new Euler(localRotation.x,localRotation.y,e))
+                (e:number)=>{
+                    setRotation(new Euler(localRotation.x,localRotation.y,e))
+                    setLocalRotation(new Euler(localRotation.x,localRotation.y,e))
+                }
             }
             inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalRotation(new Euler(localRotation.x,localRotation.y,+e.target.value))
+                (e:ChangeEvent<HTMLInputElement>)=>{
+                    setRotation(new Euler(localRotation.x,localRotation.y,+e.target.value))
+                    setLocalRotation(new Euler(localRotation.x,localRotation.y,+e.target.value))
+                }
+               
             }
             />
         </div>
