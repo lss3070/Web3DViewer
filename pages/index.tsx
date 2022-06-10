@@ -23,6 +23,7 @@ import CameraPosition from '../components/cameraPosition'
 import LoadingComponent from '../components/Loading';
 
 
+
 library.add(fab,far,fas)
 const Home: NextPage = () => {
   library.add(fab,far,fas)
@@ -49,13 +50,13 @@ const Home: NextPage = () => {
               setMobileHelperListVisible(true);
           }}
           />
-        <main className={`w-full h-full grid grid-cols-7`}>
+        <main className={`w-full h-full grid `}>
           {commonState&&!commonState.onMobile&&(<TreeListComponent/>)}
             {commonState&&commonState.onMobile&&(
             <div className=" absolute left-4 bottom-4 z-10">
                 <Button onClick={()=>{setOnTreeModal(!onTreeModal)}} shape={`circle`} icon={onTreeModal?<CloseOutlined/>:<SearchOutlined/> }/>
             </div>)}
-            <div className={`w-full h-full border ${commonState?.onMobile?`col-span-7`:`col-span-6`}`} >
+            <div className={`w-full h-full border`} >
                 <Suspense fallback={null}>
                     <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
                 </Suspense>

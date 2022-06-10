@@ -10,6 +10,7 @@ export const TargetMoveHelper=()=>{
     const TargetChangeEvent=(x:number,y:number,z:number)=>{
         setTarget(new Vector3(x,y,z));
     } 
+    
     return(
         <div className="w-full">
             <SliderItem

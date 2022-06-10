@@ -9,7 +9,8 @@ import { SearchOutlined,CloseOutlined, LeftCircleOutlined, RightCircleOutlined, 
 import { Button } from "antd";
 import { useMeshSWR } from '../swrs/mesh.swr';
 import DarkModeSwitch from "./darkModeSwitch";
-import FileManager from "./fileManager";
+import FileManager from './fileManager';
+import MenuManager from "./menuManager";
 
 interface ITopMenu{
     helperVisible:boolean;
@@ -32,6 +33,7 @@ export const TopMenu=({helperVisible,setHelperVisibile,setMobileHelper}:ITopMenu
                 </div>
                 <div className=" col-span-5 flex gap-5">
                     <FileManager/>
+                    <MenuManager/>
                 </div>
                 <div className="flex col-span-1 items-center justify-end mr-8">
                     <DarkModeSwitch/>

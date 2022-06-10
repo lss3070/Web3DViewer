@@ -1,19 +1,20 @@
 import { Tree, Input } from "antd";
-import { DataNode, EventDataNode } from "antd/lib/tree";
+
 import { useEffect, useRef, useState,useCallback, SyntheticEvent, ReactChild, ReactNode } from "react";
 import { Group } from "three"
 import { Key } from "antd/lib/table/interface";
 import { useCommonSWR } from "../swrs/common.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
 import { CustomDataNode } from "../interfaces/app.interface";
-import {motion,LayoutGroup} from 'framer-motion'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DataNode, EventDataNode } from "antd/lib/tree";
 
 interface IRightList{
     list:Group;
 }
 
 export const TreeListComponent=()=>{
-
     const {Search}=Input;
     const { commonState }= useCommonSWR();
     const {meshState,setSelectMesh}= useMeshSWR()
@@ -23,7 +24,6 @@ export const TreeListComponent=()=>{
     const [autoExpandParent,setAutoExpandParent]=useState<boolean>(true);
     const [searchValue,setSearchValue]=useState<string>('');
     const [generateList,setGenerateList]=useState<CustomDataNode[]>([]);
-
 
     const [selectList,setSelectList]= useState<string[]>([])
     const treeRef=useRef<any>(null)
@@ -74,12 +74,14 @@ export const TreeListComponent=()=>{
     }
 
     const onExpand = (expanedKeys:Key[])=>{
-        setExpandedKeys(expanedKeys as string[]);
-        setAutoExpandParent(false);
+            setExpandedKeys(expanedKeys as string[]);
+            setAutoExpandParent(false);
+
+       
     }
 
     const treeClickEvent=(e:React.MouseEvent<HTMLSpanElement, MouseEvent>
-        ,value:EventDataNode)=>{
+        ,value:EventDataNode<any>)=>{
             const uuid = value.key as string;
             const keyIndex= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===uuid)!;
             const mesh= meshState?.staticMeshList.filter((mesh)=>mesh.current.uuid===uuid)![0]!;
@@ -165,40 +167,53 @@ export const TreeListComponent=()=>{
         title
     }:any):ReactNode=>{
         return(
-            <motion.li
-            className=" font-medium"
-            animate={{opacity:1}}
-            exit={{opacity:0}}
+            <div
+            // layout
+            //  animate={{height:'auto'}}
+            // transition={{
+            //     height: {  stiffness: 100 },
+            //     default: { duration: 0.5 },
+            //   }}
+            // exit={{height:0}}
+            className=" font-medium overflow-hidden"
+           
              key={key}>
                 {title.props.children[2]}
-            </motion.li>
+            </div>
         )
     }
 
     return(
-        <div className={`h-full col-span-1 `}>
+        <div className={`h-[800px] absolute left-10 top-20 border rounded-md p-2 z-10 bg-[#64758b]
+        `}>
             {(
-                <div className="h-full w-full overflow-hidden">
-                <Search style={{marginBottom:8}} placeholder="Search" onChange={(e)=>{onChange(e)}}/>
-                <LayoutGroup>
-                    <motion.ul>
+                <div className="h-full w-full overflow-hidden bg-transparent">
+                <div className="w-full flex justify-end">
+                    <FontAwesomeIcon
+                       icon={['fas','xmark']}
+                       className="w-5 h-5 text-white"/>
+                </div>
+                <Search className="mb-2 bg-transparent" 
+                placeholder="Search" 
+                onChange={(e)=>{onChange(e)}}/>
+                {/* <LayoutGroup> */}
                             <Tree
-                            titleRender={TitleComponent}
+                            // titleRender={TitleComponent}
                             selectedKeys={selectList}
                             ref={treeRef}
                             multiple
                             treeData={treeData} 
-                            onExpand={(expanedKeys)=>onExpand(expanedKeys)}
+                            onExpand={onExpand}
                             expandedKeys={expandedKeys!}
                             autoExpandParent={autoExpandParent}
                             height={commonState?.onMobile?200:undefined}
                             onClick={(e,value)=>{
-                            console.log(e);
-                            console.log(value);
+                            
                             treeClickEvent(e,value)
-                            }}/>
-                    </motion.ul>
-                </LayoutGroup>    
+                            }}
+                            />
+  
+                {/* </LayoutGroup>     */}
                 </div>
             )}
         </div>

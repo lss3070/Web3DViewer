@@ -10,15 +10,29 @@ type Position ={
     y:number;
 }
 
+type ExportListProps={
+    label:string
+}
+const ExportList =({label}:ExportListProps)=>{
+    return(
+        <motion.li 
+        whileHover={{scale:1.2}}
+        className=' mb-2 text-lg bg-gray-400 text-white
+        cursor-pointer h-9 flex items-center justify-center
+        '>
+        {label}
+        </motion.li>
+    )
+}
+
+
 const FileManager=()=>{
     const {setFiltPath,setFileExtension}=useCommonSWR();
     const [isExport,setIsExport]=useState<boolean>(false);
 
     const exportRef = useRef<HTMLDivElement>(null)
 
-    const [dynamicPosition,setDynamicPosition]=useState<Position>({
-        x:0,y:0
-    });
+ 
 
     const fileChange =(e:ChangeEvent<HTMLInputElement>)=>{
         const file = e.currentTarget.files![0];
@@ -38,19 +52,17 @@ const FileManager=()=>{
         setIsExport(true);
     }
     
-    useEffect(()=>{
-        setDynamicPosition({
-            x:exportRef.current?.offsetTop!,
-            y:exportRef.current?.offsetLeft!,
-        })
-    },[exportRef])
+
 
     const variants={
         down:{
-            rotate: [0, -30, 0], transition: { duration: 0.5 }
+            height:'auto',
+            // rotate: [0, -30, 0], 
+            transition: { duration: 0.5 }
         },
         up:{
-            y: [0, -10, 0], transition: { repeat: Infinity, repeatDelay: 3 }
+            height:0,
+            y: [0, -100, 0], transition: { repeat: Infinity, repeatDelay: 3 }
         }
     }
 
@@ -79,42 +91,33 @@ const FileManager=()=>{
                     className="w-5 h-5"/>
                     <span>export file</span>
             </div>
- 
-                {/* <select onChange={()=>{
-                const exporter = new OBJExporter();
-                const ee= exporter.parse(commonState?.scene?.current!)
-                    const blob = new Blob([ee],{type:'application/object'})
-                    const link =document.createElement('a');
-                    link.download='test.obj'
-                    link.href= window.URL.createObjectURL(blob);
-                    link.click();
-                
-                }}>
-                    <option>obj</option>
-                    <option>fbx</option>
-                </select> */}
+
                 
             </div>
             {
                     isExport&&(
                         <div className='absolute top-0 left-0 w-full h-full z-10
-                        bg-[#000000]/30 cursor-pointer'
+                        bg-[#000000]/30 '
                         onClick={closeExporter}
                         >
                            <motion.ul 
-                           
+                           style={{
+                               x:exportRef.current?.offsetLeft,
+                               y:exportRef.current?.offsetTop!+5,
+                                width:exportRef.current?.clientWidth!
+                           }}
                            animate={isExport?'down':'up'}
                            variants={variants}
                            className={`absolute 
-                           w-[${exportRef.current?.clientWidth!}]
-                           top-[${dynamicPosition.x}px] 
-                           left-[${dynamicPosition.y}px]
-                           border
+                           h-0
+                            rounded-md
+                            overflow-hidden
+                            grid
                            `}>
-                                <motion.li>obj</motion.li>
-                                <motion.li>obj</motion.li>
-                                <motion.li>obj</motion.li>
-                                <motion.li>obj</motion.li>
+                              <ExportList label={'obj'}/>
+                              <ExportList label={'fbx'}/>
+                              <ExportList label={'stl'}/>
+                              <ExportList label={'obj'}/>
                             </motion.ul>
                         </div>
                     )
