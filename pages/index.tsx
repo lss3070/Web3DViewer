@@ -19,8 +19,8 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {fas} from '@fortawesome/free-solid-svg-icons'
-import CameraPosition from '../components/cameraPosition'
 import LoadingComponent from '../components/Loading';
+import MiniControls from '../components/mini-control'
 
 
 
@@ -62,8 +62,8 @@ const Home: NextPage = () => {
                 </Suspense>
             </div>
         </main>
-        <CameraPosition/>
         <CustomLayout/>
+        <MiniControls/>
       </div>
       {!loadingComplete&&(
         <LoadingComponent/>
