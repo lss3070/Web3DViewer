@@ -149,8 +149,9 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             position={mesh.position}
             quaternion={mesh.quaternion}>
                 {MaterialElements()}
-                 {commonState?.textAble&&(
-                        <MeshHtmlComponent centerPosition={mesh.geometry.boundingSphere?.center!}
+                 {commonState?.onText&&(
+                        <MeshHtmlComponent 
+                        centerPosition={mesh.geometry.boundingSphere?.center!}
                         name={mesh.name}
                         uuid={mesh.uuid} 
                        />

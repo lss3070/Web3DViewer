@@ -3,6 +3,7 @@ import { Box3, Mesh, Object3D, Sphere, Vector3,Color as ThreeColor, Scene } from
 import { CustomDataNode } from "./app.interface";
 
 import { MutableRefObject, RefObject } from "react";
+import { MotionValue } from "framer-motion";
 
 export declare type ObjectRef = MutableRefObject<Object3D>;
 
@@ -42,9 +43,10 @@ export interface ICommonStateProps{
   extension?:string;
   groupList?:CustomDataNode[];
   scene?:RefObject<Scene>;
-  textAble:boolean;
   mobileHelperComponent?:JSX.Element;
   onMobile?:boolean;
+  onText:boolean;
+  onWire:boolean;
 }
 interface IAmbientLight{
   able:boolean;
@@ -87,4 +89,17 @@ export interface IAnimationStateProps{
   positionSpeed:Vector3;
   rotationSpeed:Vector3;
   scaleSpeed:Vector3;
+}
+
+export interface IMenuStateProps{
+  OnTreeList:boolean;
+  OnControl:boolean;
+  OnDetail:boolean;
+  simpleControl:IMenuModal;
+}
+
+export interface IMenuModal{
+  on:boolean;
+  x?:number;
+  y?:number;
 }

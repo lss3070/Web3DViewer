@@ -3,7 +3,7 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { ChangeEvent, useState, useEffect, useRef } from 'react';
 import { useCommonSWR } from '../swrs/common.swr';
-import {motion} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 
 type Position ={
     x:number;
@@ -62,7 +62,6 @@ const FileManager=()=>{
         },
         up:{
             height:0,
-            y: [0, -100, 0], transition: { repeat: Infinity, repeatDelay: 3 }
         }
     }
 
@@ -94,34 +93,39 @@ const FileManager=()=>{
 
                 
             </div>
+            <AnimatePresence>
             {
                     isExport&&(
                         <div className='absolute top-0 left-0 w-full h-full z-10
                         bg-[#000000]/30 '
                         onClick={closeExporter}
                         >
-                           <motion.ul 
-                           style={{
-                               x:exportRef.current?.offsetLeft,
-                               y:exportRef.current?.offsetTop!+5,
-                                width:exportRef.current?.clientWidth!
-                           }}
-                           animate={isExport?'down':'up'}
-                           variants={variants}
-                           className={`absolute 
-                           h-0
-                            rounded-md
-                            overflow-hidden
-                            grid
-                           `}>
-                              <ExportList label={'obj'}/>
-                              <ExportList label={'fbx'}/>
-                              <ExportList label={'stl'}/>
-                              <ExportList label={'obj'}/>
-                            </motion.ul>
+                           
+                                <motion.ul 
+                            style={{
+                                x:exportRef.current?.offsetLeft,
+                                y:exportRef.current?.offsetTop!+5,
+                                    width:exportRef.current?.clientWidth!
+                            }}
+                            animate={'down'}
+                            variants={variants}
+                            exit={'up'}
+                            className={`absolute 
+                            h-0
+                                rounded-md
+                                overflow-hidden
+                                grid
+                            `}>
+                                <ExportList label={'obj'}/>
+                                <ExportList label={'fbx'}/>
+                                <ExportList label={'stl'}/>
+                                <ExportList label={'obj'}/>
+                                </motion.ul>
+                            
                         </div>
                     )
                 }
+            </AnimatePresence>
         </>
     )
 }

@@ -156,7 +156,7 @@ const groupLoop=(item:Group):CustomDataNode[]=>{
     },[sceneRef])
 
     return(
-       <Canvas style={{width:'100%',maxHeight:'100vh'}}>
+       <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10">
             <scene ref={sceneRef}>
                 <LightComponent/>                
                 <CameraComponent/>

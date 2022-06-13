@@ -16,9 +16,10 @@ import ActionHelper from './helper2/actionHelper';
 import AnimationHelper from './helper2/animationHelper';
 import CommonHelper from './helper2/commonHelper';
 import { CameraHelper } from './helper2/cameraHelper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-const CustomLayout =()=>{
+const Remocorn =()=>{
 
     const [openId,setOpenId]=useState<number>();
 
@@ -71,21 +72,30 @@ const CustomLayout =()=>{
     }
 
     return(
-    <div className="rounded-md border p-4
+    <motion.div drag 
+    dragMomentum={false}
+    className=" rounded-lg border : ;
      absolute top-1/4 right-10 w-72 h-auto
-     grid gap-5 bg-slate-500
+     bg-slate-500 cursor-grab
+     z-20
     ">
-                    {/* common */}
-                    <CommonHelper openId={openId} setOpenId={setOpenId}/>
-                    {/* camera */}
-                    <CameraHelper openId={openId} setOpenId={setOpenId}/>
-                    {/* light */}
-                    <Category {...lightInfo}/>
-                    {/* action */}
-                    <ActionHelper openId={openId} setOpenId={setOpenId}/>
-                    {/* animation */}
-                    <AnimationHelper openId={openId} setOpenId={setOpenId}/>
+        <div className='w-full flex items-center justify-end pt-1'>
+            <FontAwesomeIcon
+                icon={['fas','xmark']}
+                className="w-5 h-5 text-white cursor-pointer"/>
+        </div>
+        <div className='p-4 grid gap-5 cursor-auto'>
+            {/* camera */}
+            <CameraHelper openId={openId} setOpenId={setOpenId}/>
+            {/* light */}
+            <Category {...lightInfo}/>
+            {/* action */}
+            <ActionHelper openId={openId} setOpenId={setOpenId}/>
+            {/* animation */}
+            <AnimationHelper openId={openId} setOpenId={setOpenId}/>
+        </div>
+
        
-    </div>)
+    </motion.div>)
 }
-export default CustomLayout;
+export default Remocorn;

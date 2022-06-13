@@ -3,7 +3,8 @@ import { ICommonStateProps } from "../interfaces/swr.interface";
 import { CustomDataNode } from "../interfaces/app.interface";
 
 let commonState:ICommonStateProps={
-    textAble:false,
+    onText:false,
+    onWire:false,
     onMobile:false
 }
 
@@ -41,10 +42,17 @@ export const useCommonSWR=()=>{
             }
             return mutate();
         },
-        setTextAble:async(textAble:boolean)=>{
+        setOnText:async(onText:boolean)=>{
             commonState={
                 ...commonState,
-                textAble
+                onText
+            }
+            return mutate();
+        },
+        setOnWire:async(onWire:boolean)=>{
+            commonState={
+                ...commonState,
+                onWire
             }
             return mutate();
         },

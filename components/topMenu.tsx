@@ -13,19 +13,11 @@ import FileManager from './fileManager';
 import MenuManager from "./menuManager";
 
 interface ITopMenu{
-    helperVisible:boolean;
-    setHelperVisibile:Function;
-    setMobileHelper:Function;
 }
 
-export const TopMenu=({helperVisible,setHelperVisibile,setMobileHelper}:ITopMenu)=>{
-
-
-    const {meshState}=useMeshSWR()
-
-
+export const TopMenu=()=>{
     return(
-            <div className=" w-full grid grid-cols-7 h-12 border gap-5">
+            <div className=" w-full grid grid-cols-7 h-full border gap-5">
                 <div className="flex col-span-1 items-center justify-center
                  w-56
                 ">
