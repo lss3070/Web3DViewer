@@ -6,7 +6,10 @@ import _ from 'lodash'
 import { useCameraSWR } from "../swrs/camera.swr";
 
 export const ControlComponent=()=>{
-    const { cameraState,setControlRef }= useCameraSWR();
+    const { cameraState,setControlRef,
+        setPosition,
+        setTarget
+    }= useCameraSWR();
 
     const [onZooming,setOnZooming]=useState<boolean>(false);
 
@@ -51,7 +54,13 @@ export const ControlComponent=()=>{
         setZoomPosition(position.copy(controlRef.current.target).sub(direction))
          
         setOnZooming(true);
-    },[cameraState?.selectMeshBox])
+    },[cameraState?.selectMeshBox]);
+
+
+
+    useEffect(()=>{
+        console.log('change position');
+    },[cameraState?.position])
 
     useFrame(()=>{
         const step=0.05;

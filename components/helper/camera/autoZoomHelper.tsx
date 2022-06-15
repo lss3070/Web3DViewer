@@ -34,8 +34,7 @@ export const AutoZoomHelper=()=>{
             // console.log(mesh.position);
             // console.log(mesh.children[0].position);
 
-            
-           
+    
 
             setSelectMeshBox(new Box3().setFromObject(mesh.current))
         }else{

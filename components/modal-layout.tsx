@@ -4,18 +4,23 @@ import { useMenuSWR } from '../swrs/menu.swr';
 
 interface IModalLayoutProps{
     type:'TreeList'|'Control'|'Detail'|'SimpleControl'
-    children:JSX.Element;
+    children:JSX.Element[]|JSX.Element,
+    onModal:boolean
+
 }
 
 
-const ModalLayout=({type,children}:IModalLayoutProps)=>{
+const ModalLayout=({type,children,onModal}:IModalLayoutProps)=>{
 
-    const [onModal,setOnModal]=useState<boolean>(false);
-    const {menuState}=useMenuSWR();
+    const {menuState,
+        setSimpleControlPosition,
+        setControlPosition,
+        setTreeListPosition,
+        setDetailPosition
+    }=useMenuSWR();
 
-    const x=useMotionValue(0);
-
-    const y=useMotionValue(0);
+    const x =useMotionValue<string|number>(0);
+    const y =useMotionValue<string|number>(0);
 
     const modalVariants={
         show:{
@@ -26,16 +31,58 @@ const ModalLayout=({type,children}:IModalLayoutProps)=>{
 
         }
     }
+    
+    const setPosition =(orX:number|string,orY:number|string)=>{
+        x.set(orX);
+        y.set(orY)
+    }
+
+    const staticPosition=()=>{
+        switch(type){
+            case 'Control':
+            return menuState?.control.position&&'right-[23%] top-[120px]'
+            case 'TreeList':
+            return menuState?.treeList.position&&'left-[0px] top-[100px]'
+            case 'Detail':
+            return menuState?.detail.position&&'left-[50%] top-[10%]'
+            case 'SimpleControl':
+            return menuState?.simpleControl.position&&'left-[50%] top-[5%]'
+        }
+    }
 
     useEffect(()=>{
-        switch(type){
-            case'SimpleControl':
-                setOnModal(menuState?.simpleControl.on!);
-                x.set(menuState?.simpleControl.x!);
-                y.set(menuState?.simpleControl.y!);
-                break;
-        }
-    },[type]);
+        if(onModal===undefined) return
+            switch(type){
+                case 'Detail':
+                    menuState?.detail?.position&&onModal?
+                        setPosition(
+                            menuState?.detail.position?.x!,
+                            menuState?.detail.position?.y!):
+                        setDetailPosition(x.get(),y.get());
+                    break;
+                case 'Control':
+                    menuState?.control?.position&&onModal?
+                        setPosition(
+                            menuState?.control.position?.x!,
+                            menuState?.control.position?.y!):
+                        setControlPosition(x.get(),y.get());
+                    break;
+                case 'TreeList':
+                    menuState?.treeList?.position&&onModal?
+                        setPosition(
+                            menuState?.treeList.position?.x!,
+                            menuState?.treeList.position?.y!):
+                        setTreeListPosition(x.get(),y.get());
+                    break;
+                case 'SimpleControl':
+                    menuState?.simpleControl?.position&&onModal?
+                        setPosition(
+                            menuState?.simpleControl.position?.x!,
+                            menuState?.simpleControl.position?.y!):
+                        setSimpleControlPosition(x.get(),y.get());
+                    break;
+            }
+    },[onModal])
 
 
     return(
@@ -48,14 +95,17 @@ const ModalLayout=({type,children}:IModalLayoutProps)=>{
                 variants={modalVariants}
                 style={{x,y}}
                 dragMomentum={false}
-                className="absolute 
-                rounded-lg w-auto h-auto p-2 opacity-0
-                flex gap-5 bg-[#64758b]
-                z-20"
+                className={`absolute 
+                w-auto h-auto opacity-0 z-20
+                 ${staticPosition()}
+                `}
                 >
                     {children}
                 </motion.div>
+
             )}
         </AnimatePresence>
     )
 }
+
+export default ModalLayout;

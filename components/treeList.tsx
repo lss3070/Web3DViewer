@@ -10,14 +10,14 @@ import { CustomDataNode } from "../interfaces/app.interface";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DataNode, EventDataNode } from "antd/lib/tree";
 import { useMenuSWR } from '../swrs/menu.swr';
+import ModalLayout from "./modal-layout";
 
 interface IRightList{
     list:Group;
 }
 
-export const TreeListComponent=()=>{
-
-    const {}=useMenuSWR()
+const TreeList=()=>{
+    const {menuState}=useMenuSWR()
     const {Search}=Input;
     const { commonState }= useCommonSWR();
     const {meshState,setSelectMesh}= useMeshSWR()
@@ -187,10 +187,12 @@ export const TreeListComponent=()=>{
     }
 
     return(
-        <div className={`h-[400px] 
-        absolute left-10 top-20 border rounded-md p-2 z-10 bg-[#64758b]
-        z-20
-        `}>
+
+        <ModalLayout type="TreeList" 
+        onModal={menuState?.treeList.on!}
+        >
+            <div className={`h-[400px] w-60 border rounded-md p-2 bg-[#64758b]
+            `}>
             {(
                 <div className="h-full w-full overflow-hidden bg-transparent">
                 <div className="w-full flex justify-end">
@@ -222,5 +224,8 @@ export const TreeListComponent=()=>{
                 </div>
             )}
         </div>
+        </ModalLayout>
     )
 }
+
+export default TreeList;

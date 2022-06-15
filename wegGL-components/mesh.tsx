@@ -9,6 +9,7 @@ import { useMeshSWR } from "../swrs/mesh.swr";
 import { useCommonSWR } from "../swrs/common.swr";
 import { MeshHtmlComponent } from "./mesh-html";
 import { MeshMode } from "../interfaces/swr.interface";
+import { useCameraSWR } from '../swrs/camera.swr';
 interface IMeshProps{
     mesh:THREE.Mesh
 }
@@ -18,6 +19,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
     const {animationState}=useAnimationSWR();
     const {commonState}=useCommonSWR();
+    const {setSelectMeshBox}=useCameraSWR()
 
     const [wire,setWire]=useState<boolean>(false);
     const [point,setPoint]=useState<boolean>(false);
@@ -123,7 +125,9 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             await setSelectMesh([meshRef]);
         }
     }
-
+    const meshDoubleClick=()=>{
+        setSelectMeshBox(new Box3().setFromObject(meshRef.current))
+    }
         return(
             <>
             {!point?(
@@ -132,6 +136,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
             // }}
+            onDoubleClick={meshDoubleClick}
             onPointerMove={(e)=>{
                 setHoverMesh(meshRef);
             }}

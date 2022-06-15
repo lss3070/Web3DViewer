@@ -130,7 +130,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 const groupLoop=(item:Group):CustomDataNode[]=>{
     let temp:CustomDataNode[]
     temp=item.children.map((groupItem):CustomDataNode=>{
-        console.log(groupItem.type)
         switch(groupItem.type){//groupItem.constructor.name
             case'Mesh':
             return {

@@ -96,7 +96,6 @@ export const useCameraSWR=()=>{
                 control:control
             }
             return mutate();
-        }
-
+        },
     }
 }

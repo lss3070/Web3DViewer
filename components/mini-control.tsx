@@ -5,15 +5,18 @@ import Back from '../assets/cube-back.svg'
 import Left from '../assets/cube-left.svg'
 import Right from '../assets/cube-right.svg'
 import Top from '../assets/cube-top.svg'
-import Down from '../assets/cube-down.svg'
+import Bottom from '../assets/cube-down.svg'
 import {AnimatePresence, LayoutGroup, motion, MotionValue, useMotionValue} from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { useCommonSWR } from '../swrs/common.swr';
 import { useMenuSWR } from '../swrs/menu.swr';
+import ModalLayout from './modal-layout'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-interface BoxProps{
-    children: JSX.Element,
-}
+import { useCameraSWR } from '../swrs/camera.swr';
+import { Vector3 } from 'three'
+
+
 
 interface MiniCircleButtonProps{
     label: JSX.Element|string,
@@ -28,7 +31,6 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label})=>{
     const OnActive=()=>{
         switch(label){
             case'Text':
-                console.log('eee')
                 setOnText(!commonState?.onText!);
                 setOnSelect(!commonState?.onText!)
             break;
@@ -36,6 +38,8 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label})=>{
                 setOnWire(!commonState?.onWire!);
                 setOnSelect(!commonState?.onWire!)
             break;
+            default:
+                setOnSelect(!onSelect)
         }
     }
 
@@ -45,7 +49,6 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label})=>{
     },[label])
 
     const onMouseDown=()=>{
-        console.log('down')
         setOnDown(true);
         OnActive();
     }
@@ -77,44 +80,100 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label})=>{
     
 }
 
-const CameraPositionBox:React.FC<BoxProps> =({children})=>{
+enum CustomCameraFocus{
+    Front,Back,Left,Right,Top,Bottom
+}
+
+interface BoxProps{
+    type:CustomCameraFocus
+}
+
+
+const CameraPositionBox:React.FC<BoxProps> =({type})=>{
+
+    const {cameraState,setTarget,setPosition}=useCameraSWR()
+    const switchBox=()=>{
+        switch(type){
+            case CustomCameraFocus.Front:
+                return <Front/>
+            case CustomCameraFocus.Back:
+                return <Back/>
+            case CustomCameraFocus.Left:
+                return <Left/>
+            case CustomCameraFocus.Right:
+                return <Right/>
+            case CustomCameraFocus.Top:
+                return <Top/>
+            case CustomCameraFocus.Bottom:
+                return <Bottom/>
+        }    
+    }
+
+
+    const onClick=()=>{
+        setTarget(new Vector3(0,0,0))
+        switch(type){
+            case CustomCameraFocus.Front:
+                setPosition(new Vector3(
+                                0,0,cameraState?.meshBox.max.z!*2
+                                ))
+                break;
+            case CustomCameraFocus.Back:
+                setPosition(new Vector3(
+                                0,0,cameraState?.meshBox.min.z!*2
+                                ))
+                break;
+            case CustomCameraFocus.Left:
+                setPosition(new Vector3(
+                                    cameraState?.meshBox.max.x!*2,
+                                0,0
+                                ))
+                break;
+            case CustomCameraFocus.Right:
+                setPosition(new Vector3(
+                                    cameraState?.meshBox.min.x!*2,
+                                0,0
+                                ))
+                break;
+            case CustomCameraFocus.Top:
+                setPosition(new Vector3(
+                                    0,cameraState?.meshBox.max.y!*4,0
+                                    ))
+                break;
+            case CustomCameraFocus.Bottom:
+                setPosition(new Vector3(
+                                    0,cameraState?.meshBox.min.y!*4,0
+                                    ))
+                break;
+        }    
+    }
     return  (
     <motion.div 
     whileHover={{scale:1.2,backgroundColor:'#ffffff'}}
     whileTap={{ backgroundColor:'#bdbdbd' }}
     className='w-8 h-8 p-1 cursor-pointer rounded-full 
-    z-10 bg-gray-400'>
-        {children}
+    z-10 bg-gray-400'
+    onClick={onClick}
+    >
+        {switchBox()}
     </motion.div>)
 }
 
 
 const MiniControls=()=>{
-
-  
-    const {menuState,setSimpleControlPosition} =useMenuSWR();
-
-    const x=useMotionValue<number>(menuState?.simpleControl.x?
-        menuState?.simpleControl.x:
-        100);
-
-    const y=useMotionValue(menuState?.simpleControl.y?
-        menuState?.simpleControl.y:
-        100);
-
+    const {menuState} =useMenuSWR();
 
     const [onCameraPositionList,setOnCameraPositionList]=useState<boolean>(false);
     const cameraPositionIconRef=useRef<HTMLDivElement>(null);
-    // const [cameraPosition,setCameraPosition]=useState<boolean>(false);
 
     const toggleCameraPositionList=(e:React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
         setOnCameraPositionList(!onCameraPositionList);
         e.stopPropagation();
     }
-
     const closeCameraPositionList=()=>{
         setOnCameraPositionList(false);
     }
+
     const cameraVariants={
         down:{
             height:'auto',
@@ -134,12 +193,6 @@ const MiniControls=()=>{
         }
     },[onCameraPositionList])
 
-    useEffect(()=>{
-        if(menuState?.simpleControl?.on){
-            setSimpleControlPosition(x.get(),y.get());
-        }
-    },[menuState?.simpleControl?.on])
-
 
     const variants={
         show:{
@@ -153,26 +206,20 @@ const MiniControls=()=>{
 
 
     return (
-        <AnimatePresence>
-            { menuState?.simpleControl.on&&(
-                <motion.div 
-        drag 
-        animate={'show'}
-        exit={'hide'}
-        variants={variants}
-        style={{x,y}}
-        dragMomentum={false}
-        className="absolute 
-        rounded-lg w-auto h-auto p-2 opacity-0
-        flex gap-5 bg-[#64758b]
-        z-20
-        ">
-            <motion.div className='w-8 h-8 p-1 cursor-pointer border rounded-full bg-white z-10'
-                    ref={cameraPositionIconRef}
-                    onClick={toggleCameraPositionList}
-                    >
-                        <Front/>
-            </motion.div>
+        <ModalLayout type="SimpleControl" 
+        onModal={menuState?.simpleControl.on!}
+        >
+            <div 
+            className="
+            rounded-lg w-auto h-auto p-2
+            flex gap-5 bg-[#64758b]
+            ">
+                <motion.div className='w-8 h-8 p-1 cursor-pointer border rounded-full bg-white z-10'
+                        ref={cameraPositionIconRef}
+                        onClick={toggleCameraPositionList}
+                        >
+                            <Front/>
+                </motion.div>
                 <AnimatePresence>
                     {onCameraPositionList&&(
                     <motion.div 
@@ -182,29 +229,33 @@ const MiniControls=()=>{
                     className='h-0 absolute overflow-hidden  rounded-full pb-2 bg-[#64758b]' 
                     >
                         <div className='h-8'></div>
-                        <CameraPositionBox>
-                            <Front/>
-                        </CameraPositionBox>
-                        <CameraPositionBox>
-                            <Back/>
-                        </CameraPositionBox>
-                        <CameraPositionBox>
-                            <Left/>
-                        </CameraPositionBox>
-                        <CameraPositionBox>
-                            <Right/>
-                        </CameraPositionBox>
-                        <CameraPositionBox>
-                            <Down/>
-                        </CameraPositionBox>
+                        <CameraPositionBox type={CustomCameraFocus.Front}/>
+                        <CameraPositionBox type={CustomCameraFocus.Back}/>
+                        <CameraPositionBox type={CustomCameraFocus.Left}/>
+                        <CameraPositionBox type={CustomCameraFocus.Right}/>
+                        <CameraPositionBox type={CustomCameraFocus.Top}/>
+                        <CameraPositionBox type={CustomCameraFocus.Bottom}/>
                     </motion.div>
                 )}
                 </AnimatePresence>
-           <MiniCircleButton label={'Text'}/>
-           <MiniCircleButton label={'Wire'}/>
-             </motion.div>
-            )}
-        </AnimatePresence>
+                <MiniCircleButton label={
+                    // <FontAwesomeIcon
+                    // icon={['far','arrow-up-arrow-down']}
+                    // className="w-5 h-5 text-black"/>
+                    <></>
+                }/>
+                <MiniCircleButton
+                    label={
+                        <FontAwesomeIcon
+                        icon={['fas','arrows-to-eye']}
+                        className="w-10 h-10 text-black"/>
+                    }
+                    />
+                <MiniCircleButton label={'Text'}/>
+                <MiniCircleButton label={'Wire'}/>
+             </div>
+        </ModalLayout>
+
     )
 }
 

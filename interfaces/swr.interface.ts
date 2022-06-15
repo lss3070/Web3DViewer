@@ -13,6 +13,7 @@ export enum MeshMode{
   Wire
 }
 
+
  export interface IMeshStateProps {
     hoverMesh?:ObjectRef;
     selectMesh:ObjectRef[];
@@ -25,8 +26,8 @@ export enum MeshMode{
   
 
  export interface ICameraStateProps {
-   control?:ObjectRef;
-   camera?:ObjectRef;
+  control?:ObjectRef;
+  camera?:ObjectRef;
   zoom:number,
   position:Vector3,
   moveMode:boolean
@@ -92,14 +93,18 @@ export interface IAnimationStateProps{
 }
 
 export interface IMenuStateProps{
-  OnTreeList:boolean;
-  OnControl:boolean;
-  OnDetail:boolean;
+
+  treeList:IMenuModal
+  detail:IMenuModal
+  control:IMenuModal
   simpleControl:IMenuModal;
 }
 
 export interface IMenuModal{
   on:boolean;
-  x?:number;
-  y?:number;
+  position?:{
+    x:number|string;
+    y:number|string;
+  }
+
 }

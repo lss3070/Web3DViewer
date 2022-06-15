@@ -3,12 +3,19 @@ import useSWR from "swr";
 import { IMenuModal, IMenuStateProps } from "../interfaces/swr.interface";
 import { MotionValue } from 'framer-motion';
 
+
 let menuState:IMenuStateProps={
-    OnControl:false,
-    OnTreeList:false,
-    OnDetail:false,
+    detail:{
+        on:false,
+    },
+    treeList:{
+        on:false,
+    },
+    control:{
+        on:false,
+    },
     simpleControl:{
-        on:false
+        on:false,
     }
 }
 
@@ -18,24 +25,33 @@ export const useMenuSWR=()=>{
     });
     return{
         menuState:data,
-        onTreeList:async(value:boolean)=>{
+        onTreeList:async(on:boolean)=>{
             menuState={
                 ...menuState,
-                OnTreeList:value
+                treeList:{
+                    ...menuState.treeList,
+                    on
+                }
             }
             return mutate();
         },
-        onControl:async(value:boolean)=>{
+        onControl:async(on:boolean)=>{
             menuState={
                 ...menuState,
-                OnControl:value
+                control:{
+                    ...menuState.control,
+                    on
+                }
             }
             return mutate();
         },
-        onDetail:async(value:boolean)=>{
+        onDetail:async(on:boolean)=>{
             menuState={
                 ...menuState,
-                OnDetail:value
+                detail:{
+                    ...menuState.detail,
+                    on
+                }
             }
             return mutate();
         },
@@ -49,13 +65,54 @@ export const useMenuSWR=()=>{
             }
             return mutate();
         },
-        setSimpleControlPosition:async(x:number,
-            y:number)=>{
+        setSimpleControlPosition:async(x:number|string,
+            y:number|string)=>{
             menuState={
                 ...menuState,
                 simpleControl:{
                     ...menuState.simpleControl,
-                    x:x,y:y
+                    position: {
+                        x:x,y:y
+                    }
+                }
+            }
+            return mutate();
+        },
+        setDetailPosition:async(x:number|string,
+            y:number|string)=>{
+            menuState={
+                ...menuState,
+                detail:{
+                    ...menuState.detail,
+                    position: {
+                        x:x,y:y
+                    }
+                }
+            }
+            return mutate();
+        },
+        setTreeListPosition:async(x:number|string,
+            y:number|string)=>{
+            menuState={
+                ...menuState,
+                treeList:{
+                    ...menuState.treeList,
+                    position: {
+                        x:x,y:y
+                    }
+                }
+            }
+            return mutate();
+        },
+        setControlPosition:async(x:number|string,
+            y:number|string)=>{
+            menuState={
+                ...menuState,
+                control:{
+                    ...menuState.control,
+                    position: {
+                        x:x,y:y
+                    }
                 }
             }
             return mutate();

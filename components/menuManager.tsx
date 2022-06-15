@@ -15,16 +15,16 @@ const CommonButton=({label}:CommonButtonProps)=>{
     const OnClick=()=>{
         switch(label){
             case'TreeList':
-                onTreeList(!menuState?.OnTreeList);
-                setOnButton(!menuState?.OnTreeList);
+                onTreeList(!menuState?.treeList.on);
+                setOnButton(!menuState?.treeList.on);
             break;
             case'Control':
-                onControl(!menuState?.OnControl);
-                setOnButton(!menuState?.OnControl);
+                onControl(!menuState?.control.on);
+                setOnButton(!menuState?.control.on);
             break;
             case'Detail':
-                onDetail(!menuState?.OnDetail);
-                setOnButton(!menuState?.OnDetail);
+                onDetail(!menuState?.detail.on);
+                setOnButton(!menuState?.detail.on);
             break;
             case'SimpleControl':
                 onSimpleControl(!menuState?.simpleControl.on);
@@ -45,24 +45,33 @@ const CommonButton=({label}:CommonButtonProps)=>{
     const onMouseUp=()=>{
         setOnDown(false)
     }
+
     
     return(
         <motion.div
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         // onClick={()=>setOnButton(!onButton)}
-        animate={{boxShadow:`${onButton?`inset 3px 5px rgba(0, 0, 0, 0.2)`
-        :`inset 0px 0px rgba(0, 0, 0, 0.2)`}`}}
+        animate={{boxShadow:`${onButton?
+        `inset 3px 5px rgba(0, 0, 0, 0.2)`
+        :`2px 2px rgba(0, 0, 0, 0.2)`}`,
+    }}
         whileTap={{boxShadow:`
         ${onDown?`inset 5px 7px rgba(0, 0, 0, 0.2)`:
         onButton?`inset 3px 5px rgba(0, 0, 0, 0.2)`
         :`inset 0px 0px rgba(0, 0, 0, 0.2)`}
         `}}
+        // whileHover={{
+        //     boxShadow:`2px 2px rgba(0,0,0,0.2)`
+        // }}
+  
+    
         // whileHover={{boxShadow:`${!onButton?`3px 3px rgba(0, 0, 0, 0.2)`
         // :`inset 3px 5px rgba(0, 0, 0, 0.2)`}`}}
 
         className={`rounded-md py-1 px-3 bg-[#64758b]
-        text-white cursor-pointer select-none font-semibold`}>
+        text-white cursor-pointer select-none font-semibold
+        `}>
             {label}
         </motion.div>
     )

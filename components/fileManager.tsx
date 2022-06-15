@@ -85,13 +85,17 @@ const FileManager=()=>{
             onClick={openExporter}
             >
                 <div className="h-8 flex items-center bg-[#bdbdbd] text-white px-3 cursor-pointer">
-                <FontAwesomeIcon
-                    icon={['fas','upload']}
-                    className="w-5 h-5"/>
-                    <span>export file</span>
+                    <FontAwesomeIcon
+                        icon={['fas','upload']}
+                        className="w-5 h-5"/>
+                        <span>export file</span>
+                </div>
             </div>
-
-                
+            <div className='flex items-center justify-center'>
+                스크린샷
+            </div>
+            <div className='flex items-center justify-center'>
+                인쇄
             </div>
             <AnimatePresence>
             {

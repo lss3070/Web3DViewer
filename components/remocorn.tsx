@@ -17,11 +17,14 @@ import AnimationHelper from './helper2/animationHelper';
 import CommonHelper from './helper2/commonHelper';
 import { CameraHelper } from './helper2/cameraHelper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ModalLayout from './modal-layout';
+import { useMenuSWR } from '../swrs/menu.swr';
 
 
 const Remocorn =()=>{
 
     const [openId,setOpenId]=useState<number>();
+    const {menuState}=useMenuSWR()
 
     const cameraInfo:TabCategoryProps={
         label:'Camera',
@@ -72,30 +75,32 @@ const Remocorn =()=>{
     }
 
     return(
-    <motion.div drag 
-    dragMomentum={false}
-    className=" rounded-lg border : ;
-     absolute top-1/4 right-10 w-72 h-auto
-     bg-slate-500 cursor-grab
-     z-20
-    ">
-        <div className='w-full flex items-center justify-end pt-1'>
-            <FontAwesomeIcon
-                icon={['fas','xmark']}
-                className="w-5 h-5 text-white cursor-pointer"/>
-        </div>
-        <div className='p-4 grid gap-5 cursor-auto'>
-            {/* camera */}
-            <CameraHelper openId={openId} setOpenId={setOpenId}/>
-            {/* light */}
-            <Category {...lightInfo}/>
-            {/* action */}
-            <ActionHelper openId={openId} setOpenId={setOpenId}/>
-            {/* animation */}
-            <AnimationHelper openId={openId} setOpenId={setOpenId}/>
-        </div>
-
-       
-    </motion.div>)
+        <ModalLayout type="Control" 
+        onModal={menuState?.control.on!}
+        >
+            <div 
+            className="rounded-lg border 
+            absolute w-72 h-auto
+            bg-slate-500
+            ">
+                <div className='w-full flex items-center justify-end pt-1'>
+                    <FontAwesomeIcon
+                        icon={['fas','xmark']}
+                        className="w-5 h-5 text-white cursor-pointer"/>
+                </div>
+                <div className='p-4 grid gap-5 cursor-auto'>
+                    {/* camera */}
+                    <CameraHelper openId={openId} setOpenId={setOpenId}/>
+                    {/* light */}
+                    <Category {...lightInfo}/>
+                    {/* action */}
+                    <ActionHelper openId={openId} setOpenId={setOpenId}/>
+                    {/* animation */}
+                    <AnimationHelper openId={openId} setOpenId={setOpenId}/>
+                </div>
+            </div>
+        </ModalLayout>
+            
+)
 }
 export default Remocorn;
