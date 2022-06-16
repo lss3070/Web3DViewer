@@ -48,6 +48,7 @@ export interface ICommonStateProps{
   onMobile?:boolean;
   onText:boolean;
   onWire:boolean;
+  darkMode:boolean;
 }
 interface IAmbientLight{
   able:boolean;
@@ -98,6 +99,7 @@ export interface IMenuStateProps{
   detail:IMenuModal
   control:IMenuModal
   simpleControl:IMenuModal;
+  dragArea?:RefObject<Element>
 }
 
 export interface IMenuModal{

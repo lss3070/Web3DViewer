@@ -1,11 +1,13 @@
 import useSWR from "swr";
 import { ICommonStateProps } from "../interfaces/swr.interface";
 import { CustomDataNode } from "../interfaces/app.interface";
+import { RefObject } from "react";
 
 let commonState:ICommonStateProps={
     onText:false,
     onWire:false,
-    onMobile:false
+    onMobile:false,
+    darkMode:true
 }
 
 export const useCommonSWR=()=>{
@@ -69,6 +71,13 @@ export const useCommonSWR=()=>{
                 mobileHelperComponent
             }
             return mutate();
-        }
+        },
+        setDarkMode:async(darkMode:boolean)=>{
+            commonState = {
+                ...commonState,
+                darkMode
+            }
+            return mutate();
+        },        
     }
 }

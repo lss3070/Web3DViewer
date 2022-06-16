@@ -28,11 +28,12 @@ const ExportList =({label}:ExportListProps)=>{
 
 const FileManager=()=>{
     const {setFiltPath,setFileExtension}=useCommonSWR();
+
+    const [openHover,setOpenHover]=useState<boolean>(false);
     const [isExport,setIsExport]=useState<boolean>(false);
 
     const exportRef = useRef<HTMLDivElement>(null)
 
- 
 
     const fileChange =(e:ChangeEvent<HTMLInputElement>)=>{
         const file = e.currentTarget.files![0];
@@ -43,16 +44,19 @@ const FileManager=()=>{
         setFiltPath(link);
     }
 
-
-    
     const closeExporter=()=>{
         setIsExport(false);
     }
     const openExporter=()=>{
         setIsExport(true);
     }
-    
 
+    const onOpenHover=()=>{
+        setOpenHover(true)
+    }
+    const offOpenHover=()=>{
+        setOpenHover(false)
+    }
 
     const variants={
         down:{
@@ -69,14 +73,18 @@ const FileManager=()=>{
         <>
             <div className="flex items-center justify-center">
                 <input className="w-0 h-0 opacity-0" type="file" name="file" id="file" onChange={fileChange}/>
-                <label htmlFor="file"
-                className="h-8 flex items-center bg-[#bdbdbd] text-white px-3 cursor-pointer"
-                >
+                <label 
+                onMouseMove={onOpenHover}
+                onMouseLeave={offOpenHover}
+                htmlFor="file"
+                className="h-8 flex items-center text-white px-3 cursor-pointer
+                rounded-md bg-[#64758b] select-none font-semibold
+                ">
                     <FontAwesomeIcon
                     icon={['fas','download']}
                     className="w-5 h-5"/>
                     <span>
-                        choose file
+                        Open
                     </span>
                 </label>
             </div>
@@ -84,19 +92,27 @@ const FileManager=()=>{
             ref={exportRef}
             onClick={openExporter}
             >
-                <div className="h-8 flex items-center bg-[#bdbdbd] text-white px-3 cursor-pointer">
+                <div className="
+                h-8 flex items-center text-white px-3 cursor-pointer
+                rounded-md bg-[#64758b] select-none font-semibold">
                     <FontAwesomeIcon
                         icon={['fas','upload']}
                         className="w-5 h-5"/>
-                        <span>export file</span>
+                        <span>Save</span>
                 </div>
             </div>
-            <div className='flex items-center justify-center'>
-                스크린샷
-            </div>
-            <div className='flex items-center justify-center'>
-                인쇄
-            </div>
+  
+            <AnimatePresence>
+                {
+                    openHover&&(
+                        <motion.ul
+                        style={{}}
+                        >
+                            eeee
+                        </motion.ul>
+                    )
+                }
+            </AnimatePresence>
             <AnimatePresence>
             {
                     isExport&&(
@@ -104,8 +120,7 @@ const FileManager=()=>{
                         bg-[#000000]/30 '
                         onClick={closeExporter}
                         >
-                           
-                                <motion.ul 
+                            <motion.ul 
                             style={{
                                 x:exportRef.current?.offsetLeft,
                                 y:exportRef.current?.offsetTop!+5,

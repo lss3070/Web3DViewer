@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import {motion} from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useCommonSWR } from '../swrs/common.swr';
 
 const DarkModeSwitch=()=>{
 
-    const [isOn,setIsOn]=useState<boolean>(false);
-    const toggleSwitch = () => setIsOn(!isOn)
+    // const [isOn,setIsOn]=useState<boolean>(false);
+
+    const {commonState,setDarkMode}=useCommonSWR()
+    const toggleSwitch = () => setDarkMode(!commonState?.darkMode!)
     
     const spring = {
         type: 'spring',
@@ -14,7 +17,7 @@ const DarkModeSwitch=()=>{
     }
 
     useEffect(()=>{
-        if (isOn) {
+        if (commonState?.darkMode) {
             document.documentElement.classList.remove('dark')
             localStorage.setItem('theme', 'light')
           } else {
@@ -29,28 +32,35 @@ const DarkModeSwitch=()=>{
             else {
               document.documentElement.classList.remove('dark')
           }
-    },[isOn]);
+    },[commonState?.darkMode]);
 
  
-
     return(
-      <div onClick={toggleSwitch} className={`flex-start flex h-[30px] w-[50px] rounded-[50px] bg-zinc-100 p-[5px] shadow-inner hover:cursor-pointer dark:bg-zinc-700 ${ isOn && 'place-content-end'}`}>
+      <div onClick={toggleSwitch} className={`flex-start flex h-[30px] w-[50px] rounded-[50px] 
+      bg-[#ededed] p-[5px] shadow-inner hover:cursor-pointer 
+      dark:bg-zinc-600 
+      ${ commonState?.darkMode && 'place-content-end'}`}>
             <motion.div
                 className="flex h-[20px] 
-                w-[20px] items-center justify-center rounded-full bg-black/90"
+                w-[20px] items-center justify-center rounded-full 
+                bg-white
+                dark:bg-zinc-900 
+               "
+                
                 layout
                 transition={spring}
             >
                 <motion.div whileTap={{rotate: 360}}>
-                    {isOn ? 
-                    (<FontAwesomeIcon
-                        icon={['fas','sun']}
-                        className="w-5 h-5 text-white"/>
-                        ) : 
+                    {commonState?.darkMode? 
                     (<FontAwesomeIcon
                         icon={['fas','moon']}
-                        className="w-5 h-5 text-white"/>
-                    )}
+                        className="w-5 h-5 text-yellow-200"/>
+                    ):
+                    (<FontAwesomeIcon
+                        icon={['fas','sun']}
+                        className="w-5 h-5 text-[black]"/>
+                        )
+                    }
                 </motion.div>
             </motion.div>      
         </div>

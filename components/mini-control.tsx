@@ -58,7 +58,7 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label})=>{
     }
 
     return(
-        <motion.div 
+        <motion.div
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         animate={{boxShadow:`${onSelect?`inset 1px 3px 1px rgba(0, 0, 0, 0.2)`
@@ -71,13 +71,14 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label})=>{
         // whileHover={{boxShadow:`${!onSelect?`3px 3px rgba(0, 0, 0, 0.2)`
         // :`inset 3px 5px rgba(0, 0, 0, 0.2)`}`}}
 
-        className='w-8 h-8 bg-white rounded-full flex 
+        className='w-8 h-8 bg-gray-400 rounded-full flex 
             items-center justify-center font-semibold cursor-pointer 
+              text-stone-800
+            dark:text-white
             '>
                     {label}
         </motion.div>
     )
-    
 }
 
 enum CustomCameraFocus{
@@ -108,7 +109,6 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
                 return <Bottom/>
         }    
     }
-
 
     const onClick=()=>{
         setTarget(new Vector3(0,0,0))
@@ -212,9 +212,12 @@ const MiniControls=()=>{
             <div 
             className="
             rounded-lg w-auto h-auto p-2
-            flex gap-5 bg-[#64758b]
+            flex gap-5 
+             bg-gray-200
+            dark:bg-slate-600
             ">
-                <motion.div className='w-8 h-8 p-1 cursor-pointer border rounded-full bg-white z-10'
+                <motion.div className='w-8 h-8 p-1 cursor-pointer rounded-full 
+                bg-gray-400 z-10'
                         ref={cameraPositionIconRef}
                         onClick={toggleCameraPositionList}
                         >
@@ -248,7 +251,7 @@ const MiniControls=()=>{
                     label={
                         <FontAwesomeIcon
                         icon={['fas','arrows-to-eye']}
-                        className="w-10 h-10 text-black"/>
+                        className="w-10 h-10"/>
                     }
                     />
                 <MiniCircleButton label={'Text'}/>

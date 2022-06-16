@@ -79,9 +79,10 @@ const Remocorn =()=>{
         onModal={menuState?.control.on!}
         >
             <div 
-            className="rounded-lg border 
+            className="rounded-lg 
             absolute w-72 h-auto
-            bg-slate-500
+            bg-gray-200
+            dark:bg-slate-600
             ">
                 <div className='w-full flex items-center justify-end pt-1'>
                     <FontAwesomeIcon

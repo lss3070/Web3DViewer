@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {motion} from 'framer-motion'
 import { useEffect, useState } from 'react';
 import { useMenuSWR } from '../swrs/menu.swr';
@@ -6,12 +7,33 @@ import { useMenuSWR } from '../swrs/menu.swr';
 interface CommonButtonProps{
     label:string
 }
-const CommonButton=({label}:CommonButtonProps)=>{
+const MenuManageButton=({label}:CommonButtonProps)=>{
 
     const {menuState,onControl,onDetail,onTreeList,onSimpleControl}= useMenuSWR();
     const [onDown,setOnDown]=useState<boolean>(false);
     const [onButton,setOnButton]=useState<boolean>(false);
     
+    const Icon =()=>{
+        switch(label){
+            case'TreeList':
+                return <FontAwesomeIcon
+                icon={['fas','folder-tree']} 
+                className="w-5 h-5 "/>
+            case'Control':
+                return <FontAwesomeIcon
+                icon={['fas','screwdriver-wrench']}
+                className="w-5 h-5 ]"/>
+            case'Detail':
+                return <FontAwesomeIcon
+                icon={['fas','file-lines']}
+                className="w-5 h-5 "/>
+            case'SimpleControl':
+                return <FontAwesomeIcon
+                icon={['fas','wrench']}
+                className="w-5 h-5 "/>
+            }
+    }
+
     const OnClick=()=>{
         switch(label){
             case'TreeList':
@@ -54,7 +76,7 @@ const CommonButton=({label}:CommonButtonProps)=>{
         // onClick={()=>setOnButton(!onButton)}
         animate={{boxShadow:`${onButton?
         `inset 3px 5px rgba(0, 0, 0, 0.2)`
-        :`2px 2px rgba(0, 0, 0, 0.2)`}`,
+        :`inset 0px 0px rgba(0, 0, 0, 0.2)`}`,
     }}
         whileTap={{boxShadow:`
         ${onDown?`inset 5px 7px rgba(0, 0, 0, 0.2)`:
@@ -72,7 +94,7 @@ const CommonButton=({label}:CommonButtonProps)=>{
         className={`rounded-md py-1 px-3 bg-[#64758b]
         text-white cursor-pointer select-none font-semibold
         `}>
-            {label}
+            {Icon()}{label}
         </motion.div>
     )
 }
@@ -82,16 +104,16 @@ const MenuManager=()=>{
         <>
             <div className="flex items-center justify-center
             ">
-                <CommonButton label={'TreeList'}/>
+                <MenuManageButton label={'TreeList'}/>
             </div>
             <div className="flex items-center justify-center">
-                <CommonButton label={'Control'}/>
+                <MenuManageButton label={'Control'}/>
             </div>
             <div className="flex items-center justify-center">
-                <CommonButton label={'Detail'}/>
+                <MenuManageButton label={'Detail'}/>
             </div>
             <div className='flex items-center justify-center'>
-                <CommonButton label={'SimpleControl'}/>
+                <MenuManageButton label={'SimpleControl'}/>
             </div>
         </>
     )

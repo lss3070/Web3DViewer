@@ -18,6 +18,7 @@ const ModalLayout=({type,children,onModal}:IModalLayoutProps)=>{
         setTreeListPosition,
         setDetailPosition
     }=useMenuSWR();
+    
 
     const x =useMotionValue<string|number>(0);
     const y =useMotionValue<string|number>(0);
@@ -90,6 +91,7 @@ const ModalLayout=({type,children,onModal}:IModalLayoutProps)=>{
             {onModal&&(
                 <motion.div
                 drag 
+                dragConstraints={menuState?.dragArea}
                 animate={'show'}
                 exit={'hide'}
                 variants={modalVariants}
@@ -97,6 +99,9 @@ const ModalLayout=({type,children,onModal}:IModalLayoutProps)=>{
                 dragMomentum={false}
                 className={`absolute 
                 w-auto h-auto opacity-0 z-20
+                bg-gray-200
+                dark:bg-slate-600
+                 rounded-lg
                  ${staticPosition()}
                 `}
                 >

@@ -187,24 +187,38 @@ const TreeList=()=>{
     }
 
     return(
-
         <ModalLayout type="TreeList" 
         onModal={menuState?.treeList.on!}
         >
-            <div className={`h-[400px] w-60 border rounded-md p-2 bg-[#64758b]
+            <div className={`h-[400px] w-60 rounded-md p-2 
+                   bg-gray-200
+                   dark:bg-slate-600
             `}>
             {(
-                <div className="h-full w-full overflow-hidden bg-transparent">
-                <div className="w-full flex justify-end">
-                    <FontAwesomeIcon
-                       icon={['fas','xmark']}
-                       className="w-5 h-5 text-white"/>
-                </div>
-                <Search className="mb-2 bg-transparent" 
-                placeholder="Search" 
-                onChange={(e)=>{onChange(e)}}/>
+                <div className="h-full w-full overflow-hidden bg-slate-600">
+                    <div className="w-full flex justify-end">
+                        <FontAwesomeIcon
+                        icon={['fas','xmark']}
+                        className="w-5 h-5 text-white"/>
+                    </div>
+                    <div className="w-full relative mb-2">
+                        <input className="w-full h-8 p-2 bg-gray-400 rounded-xl
+                        placeholder:text-white outline-none"
+                        placeholder="Search"
+                        onChange={(e)=>onChange(e)}
+                        />
+                        <FontAwesomeIcon
+                            icon={['fas','magnifying-glass']}
+                            className="w-5 h-5 absolute top-2 right-1 
+                            text-white"/>
+                    </div>
+
                 {/* <LayoutGroup> */}
                             <Tree
+                            style={{backgroundColor:'#9ca3af',color:'white',
+                            borderRadius:'10px'
+                        }}
+                            className="text-white rounded-xl"
                             // titleRender={TitleComponent}
                             selectedKeys={selectList}
                             ref={treeRef}
@@ -215,7 +229,6 @@ const TreeList=()=>{
                             autoExpandParent={autoExpandParent}
                             height={commonState?.onMobile?200:undefined}
                             onClick={(e,value)=>{
-                            
                             treeClickEvent(e,value)
                             }}
                             />
