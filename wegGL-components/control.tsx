@@ -8,7 +8,8 @@ import { useCameraSWR } from "../swrs/camera.swr";
 export const ControlComponent=()=>{
     const { cameraState,setControlRef,
         setPosition,
-        setTarget
+        setTarget,
+        setSelectMeshBox
     }= useCameraSWR();
 
     const [onZooming,setOnZooming]=useState<boolean>(false);
@@ -57,11 +58,6 @@ export const ControlComponent=()=>{
     },[cameraState?.selectMeshBox]);
 
 
-
-    useEffect(()=>{
-        console.log('change position');
-    },[cameraState?.position])
-
     useFrame(()=>{
         const step=0.05;
         if( onZooming){
@@ -84,7 +80,9 @@ export const ControlComponent=()=>{
     });
     
     return(
-        <TrackballControls ref={controlRef} target={cameraState?.target}/>
+        <TrackballControls 
+        ref={controlRef} 
+        target={cameraState?.target}/>
     )
 }
 //https://codesandbox.io/s/three-fiber-zoom-to-object-camera-controls-solution-final-forked-d5ebf?file=/src/App.js

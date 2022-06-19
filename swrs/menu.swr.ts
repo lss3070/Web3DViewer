@@ -1,7 +1,6 @@
 import useSWR from "swr";
 
 import { IMenuModal, IMenuStateProps } from "../interfaces/swr.interface";
-import { MotionValue } from 'framer-motion';
 import { RefObject } from "react";
 
 

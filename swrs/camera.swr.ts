@@ -65,7 +65,7 @@ export const useCameraSWR=()=>{
         setSelectMeshBox:async(selectMeshBox:Box3)=>{
             cameraState={
                 ...cameraState,
-                selectMeshBox:selectMeshBox
+                selectMeshBox
             }
             return mutate();
         },

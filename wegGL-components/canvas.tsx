@@ -1,6 +1,6 @@
-import { Canvas } from "@react-three/fiber"
+import { Canvas, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
-import {Box3, Group, Material, ObjectLoader, Scene, Vector3 } from "three"
+import {AxesHelper, Box3, Group, Material, ObjectLoader, Scene, Vector3 } from "three"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 
@@ -15,6 +15,7 @@ import { CustomDataNode } from "../interfaces/app.interface";
 import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
+import { Box, PerspectiveCamera } from "@react-three/drei";
 
 interface ICanvasProps{
     setLoadingPercent:Function;
@@ -24,6 +25,8 @@ interface ICanvasProps{
 export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
     const {commonState,setGroupList,setScene}=useCommonSWR();
+
+    const {cameraState}=useCameraSWR()
     const {setMeshBox}=useCameraSWR();
 
     const sceneRef = useRef<Scene>(null)
@@ -51,7 +54,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         setMeshGroup(obj); 
 
                         const box = new Box3().setFromObject(obj);
-
+              
                         setMeshBox(box);
                         setLoadingComplete(true);
                     }).catch((err)=>{
@@ -154,18 +157,29 @@ const groupLoop=(item:Group):CustomDataNode[]=>{
         setScene(sceneRef)
     },[sceneRef])
 
+
+ 
+
     return(
-       <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10">
-            <color attach="background" 
-            args={[commonState?.darkMode?"#2a2b2e":'#ffffff']} />
-            <scene ref={sceneRef} >
-                <LightComponent/>                
-                <CameraComponent/>
-                <ControlComponent/> 
-                {meshGroup&&<MeshGroupComponent meshGroup={meshGroup}/>}
-                <SelectMeshComponent/>
-            </scene>
+        <>
+        <Canvas style={{position:"absolute",left:'0',bottom:'0',width:'100px',height:'100px',
+                zIndex:20}}>
+                   
+                <axesHelper args={[10]} />
         </Canvas>
+        <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10"
+        >
+                <color attach="background" 
+                args={[commonState?.darkMode?"#2a2b2e":'#ffffff']} />
+                <scene ref={sceneRef}>
+                    <LightComponent/>                
+                    <CameraComponent/>
+                    <ControlComponent/> 
+                    {meshGroup&&<MeshGroupComponent meshGroup={meshGroup}/>}
+                    <SelectMeshComponent/>
+                </scene>
+            </Canvas>
+        </>
     )
 }
 

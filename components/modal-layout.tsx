@@ -45,7 +45,7 @@ const ModalLayout=({type,children,onModal}:IModalLayoutProps)=>{
             case 'TreeList':
             return menuState?.treeList.position&&'left-[0px] top-[100px]'
             case 'Detail':
-            return menuState?.detail.position&&'left-[50%] top-[10%]'
+            return menuState?.detail.position&&'right-[0%] top-[60%]'
             case 'SimpleControl':
             return menuState?.simpleControl.position&&'left-[50%] top-[5%]'
         }

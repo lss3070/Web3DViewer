@@ -7,7 +7,7 @@ import Right from '../assets/cube-right.svg'
 import Top from '../assets/cube-top.svg'
 import Bottom from '../assets/cube-down.svg'
 import {AnimatePresence, LayoutGroup, motion, MotionValue, useMotionValue} from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, MouseEventHandler } from 'react';
 import { useCommonSWR } from '../swrs/common.swr';
 import { useMenuSWR } from '../swrs/menu.swr';
 import ModalLayout from './modal-layout'
@@ -15,13 +15,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { useCameraSWR } from '../swrs/camera.swr';
 import { Vector3 } from 'three'
+import _ from 'lodash'
 
 
 
 interface MiniCircleButtonProps{
     label: JSX.Element|string,
+    onClick?:MouseEventHandler<HTMLDivElement> ;
 }
-const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label})=>{
+const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label,onClick})=>{
 
 
     const {commonState,setOnText,setOnWire} =useCommonSWR();
@@ -68,6 +70,7 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label})=>{
         onSelect?`inset 1px 3px 1px rgba(0, 0, 0, 0.2)`
         :`inset 0px 0px 0px rgba(0, 0, 0, 0.2)`}
         `}}
+        onClick={onClick}
         // whileHover={{boxShadow:`${!onSelect?`3px 3px rgba(0, 0, 0, 0.2)`
         // :`inset 3px 5px rgba(0, 0, 0, 0.2)`}`}}
 
@@ -161,10 +164,12 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
 
 
 const MiniControls=()=>{
+    const {cameraState,setSelectMeshBox}=useCameraSWR()
     const {menuState} =useMenuSWR();
 
     const [onCameraPositionList,setOnCameraPositionList]=useState<boolean>(false);
     const cameraPositionIconRef=useRef<HTMLDivElement>(null);
+
 
     const toggleCameraPositionList=(e:React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
         setOnCameraPositionList(!onCameraPositionList);
@@ -174,6 +179,9 @@ const MiniControls=()=>{
         setOnCameraPositionList(false);
     }
 
+    const onFitZoom=()=>{
+        setSelectMeshBox(_.cloneDeep(cameraState?.meshBox!))
+    }
     const cameraVariants={
         down:{
             height:'auto',
@@ -248,6 +256,7 @@ const MiniControls=()=>{
                     <></>
                 }/>
                 <MiniCircleButton
+                onClick={onFitZoom}
                     label={
                         <FontAwesomeIcon
                         icon={['fas','arrows-to-eye']}

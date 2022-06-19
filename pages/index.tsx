@@ -22,6 +22,7 @@ import { useMenuSWR } from '../swrs/menu.swr';
 import ModalLayout from '../components/modal-layout'
 import DarkModeSwitch from '../components/darkModeSwitch'
 import { motion } from 'framer-motion'
+import MeshInfo from '../components/mesh-info'
 
 
 
@@ -55,6 +56,7 @@ const Home: NextPage = () => {
             <TreeList/>
             <Remocorn/>
             <MiniControls/>
+            <MeshInfo/>
             <div className='absolute right-5 bottom-5 w-auto z-20'>
               <DarkModeSwitch/>
             </div>

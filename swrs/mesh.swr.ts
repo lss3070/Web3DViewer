@@ -1,6 +1,7 @@
 
 
 import useSWR from "swr";
+import { Box3 } from "three";
 import { IMeshStateProps, MeshMode, ObjectRef } from "../interfaces/swr.interface";
 
 let meshState:IMeshStateProps={

@@ -27,7 +27,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     useEffect(()=>{
         switch(meshState?.meshMode){
             case MeshMode.Default:
-                setWire(false)
+                setWire(true)
                 break;
             case MeshMode.Point:
                 setPoint(true);
@@ -91,13 +91,13 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             case 'MeshBasicMaterial':
                 return <meshBasicMaterial {...material} wireframe={wire} key={index?index:0}/>
             case 'MeshMatcapMaterial':
-                return <meshMatcapMaterial {...material} key={index?index:0}/>
+                return <meshMatcapMaterial {...material}  key={index?index:0}/>
             case 'MeshPhongMaterial':
                 return <meshPhongMaterial {...material} wireframe={wire}  key={index?index:0}/>
             case 'MeshLambertMaterial':
                 return <meshLambertMaterial {...material} wireframe={wire}  key={index?index:0}/>
             default:
-            return <meshBasicMaterial {...material}/>
+            return <meshBasicMaterial {...material} wireframe={wire}/>
         }
     }
 
