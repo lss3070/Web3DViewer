@@ -9,7 +9,8 @@ let cameraState:ICameraStateProps={
     aspect:1,
     fov:50,
     meshBox:new Box3(new Vector3()),
-    target:new Vector3(0,0,0)
+    target:new Vector3(0,0,0),
+    axes:new Vector3(0,0,0),
 };
 
 
@@ -94,6 +95,13 @@ export const useCameraSWR=()=>{
             cameraState={
                 ...cameraState,
                 control:control
+            }
+            return mutate();
+        },
+        setAxes:async(axes:Vector3)=>{
+            cameraState={
+                ...cameraState,
+                axes
             }
             return mutate();
         },

@@ -41,7 +41,7 @@ const ModalLayout=({type,children,onModal}:IModalLayoutProps)=>{
     const staticPosition=()=>{
         switch(type){
             case 'Control':
-            return menuState?.control.position&&'right-[23%] top-[120px]'
+            return menuState?.control.position&&'right-[0%] top-[120px]'
             case 'TreeList':
             return menuState?.treeList.position&&'left-[0px] top-[100px]'
             case 'Detail':

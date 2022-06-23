@@ -12,6 +12,7 @@ import DarkModeSwitch from "./darkModeSwitch";
 import FileManager from './fileManager';
 import MenuManager from "./menuManager";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Eye from '../public/eye.svg'
 
 interface ITopMenu{
 }

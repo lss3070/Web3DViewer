@@ -8,7 +8,11 @@ let meshState:IMeshStateProps={
     onInfo:false,
     meshMode:MeshMode.Default,
     staticMeshList:[],
-    selectMesh:[]
+    selectMesh:[],
+
+    onText:false,
+    onWire:false,
+    wireWidth:0.1
 };
 
 export const useMeshSWR=()=>{
@@ -60,9 +64,27 @@ export const useMeshSWR=()=>{
                 ...meshState
             }
             return mutate();
+        },
+        setOnText:async(onText:boolean)=>{
+            meshState={
+                ...meshState,
+                onText
+            }
+            return mutate();
+        },
+        setOnWire:async(onWire:boolean)=>{
+            meshState={
+                ...meshState,
+                onWire
+            }
+            return mutate();
+        },
+        setWireWidth:async(wireWidth:number)=>{
+            meshState={
+                ...meshState,
+                wireWidth
+            }
+            return mutate();
         }
-
-
-        
     }
 }

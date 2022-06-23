@@ -1,7 +1,7 @@
 import { Tree, Input } from "antd";
 
-import { useEffect, useRef, useState,useCallback, SyntheticEvent, ReactChild, ReactNode } from "react";
-import { Group } from "three"
+import React, { useEffect, useRef, useState,useCallback, SyntheticEvent, ReactChild, ReactNode, Children } from "react";
+import { Box3, Group, Mesh } from "three"
 import { Key } from "antd/lib/table/interface";
 import { useCommonSWR } from "../swrs/common.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
@@ -11,18 +11,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DataNode, EventDataNode } from "antd/lib/tree";
 import { useMenuSWR } from '../swrs/menu.swr';
 import ModalLayout from "./modal-layout";
+import _ from "lodash";
+import { useCameraSWR } from '../swrs/camera.swr';
 
-interface IRightList{
-    list:Group;
+
+interface CustomNode extends DataNode {
+    select:boolean;
+    visible:boolean
 }
 
 const TreeList=()=>{
     const {menuState}=useMenuSWR()
-    const {Search}=Input;
-    const { commonState }= useCommonSWR();
-    const {meshState,setSelectMesh}= useMeshSWR()
+    const { commonState,setGroupList }= useCommonSWR();
+    const {meshState,setSelectMesh}= useMeshSWR();
+    const {setSelectMeshBox}=useCameraSWR()
 
-    const [treeData,setTreeData]=useState<DataNode[]>();
+    const [treeData,setTreeData]=useState<CustomNode[]>();
     const [expandedKeys,setExpandedKeys]=useState<(string)[]>();
     const [autoExpandParent,setAutoExpandParent]=useState<boolean>(true);
     const [searchValue,setSearchValue]=useState<string>('');
@@ -30,11 +34,15 @@ const TreeList=()=>{
 
     const [selectList,setSelectList]= useState<string[]>([])
     const treeRef=useRef<any>(null)
+    
+
 
     const generateLoop = (data:CustomDataNode[])=>{
         for (let i = 0; i < data.length; i++) {
             const node = data[i];
             const value:CustomDataNode={
+                visible:node.visible,
+                select:node.select,
                 key:node.key,
                 title:node.title!
             }
@@ -84,8 +92,8 @@ const TreeList=()=>{
     }
 
     const treeClickEvent=(e:React.MouseEvent<HTMLSpanElement, MouseEvent>
-        ,value:EventDataNode<any>)=>{
-            const uuid = value.key as string;
+        ,key:string|number)=>{
+            const uuid = key as string;
             const keyIndex= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===uuid)!;
             const mesh= meshState?.staticMeshList.filter((mesh)=>mesh.current.uuid===uuid)![0]!;
             
@@ -104,13 +112,15 @@ const TreeList=()=>{
     }
 
 
-    const loop =(data:CustomDataNode[]):DataNode[]=>{
+    const loop =(data:CustomDataNode[]):CustomNode[]=>{
             return data.map((item)=>{
                 const index = item.title!.indexOf(searchValue)
                 const beforeStr = item.title!.substr(0,index);
                 const afterStr = item.title!.substr(index!+searchValue.length);
 
-                const title= index!>-1?(
+                const title= 
+                index!>-1?
+                (
                     <span>
                         {beforeStr}
                         <span className=" text-red-500">{searchValue}</span>
@@ -121,12 +131,16 @@ const TreeList=()=>{
                 );
                 if(item.children){
                     return {
+                        visible:item.visible,
                         title:title,
                         key:item.key,
                         children:loop(item.children),
+                        select:item.select,
                     }
                 }
                 return {
+                    select:item.select,
+                    visible:item.visible,
                     title:title, 
                     key:item.key,
                 }
@@ -143,45 +157,94 @@ const TreeList=()=>{
 
         // let selectList = useMemo(()=>meshState?.selectMesh!.map((mesh)=>mesh.current.uuid)
         // ,[meshState?.selectMesh])
+        const SelectListChange=(listdata:string[])=>{
+
+        }
 
         useEffect(()=>{
             const list = meshState?.selectMesh.map((mesh)=>mesh.current.uuid);
             setSelectList(list!);
         },[meshState?.selectMesh])
+        //검색시 변경
         useEffect(()=>{
             if(commonState?.groupList!==undefined){
-                
                 const list = loop(commonState?.groupList);
-                console.log(list);
                 setTreeData(list);
             }
         },[commonState,searchValue])
-
-    useEffect(()=>{
-        if(commonState?.groupList!==undefined){
-            generateLoop(commonState.groupList);
+        //groupList가져올때 tree에 그려질 데이터 리 렌더링
+        useEffect(()=>{
+            if(commonState?.groupList!==undefined){
+                generateLoop(commonState.groupList);
+            }
+        },[commonState?.groupList]);
+        //visible 버튼 클릭시 이벤트
+        const visibleChange=(uuid:string)=>{
+            let copy = _.cloneDeep(commonState?.groupList);
+            const result= copy?.map((item)=>{
+                return visibleChangeLoop(uuid,item);
+            })
+            setGroupList(result!)
         }
-    },[commonState?.groupList]);
+        //visible 재귀함수
+        const visibleChangeLoop=(key:string|number,
+            tree:CustomDataNode,
+            value?:boolean)=>{
+                    if(tree.key===key){
+                        tree.visible=value?value:!tree.visible;
+                        if(tree.children){
+                            for(let i=0;i<tree.children.length;i++){
+                                tree.children[i]= visibleChangeLoop(tree.children[i].key,
+                                    tree.children[i],tree.visible) as CustomDataNode
+                            }
+                        }
+                    }else{
+                        if(tree.children){
+                            for(let i=0;i<tree.children.length;i++){
+                                tree.children[i]= visibleChangeLoop(key,
+                                    tree.children[i],value) as CustomDataNode
+                            }
+                        }
+                    }
+                    return tree;
+        }
 
+interface TitleProps{
+    node:CustomNode;
+    visibleChange:Function;
+}
 
-    const TitleComponent =({
-        children,
-        key,
-        title
-    }:any):ReactNode=>{
+    const TitleComponent =({node,visibleChange}:TitleProps):ReactNode=>{     
+        const onIconClick=(e:React.MouseEvent<SVGSVGElement, MouseEvent>)=>{    
+            const object = commonState?.scene?.current?.getObjectByProperty('uuid',node.key+'') as Mesh|Group
+            if(object){
+                object.visible=!node.visible;
+                visibleChange(node.key);
+            }
+        }
+        const onDoubleClick=()=>{
+            const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',node.key+'') as Mesh;
+            setSelectMeshBox(new Box3().setFromObject(mesh))
+        }
+
         return(
             <div
-            // layout
-            //  animate={{height:'auto'}}
-            // transition={{
-            //     height: {  stiffness: 100 },
-            //     default: { duration: 0.5 },
-            //   }}
-            // exit={{height:0}}
-            className=" font-medium overflow-hidden"
-           
-             key={key}>
-                {title.props.children[2]}
+            className=" font-medium overflow-hidden w-full flex items-center"
+             key={node.key}>
+                 <FontAwesomeIcon
+                 onClick={onIconClick}
+                      icon={['fas','eye']}
+                      className={`w-5 h-5
+                      ${node.visible?`text-black`:`text-gray-300`}
+                      `}/>
+                 <div className={`hover:bg-red-300
+                  ${node.select?`bg-slate-500`:`bg-none`}
+                 `}
+                 onClick={(e)=>treeClickEvent(e,node.key)}
+                 onDoubleClick={onDoubleClick}
+                 >
+                    {node.title as React.ReactNode}
+                 </div>
             </div>
         )
     }
@@ -195,7 +258,7 @@ const TreeList=()=>{
                    dark:bg-slate-600
             `}>
             {(
-                <div className="h-full w-full overflow-hidden bg-slate-600">
+                <div className="h-auto w-full bg-slate-600 ">
                     <div className="w-full flex justify-end">
                         <FontAwesomeIcon
                         icon={['fas','xmark']}
@@ -214,25 +277,33 @@ const TreeList=()=>{
                     </div>
 
                 {/* <LayoutGroup> */}
-                            <Tree
-                            style={{backgroundColor:'#9ca3af',color:'white',
-                            borderRadius:'10px'
+                <div className="rounded-xl bg-[#9ca3af] text-white p-1 h-[330px]">
+                    <Tree
+                        style={{backgroundColor:'#9ca3af',color:'white',
+                        borderRadius:'10px'
                         }}
-                            className="text-white rounded-xl"
-                            // titleRender={TitleComponent}
-                            selectedKeys={selectList}
-                            ref={treeRef}
-                            multiple
-                            treeData={treeData} 
-                            onExpand={onExpand}
-                            expandedKeys={expandedKeys!}
-                            autoExpandParent={autoExpandParent}
-                            height={commonState?.onMobile?200:undefined}
-                            onClick={(e,value)=>{
-                            treeClickEvent(e,value)
-                            }}
-                            />
-  
+                        className="text-white  overflow-scroll h-full"
+                        titleRender={(node)=>TitleComponent({
+                            node:node,
+                            visibleChange:visibleChange
+                        })}
+                        selectedKeys={selectList}
+                        selectable={false}
+                        icon
+                        ref={treeRef}
+                        multiple
+                        treeData={treeData} 
+                        onExpand={onExpand}
+                        expandedKeys={expandedKeys!}
+                        autoExpandParent={autoExpandParent}
+                        height={commonState?.onMobile?200:undefined}
+                        // onClick={(e,value)=>{
+                        // treeClickEvent(e,value)
+                        // }}
+                    >
+                    </Tree>
+                </div>
+              
                 {/* </LayoutGroup>     */}
                 </div>
             )}

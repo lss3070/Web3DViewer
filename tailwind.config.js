@@ -1,5 +1,5 @@
 module.exports = {
-  darkMode:['class', '[data-mode="dark"]'],
+  darkMode:'class',
   //이 부분 추가
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",

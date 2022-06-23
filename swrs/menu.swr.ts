@@ -45,16 +45,6 @@ export const useMenuSWR=()=>{
             }
             return mutate();
         },
-        onDetail:async(on:boolean)=>{
-            menuState={
-                ...menuState,
-                detail:{
-                    ...menuState.detail,
-                    on
-                }
-            }
-            return mutate();
-        },
         onSimpleControl:async(on:boolean)=>{
             menuState={
                 ...menuState,

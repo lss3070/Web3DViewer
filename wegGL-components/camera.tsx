@@ -28,6 +28,8 @@ export const CameraComponent =()=>{
     useEffect(()=>{
         setCameraRef(cameraRef);
     },[cameraRef])
+    
+    useCamera
 
     // useFrame(()=>{
     //     console.log(cameraRef?.current?.position);
@@ -35,10 +37,11 @@ export const CameraComponent =()=>{
 
     return(
         {zoom}&&<PerspectiveCamera
-        onClick={()=>{console.log('!!')}}
+        
         ref={cameraRef} 
         makeDefault// mesh깨짐
-        position={cameraState?.position!} zoom={zoom}
+        position={cameraState?.position!} 
+        zoom={zoom}
         near={10}
         far={100000}
         />

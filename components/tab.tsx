@@ -64,7 +64,6 @@ const Tab=({tabList}:ITapProps)=>{
             <motion.main className=' items-center justify-center'>
                     <motion.div
                     layout
-              
                      transition={{ 
                          duration: 0.2 }}
                     >

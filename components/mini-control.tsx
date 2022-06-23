@@ -16,6 +16,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCameraSWR } from '../swrs/camera.swr';
 import { Vector3 } from 'three'
 import _ from 'lodash'
+import { useMeshSWR } from '../swrs/mesh.swr';
+import { Slider } from 'antd'
 
 
 
@@ -25,20 +27,19 @@ interface MiniCircleButtonProps{
 }
 const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label,onClick})=>{
 
-
-    const {commonState,setOnText,setOnWire} =useCommonSWR();
+    const {meshState,setOnText,setOnWire}=useMeshSWR();
     const [onDown,setOnDown]=useState<boolean>(false);
     const [onSelect,setOnSelect]=useState<boolean>(false);
 
     const OnActive=()=>{
         switch(label){
             case'Text':
-                setOnText(!commonState?.onText!);
-                setOnSelect(!commonState?.onText!)
+                setOnText(!meshState?.onText!);
+                setOnSelect(!meshState?.onText!)
             break;
             case'Wire':
-                setOnWire(!commonState?.onWire!);
-                setOnSelect(!commonState?.onWire!)
+                setOnWire(!meshState?.onWire!);
+                setOnSelect(!meshState?.onWire!)
             break;
             default:
                 setOnSelect(!onSelect)
@@ -46,8 +47,8 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label,onClick})=>{
     }
 
     useEffect(()=>{
-        setOnText(commonState?.onText!);
-        setOnSelect(commonState?.onText!)
+        setOnText(meshState?.onText!);
+        setOnSelect(meshState?.onText!)
     },[label])
 
     const onMouseDown=()=>{
@@ -164,8 +165,9 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
 
 
 const MiniControls=()=>{
-    const {cameraState,setSelectMeshBox}=useCameraSWR()
+    const {cameraState,setSelectMeshBox,setTarget,setPosition}=useCameraSWR()
     const {menuState} =useMenuSWR();
+    const {meshState,setWireWidth}=useMeshSWR()
 
     const [onCameraPositionList,setOnCameraPositionList]=useState<boolean>(false);
     const cameraPositionIconRef=useRef<HTMLDivElement>(null);
@@ -179,6 +181,10 @@ const MiniControls=()=>{
         setOnCameraPositionList(false);
     }
 
+    const cameraInit=()=>{
+        setTarget(new Vector3(0,0,0));
+        setPosition(new Vector3(0,0,59))
+    }
     const onFitZoom=()=>{
         setSelectMeshBox(_.cloneDeep(cameraState?.meshBox!))
     }
@@ -212,6 +218,9 @@ const MiniControls=()=>{
         }
     }
 
+    const ChangeWire=(value: number)=>{
+        setWireWidth(value);
+    }
 
     return (
         <ModalLayout type="SimpleControl" 
@@ -231,6 +240,7 @@ const MiniControls=()=>{
                         >
                             <Front/>
                 </motion.div>
+
                 <AnimatePresence>
                     {onCameraPositionList&&(
                     <motion.div 
@@ -249,11 +259,25 @@ const MiniControls=()=>{
                     </motion.div>
                 )}
                 </AnimatePresence>
-                <MiniCircleButton label={
-                    // <FontAwesomeIcon
-                    // icon={['far','arrow-up-arrow-down']}
-                    // className="w-5 h-5 text-black"/>
-                    <></>
+                <AnimatePresence>
+                    
+                    {meshState?.onWire&&(
+                    <motion.div className=' text-white p-2 absolute right-0 top-10
+                    border w-52
+                    '>
+                          <Slider min={0} max={100}
+                        value={meshState.wireWidth}
+                        onChange={ChangeWire}
+                    />
+                    </motion.div>)}
+                </AnimatePresence>
+
+                <MiniCircleButton 
+                onClick={cameraInit}
+                label={
+                    <FontAwesomeIcon
+                    icon={['fas','house']}
+                    className="w-5 h-5 text-white"/>
                 }/>
                 <MiniCircleButton
                 onClick={onFitZoom}

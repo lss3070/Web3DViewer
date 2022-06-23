@@ -9,7 +9,7 @@ interface CommonButtonProps{
 }
 const MenuManageButton=({label}:CommonButtonProps)=>{
 
-    const {menuState,onControl,onDetail,onTreeList,onSimpleControl}= useMenuSWR();
+    const {menuState,onControl,onTreeList,onSimpleControl}= useMenuSWR();
     const [onDown,setOnDown]=useState<boolean>(false);
     const [onButton,setOnButton]=useState<boolean>(false);
     
@@ -43,10 +43,6 @@ const MenuManageButton=({label}:CommonButtonProps)=>{
             case'Control':
                 onControl(!menuState?.control.on);
                 setOnButton(!menuState?.control.on);
-            break;
-            case'Detail':
-                onDetail(!menuState?.detail.on);
-                setOnButton(!menuState?.detail.on);
             break;
             case'SimpleControl':
                 onSimpleControl(!menuState?.simpleControl.on);

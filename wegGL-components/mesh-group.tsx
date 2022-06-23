@@ -11,6 +11,7 @@ interface IMeshProps{
 export const MeshGroupComponent = ({meshGroup}:IMeshProps)=>{
     const group = useRef<any>();
 
+    
     const MeshSwitch=()=>{
         return meshGroup.children.map((groupItem,index)=>{
             switch(groupItem.type){
@@ -29,6 +30,7 @@ export const MeshGroupComponent = ({meshGroup}:IMeshProps)=>{
 
     return(
        <group ref={group} position={meshGroup.position} scale={meshGroup.scale} 
+       uuid={meshGroup.uuid}
         quaternion={meshGroup.quaternion}>
             {meshGroup?MeshSwitch():<></>}
         </group>

@@ -13,7 +13,6 @@ export enum MeshMode{
   Wire
 }
 
-
  export interface IMeshStateProps {
     hoverMesh?:ObjectRef;
     selectMesh:ObjectRef[];
@@ -22,6 +21,10 @@ export enum MeshMode{
     meshMode:MeshMode;
     textScale?:number;
     uuid?:string;
+
+    onText:boolean;
+    onWire:boolean;
+    wireWidth:number;
   }
   
 
@@ -37,6 +40,7 @@ export enum MeshMode{
   selectMeshBox?:Box3;
   sphere?:Sphere;
   target?:Vector3;
+  axes:Vector3;
 }
 
 export interface ICommonStateProps{
@@ -46,8 +50,7 @@ export interface ICommonStateProps{
   scene?:RefObject<Scene>;
   mobileHelperComponent?:JSX.Element;
   onMobile?:boolean;
-  onText:boolean;
-  onWire:boolean;
+ 
   darkMode:boolean;
 }
 interface IAmbientLight{

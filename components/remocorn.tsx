@@ -19,36 +19,13 @@ import { CameraHelper } from './helper2/cameraHelper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalLayout from './modal-layout';
 import { useMenuSWR } from '../swrs/menu.swr';
+import InfoHelper from './helper2/infoHelper';
 
 
 const Remocorn =()=>{
 
     const [openId,setOpenId]=useState<number>();
     const {menuState}=useMenuSWR()
-
-    const cameraInfo:TabCategoryProps={
-        label:'Camera',
-        id:0,
-        openId,
-        setOpenId,
-        tabList:[
-            {
-                label:'AutoZoom',
-                index:0,
-                content:<AutoZoomHelper/>
-            },
-            {
-                label:'PointLight',
-                index:1,
-                content:<PositionMoveHelper/>
-            },
-            {
-                label:'SpotLight',
-                index:2,
-                content:<TargetMoveHelper/>
-            }
-        ]
-    }
 
     const lightInfo:TabCategoryProps={
         label:'Light',
@@ -80,7 +57,7 @@ const Remocorn =()=>{
         >
             <div 
             className="rounded-lg 
-            absolute w-72 h-auto
+             w-72 h-auto
             bg-gray-200
             dark:bg-slate-600
             ">
@@ -90,6 +67,8 @@ const Remocorn =()=>{
                         className="w-5 h-5 text-white cursor-pointer"/>
                 </div>
                 <div className='p-4 grid gap-5 cursor-auto'>
+                    {/* info */}
+                    <InfoHelper openId={openId} setOpenId={setOpenId}/>
                     {/* camera */}
                     <CameraHelper openId={openId} setOpenId={setOpenId}/>
                     {/* light */}

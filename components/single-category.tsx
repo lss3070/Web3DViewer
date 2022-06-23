@@ -6,20 +6,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export interface TabCategoryProps{
     label:string;
     id:number;
-    tabList:TabItem[];
+    children:JSX.Element;
     openId?:number;
     setOpenId:Function;
 }
-export interface TabItem{
-    label:string;
-    index:number;
-    content:JSX.Element;
-}
 
-const Category=({label,id,tabList,openId,setOpenId}:TabCategoryProps)=>{
+
+const SingleCategory=({label,id,children,openId,setOpenId}:TabCategoryProps)=>{
 
     const toggleOpen = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-
+console.log(openId);
+console.log(id);
         id===openId?setOpenId():setOpenId(id);
     }
 
@@ -54,9 +51,26 @@ const Category=({label,id,tabList,openId,setOpenId}:TabCategoryProps)=>{
                 </div>
             </div>
                 <AnimatePresence initial={false} >
-                    {openId===id && <Tab tabList={tabList}/>}
+                    {openId===id &&
+                      <motion.div
+                      key="content"
+                      initial='collapsed'
+                      animate="open"
+                      exit="collapsed"
+                      variants={{
+                          open: { opacity: 1, height: `auto` },
+                          collapsed: { opacity: 0, height: 0 },
+                          layout:{}
+                      }}
+                      transition={{
+                        duration:0.5,
+                         ease: [0.04, 0.62, 0.23, 0.98] }}
+                        className='bg-slate-400 h-full rounded-b-md px-2'>
+                        {children}
+                      </motion.div>
+                    }
                 </AnimatePresence>
         </motion.li>
     )
 }
-export default Category
+export default SingleCategory

@@ -1,9 +1,9 @@
-import ModalLayout from "./modal-layout";
-import { useMenuSWR } from '../swrs/menu.swr';
-import { useMeshSWR } from '../swrs/mesh.swr';
-import { MutableRefObject, useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from "react";
 import { Mesh } from "three";
-import { Geometry, mergeVertices } from "three-stdlib";
+import { mergeVertices } from "three-stdlib";
+import { useMenuSWR } from "../../swrs/menu.swr";
+import { useMeshSWR } from "../../swrs/mesh.swr";
+import SingleCategory from "../single-category";
 
 type MeshInfoType={
     name:string;
@@ -15,7 +15,13 @@ type MeshInfoType={
 
 }
 
-const MeshInfo=()=>{
+interface InfoProps{
+    openId?:number;
+    setOpenId:Function;
+}
+
+
+const InfoHelper=({openId,setOpenId}:InfoProps)=>{
 
     const {menuState}=useMenuSWR();
     const {meshState}=useMeshSWR();
@@ -23,22 +29,31 @@ const MeshInfo=()=>{
     const [meshInfo,setMeshInfo]=useState<MeshInfoType>()
     
 
-    useEffect(()=>{
-        
+    const onAllMesh=()=>{
         let vertex=0;
-        let name=meshState?.selectMesh?.length!>0?
-        `${meshState?.selectMesh[0].current.name} 외 ${meshState?.selectMesh?.length!-1}`
-        :``
         let triangle=0
         let x =0;
         let y=0;
         let z=0;
-       
+
+        console.log('static mesh');
+        // console.log(meshState?.staticMeshList);
+        // console.log(cameraState?.meshBox);
+        // console.log(commonState?.groupList);
+        console.log('!')
+    }
+    const onSelectMesh=()=>{
+        let vertex=0;
+        let name=meshState?.selectMesh?.length!>1?
+        `${meshState?.selectMesh[0].current.name} 외 ${meshState?.selectMesh?.length!-1}`
+        :`${meshState?.selectMesh[0].current.name}`
+        let triangle=0
+        let x =0;
+        let y=0;
+        let z=0;
 
         meshState?.selectMesh.map((item)=>{
-            
             const mesh = item as MutableRefObject<Mesh>
-            console.log(mesh)
             const merge= mergeVertices(mesh.current.geometry);
             vertex+=merge.attributes.position.count
             triangle+=mesh.current.geometry.attributes.position.count/3
@@ -54,46 +69,45 @@ const MeshInfo=()=>{
             y,
             z
         })
-
+    }
+    useEffect(()=>{
+        meshState?.selectMesh.length!>0?onSelectMesh():onAllMesh()
     },[meshState?.selectMesh]);
-
+    
     return(
-        <ModalLayout type="Detail" 
-        onModal={menuState?.control.on!}
-        >
-            <div className="rounded-lg
-                       bg-gray-200
-                       dark:bg-slate-600
-                        
+        <SingleCategory 
+        label={'Info'} 
+        id={10} 
+        openId={openId} 
+        setOpenId={setOpenId}>
+        <div className=" h-full px-2
             ">
-                <div>
+                <div className="flex gap-5">
                     <div>Name</div>
                     <div>{meshInfo?.name}</div>
                 </div>
-                <div>
+                <div className="flex gap-5">
                     <div>Vertices</div>
                     <div>{meshInfo?.vertex}</div>
                 </div>
-                <div>
+                <div className="flex gap-5">
                     <div>Triangles</div>
                     <div>{meshInfo?.triangle}</div>
                 </div>
-                <div>
+                <div className="flex">
                     <div>X</div>
                     <div>{meshInfo?.x}</div>
                 </div>
-                <div>
+                <div className="flex">
                     <div>Y</div>
                     <div>{meshInfo?.y}</div>
                 </div>
-                <div>
+                <div className="flex">
                     <div>Z</div>
                     <div>{meshInfo?.z}</div>
                 </div>
-
             </div>
-            
-        </ModalLayout>
+        </SingleCategory>
     )
 }
-export default MeshInfo;
+export default InfoHelper;

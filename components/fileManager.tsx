@@ -101,18 +101,6 @@ const FileManager=()=>{
                         <span>Save</span>
                 </div>
             </div>
-  
-            <AnimatePresence>
-                {
-                    openHover&&(
-                        <motion.ul
-                        style={{}}
-                        >
-                            eeee
-                        </motion.ul>
-                    )
-                }
-            </AnimatePresence>
             <AnimatePresence>
             {
                     isExport&&(

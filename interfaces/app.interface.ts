@@ -10,4 +10,6 @@ export interface  CustomDataNode {
     // 'Group'|'Mesh'|'Bone'|'LineSegments'
     key: string;
     title?: string;
+    visible:boolean;
+    select:boolean;
 }

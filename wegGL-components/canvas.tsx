@@ -1,6 +1,6 @@
 import { Canvas, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
-import {AxesHelper, Box3, Group, Material, ObjectLoader, Scene, Vector3 } from "three"
+import {AnimationMixer, AxesHelper, Box3, CameraHelper, Color, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3 } from "three"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 
@@ -15,7 +15,8 @@ import { CustomDataNode } from "../interfaces/app.interface";
 import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
-import { Box, PerspectiveCamera } from "@react-three/drei";
+import { Box, PerspectiveCamera, TrackballControls, useHelper } from "@react-three/drei";
+import Axes from './axes';
 
 interface ICanvasProps{
     setLoadingPercent:Function;
@@ -45,7 +46,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     objLoader.loadAsync(commonState?.filePath!,(progress)=>{
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((obj)=>{
-                        console.log(obj);
+
                         new Box3().setFromObject(obj).getCenter(obj.position).multiplyScalar(-1);
 
                         const group = groupLoop(obj);
@@ -57,6 +58,8 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
               
                         setMeshBox(box);
                         setLoadingComplete(true);
+            
+
                     }).catch((err)=>{
                         alert(err)
                         setLoadingComplete(true);
@@ -72,6 +75,8 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         setGroupList(group);
                         setMeshGroup(fbx);
                         
+                        fbx.visible=false
+
                         let size =new Vector3();
                         let cnet = new Vector3();
                         const box = new Box3().setFromObject(fbx);
@@ -79,6 +84,13 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         console.log(box);
                         setMeshBox(box);
                         setLoadingComplete(true);
+
+                        const mixer =new AnimationMixer(fbx);
+                    
+                        const action= mixer.clipAction(fbx.animations[0])
+                        action.play()
+
+
                     },(progress)=>{
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
@@ -101,9 +113,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                                             temp.add(item)
                                         }
                                     })
-                                   
                                 }
-                               
                             })
                             console.log('temp')
                             console.log(temp);
@@ -136,42 +146,50 @@ const groupLoop=(item:Group):CustomDataNode[]=>{
         switch(groupItem.type){//groupItem.constructor.name
             case'Mesh':
             return {
+                visible:true,
+                select:false,
                 key:groupItem.uuid,
                 type:groupItem.type,
                 title:groupItem.name
             }
             case'Group':
             return {
+                visible:true,
+                select:false,
                 key:groupItem.uuid,
                 type:groupItem.type,
                 title:groupItem.name,
                 children:groupLoop(groupItem as Group)
             }
             default:
-            return {key:groupItem.uuid,type:groupItem.type,title:groupItem.name};
+            return {
+                visible:true,
+                select:false,
+                key:groupItem.uuid,
+                type:groupItem.type,
+                title:groupItem.name};
         }
     })
     return temp;
 }
+
     useEffect(()=>{
         setScene(sceneRef)
     },[sceneRef])
 
-
- 
-
     return(
         <>
-        <Canvas style={{position:"absolute",left:'0',bottom:'0',width:'100px',height:'100px',
-                zIndex:20}}>
-                   
-                <axesHelper args={[10]} />
-        </Canvas>
-        <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10"
-        >
+            <Axes/>
+            <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10"
+            onClick={(e)=>console.log(e)}
+            onClickCapture={(e)=>console.log(e)}
+            onAuxClick={(e)=>console.log(e)}
+            onAuxClickCapture={(e)=>console.log(e)}
+            >
                 <color attach="background" 
-                args={[commonState?.darkMode?"#2a2b2e":'#ffffff']} />
-                <scene ref={sceneRef}>
+                args={[commonState?.darkMode?"#2a2b2e":'#ffffff']} 
+                />
+                <scene ref={sceneRef} >
                     <LightComponent/>                
                     <CameraComponent/>
                     <ControlComponent/> 
@@ -186,3 +204,4 @@ const groupLoop=(item:Group):CustomDataNode[]=>{
 function loadJsonFileSync(arg0: string) {
     throw new Error("Function not implemented.");
 }
+

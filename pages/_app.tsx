@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import 'antd/dist/antd.min.css'
+import 'antd/dist/antd.less'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 import type { AppProps } from 'next/app'

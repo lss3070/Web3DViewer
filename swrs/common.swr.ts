@@ -4,8 +4,6 @@ import { CustomDataNode } from "../interfaces/app.interface";
 import { RefObject } from "react";
 
 let commonState:ICommonStateProps={
-    onText:false,
-    onWire:false,
     onMobile:false,
     darkMode:true
 }
@@ -41,20 +39,6 @@ export const useCommonSWR=()=>{
             commonState={
                 ...commonState,
                 scene:value
-            }
-            return mutate();
-        },
-        setOnText:async(onText:boolean)=>{
-            commonState={
-                ...commonState,
-                onText
-            }
-            return mutate();
-        },
-        setOnWire:async(onWire:boolean)=>{
-            commonState={
-                ...commonState,
-                onWire
             }
             return mutate();
         },
