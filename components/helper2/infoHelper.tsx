@@ -37,10 +37,15 @@ const InfoHelper=({openId,setOpenId}:InfoProps)=>{
         let z=0;
 
         console.log('static mesh');
-        // console.log(meshState?.staticMeshList);
-        // console.log(cameraState?.meshBox);
-        // console.log(commonState?.groupList);
-        console.log('!')
+        
+        setMeshInfo({
+            name:'',
+            vertex:0,
+            triangle:0,
+            x:0,
+            y:0,
+            z:0
+        })
     }
     const onSelectMesh=()=>{
         let vertex=0;

@@ -1,12 +1,11 @@
 import { Canvas, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
-import {AnimationMixer, AxesHelper, Box3, CameraHelper, Color, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3 } from "three"
+import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane } from 'three';
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 
 import { CameraComponent } from "./camera"
 import { LightComponent } from "./light";
-import { Geometry } from "three-stdlib";
 
 import fs from 'fs';
 import { useCommonSWR } from "../swrs/common.swr";
@@ -37,6 +36,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const objLoader=new OBJLoader();
     const objectLoader = new ObjectLoader();
 
+
     useEffect(()=>{
         if(commonState?.extension!==undefined){
             console.log(commonState.extension)
@@ -46,7 +46,8 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     objLoader.loadAsync(commonState?.filePath!,(progress)=>{
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((obj)=>{
-
+                        
+                        
                         new Box3().setFromObject(obj).getCenter(obj.position).multiplyScalar(-1);
 
                         const group = groupLoop(obj);
@@ -54,11 +55,12 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         setGroupList(group); 
                         setMeshGroup(obj); 
 
+
+
                         const box = new Box3().setFromObject(obj);
               
                         setMeshBox(box);
                         setLoadingComplete(true);
-            
 
                     }).catch((err)=>{
                         alert(err)
@@ -67,6 +69,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     break;
                 case 'fbx':
                     fbxLoader.load(commonState?.filePath!,(fbx)=>{
+              
                         console.log(fbx);
                         new Box3().setFromObject(fbx).getCenter(fbx.position).multiplyScalar(-1);
 
@@ -140,17 +143,19 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     },[commonState?.filePath])
 
-const groupLoop=(item:Group):CustomDataNode[]=>{
+const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
     let temp:CustomDataNode[]
     temp=item.children.map((groupItem):CustomDataNode=>{
         switch(groupItem.type){//groupItem.constructor.name
+           
             case'Mesh':
             return {
                 visible:true,
                 select:false,
                 key:groupItem.uuid,
                 type:groupItem.type,
-                title:groupItem.name
+                title:groupItem.name,
+                children:groupLoop(groupItem as Mesh)
             }
             case'Group':
             return {
@@ -161,13 +166,23 @@ const groupLoop=(item:Group):CustomDataNode[]=>{
                 title:groupItem.name,
                 children:groupLoop(groupItem as Group)
             }
+            case 'Bone':
+                return{
+                    visible:true,
+                    select:false,
+                    key:groupItem.uuid,
+                    type:groupItem.type,
+                    title:groupItem.name,
+                    children:groupLoop(groupItem as Bone)
+                }
             default:
             return {
                 visible:true,
                 select:false,
                 key:groupItem.uuid,
                 type:groupItem.type,
-                title:groupItem.name};
+                title:groupItem.name
+            };
         }
     })
     return temp;
@@ -180,16 +195,21 @@ const groupLoop=(item:Group):CustomDataNode[]=>{
     return(
         <>
             <Axes/>
-            <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10"
-            onClick={(e)=>console.log(e)}
-            onClickCapture={(e)=>console.log(e)}
-            onAuxClick={(e)=>console.log(e)}
-            onAuxClickCapture={(e)=>console.log(e)}
-            >
+            <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10">
                 <color attach="background" 
                 args={[commonState?.darkMode?"#2a2b2e":'#ffffff']} 
                 />
+                
                 <scene ref={sceneRef} >
+                    <mesh
+                    onClick={(e)=>console.log('!!')}
+                    position={[0,0,0]}
+                    
+                    >
+                        <boxGeometry args={[10000, 10000, 10000]}/>
+                        <meshStandardMaterial color={'orange'}/>
+                    </mesh>
+                
                     <LightComponent/>                
                     <CameraComponent/>
                     <ControlComponent/> 

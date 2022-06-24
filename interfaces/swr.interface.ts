@@ -12,6 +12,11 @@ export enum MeshMode{
   Point,
   Wire
 }
+export interface EveryMesh{
+  name:string,
+  vertex:number,
+  triangle:number
+}
 
  export interface IMeshStateProps {
     hoverMesh?:ObjectRef;
@@ -21,6 +26,7 @@ export enum MeshMode{
     meshMode:MeshMode;
     textScale?:number;
     uuid?:string;
+    everyMesh?:EveryMesh;
 
     onText:boolean;
     onWire:boolean;

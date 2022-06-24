@@ -29,7 +29,14 @@ export const CameraComponent =()=>{
         setCameraRef(cameraRef);
     },[cameraRef])
     
-    useCamera
+   
+    useEffect(()=>{
+        console.log('change');
+    },[cameraRef?.current?.position])
+
+    const ee =useThree();
+
+    
 
     // useFrame(()=>{
     //     console.log(cameraRef?.current?.position);
@@ -37,7 +44,6 @@ export const CameraComponent =()=>{
 
     return(
         {zoom}&&<PerspectiveCamera
-        
         ref={cameraRef} 
         makeDefault// mesh깨짐
         position={cameraState?.position!} 

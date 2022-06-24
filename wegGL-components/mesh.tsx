@@ -1,6 +1,6 @@
 import { Html, PointMaterial } from "@react-three/drei";
 import { useEffect, useMemo, useState, useRef, memo } from 'react';
-import { BackSide, Box3, Color, DoubleSide, FrontSide, Material, Matrix4, Mesh, PlaneGeometry, Vector3,EdgesGeometry, MeshBasicMaterial, MeshPhongMaterial, MeshStandardMaterial, MeshStandardMaterialParameters, MeshToonMaterial } from "three";
+import { BackSide, Box3, Color, DoubleSide, FrontSide, Material, Matrix4, Mesh, PlaneGeometry, Vector3,EdgesGeometry, MeshBasicMaterial, MeshPhongMaterial, MeshStandardMaterial, MeshStandardMaterialParameters, MeshToonMaterial, Plane } from "three";
 
 import { Outline } from '@react-three/postprocessing';
 import { MeshStandardMaterialProps, ThreeEvent, useFrame } from "@react-three/fiber";
@@ -22,6 +22,12 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     const {setSelectMeshBox}=useCameraSWR()
 
     const [point,setPoint]=useState<boolean>(false);
+
+    const [plane,setPlane]=useState<Plane[]>([
+        new Plane(new Vector3(-1,0,0),0),
+        new Plane(new Vector3(0,-1,0),0),
+        new Plane(new Vector3(0,0,-1),0),
+    ])
 
     useEffect(()=>{
         switch(meshState?.meshMode){
@@ -75,16 +81,19 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
         switch(material.type){
             case 'MeshPhysicalMaterial':
                 return <meshPhysicalMaterial {...material} 
+            
                 wireframeLinewidth={meshState?.wireWidth}
                 wireframe={meshState?.onWire} 
                  key={index?index:0}/>;
             case 'MeshStandardMaterial':
                 return <meshStandardMaterial {...material} 
+  
                 wireframeLinewidth={meshState?.wireWidth}
                 wireframe={meshState?.onWire} 
                  key={index?index:0}/>;
             case 'MeshToonMaterial':
-                return <meshToonMaterial {...material} key={index?index:0}/>;
+                return <meshToonMaterial {...material}
+                 key={index?index:0}/>;
             case 'MeshNormalMaterial':
                 return <meshNormalMaterial {...material} 
                 wireframeLinewidth={meshState?.wireWidth}
@@ -96,14 +105,16 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                 wireframe={meshState?.onWire} 
                  key={index?index:0}/>;
             case 'MeshDistanceMaterial':
-                return <meshDistanceMaterial {...material} key={index?index:0}/>;
+                return <meshDistanceMaterial
+                {...material} key={index?index:0}/>;
             case 'MeshBasicMaterial':
                 return <meshBasicMaterial {...material} 
                 wireframeLinewidth={meshState?.wireWidth}
                 wireframe={meshState?.onWire} 
                 key={index?index:0}/>
             case 'MeshMatcapMaterial':
-                return <meshMatcapMaterial {...material}  key={index?index:0}/>
+                return <meshMatcapMaterial {...material}  
+                key={index?index:0}/>
             case 'MeshPhongMaterial':
                 return <meshPhongMaterial {...material} 
                 wireframeLinewidth={meshState?.wireWidth}
@@ -116,7 +127,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                 key={index?index:0}/>
             default:
             return <meshBasicMaterial {...material} 
-            
             wireframe={meshState?.onWire}
             wireframeLinewidth={meshState?.wireWidth}
             />

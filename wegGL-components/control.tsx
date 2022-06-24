@@ -1,6 +1,6 @@
-import { TrackballControls, TrackballControlsProps } from "@react-three/drei"
+import { TrackballControls, TrackballControlsProps, useCamera } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber";
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, ChangeEvent } from 'react';
 import { Vector3,PerspectiveCamera, Mesh } from "three";
 import _ from 'lodash'
 import { useCameraSWR } from "../swrs/camera.swr";
@@ -17,6 +17,7 @@ export const ControlComponent=()=>{
 
     const [zoomTarget,setZoomTarget]=useState<Vector3>(new Vector3());
     const [zoomPosition,setZoomPosition]=useState<Vector3>(new Vector3());
+    
 
     const controlRef=useRef<any>()
 
@@ -81,23 +82,22 @@ export const ControlComponent=()=>{
     });
     
     const onChangeEvent=(e:any)=>{
-        console.log(e.target);
+
         const position={
             isVector3:true,
-            x:controlRef.current.lastPosition.x,
-            y:controlRef.current.lastPosition.y,
-            z:controlRef.current.lastPosition.z,
+            x:e.target.object.position.x,
+            y:e.target.object.position.y,
+            z:e.target.object.position.z,
         } as Vector3
-        console.log(e.target);
-        console.log(e.target.rotateCamera())
-        console.log(position);
-        // setPosition(position)
-        // setAxes(position)
+     
+        setAxes(position)
     }
+
+    
 
     return(
         <TrackballControls 
-        
+        maxDistance={20000}
         noPan={false}
         onChange={onChangeEvent}
         // onEnd={onChangeEvent}

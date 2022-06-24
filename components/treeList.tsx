@@ -34,7 +34,6 @@ const TreeList=()=>{
 
     const [selectList,setSelectList]= useState<string[]>([])
     const treeRef=useRef<any>(null)
-    
 
 
     const generateLoop = (data:CustomDataNode[])=>{
@@ -87,8 +86,6 @@ const TreeList=()=>{
     const onExpand = (expanedKeys:Key[])=>{
             setExpandedKeys(expanedKeys as string[]);
             setAutoExpandParent(false);
-
-       
     }
 
     const treeClickEvent=(e:React.MouseEvent<HTMLSpanElement, MouseEvent>
@@ -157,9 +154,26 @@ const TreeList=()=>{
 
         // let selectList = useMemo(()=>meshState?.selectMesh!.map((mesh)=>mesh.current.uuid)
         // ,[meshState?.selectMesh])
-        const SelectListChange=(listdata:string[])=>{
+        const SelectListChange=(listdata:string[],tree:CustomDataNode,)=>{
+            if(listdata.length===0) return tree;
+            
+            const index = listdata.indexOf(tree.key);
 
+            if(index>=0){  
+                let curlist = listdata.splice(index,1);
+                tree.select=true;
+                for(let i=0;i<tree.children?.length!;i++){
+                    tree.children![i] = SelectListChange(curlist,tree.children![i]) as CustomDataNode
+                }
+            }else{
+                tree.select=false;
+                for(let i=0;i<tree.children?.length!;i++){
+                    tree.children![i] = SelectListChange(listdata,tree.children![i]) as CustomDataNode
+                }
+            }
+            return tree;
         }
+
 
         useEffect(()=>{
             const list = meshState?.selectMesh.map((mesh)=>mesh.current.uuid);
@@ -172,6 +186,7 @@ const TreeList=()=>{
                 setTreeData(list);
             }
         },[commonState,searchValue])
+
         //groupList가져올때 tree에 그려질 데이터 리 렌더링
         useEffect(()=>{
             if(commonState?.groupList!==undefined){
@@ -209,6 +224,22 @@ const TreeList=()=>{
                     return tree;
         }
 
+        const onSelect=((selectedKeys: Key[], info: {
+            event: "select";
+            selected: boolean;
+            node: EventDataNode<CustomNode>;
+            selectedNodes: CustomNode[];
+            nativeEvent: MouseEvent;
+        })=>{
+            
+            if(!info.selected){
+               const result= meshState?.selectMesh.filter((item)=>item.current.uuid!==info.node.key);
+               setSelectMesh(result!);
+            }
+            console.log(meshState?.selectMesh);
+            console.log(info);
+        })
+
 interface TitleProps{
     node:CustomNode;
     visibleChange:Function;
@@ -221,6 +252,7 @@ interface TitleProps{
                 object.visible=!node.visible;
                 visibleChange(node.key);
             }
+            e.stopPropagation();
         }
         const onDoubleClick=()=>{
             const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',node.key+'') as Mesh;
@@ -237,7 +269,7 @@ interface TitleProps{
                       className={`w-5 h-5
                       ${node.visible?`text-black`:`text-gray-300`}
                       `}/>
-                 <div className={`hover:bg-red-300
+                 <div className={`
                   ${node.select?`bg-slate-500`:`bg-none`}
                  `}
                  onClick={(e)=>treeClickEvent(e,node.key)}
@@ -288,7 +320,8 @@ interface TitleProps{
                             visibleChange:visibleChange
                         })}
                         selectedKeys={selectList}
-                        selectable={false}
+                        selectable={true}
+                        onSelect={onSelect}
                         icon
                         ref={treeRef}
                         multiple
