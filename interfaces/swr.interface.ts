@@ -56,6 +56,7 @@ export interface ICommonStateProps{
   scene?:RefObject<Scene>;
   mobileHelperComponent?:JSX.Element;
   onMobile?:boolean;
+  fileLoad:boolean;
  
   darkMode:boolean;
 }

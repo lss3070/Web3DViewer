@@ -81,13 +81,12 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
         switch(material.type){
             case 'MeshPhysicalMaterial':
                 return <meshPhysicalMaterial {...material} 
-            
+                
                 wireframeLinewidth={meshState?.wireWidth}
                 wireframe={meshState?.onWire} 
                  key={index?index:0}/>;
             case 'MeshStandardMaterial':
                 return <meshStandardMaterial {...material} 
-  
                 wireframeLinewidth={meshState?.wireWidth}
                 wireframe={meshState?.onWire} 
                  key={index?index:0}/>;
@@ -121,7 +120,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                 wireframe={meshState?.onWire}  
                 key={index?index:0}/>
             case 'MeshLambertMaterial':
-                return <meshLambertMaterial {...material} 
+                return <meshLambertMaterial {...material}
                 wireframe={meshState?.onWire}  
                 wireframeLinewidth={meshState?.wireWidth}
                 key={index?index:0}/>
@@ -135,15 +134,19 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
     const MaterialElements =()=>{
         if(Array.isArray(mesh.material)){
+            
             return (mesh.material as Material[]).map((item,index)=>
-                 switchMaterial(item,index)
+                switchMaterial(item,index)
             )
         }else{
             return switchMaterial(mesh.material);
         }
     }
 
-    const meshOnClick =async (e:any)=>{   
+    const meshOnClick =async (e:any)=>{ 
+        console.log('meshclick')
+        console.log(e);
+
         if(e.metaKey||e.ctrlKey){
             const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===meshRef.current.uuid)!;
             if(index>=0){
@@ -154,8 +157,9 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                 await setSelectMesh([...meshState?.selectMesh!,meshRef])
             }
         }else{
-            await setSelectMesh([meshRef]);
+            setSelectMesh([meshRef]);
         }
+        
     }
     const meshDoubleClick=()=>{
         setSelectMeshBox(new Box3().setFromObject(meshRef.current))
@@ -164,7 +168,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             <>
             {!point?(
                 <mesh ref={meshRef} 
-                
             onClick={meshOnClick}
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
@@ -180,6 +183,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                 setHoverMesh(undefined)
             }}
             
+            renderOrder={999}
             name={mesh.name}
             uuid={mesh.uuid}
             geometry={mesh.geometry}
@@ -197,7 +201,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             </mesh>
             ):(
                 <points
-                
                 geometry={mesh.geometry} >
                     <PointMaterial
                       color={"#000000"} 
@@ -205,8 +208,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                     />
                 </points>
             )}
-            
-    
             </>
             
         )

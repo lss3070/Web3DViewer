@@ -105,9 +105,6 @@ const MenuManager=()=>{
             <div className="flex items-center justify-center">
                 <MenuManageButton label={'Control'}/>
             </div>
-            <div className="flex items-center justify-center">
-                <MenuManageButton label={'Detail'}/>
-            </div>
             <div className='flex items-center justify-center'>
                 <MenuManageButton label={'SimpleControl'}/>
             </div>

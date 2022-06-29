@@ -5,7 +5,8 @@ import { RefObject } from "react";
 
 let commonState:ICommonStateProps={
     onMobile:false,
-    darkMode:true
+    darkMode:true,
+    fileLoad:false
 }
 
 export const useCommonSWR=()=>{
@@ -62,6 +63,13 @@ export const useCommonSWR=()=>{
                 darkMode
             }
             return mutate();
-        },        
+        },     
+        setFileLoad:async(fileLoad:boolean)=>{
+            commonState={
+                ...commonState,
+                fileLoad
+            }
+            return mutate()
+        }   
     }
 }

@@ -82,21 +82,18 @@ export const ControlComponent=()=>{
     });
     
     const onChangeEvent=(e:any)=>{
-
         const position={
             isVector3:true,
             x:e.target.object.position.x,
             y:e.target.object.position.y,
             z:e.target.object.position.z,
         } as Vector3
-     
         setAxes(position)
     }
 
-    
-
     return(
         <TrackballControls 
+        enabled={true}
         maxDistance={20000}
         noPan={false}
         onChange={onChangeEvent}

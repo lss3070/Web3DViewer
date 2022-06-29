@@ -7,10 +7,13 @@ import { PositionHelper } from "../helper/action/positionHelper";
 import { RotationHelper } from "../helper/action/rotationHelper";
 import { ScaleHelper } from "../helper/action/scaleHelper";
 import { VisibleHelper } from "../helper/action/visibleHelper";
+import { ColorHelper } from '../helper/action/colorHelper';
+import { DragControls } from "framer-motion";
 
 interface ActionProps{
     openId?:number;
     setOpenId:Function;
+    
 }
 
 const ActionHelper=({openId,setOpenId}:ActionProps)=>{
@@ -18,6 +21,7 @@ const ActionHelper=({openId,setOpenId}:ActionProps)=>{
     const {commonState}=useCommonSWR()
     const [position,setPosition]=useState<Vector3>(new Vector3());
     const [rotation,setRotation]=useState<Euler>(new Euler());
+    const [rotationAxis,setRotationAxis]=useState<Vector3>(new Vector3(0,0,0))
     const [scale,setScale]=useState<Vector3>(new Vector3());
     const [visible,setVisible]=useState<boolean>(false)
     const [color,setColor]=useState<string>("#ffffff")
@@ -46,9 +50,10 @@ const ActionHelper=({openId,setOpenId}:ActionProps)=>{
             mesh.position.set(positionProps.x,positionProps.y,positionProps.z);
         })
     }
-    const rotationChangeEvent=(rotationProps:Euler)=>{
+    const rotationChangeEvent=(rotationProps:Euler,axis:Vector3)=>{
         setRotation(rotationProps);
         meshList?.forEach((mesh)=>{
+            mesh.rotateOnAxis(new Vector3(0,0,0),0);
             mesh.rotation.set(rotationProps.x,rotationProps.y,rotationProps.z)
         })
     }
@@ -92,7 +97,9 @@ const ActionHelper=({openId,setOpenId}:ActionProps)=>{
                 label:'Rotate',
                 index:1,
                 content:<RotationHelper
-                rotation={rotation} setRotation={rotationChangeEvent}
+                rotation={rotation} 
+                rotationAxis={rotationAxis}
+                setRotation={rotationChangeEvent}
                 />
             },
             {
@@ -103,17 +110,14 @@ const ActionHelper=({openId,setOpenId}:ActionProps)=>{
                 />
             },
             {
-                label:'Visible',
+                label:'Color',
                 index:3,
-                content:<VisibleHelper
-                meshList={meshList!} 
-                        visible={visible} 
-                        setVisible={setVisible}
+                content:<ColorHelper
+                color={color} setColor={colorChangeEvent}
                 />
             }
         ]
     }
-    
     return(
         <Category {...actionInfo}/>
     )

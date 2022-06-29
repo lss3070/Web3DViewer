@@ -18,6 +18,7 @@ import { Vector3 } from 'three'
 import _ from 'lodash'
 import { useMeshSWR } from '../swrs/mesh.swr';
 import { Slider } from 'antd'
+import { useThree } from '@react-three/fiber';
 
 
 
@@ -42,18 +43,26 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label,onClick})=>{
                 setOnSelect(!meshState?.onWire!)
             break;
             default:
-                setOnSelect(!onSelect)
+                // setOnSelect(!onSelect)
         }
     }
 
     useEffect(()=>{
-        setOnText(meshState?.onText!);
-        setOnSelect(meshState?.onText!)
+        switch(label){
+            case 'Text':
+                setOnText(meshState?.onText!);
+                setOnSelect(meshState?.onText!)
+                break;
+            case 'Wire':
+                setOnText(meshState?.onWire!);
+                setOnSelect(meshState?.onWire!)
+                break
+        }
     },[label])
 
     const onMouseDown=()=>{
-        setOnDown(true);
-        OnActive();
+            setOnDown(true);
+            OnActive();
     }
 
     const onMouseUp=()=>{
@@ -115,36 +124,43 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
     }
 
     const onClick=()=>{
-        setTarget(new Vector3(0,0,0))
+        setTarget(new Vector3(0,0,0));
+        
         switch(type){
             case CustomCameraFocus.Front:
+                cameraState?.camera?.current.up.set(0,1,0)
                 setPosition(new Vector3(
                                 0,0,cameraState?.meshBox.max.z!*2
                                 ))
                 break;
             case CustomCameraFocus.Back:
+                cameraState?.camera?.current.up.set(0,1,0)
                 setPosition(new Vector3(
                                 0,0,cameraState?.meshBox.min.z!*2
                                 ))
                 break;
             case CustomCameraFocus.Left:
+                cameraState?.camera?.current.up.set(0,1,0)
                 setPosition(new Vector3(
                                     cameraState?.meshBox.max.x!*2,
                                 0,0
                                 ))
                 break;
             case CustomCameraFocus.Right:
+                cameraState?.camera?.current.up.set(0,1,0)
                 setPosition(new Vector3(
                                     cameraState?.meshBox.min.x!*2,
                                 0,0
                                 ))
                 break;
             case CustomCameraFocus.Top:
+                cameraState?.camera?.current.up.set(0,0,1)
                 setPosition(new Vector3(
                                     0,cameraState?.meshBox.max.y!*4,0
                                     ))
                 break;
             case CustomCameraFocus.Bottom:
+                cameraState?.camera?.current.up.set(0,0,1)
                 setPosition(new Vector3(
                                     0,cameraState?.meshBox.min.y!*4,0
                                     ))
@@ -156,7 +172,7 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
     whileHover={{scale:1.2,backgroundColor:'#ffffff'}}
     whileTap={{ backgroundColor:'#bdbdbd' }}
     className='w-8 h-8 p-1 cursor-pointer rounded-full 
-    z-10 bg-gray-400'
+    z-10 bg-gray-400 border'
     onClick={onClick}
     >
         {switchBox()}
@@ -182,6 +198,7 @@ const MiniControls=()=>{
     }
 
     const cameraInit=()=>{
+        cameraState?.camera?.current.up.set(0,1,0);
         setTarget(new Vector3(0,0,0));
         setPosition(new Vector3(0,0,59))
     }

@@ -11,6 +11,7 @@ let cameraState:ICameraStateProps={
     meshBox:new Box3(new Vector3()),
     target:new Vector3(0,0,0),
     axes:new Vector3(0,0,0),
+    
 };
 
 

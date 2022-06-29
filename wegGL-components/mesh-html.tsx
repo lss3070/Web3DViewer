@@ -32,7 +32,6 @@ export const MeshHtmlComponent=({centerPosition,name,uuid}:IMeshHtmlProps)=>{
 
     const [inTextScale,setInTextScale]=useState<number>(10);
 
-
     return (
             {meshPosition: centerPosition}&&{inScale: inTextScale}&&
             <Html 

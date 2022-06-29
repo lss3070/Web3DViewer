@@ -1,5 +1,5 @@
 
-import { motion, LayoutGroup,AnimatePresence } from 'framer-motion';
+import { motion, LayoutGroup,AnimatePresence, useDragControls } from 'framer-motion';
 import { useState } from 'react';
 import Category, { TabCategoryProps } from './category';
 import { AutoZoomHelper } from './helper/camera/autoZoomHelper';
@@ -21,11 +21,11 @@ import ModalLayout from './modal-layout';
 import { useMenuSWR } from '../swrs/menu.swr';
 import InfoHelper from './helper2/infoHelper';
 
-
 const Remocorn =()=>{
-
     const [openId,setOpenId]=useState<number>();
     const {menuState}=useMenuSWR()
+
+    const [drag,setDrag]=useState<boolean>(true)
 
     const lightInfo:TabCategoryProps={
         label:'Light',
@@ -51,32 +51,57 @@ const Remocorn =()=>{
         ]
     }
 
+      
+    
     return(
         <ModalLayout type="Control" 
         onModal={menuState?.control.on!}
-        >
+        drag={drag}>
             <div 
             className="rounded-lg 
-             w-72 h-auto
+             w-72 h-auto px-4 pb-4
             bg-gray-200
             dark:bg-slate-600
             ">
-                <div className='w-full flex items-center justify-end pt-1'>
-                    <FontAwesomeIcon
-                        icon={['fas','xmark']}
-                        className="w-5 h-5 text-white cursor-pointer"/>
+                <div className='w-full flex items-center justify-center h-12
+                 '>
+                    <div className='text-white w-full text-base font-semibold'>
+                        <FontAwesomeIcon
+                                icon={['fas','screwdriver-wrench']}
+                                className="w-8 h-8 text-white cursor-pointer"/>
+                        <span>
+                            Control
+                        </span>
+                    </div>
+                    <div className='w-full flex justify-end'>
+                        <FontAwesomeIcon
+                            icon={['fas','xmark']}
+                            className="w-8 h-8 text-white cursor-pointer text-lg font-bold"/>
+                    </div>
                 </div>
-                <div className='p-4 grid gap-5 cursor-auto'>
+                <div className='grid gap-5 cursor-auto'
+                onMouseDown={(e)=>setDrag(false)}
+                onMouseLeave={(e)=>setDrag(true)}
+                >
                     {/* info */}
-                    <InfoHelper openId={openId} setOpenId={setOpenId}/>
+                    <InfoHelper 
+                    openId={openId} 
+                    setOpenId={setOpenId}/>
                     {/* camera */}
-                    <CameraHelper openId={openId} setOpenId={setOpenId}/>
+                    <CameraHelper 
+                    openId={openId} 
+                    setOpenId={setOpenId}/>
                     {/* light */}
-                    <Category {...lightInfo}/>
+                    {/* <Category {...lightInfo}/> */}
                     {/* action */}
-                    <ActionHelper openId={openId} setOpenId={setOpenId}/>
+                    <ActionHelper 
+                    
+                    openId={openId} 
+                    setOpenId={setOpenId}/>
                     {/* animation */}
-                    <AnimationHelper openId={openId} setOpenId={setOpenId}/>
+                    <AnimationHelper 
+                    openId={openId} 
+                    setOpenId={setOpenId}/>
                 </div>
             </div>
         </ModalLayout>

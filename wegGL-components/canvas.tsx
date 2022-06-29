@@ -1,8 +1,13 @@
 import { Canvas, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
-import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane } from 'three';
+import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial } from 'three';
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
+import {Rhino3dmLoader,} from 'three/examples/jsm/loaders/3DMLoader'
+import {STLLoader} from 'three/examples/jsm/loaders/STLLoader'
+import {PLYLoader} from 'three/examples/jsm/loaders/PLYLoader'
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
+import {ThreeMFLoader} from 'three/examples/jsm/loaders/3MFLoader'
 
 import { CameraComponent } from "./camera"
 import { LightComponent } from "./light";
@@ -16,17 +21,15 @@ import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
 import { Box, PerspectiveCamera, TrackballControls, useHelper } from "@react-three/drei";
 import Axes from './axes';
+import SkyBox from './sky-box';
 
 interface ICanvasProps{
     setLoadingPercent:Function;
     setLoadingComplete:Function;
 }
-
 export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
-    const {commonState,setGroupList,setScene}=useCommonSWR();
-
-    const {cameraState}=useCameraSWR()
+    const {commonState,setGroupList,setScene,setFileLoad}=useCommonSWR();
     const {setMeshBox}=useCameraSWR();
 
     const sceneRef = useRef<Scene>(null)
@@ -34,111 +37,139 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     const fbxLoader= new FBXLoader();
     const objLoader=new OBJLoader();
+    const threeDMLoader = new Rhino3dmLoader();
+    const stlLoader = new STLLoader();
+    const plyLoader = new PLYLoader();
+    const gltfLoader = new GLTFLoader();
+    const threeMFLoader = new ThreeMFLoader
+
     const objectLoader = new ObjectLoader();
 
 
+    const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
+        switch(data.type){
+            case 'Group':
+                const object =data as Group;
+                new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
+    
+                const group = groupLoop(object);
+        
+                setGroupList(group);
+                setMeshGroup(object);
+        
+                const box = new Box3().setFromObject(object);
+                      
+                setFileLoad(true);
+                setMeshBox(box);
+                setLoadingComplete(true);
+                break;
+            case 'BufferGeometry':
+                const geometry =data as BufferGeometry;
+
+                const bufferMaterial = new MeshPhysicalMaterial()
+                const mesh =new Mesh(geometry,bufferMaterial);
+                const bufferGroup = new Group()
+                bufferGroup.add(mesh)
+
+                new Box3().setFromObject(bufferGroup).getCenter(bufferGroup.position).multiplyScalar(-1);
+
+                setGroupList(groupLoop(bufferGroup));
+                setMeshGroup(bufferGroup);
+        
+                const bufferBox = new Box3().setFromObject(bufferGroup);
+                      
+                setFileLoad(true);
+                setMeshBox(bufferBox);
+                setLoadingComplete(true);
+                break;
+        }
+
+    }
+
     useEffect(()=>{
+        console.log(commonState?.filePath)
+        console.log(commonState?.extension)
         if(commonState?.extension!==undefined){
-            console.log(commonState.extension)
             setLoadingComplete(false);
             switch(commonState?.extension!){
                 case 'obj':
                     objLoader.loadAsync(commonState?.filePath!,(progress)=>{
+                        setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                    }).then((obj)=>{
-                        
-                        
-                        new Box3().setFromObject(obj).getCenter(obj.position).multiplyScalar(-1);
-
-                        const group = groupLoop(obj);
-
-                        setGroupList(group); 
-                        setMeshGroup(obj); 
-
-
-
-                        const box = new Box3().setFromObject(obj);
-              
-                        setMeshBox(box);
-                        setLoadingComplete(true);
-
+                    }).then((obj)=>{         
+                        SettingModel(obj)
                     }).catch((err)=>{
                         alert(err)
                         setLoadingComplete(true);
                     });
                     break;
                 case 'fbx':
-                    fbxLoader.load(commonState?.filePath!,(fbx)=>{
-              
-                        console.log(fbx);
-                        new Box3().setFromObject(fbx).getCenter(fbx.position).multiplyScalar(-1);
-
-                        const group = groupLoop(fbx);
-    
-                        setGroupList(group);
-                        setMeshGroup(fbx);
-                        
-                        fbx.visible=false
-
-                        let size =new Vector3();
-                        let cnet = new Vector3();
-                        const box = new Box3().setFromObject(fbx);
-             
-                        console.log(box);
-                        setMeshBox(box);
-                        setLoadingComplete(true);
-
-                        const mixer =new AnimationMixer(fbx);
-                    
-                        const action= mixer.clipAction(fbx.animations[0])
-                        action.play()
-
-
-                    },(progress)=>{
+                    fbxLoader.loadAsync(commonState.filePath!,(progress)=>{
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
+                    }).then((fbx)=>{
+                        SettingModel(fbx);
+                    }).catch((err)=>{
+                        alert(err)
+                        setLoadingComplete(true);
                     })
                     break;
-                    case 'json':
-                        console.log(commonState?.filePath!);
-                        // var dataArray = JSON.parse(fs.readFileSync(commonState?.filePath!,
-                        //     'utf-8'))
-                        
-                        objectLoader.load(commonState?.filePath!,(data)=>{
-                            console.log('data')
-                            console.log(data);
-                            const temp = new Group();
-                            data.children.forEach((ob)=>{
-                                if(ob.type==='Object3D'){
-                                    ob.children.forEach((item)=>{
-                                        if(item.type==='Mesh'){
-                                            
-                                            temp.add(item)
-                                        }
-                                    })
-                                }
-                            })
-                            console.log('temp')
-                            console.log(temp);
-                            new Box3().setFromObject(temp).getCenter(temp.position).multiplyScalar(-1);
+                case 'stl':
+              
+                    stlLoader.loadAsync(commonState.filePath!,(progress)=>{
+                        setLoadingComplete(false);
+                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
+                    }).then((stl)=>{
+                        console.log(stl);
+                        SettingModel(stl);
+                    }).catch((err)=>{
+                        alert(err)
+                        setLoadingComplete(true);
+                    })
+                    break;
+                case 'ply':
+                    plyLoader.loadAsync(commonState.filePath!,(progress)=>{
+                        setLoadingComplete(false);
+                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
+                    }).then((ply)=>{
+                        SettingModel(ply);
+                    }).catch((err)=>{
+                        alert(err)
+                        setLoadingComplete(true);
+                    })
+                    break;
+                case 'gltf':
+                    gltfLoader.loadAsync(commonState.filePath!,(progress)=>{
+                        setLoadingComplete(false);
+                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
+                    }).then((gltf)=>{
+                        SettingModel(gltf.scene);
+                    }).catch((err)=>{
+                        alert(err)
+                        setLoadingComplete(true);
+                    })
+                    break;
+                case '3dm':
+                    threeDMLoader.load(commonState.filePath!,(load)=>{
+                        console.log(load)
+                    },(pro)=>{
 
-                            const group = groupLoop(temp);
-        
-                            setGroupList(group);
-                            setMeshGroup(temp);
-                            
-                            let size =new Vector3();
-                            let cnet = new Vector3();
-                            const box = new Box3().setFromObject(temp);
-                 
-                            setMeshBox(box);
-                            setLoadingComplete(true);
-                        },(progress)=>{
-                            setLoadingComplete(false);
-                            setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                        })
+                    },(error)=>{
+                        console.log(error);
+                    })
+                    // threeDMLoader.loadAsync(commonState.filePath!,(progress)=>{
+                    //     setLoadingComplete(false);
+                    //     setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
+                    // }).then((dm)=>{
+                    //     console.log(dm);
+                    //     // SettingModel(dm);
+                    // }).catch((err)=>{
+                    //     alert(err)
+                    //     setLoadingComplete(true);
+                    // })
                     break;
                 }
+                
         }
 
     },[commonState?.filePath])
@@ -191,25 +222,19 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
     useEffect(()=>{
         setScene(sceneRef)
     },[sceneRef])
+    
 
     return(
         <>
             <Axes/>
-            <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10">
+            <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10"
+            >
                 <color attach="background" 
                 args={[commonState?.darkMode?"#2a2b2e":'#ffffff']} 
                 />
-                
-                <scene ref={sceneRef} >
-                    <mesh
-                    onClick={(e)=>console.log('!!')}
-                    position={[0,0,0]}
-                    
-                    >
-                        <boxGeometry args={[10000, 10000, 10000]}/>
-                        <meshStandardMaterial color={'orange'}/>
-                    </mesh>
-                
+                <scene ref={sceneRef} 
+                >     
+                    <SkyBox/>
                     <LightComponent/>                
                     <CameraComponent/>
                     <ControlComponent/> 

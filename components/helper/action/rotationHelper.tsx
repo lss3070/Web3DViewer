@@ -5,20 +5,22 @@ import { Euler, Vector3 } from "three";
 import { useCommonSWR } from "../../../swrs/common.swr";
 import SliderItem from "../../sliderItem";
 
-
 interface IRotationHelper{
     rotation:Euler;
+    rotationAxis:Vector3;
     setRotation:Function;
 }
 
-
-export const RotationHelper=({rotation,setRotation}:IRotationHelper)=>{
-    const {commonState}=useCommonSWR()
+export const RotationHelper=({rotation,rotationAxis,setRotation}:IRotationHelper)=>{
     
+    const {commonState}=useCommonSWR()
     const [localRotation,setLocalRotation]=useState<Euler>(rotation);
 
     return(
         <div className="w-full">
+            <div>
+
+            </div>
             <SliderItem
             label='x'
             max={1000}
@@ -29,14 +31,12 @@ export const RotationHelper=({rotation,setRotation}:IRotationHelper)=>{
                     setRotation(new Euler(+e,localRotation.y,localRotation.z))
                     setLocalRotation(new Euler(+e,localRotation.y,localRotation.z))
                 }
-                
             }
             inputChangeEvent={
                 (e:ChangeEvent<HTMLInputElement>)=>{
                     setRotation(new Euler(+e.target.value,localRotation.y,localRotation.z))
                     setLocalRotation(new Euler(+e.target.value,localRotation.y,localRotation.z))
                 }
-                
             }
             />
             <SliderItem
@@ -55,7 +55,6 @@ export const RotationHelper=({rotation,setRotation}:IRotationHelper)=>{
                     setRotation(new Euler(localRotation.x,+e.target.value,localRotation.z))
                     setLocalRotation(new Euler(localRotation.x,+e.target.value,localRotation.z))
                 }
-              
             }
             />
             <SliderItem
@@ -74,7 +73,6 @@ export const RotationHelper=({rotation,setRotation}:IRotationHelper)=>{
                     setRotation(new Euler(localRotation.x,localRotation.y,+e.target.value))
                     setLocalRotation(new Euler(localRotation.x,localRotation.y,+e.target.value))
                 }
-               
             }
             />
         </div>

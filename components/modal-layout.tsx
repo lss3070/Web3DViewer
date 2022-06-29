@@ -1,17 +1,15 @@
-import { AnimatePresence, motion, useMotionValue } from "framer-motion"
+import { AnimatePresence, DragControls, motion, useDragControls, useMotionValue } from "framer-motion"
 import { useEffect, useState } from "react"
 import { useMenuSWR } from '../swrs/menu.swr';
 
 interface IModalLayoutProps{
     type:'TreeList'|'Control'|'Detail'|'SimpleControl'
     children:JSX.Element[]|JSX.Element,
-    onModal:boolean
-
+    onModal:boolean,
+    drag?:boolean,
 }
 
-
-const ModalLayout=({type,children,onModal}:IModalLayoutProps)=>{
-
+const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
     const {menuState,
         setSimpleControlPosition,
         setControlPosition,
@@ -85,12 +83,11 @@ const ModalLayout=({type,children,onModal}:IModalLayoutProps)=>{
             }
     },[onModal])
 
-
     return(
         <AnimatePresence>
             {onModal&&(
                 <motion.div
-                drag 
+                drag={drag}
                 dragConstraints={menuState?.dragArea}
                 animate={'show'}
                 exit={'hide'}

@@ -15,11 +15,14 @@ import LoadingComponent from '../components/Loading';
 import MiniControls from '../components/mini-control'
 import { useMenuSWR } from '../swrs/menu.swr';
 import DarkModeSwitch from '../components/darkModeSwitch'
+import { useCommonSWR } from '../swrs/common.swr';
+import { useMeshSWR } from '../swrs/mesh.swr';
 
 
 library.add(fab,far,fas)
 const Home: NextPage = () => {
   const { menuState,setDragArea} =useMenuSWR();
+  const {commonState}=useCommonSWR()
   const dragArea = useRef<HTMLDivElement>(null)
   
   const [loadingPercent,setLoadingPercent]=useState<number>(0)
@@ -31,7 +34,7 @@ const Home: NextPage = () => {
   },[dragArea])
 
   return (
-    <div className="w-full h-full grid ">
+    <div className="w-full h-full grid fixed">
       <main>
         <div className='w-full h-[5%] grid'>
           <TopMenu/>
@@ -44,9 +47,14 @@ const Home: NextPage = () => {
         <div 
         ref={dragArea}
         className='absolute top-[5%] left-0  w-full h-[95%]'>
-            <TreeList/>
-            <Remocorn/>
-            <MiniControls/>
+          {commonState?.fileLoad&&(
+            <>
+              <TreeList/>
+              <Remocorn/>
+              <MiniControls/>
+            </>
+          )}
+            
             <div className='absolute right-5 bottom-5 w-auto z-20'>
               <DarkModeSwitch/>
             </div>
