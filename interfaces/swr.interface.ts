@@ -57,7 +57,8 @@ export interface ICommonStateProps{
   mobileHelperComponent?:JSX.Element;
   onMobile?:boolean;
   fileLoad:boolean;
- 
+  fileName?:string;
+  fileUuid?:string;
   darkMode:boolean;
 }
 interface IAmbientLight{

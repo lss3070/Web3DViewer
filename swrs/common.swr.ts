@@ -70,6 +70,20 @@ export const useCommonSWR=()=>{
                 fileLoad
             }
             return mutate()
-        }   
+        },
+        setFIleName:async(fileName:string)=>{
+            commonState={
+                ...commonState,
+                fileName
+            }
+            return mutate()
+        },
+        setFileUuid:async(fileUuid:string)=>{
+            commonState={
+                ...commonState,
+                fileUuid
+            }
+            return mutate()
+        }
     }
 }

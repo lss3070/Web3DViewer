@@ -29,7 +29,7 @@ interface ICanvasProps{
 }
 export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
-    const {commonState,setGroupList,setScene,setFileLoad}=useCommonSWR();
+    const {commonState,setGroupList,setScene,setFileLoad,setFileUuid}=useCommonSWR();
     const {setMeshBox}=useCameraSWR();
 
     const sceneRef = useRef<Scene>(null)
@@ -62,6 +62,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                 setFileLoad(true);
                 setMeshBox(box);
                 setLoadingComplete(true);
+                setFileUuid(object.uuid);
                 break;
             case 'BufferGeometry':
                 const geometry =data as BufferGeometry;
@@ -115,7 +116,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     })
                     break;
                 case 'stl':
-              
                     stlLoader.loadAsync(commonState.filePath!,(progress)=>{
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
@@ -167,6 +167,17 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     //     alert(err)
                     //     setLoadingComplete(true);
                     // })
+                    break;
+                case '3mf':
+                    threeMFLoader.load(commonState.filePath!,(load)=>{
+                        SettingModel(load);
+                    },(progress)=>{
+                        setLoadingComplete(false);
+                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
+                    },(error)=>{
+                        alert(error)
+                        setLoadingComplete(true);
+                    })
                     break;
                 }
                 

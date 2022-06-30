@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { ChangeEvent, useState, useEffect, useRef } from 'react';
 import { useCommonSWR } from '../swrs/common.swr';
 import {AnimatePresence, motion} from 'framer-motion';
+import Export from './Export';
 
 type Position ={
     x:number;
@@ -27,7 +28,7 @@ const ExportList =({label}:ExportListProps)=>{
 
 
 const FileManager=()=>{
-    const {setFiltPath,setFileExtension}=useCommonSWR();
+    const {setFiltPath,setFileExtension,setFIleName}=useCommonSWR();
 
     const [openHover,setOpenHover]=useState<boolean>(false);
     const [isExport,setIsExport]=useState<boolean>(false);
@@ -36,15 +37,22 @@ const FileManager=()=>{
 
 
     const fileChange =(e:ChangeEvent<HTMLInputElement>)=>{
+        console.log(e);
         const file = e.currentTarget.files![0];
-        const extension = file?.name?.substr(file?.name?.lastIndexOf('.') + 1);
-        const link = window.URL.createObjectURL(file);
+        if(file){
+            const commaIndex = file?.name?.lastIndexOf('.')
+            const fileName = file.name.slice(0,commaIndex)
+            const extension = file?.name?.slice( commaIndex+1,file.name.length);
+            const link = window.URL.createObjectURL(file);
 
-        setFileExtension(extension);
-        setFiltPath(link);
+            setFIleName(fileName);
+            setFileExtension(extension);
+            setFiltPath(link);
+        }
     }
 
     const closeExporter=()=>{
+        console.log('parent')
         setIsExport(false);
     }
     const openExporter=()=>{
@@ -56,17 +64,6 @@ const FileManager=()=>{
     }
     const offOpenHover=()=>{
         setOpenHover(false)
-    }
-
-    const variants={
-        down:{
-            height:'auto',
-            // rotate: [0, -30, 0], 
-            transition: { duration: 0.5 }
-        },
-        up:{
-            height:0,
-        }
     }
 
     return(
@@ -101,14 +98,16 @@ const FileManager=()=>{
                         <span>Save</span>
                 </div>
             </div>
+            <Export/>
             <AnimatePresence>
             {
-                    isExport&&(
-                        <div className='absolute top-0 left-0 w-full h-full z-10
+                    // isExport&&(
+                        <div className='absolute top-0 left-0 w-full h-full z-20
                         bg-[#000000]/30 '
                         onClick={closeExporter}
                         >
-                            <motion.ul 
+                            {/* <Export/> */}
+                            {/* <motion.ul 
                             style={{
                                 x:exportRef.current?.offsetLeft,
                                 y:exportRef.current?.offsetTop!+5,
@@ -127,10 +126,10 @@ const FileManager=()=>{
                                 <ExportList label={'fbx'}/>
                                 <ExportList label={'stl'}/>
                                 <ExportList label={'obj'}/>
-                                </motion.ul>
+                                </motion.ul> */}
                             
                         </div>
-                    )
+                    // )
                 }
             </AnimatePresence>
         </>
