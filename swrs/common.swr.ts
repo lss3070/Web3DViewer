@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { ICommonStateProps } from "../interfaces/swr.interface";
+import { FileInfo, ICommonStateProps } from "../interfaces/swr.interface";
 import { CustomDataNode } from "../interfaces/app.interface";
 import { RefObject } from "react";
 
@@ -15,20 +15,20 @@ export const useCommonSWR=()=>{
     });
     return{
         commonState:data,
-        setFiltPath:async(filePath:string)=>{
+        setFiltPath:async(filePath:FileInfo)=>{
             commonState={
                 ...commonState,
-                filePath:filePath
+                fileInfo:filePath
             }
             return mutate();
         },
-        setFileExtension:async(extension:string)=>{
-            commonState={
-                ...commonState,
-                extension:extension
-            }
-            return mutate();
-        },
+        // setFileExtension:async(extension:string)=>{
+        //     commonState={
+        //         ...commonState,
+        //         extension:extension
+        //     }
+        //     return mutate();
+        // },
         setGroupList:async(value:CustomDataNode[])=>{
             commonState={
                 ...commonState,
@@ -71,13 +71,13 @@ export const useCommonSWR=()=>{
             }
             return mutate()
         },
-        setFIleName:async(fileName:string)=>{
-            commonState={
-                ...commonState,
-                fileName
-            }
-            return mutate()
-        },
+        // setFIleName:async(fileName:string)=>{
+        //     commonState={
+        //         ...commonState,
+        //         fileName
+        //     }
+        //     return mutate()
+        // },
         setFileUuid:async(fileUuid:string)=>{
             commonState={
                 ...commonState,

@@ -4,11 +4,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { ChangeEvent, useState, useEffect, useRef } from 'react';
 import { useCommonSWR } from '../swrs/common.swr';
 import {AnimatePresence, motion} from 'framer-motion';
-import Export from './Export';
+import Export from './export';
+import { LoadingManager } from 'three';
 
-type Position ={
-    x:number;
-    y:number;
+
+type FileType={
+    origin:'gltf'|'obj'
+    suport:'bin'|'mlt'
 }
 
 type ExportListProps={
@@ -28,7 +30,7 @@ const ExportList =({label}:ExportListProps)=>{
 
 
 const FileManager=()=>{
-    const {setFiltPath,setFileExtension,setFIleName}=useCommonSWR();
+    const {setFiltPath}=useCommonSWR();
 
     const [openHover,setOpenHover]=useState<boolean>(false);
     const [isExport,setIsExport]=useState<boolean>(false);
@@ -37,22 +39,55 @@ const FileManager=()=>{
 
 
     const fileChange =(e:ChangeEvent<HTMLInputElement>)=>{
-        console.log(e);
-        const file = e.currentTarget.files![0];
-        if(file){
+
+
+        const files= e.currentTarget.files;
+       
+        let originExtension:string;
+        let originName:string;
+        let originLink:string;
+        let supportLink:string;
+        
+        for(let i=0;i<files?.length!;i++){
+            const file = files?.item(i)!;
             const commaIndex = file?.name?.lastIndexOf('.')
-            const fileName = file.name.slice(0,commaIndex)
+
+            const name = file.name.slice(0,commaIndex)
             const extension = file?.name?.slice( commaIndex+1,file.name.length);
             const link = window.URL.createObjectURL(file);
 
-            setFIleName(fileName);
-            setFileExtension(extension);
-            setFiltPath(link);
+            console.log(extension);
+            if(extension===('bin'||'mtl')){
+                supportLink=link;
+            }else{
+                originExtension=extension;
+                originName=name;
+                originLink=link;
+            }
         }
+        // setFIleName(originName!);
+        // setFileExtension(originExtension!);
+        setFiltPath({
+            originPath:originLink!,
+            supportPath:supportLink!,
+            originExtension:originExtension!,
+            originName:originName!
+        });
+
+        // const file = e.currentTarget.files![0];
+        // if(file){
+        //     const commaIndex = file?.name?.lastIndexOf('.')
+        //     const fileName = file.name.slice(0,commaIndex)
+        //     const extension = file?.name?.slice( commaIndex+1,file.name.length);
+        //     const link = window.URL.createObjectURL(file);
+
+        //     setFIleName(fileName);
+        //     setFileExtension(extension);
+        //     setFiltPath(link);
+        // }
     }
 
     const closeExporter=()=>{
-        console.log('parent')
         setIsExport(false);
     }
     const openExporter=()=>{
@@ -69,7 +104,9 @@ const FileManager=()=>{
     return(
         <>
             <div className="flex items-center justify-center">
-                <input className="w-0 h-0 opacity-0" type="file" name="file" id="file" onChange={fileChange}/>
+                <input className="w-0 h-0 opacity-0" type="file" name="file" id="file" 
+                multiple
+                onChange={fileChange}/>
                 <label 
                 onMouseMove={onOpenHover}
                 onMouseLeave={offOpenHover}
@@ -98,38 +135,18 @@ const FileManager=()=>{
                         <span>Save</span>
                 </div>
             </div>
-            <Export/>
+           
             <AnimatePresence>
             {
-                    // isExport&&(
+                    isExport&&(
                         <div className='absolute top-0 left-0 w-full h-full z-20
                         bg-[#000000]/30 '
                         onClick={closeExporter}
                         >
-                            {/* <Export/> */}
-                            {/* <motion.ul 
-                            style={{
-                                x:exportRef.current?.offsetLeft,
-                                y:exportRef.current?.offsetTop!+5,
-                                    width:exportRef.current?.clientWidth!
-                            }}
-                            animate={'down'}
-                            variants={variants}
-                            exit={'up'}
-                            className={`absolute 
-                            h-0
-                                rounded-md
-                                overflow-hidden
-                                grid
-                            `}>
-                                <ExportList label={'obj'}/>
-                                <ExportList label={'fbx'}/>
-                                <ExportList label={'stl'}/>
-                                <ExportList label={'obj'}/>
-                                </motion.ul> */}
+                            <Export onClose={closeExporter}/>
                             
                         </div>
-                    // )
+                    )
                 }
             </AnimatePresence>
         </>

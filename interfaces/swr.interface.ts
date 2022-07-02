@@ -49,15 +49,22 @@ export interface EveryMesh{
   axes:Vector3;
 }
 
+export interface FileInfo{
+  originPath:string;
+  supportPath:string;
+  originExtension:string;
+  originName:string;
+}
+
 export interface ICommonStateProps{
-  filePath?:string;
-  extension?:string;
+  fileInfo?:FileInfo;
+  // extension?:string;\
   groupList?:CustomDataNode[];
   scene?:RefObject<Scene>;
   mobileHelperComponent?:JSX.Element;
   onMobile?:boolean;
   fileLoad:boolean;
-  fileName?:string;
+  // fileName?:string;
   fileUuid?:string;
   darkMode:boolean;
 }

@@ -1,6 +1,6 @@
 import { Canvas, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
-import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial } from 'three';
+import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping } from 'three';
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 import {Rhino3dmLoader,} from 'three/examples/jsm/loaders/3DMLoader'
@@ -8,6 +8,8 @@ import {STLLoader} from 'three/examples/jsm/loaders/STLLoader'
 import {PLYLoader} from 'three/examples/jsm/loaders/PLYLoader'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {ThreeMFLoader} from 'three/examples/jsm/loaders/3MFLoader'
+import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader';
+import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader';
 
 import { CameraComponent } from "./camera"
 import { LightComponent } from "./light";
@@ -22,6 +24,7 @@ import { SelectMeshComponent } from "./outLineMesh";
 import { Box, PerspectiveCamera, TrackballControls, useHelper } from "@react-three/drei";
 import Axes from './axes';
 import SkyBox from './sky-box';
+import CustomGLTFLoader from '../loaders/gltfLoader';
 
 interface ICanvasProps{
     setLoadingPercent:Function;
@@ -31,7 +34,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     const {commonState,setGroupList,setScene,setFileLoad,setFileUuid}=useCommonSWR();
     const {setMeshBox}=useCameraSWR();
-
     const sceneRef = useRef<Scene>(null)
     const [meshGroup,setMeshGroup]=useState<Group>();
 
@@ -41,9 +43,12 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const stlLoader = new STLLoader();
     const plyLoader = new PLYLoader();
     const gltfLoader = new GLTFLoader();
-    const threeMFLoader = new ThreeMFLoader
+    const threeMFLoader = new ThreeMFLoader();
+    const rgbeLoader = new RGBELoader();
+    const dracoLoader= new DRACOLoader();
 
     const objectLoader = new ObjectLoader();
+
 
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
@@ -88,13 +93,13 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     }
 
     useEffect(()=>{
-        console.log(commonState?.filePath)
-        console.log(commonState?.extension)
-        if(commonState?.extension!==undefined){
+       
+        console.log(commonState?.fileInfo);
+        if(commonState?.fileInfo?.originExtension!==undefined){
             setLoadingComplete(false);
-            switch(commonState?.extension!){
+            switch(commonState?.fileInfo?.originExtension){
                 case 'obj':
-                    objLoader.loadAsync(commonState?.filePath!,(progress)=>{
+                    objLoader.loadAsync(commonState.fileInfo.originPath,(progress)=>{
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((obj)=>{         
@@ -105,7 +110,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     });
                     break;
                 case 'fbx':
-                    fbxLoader.loadAsync(commonState.filePath!,(progress)=>{
+                    fbxLoader.loadAsync(commonState.fileInfo.originPath,(progress)=>{
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((fbx)=>{
@@ -116,7 +121,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     })
                     break;
                 case 'stl':
-                    stlLoader.loadAsync(commonState.filePath!,(progress)=>{
+                    stlLoader.loadAsync(commonState.fileInfo.originPath,(progress)=>{
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((stl)=>{
@@ -128,7 +133,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     })
                     break;
                 case 'ply':
-                    plyLoader.loadAsync(commonState.filePath!,(progress)=>{
+                    plyLoader.loadAsync(commonState.fileInfo.originPath,(progress)=>{
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((ply)=>{
@@ -139,18 +144,33 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     })
                     break;
                 case 'gltf':
-                    gltfLoader.loadAsync(commonState.filePath!,(progress)=>{
-                        setLoadingComplete(false);
-                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                    }).then((gltf)=>{
-                        SettingModel(gltf.scene);
-                    }).catch((err)=>{
-                        alert(err)
-                        setLoadingComplete(true);
+                    CustomGLTFLoader({
+                        fileInfo:commonState.fileInfo
                     })
+              
+                    // if(commonState.fileInfo.supportPath){
+
+                   
+                    //     const converToFile=
+                    //     const bufferData= converToFile(commonState.fileInfo.supportPath)
+                      
+                    //     // dracoLoader.setDecoderPath(commonState.fileInfo.supportPath)
+                    //     // gltfLoader.dracoLoader?.setCrossOrigin(commonState.fileInfo.supportPath);
+                    //     // gltfLoader.dracoLoader?.setPath(commonState.fileInfo.supportPath);
+                    //     gltfLoader.parse(bufferData).
+                    //     loadAsync(commonState.fileInfo.originPath!,(progress)=>{
+                    //         setLoadingComplete(false);
+                    //         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
+                    //     }).then((gltf)=>{
+                    //         SettingModel(gltf.scene);
+                    //     }).catch((err)=>{
+                    //         alert(err)
+                    //         setLoadingComplete(true);
+                    //     })
+                    // }
                     break;
                 case '3dm':
-                    threeDMLoader.load(commonState.filePath!,(load)=>{
+                    threeDMLoader.load(commonState.fileInfo.originPath!,(load)=>{
                         console.log(load)
                     },(pro)=>{
 
@@ -169,7 +189,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     // })
                     break;
                 case '3mf':
-                    threeMFLoader.load(commonState.filePath!,(load)=>{
+                    threeMFLoader.load(commonState.fileInfo.originPath!,(load)=>{
                         SettingModel(load);
                     },(progress)=>{
                         setLoadingComplete(false);
@@ -183,7 +203,14 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                 
         }
 
-    },[commonState?.filePath])
+    },[commonState?.fileInfo])
+
+    const converToFile=async(url:string)=>{
+        let response = await fetch(url);
+        let blob = await response.blob();
+        return blob.arrayBuffer
+    }
+   
 
 const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
     let temp:CustomDataNode[]
