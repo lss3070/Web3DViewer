@@ -1,5 +1,5 @@
 
-import { Box3, Mesh, Object3D, Sphere, Vector3,Color as ThreeColor, Scene } from "three";
+import { Box3, Mesh, Object3D, Sphere, Vector3,Color as ThreeColor, Scene, Group } from "three";
 import { CustomDataNode } from "./app.interface";
 
 import { MutableRefObject, RefObject } from "react";
@@ -18,6 +18,7 @@ export interface EveryMesh{
   triangle:number
 }
 
+
  export interface IMeshStateProps {
     hoverMesh?:ObjectRef;
     selectMesh:ObjectRef[];
@@ -26,7 +27,8 @@ export interface EveryMesh{
     meshMode:MeshMode;
     textScale?:number;
     uuid?:string;
-    everyMesh?:EveryMesh;
+    everyMesh?:EveryMesh;//전체 mesh정보
+    meshGroup?:Group;//전체 mesh
 
     onText:boolean;
     onWire:boolean;
@@ -54,6 +56,7 @@ export interface FileInfo{
   supportPath:string;
   originExtension:string;
   originName:string;
+  fileMap?:Map<string,File>;
 }
 
 export interface ICommonStateProps{

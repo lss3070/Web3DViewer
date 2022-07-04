@@ -43,13 +43,17 @@ const FileManager=()=>{
 
         const files= e.currentTarget.files;
        
+        const fileMap = new Map<string,File>();
+
         let originExtension:string;
         let originName:string;
         let originLink:string;
         let supportLink:string;
+
         
         for(let i=0;i<files?.length!;i++){
             const file = files?.item(i)!;
+            fileMap.set(file.name,file)
             const commaIndex = file?.name?.lastIndexOf('.')
 
             const name = file.name.slice(0,commaIndex)
@@ -71,7 +75,8 @@ const FileManager=()=>{
             originPath:originLink!,
             supportPath:supportLink!,
             originExtension:originExtension!,
-            originName:originName!
+            originName:originName!,
+            fileMap:fileMap!
         });
 
         // const file = e.currentTarget.files![0];

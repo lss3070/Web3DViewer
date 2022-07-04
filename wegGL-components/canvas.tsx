@@ -25,6 +25,7 @@ import { Box, PerspectiveCamera, TrackballControls, useHelper } from "@react-thr
 import Axes from './axes';
 import SkyBox from './sky-box';
 import CustomGLTFLoader from '../loaders/gltfLoader';
+import { useMeshSWR } from '../swrs/mesh.swr';
 
 interface ICanvasProps{
     setLoadingPercent:Function;
@@ -34,8 +35,11 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     const {commonState,setGroupList,setScene,setFileLoad,setFileUuid}=useCommonSWR();
     const {setMeshBox}=useCameraSWR();
+    const {meshState}=useMeshSWR()
     const sceneRef = useRef<Scene>(null)
     const [meshGroup,setMeshGroup]=useState<Group>();
+
+    
 
     const fbxLoader= new FBXLoader();
     const objLoader=new OBJLoader();
@@ -50,8 +54,8 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const objectLoader = new ObjectLoader();
 
 
-
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
+        console.log(data);
         switch(data.type){
             case 'Group':
                 const object =data as Group;
@@ -89,7 +93,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                 setLoadingComplete(true);
                 break;
         }
-
     }
 
     useEffect(()=>{
@@ -103,7 +106,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((obj)=>{         
-                        SettingModel(obj)
+                        // SettingModel(obj)
                     }).catch((err)=>{
                         alert(err)
                         setLoadingComplete(true);
@@ -114,7 +117,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((fbx)=>{
-                        SettingModel(fbx);
+                        // SettingModel(fbx);
                     }).catch((err)=>{
                         alert(err)
                         setLoadingComplete(true);
@@ -126,7 +129,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((stl)=>{
                         console.log(stl);
-                        SettingModel(stl);
+                        // SettingModel(stl);
                     }).catch((err)=>{
                         alert(err)
                         setLoadingComplete(true);
@@ -137,7 +140,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
                     }).then((ply)=>{
-                        SettingModel(ply);
+                        // SettingModel(ply);
                     }).catch((err)=>{
                         alert(err)
                         setLoadingComplete(true);
@@ -145,29 +148,10 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     break;
                 case 'gltf':
                     CustomGLTFLoader({
-                        fileInfo:commonState.fileInfo
+                        fileInfo:commonState?.fileInfo!
+                    }).then((data)=>{
+                       SettingModel(data as Group);
                     })
-              
-                    // if(commonState.fileInfo.supportPath){
-
-                   
-                    //     const converToFile=
-                    //     const bufferData= converToFile(commonState.fileInfo.supportPath)
-                      
-                    //     // dracoLoader.setDecoderPath(commonState.fileInfo.supportPath)
-                    //     // gltfLoader.dracoLoader?.setCrossOrigin(commonState.fileInfo.supportPath);
-                    //     // gltfLoader.dracoLoader?.setPath(commonState.fileInfo.supportPath);
-                    //     gltfLoader.parse(bufferData).
-                    //     loadAsync(commonState.fileInfo.originPath!,(progress)=>{
-                    //         setLoadingComplete(false);
-                    //         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                    //     }).then((gltf)=>{
-                    //         SettingModel(gltf.scene);
-                    //     }).catch((err)=>{
-                    //         alert(err)
-                    //         setLoadingComplete(true);
-                    //     })
-                    // }
                     break;
                 case '3dm':
                     threeDMLoader.load(commonState.fileInfo.originPath!,(load)=>{
@@ -190,7 +174,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     break;
                 case '3mf':
                     threeMFLoader.load(commonState.fileInfo.originPath!,(load)=>{
-                        SettingModel(load);
+                        // SettingModel(load);
                     },(progress)=>{
                         setLoadingComplete(false);
                         setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
