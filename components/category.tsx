@@ -30,7 +30,6 @@ const Category=({
 
     return(
         <motion.li
-     
         key={id}
         transition={{
             layout:{

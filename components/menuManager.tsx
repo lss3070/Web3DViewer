@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {motion} from 'framer-motion'
 import { useEffect, useState } from 'react';
 import { useMenuSWR } from '../swrs/menu.swr';
+import MiniButton from './mini-button';
 
 
 interface CommonButtonProps{
@@ -79,16 +80,11 @@ const MenuManageButton=({label}:CommonButtonProps)=>{
         onButton?`inset 3px 5px rgba(0, 0, 0, 0.2)`
         :`inset 0px 0px rgba(0, 0, 0, 0.2)`}
         `}}
-        // whileHover={{
-        //     boxShadow:`2px 2px rgba(0,0,0,0.2)`
-        // }}
-  
-    
-        // whileHover={{boxShadow:`${!onButton?`3px 3px rgba(0, 0, 0, 0.2)`
-        // :`inset 3px 5px rgba(0, 0, 0, 0.2)`}`}}
 
-        className={`rounded-md py-1 px-3 bg-[#64758b]
-        text-white cursor-pointer select-none font-semibold
+        className={`rounded-md py-1 px-3 
+        bg-[#9CB6D9] dark:bg-[#64758b]
+         text-gray-600 dark:text-white
+         cursor-pointer select-none font-semibold
         `}>
             {Icon()}{label}
         </motion.div>
@@ -96,19 +92,44 @@ const MenuManageButton=({label}:CommonButtonProps)=>{
 }
 
 const MenuManager=()=>{
+
+    const {menuState,onControl,onTreeList,onSimpleControl}= useMenuSWR();
+    const onTreeClick=()=>{
+        onTreeList(!menuState?.treeList.on);
+    }
+    const onControlClick=()=>{
+        onControl(!menuState?.control.on);
+    }
+    const onSimpleControlClick=()=>{
+        onSimpleControl(!menuState?.simpleControl.on);
+    }
     return(
-        <>
-            <div className="flex items-center justify-center
-            ">
-                <MenuManageButton label={'TreeList'}/>
-            </div>
-            <div className="flex items-center justify-center">
-                <MenuManageButton label={'Control'}/>
-            </div>
-            <div className='flex items-center justify-center'>
-                <MenuManageButton label={'SimpleControl'}/>
-            </div>
-        </>
+        <div className='flex items-center gap-5'>
+        <MiniButton onClick={onTreeClick} onPressEvent={true}>
+            <>
+                <FontAwesomeIcon
+                    icon={['fas','folder-tree']} 
+                    className="w-5 h-5 "/>
+                <span>TreeList</span>
+            </>
+        </MiniButton>
+        <MiniButton onClick={onControlClick} onPressEvent={true}>
+            <>
+                <FontAwesomeIcon
+                    icon={['fas','screwdriver-wrench']} 
+                    className="w-5 h-5 "/>
+                <span>Control</span>
+            </>
+        </MiniButton>
+        <MiniButton onClick={onSimpleControlClick} onPressEvent={true}>
+            <>
+                <FontAwesomeIcon
+                    icon={['fas','wrench']} 
+                    className="w-5 h-5 "/>
+                <span>SimpleControl</span>
+            </>
+        </MiniButton>
+        </div>
     )
 }
 export default MenuManager

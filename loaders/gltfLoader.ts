@@ -1,8 +1,9 @@
 import { useLoader } from "@react-three/fiber";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import {Group, LoadingManager} from 'three'
-
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 
 
 import { FileInfo } from "../interfaces/swr.interface"
@@ -14,15 +15,16 @@ interface IGLTFLoader{
 }
 
 const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
-
+    console.log('!!');
     const baseURL = 'blob:http://localhost:3000/'
-//https://gltf-viewer.donmccurdy.com/ code ㅊㅏㅁ조
-        const manager = new LoadingManager()
+    const manager = new LoadingManager()
+
             return new Promise((resolve,reject)=>{
             manager.setURLModifier((url)=>{
                 const normalizedURL= 
                 url.replace(baseURL,'').replace(/^(\.?\/)/, '');
 
+                console.log(normalizedURL);
                 if (fileInfo.fileMap!.has(normalizedURL)) {
                     const blob = fileInfo.fileMap!.get(normalizedURL)!;
                     const blobURL = URL.createObjectURL(blob);
@@ -34,6 +36,7 @@ const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
 
             const loader = new GLTFLoader(manager)
             .setCrossOrigin('anonymous')
+            .setMeshoptDecoder(MeshoptDecoder)
 
             const blobURLs:any[]=[]
 
@@ -43,9 +46,16 @@ const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
                 resolve(gltf)
             },undefined,reject)
         }).then((object)=>{
+            console.log('object');
+            console.log(object);
             return (object as GLTF).scene
+        }).catch((error)=>{
+            console.log('error');
+            console.log(error);
+        }).finally(()=>{
+            console.log('finally')
         })
-        
+
 }
 
 

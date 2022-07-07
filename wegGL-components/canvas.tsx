@@ -26,6 +26,10 @@ import Axes from './axes';
 import SkyBox from './sky-box';
 import CustomGLTFLoader from '../loaders/gltfLoader';
 import { useMeshSWR } from '../swrs/mesh.swr';
+import CustomOBJLoader from '../loaders/objLoader';
+import CustomFBXLoader from '../loaders/fbxLoader';
+import CustomSTLLoader from '../loaders/stlLoader';
+import CustomPLYLoader from '../loaders/plyLoader';
 
 interface ICanvasProps{
     setLoadingPercent:Function;
@@ -39,20 +43,8 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const sceneRef = useRef<Scene>(null)
     const [meshGroup,setMeshGroup]=useState<Group>();
 
-    
-
-    const fbxLoader= new FBXLoader();
-    const objLoader=new OBJLoader();
     const threeDMLoader = new Rhino3dmLoader();
-    const stlLoader = new STLLoader();
-    const plyLoader = new PLYLoader();
-    const gltfLoader = new GLTFLoader();
     const threeMFLoader = new ThreeMFLoader();
-    const rgbeLoader = new RGBELoader();
-    const dracoLoader= new DRACOLoader();
-
-    const objectLoader = new ObjectLoader();
-
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
         console.log(data);
@@ -99,54 +91,46 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
        
         console.log(commonState?.fileInfo);
         if(commonState?.fileInfo?.originExtension!==undefined){
+            console.log(commonState.fileInfo.originExtension);
             setLoadingComplete(false);
             switch(commonState?.fileInfo?.originExtension){
                 case 'obj':
-                    objLoader.loadAsync(commonState.fileInfo.originPath,(progress)=>{
-                        setLoadingComplete(false);
-                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                    }).then((obj)=>{         
-                        // SettingModel(obj)
-                    }).catch((err)=>{
-                        alert(err)
-                        setLoadingComplete(true);
-                    });
+                    CustomOBJLoader({
+                        fileInfo:commonState?.fileInfo!
+                    }).then((data)=>{
+                       SettingModel(data as Group);
+                    })
+
                     break;
                 case 'fbx':
-                    fbxLoader.loadAsync(commonState.fileInfo.originPath,(progress)=>{
-                        setLoadingComplete(false);
-                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                    }).then((fbx)=>{
-                        // SettingModel(fbx);
-                    }).catch((err)=>{
-                        alert(err)
-                        setLoadingComplete(true);
+                    CustomFBXLoader({
+                        fileInfo:commonState?.fileInfo!
+                    }).then((data)=>{
+                       SettingModel(data as Group);
                     })
                     break;
                 case 'stl':
-                    stlLoader.loadAsync(commonState.fileInfo.originPath,(progress)=>{
-                        setLoadingComplete(false);
-                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                    }).then((stl)=>{
-                        console.log(stl);
-                        // SettingModel(stl);
-                    }).catch((err)=>{
-                        alert(err)
-                        setLoadingComplete(true);
+                    CustomSTLLoader({
+                        fileInfo:commonState?.fileInfo!
+                    }).then((data)=>{
+                       SettingModel(data as Group);
                     })
                     break;
                 case 'ply':
-                    plyLoader.loadAsync(commonState.fileInfo.originPath,(progress)=>{
-                        setLoadingComplete(false);
-                        setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                    }).then((ply)=>{
-                        // SettingModel(ply);
-                    }).catch((err)=>{
-                        alert(err)
-                        setLoadingComplete(true);
+                    CustomPLYLoader({
+                        fileInfo:commonState?.fileInfo!
+                    }).then((data)=>{
+                       SettingModel(data as Group);
                     })
                     break;
                 case 'gltf':
+                    CustomGLTFLoader({
+                        fileInfo:commonState?.fileInfo!
+                    }).then((data)=>{
+                       SettingModel(data as Group);
+                    })
+                    break;
+                case 'glb':
                     CustomGLTFLoader({
                         fileInfo:commonState?.fileInfo!
                     }).then((data)=>{

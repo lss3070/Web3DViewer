@@ -1,13 +1,13 @@
 
 import { LoadingManager} from 'three'
 import { FileInfo } from "../interfaces/swr.interface"
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader';
 
-interface IFBXLoader{
+interface IPLYLoader{
     fileInfo:FileInfo
 }
 
-const CustomFBXLoader=({fileInfo}:IFBXLoader)=>{
+const CustomPLYLoader=({fileInfo}:IPLYLoader)=>{
 
     const baseURL = 'blob:http://localhost:3000/'
 //https://gltf-viewer.donmccurdy.com/ code ㅊㅏㅁ조
@@ -26,13 +26,15 @@ const CustomFBXLoader=({fileInfo}:IFBXLoader)=>{
                 return url
             })
 
-            const loader = new FBXLoader(manager)
+            const loader = new PLYLoader(manager)
+            .setCrossOrigin('anonymous')
 
             const blobURLs:any[]=[]
 
-            loader.load(fileInfo.originPath,(fbx)=>{
+            loader.load(fileInfo.originPath,(obj)=>{
                 blobURLs.forEach(URL.revokeObjectURL);
-                resolve(fbx)
+                
+                resolve(obj)
             },undefined,reject)
         }).then((object)=>{
             return object 
@@ -40,4 +42,4 @@ const CustomFBXLoader=({fileInfo}:IFBXLoader)=>{
         
 }
 
-export default CustomFBXLoader
+export default CustomPLYLoader

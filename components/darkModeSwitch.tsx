@@ -46,7 +46,6 @@ const DarkModeSwitch=()=>{
                 bg-white
                 dark:bg-zinc-900 
                "
-                
                 layout
                 transition={spring}
             >
@@ -58,7 +57,7 @@ const DarkModeSwitch=()=>{
                     ):
                     (<FontAwesomeIcon
                         icon={['fas','sun']}
-                        className="w-5 h-5 text-[black]"/>
+                        className="w-5 h-5 text-orange-300"/>
                         )
                     }
                 </motion.div>

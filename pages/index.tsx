@@ -17,9 +17,11 @@ import { useMenuSWR } from '../swrs/menu.swr';
 import DarkModeSwitch from '../components/darkModeSwitch'
 import { useCommonSWR } from '../swrs/common.swr';
 import { useMeshSWR } from '../swrs/mesh.swr';
+import React from 'react'
+import Portal from '../HOC/portal'
 
+library.add(fab,far,fas);
 
-library.add(fab,far,fas)
 const Home: NextPage = () => {
   const { menuState,setDragArea} =useMenuSWR();
   const {commonState}=useCommonSWR()
@@ -33,39 +35,39 @@ const Home: NextPage = () => {
     setDragArea(dragArea);
   },[dragArea])
 
-  return (
-    <div className="w-full h-full grid fixed">
-      <main>
-        <div className='w-full h-[5%] grid'>
-          <TopMenu/>
-        </div>
-        <div className={`w-full h-[95%] grid`}>
-                <Suspense fallback={null}>
-                    <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
-                </Suspense>
-        </div>
-        <div 
-        ref={dragArea}
-        className='absolute top-[5%] left-0  w-full h-[95%]'>
-          {commonState?.fileLoad&&(
-            <>
-              <TreeList/>
-              <Remocorn/>
-              <MiniControls/>
-            </>
-          )}
-            
-            <div className='absolute right-5 bottom-5 w-auto z-20'>
-              <DarkModeSwitch/>
-            </div>
-        </div>
-  
-       
-      </main>
-      {!loadingComplete&&(
-        <LoadingComponent/>
-      )}
-    </div>
+  return (  
+    <>
+           <div className="w-full h-full grid fixed">
+        <main>
+          <div className='w-full h-[5%] grid'>
+            <TopMenu/>
+          </div>
+          <div className={`w-full h-[95%] grid`}>
+                  <Suspense fallback={null}>
+                      <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
+                  </Suspense>
+          </div>
+          <div 
+          ref={dragArea}
+          className='absolute top-[5%] left-0  w-full h-[95%]'>
+            {commonState?.fileLoad&&(
+              <>
+                <TreeList/>
+                <Remocorn/>
+                <MiniControls/>
+              </>
+            )}
+              <div className='absolute right-5 bottom-5 w-auto z-20'>
+                <DarkModeSwitch/>
+              </div>
+          </div>
+    
+        </main>
+        {!loadingComplete&&(
+          <LoadingComponent/>
+        )}
+      </div>
+    </>
   )
 }
 

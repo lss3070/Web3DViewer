@@ -40,9 +40,14 @@ export const TopMenu=()=>{
                                 className="w-5 h-5 text-[white]"/>
                     </div>
                     <div className='flex items-center justify-center'>
-                    <FontAwesomeIcon
-                                icon={['fas','print']}
-                                className="w-5 h-5 text-[white]"/>
+                        <FontAwesomeIcon
+                                    icon={['fas','print']}
+                                    className="w-5 h-5 text-[white]"/>
+                    </div>
+                    <div className='flex items-center justify-center'>
+                        <FontAwesomeIcon
+                                    icon={['fas','circle-info']}
+                                    className="w-5 h-5 text-[white] cursor-pointer"/>
                     </div>
                 </div>
             </div>

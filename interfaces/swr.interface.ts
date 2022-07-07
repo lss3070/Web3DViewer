@@ -53,7 +53,6 @@ export interface EveryMesh{
 
 export interface FileInfo{
   originPath:string;
-  supportPath:string;
   originExtension:string;
   originName:string;
   fileMap?:Map<string,File>;
