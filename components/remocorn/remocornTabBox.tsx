@@ -1,35 +1,35 @@
-import {motion,AnimatePresence,LayoutGroup, DragControls} from 'framer-motion'
-import { memo, ReactElement, useState } from 'react';
-import Tab from './tab';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AnimatePresence, motion } from "framer-motion"
 
-export interface TabCategoryProps{
+interface IRemocornTabBox{
     label:string;
-    id:number;
-    tabList:TabItem[];
-    openId?:number;
+    id:string;
+    openId?:string;
     setOpenId:Function;
-}
-export interface TabItem{
-    label:string;
-    index:number;
-    content:JSX.Element;
+    children:JSX.Element
 }
 
-const Category=({
-    label,
-    id,
-    tabList,
-    openId,
-    setOpenId}:TabCategoryProps)=>{
+const RemocornTabBox=({label,id,openId,setOpenId,children}:IRemocornTabBox)=>{
 
-    const toggleOpen = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        id===openId?setOpenId():setOpenId(id);
+    const toggleOpen = () => {
+        id===openId?setOpenId(''):setOpenId(id);
     }
 
     return(
         <motion.li
         key={id}
+        className="
+        bg-[#f7fafb]
+        text-gray-600
+        dark:bg-gray-400 
+        dark:border-transparent
+        font-bold
+        grid
+        rounded-lg
+         shadow-md
+         border
+         border-gray-100
+        "
         transition={{
             layout:{
                 duration:1,
@@ -37,15 +37,10 @@ const Category=({
             }
         }}
         style={{transition:`opacity 0.5s ease-in-out`}}
-        className="
-        bg-[#cbd5df]
-        text-gray-600
-        dark:bg-gray-400 
-        font-bold
-        grid
-        "
-        initial={{ borderRadius: 10 }}>
-            <div className='flex items-center justify-center h-9 px-2'>
+        >
+            <div className="rounded-lg 
+              h-auto px-4 ">
+                <div className='flex items-center justify-center h-10 '>
                 <div className=' w-full'>{label}</div>
                 <div className=' w-full flex justify-end cursor-pointer'
                   onClick={toggleOpen} 
@@ -63,10 +58,13 @@ const Category=({
                     }
                 </div>
             </div>
-                <AnimatePresence initial={false} >
-                    {openId===id && <Tab tabList={tabList}/>}
+                
+             </div>
+             <AnimatePresence initial={false} >
+                    {openId===id && children}
                 </AnimatePresence>
         </motion.li>
     )
 }
-export default Category
+
+export default RemocornTabBox

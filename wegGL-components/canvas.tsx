@@ -236,7 +236,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
             <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10"
             >
                 <color attach="background" 
-                args={[commonState?.darkMode?"#2a2b2e":'#ffffff']} 
+                args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 
                 />
                 <scene ref={sceneRef} 
                 >     

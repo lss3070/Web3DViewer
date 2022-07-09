@@ -70,27 +70,30 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label,onClick})=>{
     }
 
     return(
-        <motion.div
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        animate={{boxShadow:`${onSelect?`inset 1px 3px 1px rgba(0, 0, 0, 0.2)`
-        :`inset 0px 0px 0px rgba(0, 0, 0, 0.2)`}`}}
-        whileTap={{boxShadow:`
-        ${onDown?`inset 1px 5px 1px rgba(0, 0, 0, 0.2)`:
-        onSelect?`inset 1px 3px 1px rgba(0, 0, 0, 0.2)`
-        :`inset 0px 0px 0px rgba(0, 0, 0, 0.2)`}
-        `}}
-        onClick={onClick}
-        // whileHover={{boxShadow:`${!onSelect?`3px 3px rgba(0, 0, 0, 0.2)`
-        // :`inset 3px 5px rgba(0, 0, 0, 0.2)`}`}}
-
-        className='w-8 h-8 bg-gray-400 rounded-full flex 
-            items-center justify-center font-semibold cursor-pointer 
-              text-stone-800
-            dark:text-white
-            '>
-                    {label}
-        </motion.div>
+        <div className='rounded-full shadow-md'>
+            <motion.div
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
+            animate={{boxShadow:`${onSelect?`inset 1px 3px 1px rgba(0, 0, 0, 0.2)`
+            :`inset 0px 0px 0px rgba(0, 0, 0, 0.2)`}`}}
+            whileTap={{boxShadow:`
+            ${onDown?`inset 1px 5px 1px rgba(0, 0, 0, 0.2)`:
+            onSelect?`inset 1px 3px 1px rgba(0, 0, 0, 0.2)`
+            :`inset 0px 0px 0px rgba(0, 0, 0, 0.2)`}
+            `}}
+            onClick={onClick}
+            // whileHover={{boxShadow:`${!onSelect?`3px 3px rgba(0, 0, 0, 0.2)`
+            // :`inset 3px 5px rgba(0, 0, 0, 0.2)`}`}}
+            className='w-8 h-8 
+            dark:bg-gray-400
+            bg-[#edf1f5]
+            rounded-full flex 
+            items-center justify-center 
+            font-semibold cursor-pointer 
+                '>
+                        {label}
+            </motion.div>
+        </div>
     )
 }
 
@@ -247,8 +250,6 @@ const MiniControls=()=>{
             className="
             rounded-lg w-auto h-auto p-2
             flex gap-5 
-             bg-gray-200
-            dark:bg-slate-600
             ">
                 <motion.div className='w-8 h-8 p-1 cursor-pointer rounded-full 
                 bg-gray-400 z-10'
@@ -257,7 +258,6 @@ const MiniControls=()=>{
                         >
                             <Front/>
                 </motion.div>
-
                 <AnimatePresence>
                     {onCameraPositionList&&(
                     <motion.div 
@@ -294,7 +294,7 @@ const MiniControls=()=>{
                 label={
                     <FontAwesomeIcon
                     icon={['fas','house']}
-                    className="w-5 h-5 text-white"/>
+                    className="w-5 h-5 "/>
                 }/>
                 <MiniCircleButton
                 onClick={onFitZoom}
@@ -306,7 +306,7 @@ const MiniControls=()=>{
                     />
                 <MiniCircleButton label={'Text'}/>
                 <MiniCircleButton label={'Wire'}/>
-             </div>
+            </div>
         </ModalLayout>
 
     )

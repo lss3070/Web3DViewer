@@ -96,9 +96,18 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
                 dragMomentum={false}
                 className={`absolute 
                 w-auto h-auto opacity-0 z-20
-                bg-gray-200
+                rounded-lg
+                shadow-lg
+                border
+
+                bg-white
+                text-gray-600 
+                border-gray-100
+
+                dark:text-white
                 dark:bg-slate-600
-                 rounded-lg
+                dark:border-transparent
+
                  ${staticPosition()}
                 `}
                 >

@@ -5,7 +5,7 @@ import { TopMenu } from '../components/topMenu'
 import TreeList from '../components/treeList'
 import { CanvasComponent } from '../wegGL-components/canvas'
 
-import Remocorn from '../components/remocorn'
+import Remocorn from '../components/remocorn/remocorn'
 
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {fab} from '@fortawesome/free-brands-svg-icons';

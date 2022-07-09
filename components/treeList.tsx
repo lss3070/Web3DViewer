@@ -287,20 +287,17 @@ interface TitleProps{
         onModal={menuState?.treeList.on!}
         drag={drag}
         >
-            <div className={`h-auto w-72 rounded-md px-4 pb-4
-                   bg-gray-200
-                   dark:bg-slate-600
-            `}>
+            <div className={`h-auto w-72 rounded-md px-4 pb-4`}>
             {(
                 /* </LayoutGroup>     */
-                <div className="h-auto w-full bg-slate-600">
+                <div className="h-auto w-full ">
 
                     {/* title */}
                     <div className='w-full flex items-center justify-center h-12'>
-                        <div className='text-white w-full text-base font-semibold'>
+                        <div className='w-full text-base font-semibold'>
                             <FontAwesomeIcon
                                     icon={['fas','folder-tree']}
-                                    className="w-8 h-8 text-white cursor-pointer"/>
+                                    className="w-8 h-8 cursor-pointer"/>
                             <span>
                                 TreeList
                             </span>
@@ -308,7 +305,7 @@ interface TitleProps{
                         <div className='w-full flex justify-end'>
                             <FontAwesomeIcon
                                 icon={['fas','xmark']}
-                                className="w-8 h-8 text-white cursor-pointer text-lg font-bold"/>
+                                className="w-8 h-8 cursor-pointer text-lg font-bold"/>
                         </div>
                     </div>
                     <div
@@ -317,20 +314,32 @@ interface TitleProps{
                     >
                         {/* search box */}
                         <div className="w-full relative mb-2">
-                            <input className="w-full h-8 p-2 bg-gray-400 rounded-xl
-                            placeholder:text-white outline-none"
+                            <input className="w-full h-8 p-2 
+                            bg-[#f7fafb]
+                            dark:bg-gray-400 rounded-xl
+                            placeholder:text-gray-600 
+                             dark:placeholder:text-white
+                            outline-none shadow-lg border border-gray-100 dark:border-transparent"
                             placeholder="Search"
                             onChange={(e)=>onChange(e)}
                             />
                             <FontAwesomeIcon
                                 icon={['fas','magnifying-glass']}
-                                className="w-5 h-5 absolute top-2 right-1 
-                                text-white"/>
+                                className="w-5 h-5 absolute top-2 right-1 "/>
                         </div>
                         {/* <LayoutGroup> */}
-                        <div className="rounded-xl bg-[#9ca3af] text-white h-[330px] p-1">
+                        <div className="rounded-xl 
+                        shadow-lg
+                        border
+                        border-gray-100
+                        dark:border-transparent
+                        bg-[#f7fafb] 
+                        dark:bg-[#9ca3af]
+                        text-white h-[330px] p-1">
                             <Tree
-                                style={{backgroundColor:'#9ca3af',color:'white',
+                                style={{backgroundColor:
+                                    '#9ca3af',
+                                color:'white',
                                 borderRadius:'10px'
                                 }}
                                 className="text-white overflow-scroll h-full"

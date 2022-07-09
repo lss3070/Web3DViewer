@@ -19,7 +19,7 @@ export const TopMenu=()=>{
     const {commonState}=useCommonSWR()
     return(
             <div className=" w-full grid grid-cols-7 h-full gap-5
-             bg-[#f5f5f5]
+            bg-[#ededed]
             dark:bg-[#3d3e42]
             ">
                 <div className="flex col-span-1 items-center justify-center
@@ -33,21 +33,23 @@ export const TopMenu=()=>{
                         <MenuManager/>
                     )}
                 </div>
-                <div className="flex col-span-1 items-center justify-end mr-8">
+                <div className="flex col-span-1 items-center justify-end mr-8
+                text-gray-600 dark:text-white
+                ">
                     <div className='flex items-center justify-center'>
                         <FontAwesomeIcon
                                 icon={['fas','camera']}
-                                className="w-5 h-5 text-[white]"/>
+                                className="w-5 h-5 "/>
                     </div>
                     <div className='flex items-center justify-center'>
                         <FontAwesomeIcon
                                     icon={['fas','print']}
-                                    className="w-5 h-5 text-[white]"/>
+                                    className="w-5 h-5 "/>
                     </div>
                     <div className='flex items-center justify-center'>
                         <FontAwesomeIcon
                                     icon={['fas','circle-info']}
-                                    className="w-5 h-5 text-[white] cursor-pointer"/>
+                                    className="w-5 h-5  cursor-pointer"/>
                     </div>
                 </div>
             </div>
