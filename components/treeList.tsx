@@ -338,11 +338,11 @@ interface TitleProps{
                         text-white h-[330px] p-1">
                             <Tree
                                 style={{backgroundColor:
-                                    '#9ca3af',
-                                color:'white',
-                                borderRadius:'10px'
+                                    commonState?.darkMode?'#9ca3af':'#f7fafb',
+                                color:commonState?.darkMode?'white':'#4b5663',
+                                border:'none'
                                 }}
-                                className="text-white overflow-scroll h-full"
+                                className=" overflow-scroll h-full"
                                 titleRender={(node)=>TitleComponent({
                                     node:node,
                                     visibleChange:visibleChange

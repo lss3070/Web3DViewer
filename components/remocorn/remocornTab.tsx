@@ -24,7 +24,10 @@ const RemocornTab=({tabList}:IRemocornTabProps)=>{
 
     return (
         <motion.div
-        className=' bg-slate-400 h-full rounded-b-md px-2 font-normal'
+        className=' 
+        h-full rounded-b-md px-2 font-normal
+        bg-white
+        dark:bg-slate-400 '
         onClick={(e)=>{
             e.stopPropagation()
         }}

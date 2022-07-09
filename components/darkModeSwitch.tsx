@@ -36,33 +36,42 @@ const DarkModeSwitch=()=>{
 
  
     return(
-      <div onClick={toggleSwitch} className={`flex-start flex h-[30px] w-[50px] rounded-[50px] 
-      bg-[#ededed] p-[5px] shadow-inner hover:cursor-pointer 
-      dark:bg-zinc-600 
-      ${ commonState?.darkMode && 'place-content-end'}`}>
-            <motion.div
-                className="flex h-[20px] 
-                w-[20px] items-center justify-center rounded-full 
-                bg-white
-                dark:bg-zinc-900 
-               "
-                layout
-                transition={spring}
-            >
-                <motion.div whileTap={{rotate: 360}}>
-                    {commonState?.darkMode? 
-                    (<FontAwesomeIcon
-                        icon={['fas','moon']}
-                        className="w-5 h-5 text-yellow-200"/>
-                    ):
-                    (<FontAwesomeIcon
-                        icon={['fas','sun']}
-                        className="w-5 h-5 text-orange-300"/>
-                        )
-                    }
-                </motion.div>
-            </motion.div>      
-        </div>
+        <div className='shadow-lg rounded-[50px] h-[30px] w-[50px]'>
+            <div onClick={toggleSwitch} className={`
+            flex-start flex rounded-[50px] 
+            bg-[#f7fafb] p-[5px] shadow-inner hover:cursor-pointer 
+            dark:bg-zinc-600 
+            border 
+            border-gray-100 
+            dark:border-transparent
+            ${ commonState?.darkMode && 'place-content-end'}`}>
+                <motion.div
+                    className="flex h-[20px] 
+                    w-[20px] items-center justify-center rounded-full 
+                    bg-white
+                    dark:bg-zinc-900 
+                    
+                "
+                    layout
+                    transition={spring}
+                >
+                    <motion.div whileTap={{rotate: 360}}>
+                        {commonState?.darkMode? 
+                        (<FontAwesomeIcon
+                            icon={['fas','moon']}
+                            className="w-5 h-5 text-yellow-200"/>
+                        ):
+                        (<FontAwesomeIcon
+                            icon={['fas','sun']}
+                            className="w-5 h-5 text-orange-300"/>
+                            )
+                        }
+                    </motion.div>
+                </motion.div>      
+            </div>
+        </div>    
+
+
     )
 }
 export default DarkModeSwitch;

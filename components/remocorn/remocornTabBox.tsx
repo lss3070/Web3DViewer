@@ -22,6 +22,7 @@ const RemocornTabBox=({label,id,openId,setOpenId,children}:IRemocornTabBox)=>{
         bg-[#f7fafb]
         text-gray-600
         dark:bg-gray-400 
+        dark:text-white
         dark:border-transparent
         font-bold
         grid
