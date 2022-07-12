@@ -36,7 +36,8 @@ export const MeshHtmlComponent=({centerPosition,name,uuid,visible}:IMeshHtmlProp
     return (
             // {meshPosition: centerPosition}&&{inScale: inTextScale}&&
             <Html 
-            className={`${ visible?`block`:`hidden`}
+            className={` select-none
+            ${ visible?`block`:`hidden`}
                 ${selected?'text-red-400':hovered?'text-orange-300':
             commonState?.darkMode?`text-white`:`text-black`}
             `}

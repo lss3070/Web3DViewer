@@ -74,10 +74,9 @@ const ActionTab=()=>{
        })  
     }
 
-
     return(
         <RemocornTab>
-            <PositionHelper label={'position'}
+            <PositionHelper label={'Position'}
             position={position} setPosition={positionChangeEvent}
             />
             <RotationHelper label='Rotation' rotation={rotation} rotationAxis={rotationAxis} setRotation={rotationChangeEvent}/>

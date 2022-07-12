@@ -13,63 +13,42 @@ interface IScaleProps extends Helper{
 
 export const ScaleHelper=({scale,setScale}:IScaleProps)=>{
     
-    const [localScale,setLocalScale]=useState<Vector3>(scale);
+    const setX=(e:number)=>{
+        setScale(new Vector3(+e,scale.y,scale.z))
+    }
+    const setY=(e:number)=>{
+        setScale(new Vector3(scale.x,+e,scale.z))
+    }
+    const setZ=(e:number)=>{
+        setScale(new Vector3(scale.x,scale.y,e))
+    }
+
+
     return(
         <div className="w-full">
             <SliderItem
             label='x'
             max={1000}
             min={-1000}
-            value={localScale?.x}
-            sliderChangeEvent={
-                (e:number)=>{
-                    setScale(new Vector3(+e,localScale.y,localScale.z))
-                    setLocalScale(new Vector3(+e,localScale.y,localScale.z))
-                }
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>{
-                    setScale(new Vector3(+e.target.value,localScale.y,localScale.z))
-                    setLocalScale(new Vector3(+e.target.value,localScale.y,localScale.z))
-                }
-            }
+            value={scale?.x}
+            sliderChangeEvent={setX}
+            inputChangeEvent={(e)=>setX(+e.target.value)}
             />
             <SliderItem
             label='y'
             max={1000}
             min={-1000}
-            value={localScale?.y}
-            sliderChangeEvent={
-                (e:number)=>{
-                    setScale(new Vector3(localScale.x,e,localScale.z))
-                    setLocalScale(new Vector3(localScale.x,e,localScale.z))
-                }
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>{
-                    setScale(new Vector3(localScale.x,+e.target.value,localScale.z))
-                    setLocalScale(new Vector3(localScale.x,+e.target.value,localScale.z))
-                }
-                
-            }
+            value={scale?.y}
+            sliderChangeEvent={setY}
+            inputChangeEvent={(e)=>setY(+e.target.value)}
             />
             <SliderItem
             label='z'
             max={1000}
             min={-1000}
-            value={localScale?.z}
-            sliderChangeEvent={
-                (e:number)=>{
-                    setScale(new Vector3(localScale.x,localScale.y,e))
-                    setLocalScale(new Vector3(localScale.x,localScale.y,e))
-                }
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>{
-                    setScale(new Vector3(localScale.x,localScale.y,+e.target.value))
-                    setLocalScale(new Vector3(localScale.x,localScale.y,+e.target.value))
-                }
-            }
+            value={scale?.z}
+            sliderChangeEvent={setZ}
+            inputChangeEvent={(e)=>setZ(+e.target.value)}
             />
         </div>
     )

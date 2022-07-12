@@ -291,7 +291,6 @@ interface TitleProps{
             {(
                 /* </LayoutGroup>     */
                 <div className="h-auto w-full ">
-
                     {/* title */}
                     <div className='w-full flex items-center justify-center h-12'>
                         <div className='w-full text-base font-semibold'>
@@ -315,6 +314,7 @@ interface TitleProps{
                         {/* search box */}
                         <div className="w-full relative mb-2">
                             <input className="w-full h-8 p-2 
+                             select-none
                             bg-[#f7fafb]
                             dark:bg-gray-400 rounded-xl
                             placeholder:text-gray-600 

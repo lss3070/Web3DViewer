@@ -13,67 +13,42 @@ interface IPositionHelper extends Helper{
 
 export const PositionHelper=({position,setPosition}:IPositionHelper)=>{
     
-    const [localPosition,setLocalPosition]=useState<Vector3>(position);//only View
+
+    const setX=(e:number)=>{
+        setPosition(new Vector3(+e,position.y,position.z))
+    }
+    const setY=(e:number)=>{
+        setPosition(new Vector3(position.x,+e,position.z))
+    }
+    const setZ=(e:number)=>{
+        setPosition(new Vector3(position.x,position.y,e))
+    }
+
     return(
         <div className="w-full">
             <SliderItem
             label='x'
             max={1000}
             min={-1000}
-            value={localPosition?.x}
-            sliderChangeEvent={
-                (e:number)=>{
-                    setPosition(new Vector3(+e,localPosition.y,localPosition.z))
-                    setLocalPosition(new Vector3(+e,localPosition.y,localPosition.z))
-                }
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>{
-                    setPosition(new Vector3(+e.target.value,localPosition.y,localPosition.z))
-                    setLocalPosition(new Vector3(+e.target.value,localPosition.y,localPosition.z))
-                }
-               
-            }
+            value={position?.x}
+            sliderChangeEvent={setX}
+            inputChangeEvent={(e)=>setX(+e.target.value)}
             />
             <SliderItem
             label='y'
             max={1000}
             min={-1000}
-            value={localPosition?.y}
-            sliderChangeEvent={
-                (e:number)=>{
-                    setPosition(new Vector3(localPosition.x,+e,localPosition.z))
-                    setLocalPosition(new Vector3(localPosition.x,+e,localPosition.z))
-                }
-                
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>{
-                    setPosition(new Vector3(localPosition.x,+e.target.value,localPosition.z))
-                    setLocalPosition(new Vector3(localPosition.x,+e.target.value,localPosition.z))
-                }
-               
-            }
+            value={position?.y}
+            sliderChangeEvent={setY}
+            inputChangeEvent={(e)=>setY(+e.target.value)}
             />
             <SliderItem
             label='z'
             max={1000}
             min={-1000}
-            value={localPosition?.z}
-            sliderChangeEvent={
-                (e:number)=>{
-                    setPosition(new Vector3(localPosition.x,localPosition.y,e))
-                    setLocalPosition(new Vector3(localPosition.x,localPosition.y,e))
-                }
-                
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>{
-                    setPosition(new Vector3(localPosition.x,localPosition.y,+e.target.value))
-                    setLocalPosition(new Vector3(localPosition.x,localPosition.y,+e.target.value))
-                }
-                
-            }
+            value={position?.z}
+            sliderChangeEvent={setZ}
+            inputChangeEvent={(e)=>setZ(+e.target.value)}
             />
         </div>
     )
