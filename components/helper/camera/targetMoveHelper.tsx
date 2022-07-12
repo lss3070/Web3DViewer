@@ -1,10 +1,11 @@
 import { Col, Row, Slider } from "antd"
 import { ChangeEvent } from "react";
 import { Vector3 } from "three";
+import { Helper } from "../../../interfaces/app.interface";
 import { useCameraSWR } from "../../../swrs/camera.swr";
 import SliderItem from "../../sliderItem";
 
-export const TargetMoveHelper=()=>{
+export const TargetMoveHelper=({}:Helper)=>{
     const {cameraState,setTarget}=useCameraSWR();
     
     const TargetChangeEvent=(x:number,y:number,z:number)=>{

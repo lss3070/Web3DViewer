@@ -21,7 +21,7 @@ import { CustomDataNode } from "../interfaces/app.interface";
 import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
-import { Box, PerspectiveCamera, TrackballControls, useHelper } from "@react-three/drei";
+import { Box, PerspectiveCamera, Sky, TrackballControls, useHelper } from "@react-three/drei";
 import Axes from './axes';
 import SkyBox from './sky-box';
 import CustomGLTFLoader from '../loaders/gltfLoader';

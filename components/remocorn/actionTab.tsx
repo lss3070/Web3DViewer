@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from 'react';
 import { BufferGeometry, Euler, Material, Mesh, Vector3 } from "three"
 import { useCommonSWR } from "../../swrs/common.swr"
 import { useMeshSWR } from "../../swrs/mesh.swr"
@@ -6,7 +6,7 @@ import { ColorHelper } from "../helper/action/colorHelper"
 import { PositionHelper } from "../helper/action/positionHelper"
 import { RotationHelper } from "../helper/action/rotationHelper"
 import { ScaleHelper } from "../helper/action/scaleHelper"
-import RemocornTab, { IRemocornTabItem } from "./remocornTab"
+import RemocornTab from "./remocornTab"
 
 
 const ActionTab=()=>{
@@ -16,7 +16,7 @@ const ActionTab=()=>{
     const [rotation,setRotation]=useState<Euler>(new Euler());
     const [rotationAxis,setRotationAxis]=useState<Vector3>(new Vector3(0,0,0))
     const [scale,setScale]=useState<Vector3>(new Vector3());
-    const [visible,setVisible]=useState<boolean>(false)
+
     const [color,setColor]=useState<string>("#ffffff")
 
     let meshList = useMemo(()=>{
@@ -29,11 +29,12 @@ const ActionTab=()=>{
             setPosition(result![result!.length-1].position);
             setRotation(result![result!.length-1].rotation);
             setScale(result![result!.length-1].scale)
-            setVisible(result![result!.length-1].visible);
             setColor(`#${(result![result!.length-1].material as any).color.getHex()}`);
         }
+        console.log('memo')
         return result;
     },[meshState?.selectMesh])
+
 
     const positionChangeEvent=(positionProps:Vector3)=>{
         setPosition(positionProps);
@@ -73,41 +74,17 @@ const ActionTab=()=>{
        })  
     }
 
-    const tabList:IRemocornTabItem[]=[
-        {
-            label:'Position',
-            index:0,
-            content:<PositionHelper
-            position={position} setPosition={positionChangeEvent}
-            />
-        },
-        {
-            label:'Rotate',
-            index:1,
-            content:<RotationHelper
-            rotation={rotation} 
-            rotationAxis={rotationAxis}
-            setRotation={rotationChangeEvent}
-            />
-        },
-        {
-            label:'Scale',
-            index:2,
-            content:<ScaleHelper
-            scale={scale} setScale={scaleChangeEvent}
-            />
-        },
-        {
-            label:'Color',
-            index:3,
-            content:<ColorHelper
-            color={color} setColor={colorChangeEvent}
-            />
-        }
-    ]
 
     return(
-        <RemocornTab tabList={tabList}/>
+        <RemocornTab>
+            <PositionHelper label={'position'}
+            position={position} setPosition={positionChangeEvent}
+            />
+            <RotationHelper label='Rotation' rotation={rotation} rotationAxis={rotationAxis} setRotation={rotationChangeEvent}/>
+            <ScaleHelper label='Scale' scale={scale} setScale={scaleChangeEvent}/>
+            <ColorHelper label='Color' color={color} setColor={colorChangeEvent}/>
+
+        </RemocornTab>
     )
 }
 export default ActionTab

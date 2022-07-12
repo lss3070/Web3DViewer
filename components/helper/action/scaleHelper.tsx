@@ -1,17 +1,17 @@
 import { Col, Row,Slider } from "antd";
 import { ChangeEvent, useState } from "react";
 import {Vector3} from 'three';
+import { Helper } from "../../../interfaces/app.interface";
 import { useCommonSWR } from "../../../swrs/common.swr";
 import SliderItem from "../../sliderItem";
 
 
-interface IScaleProps{
+interface IScaleProps extends Helper{
     scale:Vector3;
     setScale:Function;
 }
 
 export const ScaleHelper=({scale,setScale}:IScaleProps)=>{
-    const {commonState}=useCommonSWR()
     
     const [localScale,setLocalScale]=useState<Vector3>(scale);
     return(

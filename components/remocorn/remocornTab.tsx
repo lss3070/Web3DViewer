@@ -1,26 +1,38 @@
+import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 import { motion } from "framer-motion";
+import { isArray } from "lodash";
 import { useEffect, useState } from "react";
 
 
- export interface IRemocornTabItem{
-    label:string;
-    index:number;
-    content:JSX.Element;
-}
+//  export interface IRemocornTabItem{
+//     label:string;
+//     index:number;
+//     content:JSX.Element;
+// }
 
 interface IRemocornTabProps{
-    tabList:IRemocornTabItem[]
+
+    children?:JSX.Element[]|JSX.Element;
 }
 
-const RemocornTab=({tabList}:IRemocornTabProps)=>{
+const RemocornTab=({children}:IRemocornTabProps)=>{
 
-    const [itemList,setItemList]=useState<IRemocornTabItem[]>();
-
-    const [selectedTab, setSelectedTab] = useState<IRemocornTabItem>(tabList[0]);
+    // const [itemList,setItemList]=useState<IRemocornTabItem[]>();
     
-    useEffect(()=>{
-        setItemList([...tabList]);
-    },[tabList])
+    const [index,setIndex]=useState<number>(0)
+
+    // useEffect(()=>{
+    //     if(isArray(children)){
+    //        const list= children.map((item,index)=>{
+    //             return {
+    //                 label:item.props.label,
+    //                 index,
+    //                 content:item
+    //             }
+    //         })
+    //         setItemList(list);
+    //     }
+    // },[children])
 
     return (
         <motion.div
@@ -44,21 +56,22 @@ const RemocornTab=({tabList}:IRemocornTabProps)=>{
             duration:0.5,
              ease: [0.04, 0.62, 0.23, 0.98] }}
         >
-            {tabList.length>1&&
+            {isArray(children)&&
             <motion.nav className='h-9'>
                 <ul className='flex w-full'>
-                {itemList?.map((item)=>{
+                
+                {children?.map((item,i)=>{
                     return(
                         <li
                         className={
                             `w-full cursor-pointer flex items-center justify-center
                             select-none relative`
                         }
-                            key={item.index}
-                            onClick={() => setSelectedTab(item)}
+                            key={i}
+                            onClick={() => setIndex(i)}
                             >
-                            {`${item.label}`}
-                            {item.index === selectedTab?.index ? (
+                            {`${item.props.label}`}
+                            {i === index ? (
                                 <motion.div 
                               style={{bottom:'-1px'}}
                                 className="
@@ -76,9 +89,8 @@ const RemocornTab=({tabList}:IRemocornTabProps)=>{
                     <motion.div
                     layout
                      transition={{ 
-                         duration: 0.2 }}
-                    >
-                        {selectedTab?.content!}
+                         duration: 0.2 }}>
+                        {isArray(children)?children[index]:children}
                     </motion.div>
             </motion.main>
         </motion.div>

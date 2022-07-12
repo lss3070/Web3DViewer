@@ -1,7 +1,8 @@
 import {HexColorPicker} from 'react-colorful'
+import { Helper } from '../../../interfaces/app.interface';
 
 
-interface IColorHelperProps{
+interface IColorHelperProps extends Helper{
     color:string;
     setColor:Function
 }

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BufferGeometry, Euler, Material, Mesh, Vector3 } from "three";
 import { useCommonSWR } from "../../swrs/common.swr";
 import { useMeshSWR } from "../../swrs/mesh.swr";
@@ -19,65 +19,80 @@ interface ActionProps{
 const ActionHelper=({openId,setOpenId}:ActionProps)=>{
     const {meshState}=useMeshSWR()
     const {commonState}=useCommonSWR()
+
     const [position,setPosition]=useState<Vector3>(new Vector3());
     const [rotation,setRotation]=useState<Euler>(new Euler());
     const [rotationAxis,setRotationAxis]=useState<Vector3>(new Vector3(0,0,0))
     const [scale,setScale]=useState<Vector3>(new Vector3());
-    const [visible,setVisible]=useState<boolean>(false)
     const [color,setColor]=useState<string>("#ffffff")
 
-    let meshList = useMemo(()=>{
-        const result:Mesh<BufferGeometry, Material | Material[]>[]|undefined= 
-        meshState?.selectMesh!.map((ref)=>{
-           const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',ref.current.uuid)! as Mesh
-           return mesh
-        })
-        if(result&&result!.length>0){
-            setPosition(result![result!.length-1].position);
-            setRotation(result![result!.length-1].rotation);
-            setScale(result![result!.length-1].scale)
-            setVisible(result![result!.length-1].visible);
-            setColor(`#${(result![result!.length-1].material as any).color.getHex()}`);
+    // const [selectList,setSelectList]=useState
+
+    // let meshList = useMemo(()=>{
+    //     const result:Mesh<BufferGeometry, Material | Material[]>[]|undefined= 
+    //     meshState?.selectMesh!.map((ref)=>{
+    //        const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',ref.current.uuid)! as Mesh
+    //        return mesh
+    //     })
+    //     if(result&&result!.length>0){
+    //         setPosition(result![result!.length-1].position);
+    //         setRotation(result![result!.length-1].rotation);
+    //         setScale(result![result!.length-1].scale)
+    //         setVisible(result![result!.length-1].visible);
+    //         setColor(`#${(result![result!.length-1].material as any).color.getHex()}`);
+    //     }
+    //     console.log(result);
+    //     return result;
+    // },[meshState?.selectMesh])
+
+    useEffect(()=>{
+        const list = meshState?.selectMesh
+        console.log('!!~~')
+        if(meshState?.selectMesh?.length!>0){
+            setPosition(list![list!.length-1].current.position);
+            setRotation(list![list!.length-1].current.rotation);
+            setScale(list![list!.length-1].current.scale)
+            setColor(`#${((list![list!.length-1].current as any).material as any).color.getHex()}`);
+
         }
-        return result;
     },[meshState?.selectMesh])
 
     const positionChangeEvent=(positionProps:Vector3)=>{
         setPosition(positionProps);
-        console.log(meshList);
-        meshList?.forEach((mesh)=>{
+       
+        meshState?.selectMesh?.forEach((mesh)=>{
             // const meshPosition = mesh.worldToLocal(position);
-            mesh.position.set(positionProps.x,positionProps.y,positionProps.z);
+            mesh.current.position.set(positionProps.x,positionProps.y,positionProps.z);
         })
     }
     const rotationChangeEvent=(rotationProps:Euler,axis:Vector3)=>{
         setRotation(rotationProps);
-        meshList?.forEach((mesh)=>{
-            mesh.rotateOnAxis(new Vector3(0,0,0),0);
-            mesh.rotation.set(rotationProps.x,rotationProps.y,rotationProps.z)
+        meshState?.selectMesh?.forEach((mesh)=>{
+            mesh.current.rotateOnAxis(new Vector3(0,0,0),0);
+            mesh.current.rotation.set(rotationProps.x,rotationProps.y,rotationProps.z)
         })
     }
     const scaleChangeEvent=(scaleProps:Vector3)=>{
         setScale(scaleProps);
-        meshList?.forEach((mesh)=>{
-            mesh.scale.set(scaleProps.x,scaleProps.y,scaleProps.z)
+        meshState?.selectMesh?.forEach((mesh)=>{
+            mesh.current.scale.set(scaleProps.x,scaleProps.y,scaleProps.z)
         })
     }
     const colorChangeEvent=(colorProps:string)=>{
         setColor(colorProps);
-        meshList?.forEach((mesh)=>{
-            // const meshPosition = mesh.worldToLocal(position);
-            if(Array.isArray(mesh.material)){
-                mesh.material.map((item)=>{
-                    (item as any).color.set(colorProps);
-                })
-            }else{
+    //     meshList?.forEach((mesh)=>{
+    //         // const meshPosition = mesh.worldToLocal(position);
+    //         if(Array.isArray(mesh.material)){
+    //             mesh.material.map((item)=>{
+    //                 (item as any).color.set(colorProps);
+    //             })
+    //         }else{
                 
-                (mesh.material as any).color.set(colorProps);
-            }
-            // mesh.material
-            // mesh.rotation.set(rotationProps.x,rotationProps.y,rotationProps.z))
-       })  
+    //             (mesh.material as any).color.set(colorProps);
+    //         }
+    //         // mesh.material
+    //         // mesh.rotation.set(rotationProps.x,rotationProps.y,rotationProps.z))
+    //    })  
     }
     
     const actionInfo:TabCategoryProps={
@@ -105,7 +120,7 @@ const ActionHelper=({openId,setOpenId}:ActionProps)=>{
             {
                 label:'Scale',
                 index:2,
-                content:<ScaleHelper
+                content:<ScaleHelper label='Scale'
                 scale={scale} setScale={scaleChangeEvent}
                 />
             },

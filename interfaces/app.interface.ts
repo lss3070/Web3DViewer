@@ -13,3 +13,6 @@ export interface  CustomDataNode {
     visible:boolean;
     select:boolean;
 }
+export interface Helper{
+    label:string
+}

@@ -3,16 +3,11 @@ import RemocornTab from "./remocornTab"
 
 const InfoTab=()=>{
 
-    const tabList=[
-        {
-            label:'Info',
-            index:0,
-            content:<InfoHelper
-            />
-        },
-    ]
+  
     return(
-        <RemocornTab tabList={tabList}/>
+        <RemocornTab>
+            <InfoHelper label="Info"/>
+        </RemocornTab>
     )
 }
 

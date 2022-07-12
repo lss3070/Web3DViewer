@@ -1,10 +1,13 @@
 import { Col, Row, Slider } from "antd"
 import { ChangeEvent } from "react";
 import { Vector3 } from "three";
+import { Helper } from "../../../interfaces/app.interface";
 import { useCameraSWR } from "../../../swrs/camera.swr";
 import SliderItem from "../../sliderItem";
 
-export const PositionMoveHelper=()=>{
+
+
+export const PositionMoveHelper=({}:Helper)=>{
     const {cameraState,setPosition}=useCameraSWR();
     const PositionMoveEvent=(x:number,y:number,z:number)=>{
         setPosition(new Vector3(x,y,z));

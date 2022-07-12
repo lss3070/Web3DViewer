@@ -2,16 +2,18 @@ import { Col, Row, Slider } from "antd";
 // import {Slider as MobileSlider} from 'antd-mobile'
 import { ChangeEvent, useState } from "react";
 import { Euler, Vector3 } from "three";
+import { Helper } from "../../../interfaces/app.interface";
 import { useCommonSWR } from "../../../swrs/common.swr";
 import SliderItem from "../../sliderItem";
 
-interface IRotationHelper{
+interface IRotationHelper extends Helper{
     rotation:Euler;
     rotationAxis:Vector3;
     setRotation:Function;
 }
 
-export const RotationHelper=({rotation,rotationAxis,setRotation}:IRotationHelper)=>{
+export const RotationHelper=({
+rotation,rotationAxis,setRotation}:IRotationHelper)=>{
     
     const {commonState}=useCommonSWR()
     const [localRotation,setLocalRotation]=useState<Euler>(rotation);

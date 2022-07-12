@@ -2,16 +2,16 @@ import { Col, Row, Slider } from "antd"
 // import {Slider as MobileSlider} from 'antd-mobile'
 import { ChangeEvent, useMemo, useState } from "react";
 import { Vector3 } from "three";
+import { Helper } from "../../../interfaces/app.interface";
 import { useCommonSWR } from "../../../swrs/common.swr";
 import SliderItem from "../../sliderItem";
 
-interface IPositionHelper{
+interface IPositionHelper extends Helper{
     position:Vector3;
     setPosition:Function;
 }
 
 export const PositionHelper=({position,setPosition}:IPositionHelper)=>{
-    const {commonState}=useCommonSWR()
     
     const [localPosition,setLocalPosition]=useState<Vector3>(position);//only View
     return(

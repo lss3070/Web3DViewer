@@ -5,6 +5,7 @@ import { useMenuSWR } from "../../swrs/menu.swr";
 import { useMeshSWR } from "../../swrs/mesh.swr";
 import SingleCategory from "../single-category";
 import { useCommonSWR } from '../../swrs/common.swr';
+import { Helper } from "../../interfaces/app.interface";
 
 type MeshInfoType={
     name:string;
@@ -17,7 +18,7 @@ type MeshInfoType={
 }
 
 
-const InfoHelper=()=>{
+const InfoHelper=({}:Helper)=>{
 
     const {commonState}=useCommonSWR()
     const {meshState}=useMeshSWR();
@@ -25,7 +26,7 @@ const InfoHelper=()=>{
     const [meshInfo,setMeshInfo]=useState<MeshInfoType>()
 
     const onAllMesh=()=>{
-        console.log(commonState?.fileInfo);
+    
         setMeshInfo({
             name:commonState?.fileInfo?.originName!,
             vertex:0,
@@ -65,6 +66,7 @@ const InfoHelper=()=>{
     }
 
     useEffect(()=>{
+
         meshState?.selectMesh.length!>0?onSelectMesh():onAllMesh()
     },[meshState?.selectMesh]);
     
