@@ -4,6 +4,7 @@ import { mergeVertices } from "three-stdlib";
 import { useMenuSWR } from "../../swrs/menu.swr";
 import { useMeshSWR } from "../../swrs/mesh.swr";
 import SingleCategory from "../single-category";
+import { useCommonSWR } from '../../swrs/common.swr';
 
 type MeshInfoType={
     name:string;
@@ -15,31 +16,18 @@ type MeshInfoType={
 
 }
 
-interface InfoProps{
-    openId?:number;
-    setOpenId:Function;
-}
 
+const InfoHelper=()=>{
 
-const InfoHelper=({openId,setOpenId}:InfoProps)=>{
-
-    const {menuState}=useMenuSWR();
+    const {commonState}=useCommonSWR()
     const {meshState}=useMeshSWR();
 
     const [meshInfo,setMeshInfo]=useState<MeshInfoType>()
-    
 
     const onAllMesh=()=>{
-        let vertex=0;
-        let triangle=0
-        let x =0;
-        let y=0;
-        let z=0;
-
-        console.log('static mesh');
-        
+        console.log(commonState?.fileInfo);
         setMeshInfo({
-            name:'',
+            name:commonState?.fileInfo?.originName!,
             vertex:0,
             triangle:0,
             x:0,
@@ -75,17 +63,13 @@ const InfoHelper=({openId,setOpenId}:InfoProps)=>{
             z
         })
     }
+
     useEffect(()=>{
         meshState?.selectMesh.length!>0?onSelectMesh():onAllMesh()
     },[meshState?.selectMesh]);
     
     return(
-        <SingleCategory 
-        label={'Info'} 
-        id={10} 
-        openId={openId} 
-        setOpenId={setOpenId}>
-        <div className=" h-full px-2
+        <div className="w-full h-full px-2
             ">
                 <div className="flex gap-5">
                     <div>Name</div>
@@ -112,7 +96,6 @@ const InfoHelper=({openId,setOpenId}:InfoProps)=>{
                     <div>{meshInfo?.z}</div>
                 </div>
             </div>
-        </SingleCategory>
     )
 }
 export default InfoHelper;

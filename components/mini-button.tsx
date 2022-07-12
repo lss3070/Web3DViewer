@@ -2,37 +2,47 @@ import { motion } from "framer-motion"
 import { useState } from "react";
 
 interface MiniButtonProps{
-    children:JSX.Element;
+    children:JSX.Element|string;
     onClick:()=>void;
     onPressEvent?:boolean;
+    htmlFor?:string;
 }
 const MiniButton=({
-    children,onClick,onPressEvent: pressCheck=false
+    children,
+    onClick,
+    onPressEvent: pressCheck=false,
+    htmlFor
 }:MiniButtonProps)=>{
 
     const [mouseDown,setMouseDown]=useState<boolean>(false);
     const [onPress,setOnPress]=useState<boolean>(false);
 
     const onMouseDown=()=>{
-        pressCheck&&setOnPress(true);
-        setMouseDown(!mouseDown)
-        onClick();
-  
+        setOnPress(true);
     }
     const onMouseUp=()=>{
-        pressCheck&&setOnPress(false);
+        setOnPress(false);
+    }
+    const onMouseClick=()=>{
+        pressCheck&&setMouseDown(!mouseDown)
+        onClick();
     }
     return(
-        <div className=" shadow-lg">
-            <motion.div 
+        <div className="rounded-md border
+        border-gray-50
+        dark:border-transparent
+        shadow-lg">
+            <motion.label 
+            htmlFor={htmlFor}
             className="
             rounded-md py-1 px-3 
             bg-white
             dark:bg-[#64758b]
             text-gray-600 dark:text-white
-                h-8 flex items-center cursor-pointer
+            h-8 flex items-center cursor-pointer
             select-none font-semibold
             "
+            onClick={onMouseClick}
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
             animate={{boxShadow:`${mouseDown?
@@ -46,7 +56,7 @@ const MiniButton=({
                 `}}
             >
                     {children}
-            </motion.div>
+            </motion.label>
         </div>
    
     )

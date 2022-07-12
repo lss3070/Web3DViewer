@@ -93,33 +93,22 @@ const FileManager=()=>{
         setIsExport(true);
     }
 
-    const onOpenHover=()=>{
-        setOpenHover(true)
-    }
-    const offOpenHover=()=>{
-        setOpenHover(false)
-    }
-
     return(
         <div className='flex gap-5 items-center'>
             <div className="flex items-center justify-center">
                 <input className="w-0 h-0 opacity-0" type="file" name="file" id="file" 
                 multiple
                 onChange={fileChange}/>
-                <label 
-                onMouseMove={onOpenHover}
-                onMouseLeave={offOpenHover}
-                htmlFor="file"
-                className="h-8 flex items-center text-white px-3 cursor-pointer
-                rounded-md bg-[#64758b] select-none font-semibold
-                ">
-                    <FontAwesomeIcon
-                    icon={['fas','download']}
-                    className="w-5 h-5"/>
-                    <span>
-                        Open
-                    </span>
-                </label>
+                <MiniButton onClick={()=>{}} htmlFor="file">
+                    <>
+                        <FontAwesomeIcon
+                        icon={['fas','download']}
+                        className="w-5 h-5"/>
+                        <span>
+                            Open
+                        </span>
+                    </>
+                </MiniButton>
             </div>
             <MiniButton onClick={openExporter}>
                 <>

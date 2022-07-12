@@ -44,7 +44,7 @@ const RemocornTab=({tabList}:IRemocornTabProps)=>{
             duration:0.5,
              ease: [0.04, 0.62, 0.23, 0.98] }}
         >
-            {tabList.length>0&&
+            {tabList.length>1&&
             <motion.nav className='h-9'>
                 <ul className='flex w-full'>
                 {itemList?.map((item)=>{

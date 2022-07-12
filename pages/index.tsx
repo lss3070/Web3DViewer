@@ -39,10 +39,10 @@ const Home: NextPage = () => {
     <>
            <div className="w-full h-full grid fixed">
         <main>
-          <div className='w-full h-[5%] grid'>
+          <div className='w-full h-11 grid'>
             <TopMenu/>
           </div>
-          <div className={`w-full h-[95%] grid`}>
+          <div className={`w-full h-full grid`}>
                   <Suspense fallback={null}>
                       <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
                   </Suspense>

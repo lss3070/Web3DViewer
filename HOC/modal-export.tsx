@@ -7,6 +7,7 @@ import {GLTFExporter} from 'three/examples/jsm/exporters/GLTFExporter';
 import { useCommonSWR } from "../swrs/common.swr";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MiniButton from "../components/mini-button";
 
 enum ExportType{
     OBJ,
@@ -50,7 +51,7 @@ const ModalExport=({onClose}:IExportProps)=>{
         link.remove();
     }
 
-    const onSave=(e: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
+    const onSave=()=>{
        
         const objectData= commonState?.scene?.current?.getObjectByProperty('uuid',
         commonState.fileUuid!)
@@ -89,26 +90,31 @@ const ModalExport=({onClose}:IExportProps)=>{
 
     return(
             <DarkBackGround onClick={onClose}>
-                <motion.div 
-                className={` text-white px-4
+                <motion.div
+                style={{gap:'10px',padding:'10px 10px',left:'40%'}} 
+                className={`
                 absolute
-                left-[50%]
-                translate-x-[-50%]
-                translate-y-[-50%]
+                translate-x-[50%]
                 rounded-md
                 overflow-hidden
                 grid
-                gap-1
                 z-[99]
-                bg-[#64758b]
-                p-3
+                border 
+                border-red-100
+                text-gray-600
+                bg-[#f7fafb]
+                dark:text-white
+                dark:bg-[#64758b]
+                dark:border-transparent
+                shadow-2xl
+                gap-3
                 `}
                 animate={'down'}
                 variants={variants}
                 exit={'up'}
                 onClick={(e)=>e.stopPropagation()}
                 >
-                    <div className="flex text-lg">
+                    <div className="flex text-lg font-bold">
                         <div>
                             <FontAwesomeIcon
                                     icon={['fas','upload']}
@@ -120,10 +126,14 @@ const ModalExport=({onClose}:IExportProps)=>{
                         Please set the format you want to save
                     </div>
                     <div>
-                        <select className="text-white 
+                        <select className="
+                        text-gray-600
+                        outline-none
+                        border-none
                         w-full
                         rounded-md
-                        bg-transparent 
+                        dark:text-gray-600
+                        dark:bg-white
                         border 
                         border-[#bdbdbd]" 
                         value={select} 
@@ -134,15 +144,13 @@ const ModalExport=({onClose}:IExportProps)=>{
                             <option value={ExportType.GLTF}>gltf</option>
                         </select>
                     </div>
-                    <div className='flex justify-end items-center gap-2 '>
-                        <div className='border rounded-md p-1 cursor-pointer' 
-                        onClick={onSave}
-                        >Save</div>
-                        <div className='border rounded-md p-1 cursor-pointer'
-                        onClick={onClose}
-                        >
-                            Cancel
-                        </div>
+                    <div className='flex justify-end items-center gap-5'>
+                        <MiniButton onClick={onSave}>
+                            Save
+                        </MiniButton>
+                        <MiniButton onClick={onClose}>
+                        Cancel
+                        </MiniButton>
                     </div>
                 </motion.div>    
             </DarkBackGround>

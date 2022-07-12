@@ -48,6 +48,12 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
             return menuState?.simpleControl.position&&'left-[50%] top-[5%]'
         }
     }
+    const onDragStart=()=>{
+        console.log('drag')
+    }
+    const onDragEnd=()=>{
+        console.log('drop');
+    }
 
     useEffect(()=>{
         if(onModal===undefined) return
@@ -88,6 +94,8 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
             {onModal&&(
                 <motion.div
                 drag={drag}
+                onDragStart={onDragStart}
+                onDragEnd={onDragEnd}
                 dragConstraints={menuState?.dragArea}
                 animate={'show'}
                 exit={'hide'}
@@ -95,7 +103,7 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
                 style={{x,y}}
                 dragMomentum={false}
                 className={`absolute 
-                w-auto h-auto opacity-0 z-20
+                w-auto h-auto opacity-0 z-30
                 rounded-lg
                 shadow-lg
                 border

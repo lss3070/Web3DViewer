@@ -30,6 +30,7 @@ import CustomOBJLoader from '../loaders/objLoader';
 import CustomFBXLoader from '../loaders/fbxLoader';
 import CustomSTLLoader from '../loaders/stlLoader';
 import CustomPLYLoader from '../loaders/plyLoader';
+import MeshGroupHtml from './mesh-group-html';
 
 interface ICanvasProps{
     setLoadingPercent:Function;

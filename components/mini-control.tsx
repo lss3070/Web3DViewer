@@ -276,7 +276,7 @@ const MiniControls=()=>{
                     </motion.div>
                 )}
                 </AnimatePresence>
-                <AnimatePresence>
+                {/* <AnimatePresence>
                     
                     {meshState?.onWire&&(
                     <motion.div className=' text-white p-2 absolute right-0 top-10
@@ -287,7 +287,7 @@ const MiniControls=()=>{
                         onChange={ChangeWire}
                     />
                     </motion.div>)}
-                </AnimatePresence>
+                </AnimatePresence> */}
 
                 <MiniCircleButton 
                 onClick={cameraInit}

@@ -144,8 +144,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     }
 
     const meshOnClick =async (e:any)=>{ 
-        console.log('meshclick')
-        console.log(e);
 
         if(e.metaKey||e.ctrlKey){
             const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===meshRef.current.uuid)!;
@@ -164,6 +162,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     const meshDoubleClick=()=>{
         setSelectMeshBox(new Box3().setFromObject(meshRef.current))
     }
+
         return(
             <>
             {!point?(
@@ -182,7 +181,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             onPointerLeave={(e)=>{
                 setHoverMesh(undefined)
             }}
-            
             renderOrder={999}
             name={mesh.name}
             uuid={mesh.uuid}
@@ -191,13 +189,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             position={mesh.position}
             quaternion={mesh.quaternion}>
                 {MaterialElements()}
-                 {meshState?.onText&&(
-                        <MeshHtmlComponent 
-                        centerPosition={mesh.geometry.boundingSphere?.center!}
-                        name={mesh.name}
-                        uuid={mesh.uuid} 
-                       />
-                     )}
+
             </mesh>
             ):(
                 <points
@@ -208,6 +200,14 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                     />
                 </points>
             )}
+
+                    <MeshHtmlComponent 
+                    centerPosition={mesh.geometry.boundingSphere?.center!}
+                    visible={meshState?.onText!}
+                    name={mesh.name}
+                    uuid={mesh.uuid} 
+                    />
+           
             </>
             
         )

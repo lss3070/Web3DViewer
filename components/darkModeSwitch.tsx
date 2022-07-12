@@ -50,12 +50,11 @@ const DarkModeSwitch=()=>{
                     w-[20px] items-center justify-center rounded-full 
                     bg-white
                     dark:bg-zinc-900 
-                    
                 "
                     layout
                     transition={spring}
                 >
-                    <motion.div whileTap={{rotate: 360}}>
+                    <motion.div whileTap={{rotate: 360}} className="shadow-lg rounded-full">
                         {commonState?.darkMode? 
                         (<FontAwesomeIcon
                             icon={['fas','moon']}
