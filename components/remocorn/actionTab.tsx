@@ -20,18 +20,20 @@ const ActionTab=()=>{
     const [color,setColor]=useState<string>("#ffffff")
 
     let meshList = useMemo(()=>{
-        const result:Mesh<BufferGeometry, Material | Material[]>[]|undefined= 
-        meshState?.selectMesh!.map((ref)=>{
+        console.log('list!!')
+        console.log(meshState?.selectMesh)
+        const result:Mesh<BufferGeometry, Material | Material[]>[]|undefined
+        = meshState?.selectMesh!.map((ref)=>{
            const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',ref.current.uuid)! as Mesh
            return mesh
         })
+        console.log(result);
         if(result&&result!.length>0){
             setPosition(result![result!.length-1].position);
             setRotation(result![result!.length-1].rotation);
             setScale(result![result!.length-1].scale)
             setColor(`#${(result![result!.length-1].material as any).color.getHex()}`);
         }
-        console.log('memo')
         return result;
     },[meshState?.selectMesh])
 

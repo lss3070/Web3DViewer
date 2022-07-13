@@ -257,6 +257,8 @@ interface TitleProps{
         }
         const onDoubleClick=()=>{
             const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',node.key+'') as Mesh;
+
+            console.log(mesh);
             setSelectMeshBox(new Box3().setFromObject(mesh))
         }
 

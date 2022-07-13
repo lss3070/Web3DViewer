@@ -155,6 +155,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                 await setSelectMesh([...meshState?.selectMesh!,meshRef])
             }
         }else{
+            console.log(meshRef.current);
             setSelectMesh([meshRef]);
         }
         

@@ -22,7 +22,7 @@ import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
 import { Box, PerspectiveCamera, Sky, TrackballControls, useHelper } from "@react-three/drei";
-import Axes from './axes';
+import Gizmo from './gizmo';
 import SkyBox from './sky-box';
 import CustomGLTFLoader from '../loaders/gltfLoader';
 import { useMeshSWR } from '../swrs/mesh.swr';
@@ -51,16 +51,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
         switch(data.type){
             case 'Group':
                 const object =data as Group;
-
-                console.log('!')
-                console.log(object.userData);
-                
-                // data.
-                // let tempVertex= new Vector3();
-                // (object).localToWorld(tempVertex);
-
-                // console.log(tempVertex);
-
                 new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
     
                 
@@ -148,7 +138,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     CustomGLTFLoader({
                         fileInfo:commonState?.fileInfo!
                     }).then((data)=>{
-            
                        SettingModel(data as Group);
                     })
                     break;
@@ -239,11 +228,9 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
     })
     return temp;
 }
-
-// const three= useThree()
-//     useEffect(()=>{
-//         setScene(sceneRef)
-//     },[sceneRef])
+    useEffect(()=>{
+        setScene(sceneRef)
+    },[sceneRef])
     
 //     const mixer = new AnimationMixer(three.scene);
 //     const clip= AnimationClip.findByName(meshState?.animationList!,'Take 001');
@@ -272,22 +259,31 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
     // useFrame((state, delta)=>{
     //     mixer?.update(delta)
     // })
+
     return(
         <>
-            <Axes/>
-            <Canvas style={{width:'100%',maxHeight:'100vh'}}className="z-10"
-            >
-                <color attach="background" 
-                args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 
-                />
-                <scene ref={sceneRef} 
-                >     
+            <Canvas style={{width:'100%',maxHeight:'100vh',
+            backgroundColor:commonState?.darkMode?'#2a2b2e':'#f7fafb'
+        }}
+            className="z-10"
+            
+            >   
+                <scene ref={sceneRef} background={new Color()}>   
+                    {/* <color attach="background" 
+                    args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 
+                    />   */}
                     <SkyBox/>
                     <LightComponent/>                
                     <CameraComponent/>
                     <ControlComponent/> 
-                    {meshGroup&&<MeshGroupComponent meshGroup={meshGroup}/>}
-                    <SelectMeshComponent/>
+                    {meshGroup&&(
+                        <>
+                            <MeshGroupComponent meshGroup={meshGroup}/>
+                            <SelectMeshComponent/>
+                            <Gizmo/>
+                        </>
+                    )}
+                  
                 </scene>
             </Canvas>
         </>

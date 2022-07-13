@@ -38,7 +38,7 @@ export const CameraComponent =()=>{
     // })
 
     return(
-        {zoom}&&<PerspectiveCamera
+        <PerspectiveCamera
         // rotation={new Euler(0,0,0)}
         // up={new Vector3(0,0,0)}
         ref={cameraRef} 
