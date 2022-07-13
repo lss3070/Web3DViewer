@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Vector3 } from "three"
+import CustomAniHelper from "../helper/animation/customAniHelper"
 import { PositionAnimationHelper } from "../helper/animation/positionAniHelper"
 import { RotationAnimationHelper } from "../helper/animation/rotationAniHelper"
 import { ScaleAnimationHelper } from "../helper/animation/scaleAniHelper"
@@ -15,6 +16,7 @@ const AnimationTab=()=>{
             <PositionAnimationHelper label="Postion" position={position}/>
             <RotationAnimationHelper label="Rotation"/>
             <ScaleAnimationHelper label="Scale" scale={scale}/>
+            <CustomAniHelper label="Custom"/>
         </RemocornTab>
     )
 }

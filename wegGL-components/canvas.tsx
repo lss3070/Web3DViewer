@@ -1,6 +1,6 @@
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
-import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping } from 'three';
+import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip } from 'three';
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 import {Rhino3dmLoader,} from 'three/examples/jsm/loaders/3DMLoader'
@@ -39,7 +39,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     const {commonState,setGroupList,setScene,setFileLoad,setFileUuid}=useCommonSWR();
     const {setMeshBox}=useCameraSWR();
-    const {meshState}=useMeshSWR()
+    const {meshState,setAnimationList}=useMeshSWR()
     const sceneRef = useRef<Scene>(null)
     const [meshGroup,setMeshGroup]=useState<Group>();
 
@@ -47,14 +47,27 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const threeMFLoader = new ThreeMFLoader();
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
-        console.log(data);
+
         switch(data.type){
             case 'Group':
                 const object =data as Group;
+
+                console.log('!')
+                console.log(object.userData);
+                
+                // data.
+                // let tempVertex= new Vector3();
+                // (object).localToWorld(tempVertex);
+
+                // console.log(tempVertex);
+
                 new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
     
+                
                 const group = groupLoop(object);
         
+                console.log('!!!!!');
+                console.log(object);
                 setGroupList(group);
                 setMeshGroup(object);
         
@@ -63,6 +76,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                 setFileLoad(true);
                 setMeshBox(box);
                 setLoadingComplete(true);
+                setAnimationList(object.animations);
                 setFileUuid(object.uuid);
                 break;
             case 'BufferGeometry':
@@ -134,6 +148,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     CustomGLTFLoader({
                         fileInfo:commonState?.fileInfo!
                     }).then((data)=>{
+            
                        SettingModel(data as Group);
                     })
                     break;
@@ -225,11 +240,38 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
     return temp;
 }
 
-    useEffect(()=>{
-        setScene(sceneRef)
-    },[sceneRef])
+// const three= useThree()
+//     useEffect(()=>{
+//         setScene(sceneRef)
+//     },[sceneRef])
+    
+//     const mixer = new AnimationMixer(three.scene);
+//     const clip= AnimationClip.findByName(meshState?.animationList!,'Take 001');
+
+//     const action= mixer.clipAction(clip);
+//     action.play();
     
 
+//     useFrame((state,delta)=>{
+//         mixer?.update(delta);
+//     })
+
+
+    // const mixer= new AnimationMixer(commonState?.scene?.current!);
+
+    // if(true){
+                  
+    //     const clip=meshState?.animationList![0]!;
+    //     // const clip= AnimationClip.findByName(meshState?.animationList!,"Take 001");
+
+    //     console.log(mixer);
+    //     console.log(clip);
+    //     const action= mixer.clipAction(clip);
+    //     action.play();
+    // }
+    // useFrame((state, delta)=>{
+    //     mixer?.update(delta)
+    // })
     return(
         <>
             <Axes/>

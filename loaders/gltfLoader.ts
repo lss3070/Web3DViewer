@@ -7,7 +7,6 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.j
 
 
 import { FileInfo } from "../interfaces/swr.interface"
-import SettingModel from './setModel';
 import { Dispatch, SetStateAction } from "react";
 
 interface IGLTFLoader{

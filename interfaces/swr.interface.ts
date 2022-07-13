@@ -1,5 +1,5 @@
 
-import { Box3, Mesh, Object3D, Sphere, Vector3,Color as ThreeColor, Scene, Group } from "three";
+import { Box3, Mesh, Object3D, Sphere, Vector3,Color as ThreeColor, Scene, Group, AnimationClip } from "three";
 import { CustomDataNode } from "./app.interface";
 
 import { MutableRefObject, RefObject } from "react";
@@ -33,6 +33,7 @@ export interface EveryMesh{
     onText:boolean;
     onWire:boolean;
     wireWidth:number;
+    animationList?:AnimationClip[]
   }
   
 

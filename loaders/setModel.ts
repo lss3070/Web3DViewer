@@ -14,12 +14,13 @@ const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
     
     switch(data.type){
         case 'Group':
-            console.log('!!')
             const object =data as Group;
             new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
 
             const group = groupLoop(object);
     
+
+            console.log(object);
             setGroupList(group);
             setMeshGroup(object);
     

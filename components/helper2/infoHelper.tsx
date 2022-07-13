@@ -47,9 +47,11 @@ const InfoHelper=({}:Helper)=>{
         let z=0;
 
         meshState?.selectMesh.map((item)=>{
+            console.log(item);
             const mesh = item as MutableRefObject<Mesh>
             const merge= mergeVertices(mesh.current.geometry);
-            vertex+=merge.attributes.position.count
+            vertex+=mesh.current.geometry.attributes.position.count
+            // vertex+=merge.attributes.position.count
             triangle+=mesh.current.geometry.attributes.position.count/3
             x+=Math.abs(mesh.current.geometry.boundingBox?.max.x!-mesh.current.geometry.boundingBox?.min.x!)
             y+=Math.abs(mesh.current.geometry.boundingBox?.max.y!-mesh.current.geometry.boundingBox?.min.y!)

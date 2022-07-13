@@ -1,7 +1,7 @@
 
 
 import useSWR from "swr";
-import { Box3, Group } from "three";
+import { Box3, Group, AnimationClip } from 'three';
 import { IMeshStateProps, MeshMode, ObjectRef } from "../interfaces/swr.interface";
 
 let meshState:IMeshStateProps={
@@ -9,7 +9,6 @@ let meshState:IMeshStateProps={
     meshMode:MeshMode.Default,
     staticMeshList:[],
     selectMesh:[],
-
 
     onText:false,
     onWire:false,
@@ -91,6 +90,13 @@ export const useMeshSWR=()=>{
             meshState={
                 ...meshState,
                 meshGroup
+            }
+            return mutate();
+        },
+        setAnimationList:async(animationList:AnimationClip[])=>{
+            meshState={
+                ...meshState,
+                animationList
             }
             return mutate();
         }
