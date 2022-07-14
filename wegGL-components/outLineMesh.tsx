@@ -13,13 +13,12 @@ export const SelectMeshComponent=()=>{
     const [hoverColor,setHoverColor]=useState<number>()
 
     useEffect(()=>{
-        setHoverColor(commonState?.darkMode?0x60a5fa:0xbdbdbd)
-        setSelectColor(commonState?.darkMode?0x60a5fa:0xbdbdbd)
+        setHoverColor(commonState?.darkMode?0xffffff:0x0026ff)
+        setSelectColor(commonState?.darkMode?0xffffff:0x0026ff)
     },[commonState?.darkMode])
     
     return(
         <EffectComposer 
-        
         autoClear={false} multisampling={1} >
             {/* hover outline mesh */}
             <Outline selection={meshState?.hoverMesh!} 
@@ -28,13 +27,15 @@ export const SelectMeshComponent=()=>{
             blur={true} 
             edgeStrength={10} 
             selectionLayer={2}
+
             />
             {/* select outline mesh */}
             <Outline selection={meshState?.selectMesh!} 
             visibleEdgeColor={selectColor} 
             hiddenEdgeColor={selectColor}
-            blur={true} 
+            // blur={true} 
             edgeStrength={100} 
+
              />
         </EffectComposer>
     )
