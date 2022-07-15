@@ -18,7 +18,11 @@ import InfoTab from './infoTab';
 
 const Remocorn =()=>{
     const [openId,setOpenId]=useState<string>('');
-    const {menuState}=useMenuSWR()
+    const {menuState,onControl}=useMenuSWR()
+
+    const closeRemocorn=()=>{
+        onControl(false);
+    }
 
     const [drag,setDrag]=useState<boolean>(true)
 
@@ -51,8 +55,10 @@ const Remocorn =()=>{
                     </div>
                     <div className='w-full flex justify-end'>
                         <FontAwesomeIcon
+                            onClick={closeRemocorn}
                             icon={['fas','xmark']}
-                            className="w-8 h-8 cursor-pointer text-lg font-bold"/>
+                            size="lg"
+                            className="cursor-pointer font-bold"/>
                     </div>
                 </div>
                 <div className='grid gap-5 cursor-auto'

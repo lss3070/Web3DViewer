@@ -1,17 +1,17 @@
 import { motion } from "framer-motion"
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 
 interface MiniButtonProps{
     children:JSX.Element|string;
     onClick:()=>void;
-    onPressEvent?:boolean;
     htmlFor?:string;
+    pressState?:boolean;
 }
 const MiniButton=({
     children,
     onClick,
-    onPressEvent: pressCheck=false,
-    htmlFor
+    htmlFor,
+    pressState
 }:MiniButtonProps)=>{
 
     const [mouseDown,setMouseDown]=useState<boolean>(false);
@@ -24,9 +24,13 @@ const MiniButton=({
         setOnPress(false);
     }
     const onMouseClick=()=>{
-        pressCheck&&setMouseDown(!mouseDown)
+        if(pressState!==undefined) setMouseDown(!mouseDown);
         onClick();
     }
+    useEffect(()=>{
+        if(pressState!==undefined)setMouseDown(pressState);
+    },[pressState])
+
     return(
         <div className="rounded-md border
         border-gray-50

@@ -1,14 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {AnimatePresence, motion} from 'framer-motion'
-import { useEffect, useState } from 'react';
-import ModalSetting from '../HOC/modal-setting';
-import Portal from '../HOC/portal';
 import { useMenuSWR } from '../swrs/menu.swr';
 import MiniButton from './mini-button';
+import { useEffect } from 'react';
 
 
 const MenuManager=()=>{
     const {menuState,onControl,onTreeList,onSimpleControl}= useMenuSWR();
+
+    useEffect(()=>{
+
+    },[menuState?.treeList.on]);
+    useEffect(()=>{
+
+    },[menuState?.control.on]);
     const onTreeClick=()=>{
         onTreeList(!menuState?.treeList.on);
     }
@@ -18,11 +22,14 @@ const MenuManager=()=>{
     const onSimpleControlClick=()=>{
         onSimpleControl(!menuState?.simpleControl.on);
     }
+    
 
 
     return(
         <div className='flex items-center gap-5'>
-        <MiniButton onClick={onTreeClick} onPressEvent={true}>
+        <MiniButton 
+        onClick={onTreeClick} 
+        pressState={menuState?.treeList.on}>
             <>
                 <FontAwesomeIcon
                     icon={['fas','folder-tree']} 
@@ -30,7 +37,9 @@ const MenuManager=()=>{
                 <span>TreeList</span>
             </>
         </MiniButton>
-        <MiniButton onClick={onControlClick} onPressEvent={true}>
+        <MiniButton 
+        onClick={onControlClick} 
+        pressState={menuState?.control.on}>
             <>
                 <FontAwesomeIcon
                     icon={['fas','screwdriver-wrench']} 
@@ -38,7 +47,9 @@ const MenuManager=()=>{
                 <span>Control</span>
             </>
         </MiniButton>
-        <MiniButton onClick={onSimpleControlClick} onPressEvent={true}>
+        <MiniButton 
+        onClick={onSimpleControlClick} 
+        pressState={menuState?.simpleControl.on}>
             <>
                 <FontAwesomeIcon
                     icon={['fas','wrench']} 

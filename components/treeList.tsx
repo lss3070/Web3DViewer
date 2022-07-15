@@ -246,7 +246,9 @@ interface TitleProps{
     visibleChange:Function;
 }
 
-    const TitleComponent =({node,visibleChange}:TitleProps):ReactNode=>{     
+    const TitleComponent =({node,visibleChange}:TitleProps):ReactNode=>{   
+        
+     
         const onIconClick=(e:React.MouseEvent<SVGSVGElement, MouseEvent>)=>{    
             const object = commonState?.scene?.current?.getObjectByProperty('uuid',node.key+'') as Mesh|Group
             if(object){
@@ -258,17 +260,17 @@ interface TitleProps{
         const onDoubleClick=()=>{
             const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',node.key+'') as Mesh;
 
-            console.log(mesh);
             setSelectMeshBox(new Box3().setFromObject(mesh))
         }
+  
 
         return(
             <div
             className=" font-medium overflow-hidden w-full flex items-center"
              key={node.key}>
                  <FontAwesomeIcon
-                 onClick={onIconClick}
                       icon={['fas','eye']}
+                      onClick={onIconClick}
                       className={`w-5 h-5
                       ${node.visible?`text-black`:`text-gray-300`}
                       `}/>
@@ -284,6 +286,10 @@ interface TitleProps{
         )
     }
 
+    const {onTreeList}=useMenuSWR()
+    const closeTreeList=()=>{
+        onTreeList(false);
+    }
     return(
         <ModalLayout type="TreeList" 
         onModal={menuState?.treeList.on!}
@@ -305,8 +311,10 @@ interface TitleProps{
                         </div>
                         <div className='w-full flex justify-end'>
                             <FontAwesomeIcon
+                                onClick={closeTreeList}
                                 icon={['fas','xmark']}
-                                className="w-8 h-8 cursor-pointer text-lg font-bold"/>
+                                size="lg"
+                                className="cursor-pointer"/>
                         </div>
                     </div>
                     <div
