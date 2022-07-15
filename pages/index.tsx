@@ -37,35 +37,35 @@ const Home: NextPage = () => {
 
   return (  
     <>
-           <div className="w-full h-full grid fixed">
+      <div className="w-full h-full grid fixed">
         <main>
+
           <div className='w-full h-11 grid'>
             <TopMenu/>
           </div>
-          <div className={`w-full h-full grid`}>
-                  <Suspense fallback={null}>
-                      <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
-                  </Suspense>
+          <div className={`w-full h-full  grid`}>
+              <Suspense fallback={null}>
+                <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
+              </Suspense>
           </div>
           <div 
           ref={dragArea}
           className='absolute top-[5%] left-0  w-full h-[95%]'>
-            {commonState?.fileLoad&&(
+            {commonState?.fileLoad&&
               <>
                 <TreeList/>
                 <Remocorn/>
                 <MiniControls/>
               </>
-            )}
+            }
               <div className='absolute right-5 bottom-5 w-auto z-20'>
                 <DarkModeSwitch/>
               </div>
           </div>
-    
-        </main>
-        {!loadingComplete&&(
+          {!loadingComplete&&(
           <LoadingComponent/>
-        )}
+          )}
+        </main>
       </div>
     </>
   )

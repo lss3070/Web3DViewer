@@ -92,8 +92,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     }
 
     useEffect(()=>{
-       
-        console.log(commonState?.fileInfo);
         if(commonState?.fileInfo?.originExtension!==undefined){
             console.log(commonState.fileInfo.originExtension);
             setLoadingComplete(false);
@@ -265,9 +263,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
             <Canvas style={{width:'100%',maxHeight:'100vh',
             backgroundColor:commonState?.darkMode?'#2a2b2e':'#f7fafb'
         }}
-            className="z-10"
-            
-            >   
+            className="z-10">   
                 <scene ref={sceneRef} background={new Color()}>   
                     {/* <color attach="background" 
                     args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 

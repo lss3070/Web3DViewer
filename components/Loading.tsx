@@ -29,24 +29,30 @@ const LoadingComponent=()=>{
       }
 
       const loadingContainer = {
-        width: "10rem",
-        height: "5rem",
+        width: "4rem",
+        height: "2rem",
         display: "flex",
         justifyContent: "space-around"
       };
       const loadingCircle = {
         display: "block",
-        width: "2rem",
-        height: "2rem",
+        width: "1rem",
+        height: "1rem",
         backgroundColor: "black",
         borderRadius: "50%"
       };
       
 
     return(
-        <div className='w-full h-full absolute top-0 left-0 flex items-center justify-center
+        <div className='w-full h-full absolute top-0 left-0 flex 
+        items-center 
+        justify-center
         bg-[#000000]/30
+        z-50
        '>
+         <div className=' text-2xl text-black dark:text-white'>
+           Loading
+         </div>
             <motion.div
             style={loadingContainer}
             variants={loadingContainerVariants}

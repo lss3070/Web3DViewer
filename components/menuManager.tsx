@@ -1,16 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {AnimatePresence, motion} from 'framer-motion'
 import { useEffect, useState } from 'react';
-import ModalInfo from '../HOC/modal-info';
+import ModalSetting from '../HOC/modal-setting';
 import Portal from '../HOC/portal';
 import { useMenuSWR } from '../swrs/menu.swr';
 import MiniButton from './mini-button';
 
 
 const MenuManager=()=>{
-
-    const [isInfo,setIsInfo]=useState<boolean>(false)
-
     const {menuState,onControl,onTreeList,onSimpleControl}= useMenuSWR();
     const onTreeClick=()=>{
         onTreeList(!menuState?.treeList.on);
@@ -22,9 +19,7 @@ const MenuManager=()=>{
         onSimpleControl(!menuState?.simpleControl.on);
     }
 
-    const closeInfo=()=>{
-        setIsInfo(false)
-    }
+
     return(
         <div className='flex items-center gap-5'>
         <MiniButton onClick={onTreeClick} onPressEvent={true}>
@@ -51,13 +46,6 @@ const MenuManager=()=>{
                 <span>SimpleControl</span>
             </>
         </MiniButton>
-
-        <Portal> 
-            <AnimatePresence>
-                {isInfo&&( <ModalInfo onClose={closeInfo}/>)}
-            </AnimatePresence>
-        </Portal>
-           
         </div>
     )
 }

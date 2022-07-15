@@ -175,7 +175,11 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
     whileHover={{scale:1.2,backgroundColor:'#ffffff'}}
     whileTap={{ backgroundColor:'#bdbdbd' }}
     className='w-8 h-8 p-1 cursor-pointer rounded-full 
-    z-10 bg-gray-400 border'
+    z-10 
+    dark:bg-gray-400
+    bg-[#edf1f5]
+    shadow-lg
+    '
     onClick={onClick}
     >
         {switchBox()}
@@ -215,6 +219,7 @@ const MiniControls=()=>{
         },
         up:{
             height:0,
+            border:'none'
         }
     }
 
@@ -252,7 +257,13 @@ const MiniControls=()=>{
             flex gap-5 
             ">
                 <motion.div className='w-8 h-8 p-1 cursor-pointer rounded-full 
-                bg-gray-400 z-10'
+                dark:bg-gray-400
+                bg-[#edf1f5]
+                shadow-lg
+                border
+                border-gray-100
+                 dark:border-transparent
+                z-10'
                         ref={cameraPositionIconRef}
                         onClick={toggleCameraPositionList}
                         >
@@ -264,7 +275,14 @@ const MiniControls=()=>{
                     animate={'down'}
                     variants={cameraVariants}
                     exit={ 'up'}
-                    className='h-0 absolute overflow-hidden  rounded-full pb-2 bg-[#64758b]' 
+                    className='h-0 absolute overflow-hidden  rounded-full pb-2 
+                    bg-[white]
+                    dark:bg-gray-600
+                    shadow-lg
+                    border
+                     border-gray-100
+                    dark:border-transparent
+                    ' 
                     >
                         <div className='h-8'></div>
                         <CameraPositionBox type={CustomCameraFocus.Front}/>
