@@ -1,5 +1,9 @@
 import useSWR from "swr"
 import { useCommonSWR } from '../swrs/common.swr';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { motion } from "framer-motion";
+import { useState } from "react";
+import MiniCircleButton from "./mini-circle-button";
 
 const Guide=()=>{
     const {commonState,setFiltPath}=useCommonSWR();
@@ -91,23 +95,48 @@ const Guide=()=>{
         })
     }
     return(
-        <div>
+        <div className="grid w-full
+        gap-4
+        text-gray-600 
+        dark:text-white
+        ">
             <div className=" 
-            text-[#3d3e42] 
-            dark:text-white">
-                Drag your 3d model here
+            text-center
+             text-2xl
+             font-bold">
+                Drag and Drop your 3d model here
             </div>
-            <div>
-                <div >Example Models</div>
-                <div className="flex gap-5">
-                    <div onClick={openTree}>tree</div>
-                    <div onClick={openHelmet}>helmet</div>
-                    <div onClick={openMannequin}>mannequin</div>
+                <div className="
+                flex 
+                items-center 
+                justify-center
+                 text-base
+                " >
+                    Example Models
+                </div>
+                <div className="flex gap-5 items-center justify-center">
+                    <MiniCircleButton onClick={openTree}>
+                        <FontAwesomeIcon
+                        icon={['fas','tree']}
+                        size='2x'
+                        />
+                    </MiniCircleButton>
+                    <MiniCircleButton onClick={openHelmet}>
+                        <FontAwesomeIcon
+                        icon={['fas','helmet-safety']}
+                        size='2x'
+                        />
+                    </MiniCircleButton>
+                    <MiniCircleButton onClick={openMannequin}>
+                        <FontAwesomeIcon
+                        icon={['fas','person']}
+                        size='2x'
+                        />
+                    </MiniCircleButton>
                 </div>
             </div>
-           
-        </div>
     )
 }
 
+  
 export default Guide;

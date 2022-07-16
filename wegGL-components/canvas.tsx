@@ -185,15 +185,15 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
     let temp:CustomDataNode[]
     temp=item.children.map((groupItem):CustomDataNode=>{
+        const title = groupItem.name?groupItem.name:'(no name)';
         switch(groupItem.type){//groupItem.constructor.name
-           
             case'Mesh':
             return {
                 visible:true,
                 select:false,
                 key:groupItem.uuid,
                 type:groupItem.type,
-                title:groupItem.name,
+                title,
                 children:groupLoop(groupItem as Mesh)
             }
             case'Group':
@@ -202,7 +202,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
                 select:false,
                 key:groupItem.uuid,
                 type:groupItem.type,
-                title:groupItem.name,
+                title,
                 children:groupLoop(groupItem as Group)
             }
             case 'Bone':
@@ -211,7 +211,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
                     select:false,
                     key:groupItem.uuid,
                     type:groupItem.type,
-                    title:groupItem.name,
+                    title,
                     children:groupLoop(groupItem as Bone)
                 }
             default:
@@ -220,7 +220,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
                 select:false,
                 key:groupItem.uuid,
                 type:groupItem.type,
-                title:groupItem.name
+                title
             };
         }
     })
