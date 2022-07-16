@@ -1,14 +1,9 @@
 
 import { motion, LayoutGroup,AnimatePresence, useDragControls } from 'framer-motion';
 import { useState } from 'react';
-
-import AnimationHelper from '../helper2/animationHelper';
-import CommonHelper from '../helper2/commonHelper';
-import { CameraHelper } from '../helper2/cameraHelper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalLayout from '../modal-layout';
 import { useMenuSWR } from '../../swrs/menu.swr';
-import InfoHelper from '../helper2/infoHelper';
 import shortId from 'shortid';
 import RemocornTabBox from './remocornTabBox';
 import ActionTab from './actionTab';

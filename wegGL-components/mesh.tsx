@@ -190,7 +190,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             position={mesh.position}
             quaternion={mesh.quaternion}>
                 {MaterialElements()}
-
             </mesh>
             ):(
                 <points

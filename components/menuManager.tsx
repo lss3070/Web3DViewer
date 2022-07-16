@@ -22,8 +22,6 @@ const MenuManager=()=>{
     const onSimpleControlClick=()=>{
         onSimpleControl(!menuState?.simpleControl.on);
     }
-    
-
 
     return(
         <div className='flex items-center gap-5'>

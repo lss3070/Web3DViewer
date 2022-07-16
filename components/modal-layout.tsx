@@ -13,8 +13,7 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
     const {menuState,
         setSimpleControlPosition,
         setControlPosition,
-        setTreeListPosition,
-        setDetailPosition
+        setTreeListPosition
     }=useMenuSWR();
     
 
@@ -42,8 +41,6 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
             return menuState?.control.position&&'right-[0%] top-[120px]'
             case 'TreeList':
             return menuState?.treeList.position&&'left-[0px] top-[100px]'
-            case 'Detail':
-            return menuState?.detail.position&&'right-[0%] top-[60%]'
             case 'SimpleControl':
             return menuState?.simpleControl.position&&'left-[50%] top-[5%]'
         }
@@ -58,13 +55,6 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
     useEffect(()=>{
         if(onModal===undefined) return
             switch(type){
-                case 'Detail':
-                    menuState?.detail?.position&&onModal?
-                        setPosition(
-                            menuState?.detail.position?.x!,
-                            menuState?.detail.position?.y!):
-                        setDetailPosition(x.get(),y.get());
-                    break;
                 case 'Control':
                     menuState?.control?.position&&onModal?
                         setPosition(

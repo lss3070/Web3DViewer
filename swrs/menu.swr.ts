@@ -5,17 +5,14 @@ import { RefObject } from "react";
 
 
 let menuState:IMenuStateProps={
-    detail:{
-        on:false,
-    },
     treeList:{
-        on:false,
+        on:true,
     },
     control:{
-        on:false,
+        on:true,
     },
     simpleControl:{
-        on:false,
+        on:true,
     }
 }
 
@@ -68,19 +65,7 @@ export const useMenuSWR=()=>{
             }
             return mutate();
         },
-        setDetailPosition:async(x:number|string,
-            y:number|string)=>{
-            menuState={
-                ...menuState,
-                detail:{
-                    ...menuState.detail,
-                    position: {
-                        x:x,y:y
-                    }
-                }
-            }
-            return mutate();
-        },
+
         setTreeListPosition:async(x:number|string,
             y:number|string)=>{
             menuState={

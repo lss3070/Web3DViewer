@@ -1,9 +1,10 @@
 import { MutableRefObject, useEffect, useState } from "react";
 import { Mesh } from "three";
 import { mergeVertices } from "three-stdlib";
-import { useMeshSWR } from "../../swrs/mesh.swr";
-import { useCommonSWR } from '../../swrs/common.swr';
-import { Helper } from "../../interfaces/app.interface";
+import { Helper } from "../../../interfaces/app.interface";
+import { useCommonSWR } from "../../../swrs/common.swr";
+import { useMeshSWR } from "../../../swrs/mesh.swr";
+
 
 type MeshInfoType={
     name:string;

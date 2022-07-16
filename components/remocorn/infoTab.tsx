@@ -1,4 +1,5 @@
-import InfoHelper from "../helper2/infoHelper"
+
+import InfoHelper from "../helper/info/info"
 import RemocornTab from "./remocornTab"
 
 const InfoTab=()=>{

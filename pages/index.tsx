@@ -19,6 +19,7 @@ import { useCommonSWR } from '../swrs/common.swr';
 import { useMeshSWR } from '../swrs/mesh.swr';
 import React from 'react'
 import Portal from '../HOC/portal'
+import Guide from '../components/guide'
 
 library.add(fab,far,fas);
 
@@ -51,12 +52,18 @@ const Home: NextPage = () => {
           <div 
           ref={dragArea}
           className='absolute top-[5%] left-0  w-full h-[95%]'>
-            {commonState?.fileLoad&&
-              <>
-                <TreeList/>
-                <Remocorn/>
-                <MiniControls/>
-              </>
+            {commonState?.fileLoad?(
+             <>
+              <TreeList/>
+              <Remocorn/>
+              <MiniControls/>
+            </>
+            ):(
+              <div className='absolute top-[40%] left-[45%] z-30'>
+                <Guide/>
+              </div>
+            )
+ 
             }
               <div className='absolute right-5 bottom-5 w-auto z-20'>
                 <DarkModeSwitch/>

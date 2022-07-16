@@ -117,7 +117,6 @@ export interface IAnimationStateProps{
 export interface IMenuStateProps{
 
   treeList:IMenuModal
-  detail:IMenuModal
   control:IMenuModal
   simpleControl:IMenuModal;
   dragArea?:RefObject<Element>

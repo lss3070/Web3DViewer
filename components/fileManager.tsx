@@ -29,14 +29,10 @@ const ExportList =({label}:ExportListProps)=>{
 
 const FileManager=()=>{
     const {setFiltPath}=useCommonSWR();
-
-    const [openHover,setOpenHover]=useState<boolean>(false);
     const [isExport,setIsExport]=useState<boolean>(false);
 
 
     const fileChange =(e:ChangeEvent<HTMLInputElement>)=>{
-
-
         const files= e.currentTarget.files;
        
         const fileMap = new Map<string,File>();
@@ -48,6 +44,7 @@ const FileManager=()=>{
 
         
         for(let i=0;i<files?.length!;i++){
+            
             const file = files?.item(i)!;
             fileMap.set(file.name,file)
             const commaIndex = file?.name?.lastIndexOf('.')
