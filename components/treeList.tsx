@@ -247,7 +247,6 @@ interface TitleProps{
 }
 
     const TitleComponent =({node,visibleChange}:TitleProps):ReactNode=>{   
-        
      
         const onIconClick=(e:React.MouseEvent<SVGSVGElement, MouseEvent>)=>{    
             const object = commonState?.scene?.current?.getObjectByProperty('uuid',node.key+'') as Mesh|Group

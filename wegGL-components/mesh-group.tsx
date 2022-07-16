@@ -4,32 +4,40 @@ import THREE, { BoxGeometry, Mesh,Box3,Sphere, Group, Bone, EdgesGeometry, Matri
 import { memo, useEffect, useState } from "react";
 import { MeshComponent } from "./mesh";
 import {useRef} from 'react'
+import { Object3D } from 'three';
+import BoneComponent from "./bone";
+
 interface IMeshProps{
-    meshGroup:Group,
+    meshGroup:Object3D<THREE.Event>,
 }
 
 export const MeshGroupComponent = ({meshGroup}:IMeshProps)=>{
-    const group = useRef<any>();
 
     
     const MeshSwitch=()=>{
         return meshGroup.children.map((groupItem,index)=>{
             switch(groupItem.type){
                 case 'Group':
-                    return (<MeshGroupComponent key={index} meshGroup={groupItem as Group}/>)
+                    return (<MeshGroupComponent key={index} 
+                        meshGroup={groupItem}/>)
                 case 'Mesh':
                     return (<MeshComponent key={index} mesh={groupItem as Mesh}/>)
-                case 'Bone':
-                    // return (  <BoneComponent bone={groupItem as Bone}/>)
-                    return (<MeshGroupComponent key={index} meshGroup={groupItem as Group}/>)
-                case 'LineSegments':
+                case 'SkinnedMesh':
                     return (<MeshComponent key={index} mesh={groupItem as Mesh}/>)
+                case 'Bone':
+                    return (<BoneComponent key={index} 
+                        boneItems={groupItem as Group}/>)
+                case 'LineSegments':
+                    return (<MeshComponent key={index} 
+                        mesh={groupItem as Mesh}/>)
             }
         });
     }
 
     return(
-       <group ref={group} position={meshGroup.position} scale={meshGroup.scale} 
+       <group
+       position={meshGroup.position} 
+       scale={meshGroup.scale} 
        uuid={meshGroup.uuid}
         quaternion={meshGroup.quaternion}>
             {meshGroup?MeshSwitch():<></>}

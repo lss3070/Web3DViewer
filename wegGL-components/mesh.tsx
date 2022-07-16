@@ -168,6 +168,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             <>
             {!point?(
                 <mesh ref={meshRef} 
+               
             onClick={meshOnClick}
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
@@ -183,6 +184,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
                 setHoverMesh(undefined)
             }}
             renderOrder={999}
+            type={mesh.type}
             name={mesh.name}
             uuid={mesh.uuid}
             geometry={mesh.geometry}
