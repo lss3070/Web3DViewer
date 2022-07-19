@@ -30,6 +30,7 @@ import CustomOBJLoader from '../loaders/objLoader';
 import CustomFBXLoader from '../loaders/fbxLoader';
 import CustomSTLLoader from '../loaders/stlLoader';
 import CustomPLYLoader from '../loaders/plyLoader';
+import ObjectComponent from './object';
 
 interface ICanvasProps{
     setLoadingPercent:Function;
@@ -274,7 +275,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
                     <ControlComponent/> 
                     {meshGroup&&(
                         <>
-                            <MeshGroupComponent meshGroup={meshGroup}/>
+                            <ObjectComponent group={meshGroup}/>
                             <SelectMeshComponent/>
                             <Gizmo/>
                         </>
