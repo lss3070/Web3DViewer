@@ -14,27 +14,6 @@ interface IMeshProps{
 
 export const MeshGroupComponent = ({meshGroup}:IMeshProps)=>{
 
-    
-    // const MeshSwitch=()=>{
-    //     return meshGroup.children.map((groupItem,index)=>{
-    //         switch(groupItem.type){
-    //             case 'Group':
-    //                 return (<MeshGroupComponent key={index} 
-    //                     meshGroup={groupItem}/>)
-    //             case 'Mesh':
-    //                 return (<MeshComponent key={index} mesh={groupItem as Mesh}/>)
-    //             case 'SkinnedMesh':
-    //                 return (<MeshComponent key={index} mesh={groupItem as SkinnedMesh}/>)
-    //             case 'Bone':
-    //                 return (<BoneComponent key={index} 
-    //                     boneItems={groupItem as Group}/>)
-    //             case 'LineSegments':
-    //                 return (<MeshComponent key={index} 
-    //                     mesh={groupItem as Mesh}/>)
-    //         }
-    //     });
-    // }
-
     return(
        <group
        position={meshGroup.position} 
