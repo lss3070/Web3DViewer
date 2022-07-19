@@ -2,7 +2,7 @@ import { Bone, Group, Mesh, Object3D, SkinnedMesh } from "three";
 import shortId from 'shortid';
 import { MeshGroupComponent } from "./mesh-group";
 import { MeshComponent } from "./mesh";
-import BoneComponent from "./bone";
+import SkinnedMeshComponent from "./skin-mesh";
 
 interface ISwitchObjectProps{
     object:Object3D<THREE.Event>
@@ -23,13 +23,13 @@ const SwitchObject=({object}:ISwitchObjectProps)=>{
                                 key={index} 
                                 mesh={object as Mesh}/>)
                         case 'SkinnedMesh':
-                            return (<MeshComponent  
+                            // return (<MeshComponent  
+                            //     key={index} 
+                            //     mesh={object as Mesh}/>)
+
+                            return (<SkinnedMeshComponent  
                                 key={index} 
-                                mesh={object as SkinnedMesh}/>)
-                        case 'Bone':
-                            return (<BoneComponent  
-                                key={index} 
-                                bone={object as Bone}/>)
+                                skinnedMeshItem={object as SkinnedMesh}/>)
                         case 'LineSegments':
                             return (<MeshComponent  
                                 key={index} 

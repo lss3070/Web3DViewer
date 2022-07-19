@@ -73,6 +73,13 @@ export const useAnimationSWR=()=>{
                 scaleSpeed:scaleSpeed
             }
             return mutate();
+        },
+        setCustomAnimation:async(customAnimation:string)=>{
+            animationState={
+                ...animationState,
+                customAnimation:customAnimation
+            }
+            return mutate();
         }
     }
 }

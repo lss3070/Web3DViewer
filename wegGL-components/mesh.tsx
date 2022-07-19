@@ -168,7 +168,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             <>
             {!point?(
                 <mesh ref={meshRef} 
-               
             onClick={meshOnClick}
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);

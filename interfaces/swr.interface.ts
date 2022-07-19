@@ -112,6 +112,7 @@ export interface IAnimationStateProps{
   positionSpeed:Vector3;
   rotationSpeed:Vector3;
   scaleSpeed:Vector3;
+  customAnimation?:string
 }
 
 export interface IMenuStateProps{

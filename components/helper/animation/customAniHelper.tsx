@@ -3,30 +3,26 @@ import { AnimationClip, AnimationMixer } from "three";
 import { Helper } from "../../../interfaces/app.interface"
 import { useCommonSWR } from '../../../swrs/common.swr';
 import { useMeshSWR } from '../../../swrs/mesh.swr';
+import { useAnimationSWR } from '../../../swrs/animation.swr';
 
 
 const CustomAniHelper=({}:Helper)=>{
 const {meshState}=useMeshSWR()
 const {commonState}=useCommonSWR()
-
-    const Start=(name:string)=>{
-
-        const mixer= new AnimationMixer(commonState?.scene?.current?.children![8]!);
-        // const mixer= new AnimationMixer(commonState?.scene?.current!);
-        
-        const clip= AnimationClip.findByName(meshState?.animationList!,name);
+const {animationState,setCustomAnimation}=useAnimationSWR()
 
 
-        console.log(mixer);
-        console.log(clip);
-        const action= mixer.clipAction(clip);
-        action.play();
+    const toggleClick=(name:string)=>{
+        const value= animationState?.customAnimation===name?
+        '':name
+        setCustomAnimation(value);
     }
+
     return(
         <div>
             {
                 meshState?.animationList?.map((item:AnimationClip)=>{
-                  return  <div onClick={()=>Start(item.name)}>
+                  return  <div onClick={()=>toggleClick(item.name)}>
                       {item.name}</div>
                 })
             }

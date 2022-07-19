@@ -43,29 +43,35 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const {meshState,setAnimationList}=useMeshSWR()
     const sceneRef = useRef<Scene>(null)
     const [meshGroup,setMeshGroup]=useState<Group>();
+    const [bone,setBone]=useState<Bone>();
 
     const threeDMLoader = new Rhino3dmLoader();
     const threeMFLoader = new ThreeMFLoader();
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
-
+  
         switch(data.type){
             case 'Group':
                 const object =data as Group;
-                new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
+
+                // new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
     
-                
+                const boneIndex=object.children.findIndex((item)=>item.type==='Bone');
+              
+                if(boneIndex>-1){
+                    const bone = object.children.splice(boneIndex,1)[0];
+                    setBone(bone as Bone);
+                }
+
                 const group = groupLoop(object);
         
-                console.log('!!!!!');
-                console.log(object);
                 setGroupList(group);
                 setMeshGroup(object);
         
-                const box = new Box3().setFromObject(object);
+                // const box = new Box3().setFromObject(object);
                       
                 setFileLoad(true);
-                setMeshBox(box);
+                // setMeshBox(box);
                 setLoadingComplete(true);
                 setAnimationList(object.animations);
                 setFileUuid(object.uuid);
@@ -78,15 +84,12 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                 const bufferGroup = new Group()
                 bufferGroup.add(mesh)
 
-                new Box3().setFromObject(bufferGroup).getCenter(bufferGroup.position).multiplyScalar(-1);
-
                 setGroupList(groupLoop(bufferGroup));
                 setMeshGroup(bufferGroup);
         
-                const bufferBox = new Box3().setFromObject(bufferGroup);
-                      
+                                
                 setFileLoad(true);
-                setMeshBox(bufferBox);
+
                 setLoadingComplete(true);
                 break;
         }
@@ -206,15 +209,6 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
                 title,
                 children:groupLoop(groupItem as Group)
             }
-            case 'Bone':
-                return{
-                    visible:true,
-                    select:false,
-                    key:groupItem.uuid,
-                    type:groupItem.type,
-                    title,
-                    children:groupLoop(groupItem as Bone)
-                }
             default:
             return {
                 visible:true,
@@ -275,7 +269,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
                     <ControlComponent/> 
                     {meshGroup&&(
                         <>
-                            <ObjectComponent group={meshGroup}/>
+                            <ObjectComponent group={meshGroup} bone={bone}/>
                             <SelectMeshComponent/>
                             <Gizmo/>
                         </>
