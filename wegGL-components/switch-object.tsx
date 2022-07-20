@@ -18,7 +18,7 @@ const SwitchObject=({objectList,complete}:ISwitchObjectProps)=>{
     const [element,setElement]=useState<JSX.Element[]>()
 
     useEffect(()=>{
-        const temp= objectList.map((object,index)=>{
+        const component= objectList.map((object,index)=>{
             switch(object.type){
                 case 'Group':
                     return (<MeshGroupComponent 
@@ -51,7 +51,7 @@ const SwitchObject=({objectList,complete}:ISwitchObjectProps)=>{
         })
        
 
-        setElement(temp!)
+        setElement(component!)
         complete&&complete(true);
     },[objectList])
     
