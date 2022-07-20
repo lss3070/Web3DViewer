@@ -14,7 +14,7 @@ interface IObjectComponentProps{
 
 const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
     console.log(group)
-    // let mixer:AnimationMixer 
+    let mixer:AnimationMixer 
 
     // if (group.animations.length) {
     //     mixer = new AnimationMixer(group);
@@ -32,6 +32,8 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
     const [currentAnimation,setCurrentAnimation]=useState<string>('')
     const {setMeshBox}=useCameraSWR();
 
+
+    const [load,setOnload]=useState<boolean>(false);
     useEffect(()=>{
         if(animationState?.customAnimation===''){
             actions[currentAnimation]?.stop()
@@ -46,10 +48,11 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
         new Box3().setFromObject(ref.current!).getCenter(ref.current?.position!)
         .multiplyScalar(-1);
 
+
         const box = new Box3().setFromObject(ref.current!);
         setMeshBox(box);
 
-    },[ref])
+    },[load])
 
     // if (ref.current?.animations.length) {
     //     mixer = new AnimationMixer(ref.current);
@@ -63,14 +66,24 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
     // }
    
 
-    // useFrame((state, delta) => {
-    //     mixer?.update(delta)
-    // })
+
+//     useFrame((state, delta) => {
+//         if(animationState?.customAnimation){
+// console.log('!!')
+//             mixer?.update(delta)
+//         }
+     
+//     })
+
     
     return(
-        <group ref={ref} name="group" dispose={null}>
-            {bone&& <primitive object={bone} name="pri"/>}
-            <SwitchObject object={group}/> 
+        <group ref={ref}
+        {...group}
+        name="group" >
+            {group.children&&(
+                <SwitchObject complete={setOnload} objectList={group.children}/> 
+            )}
+           
         </group>
     )
 }

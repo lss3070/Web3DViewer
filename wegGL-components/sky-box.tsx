@@ -5,7 +5,9 @@ import { useMeshSWR } from '../swrs/mesh.swr';
 
 const SkyBox=()=>{
     const {meshState,setSelectMesh}=useMeshSWR()
+    const {scene}= useThree()
     const initList =(e:any)=>{
+        console.log(scene)
         if(!meshState?.hoverMesh){
             setSelectMesh([]);
         }    

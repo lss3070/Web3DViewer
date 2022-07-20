@@ -15,14 +15,17 @@ interface IMeshProps{
 export const MeshGroupComponent = ({meshGroup}:IMeshProps)=>{
 
     return(
-       <group
-       position={meshGroup.position} 
-       scale={meshGroup.scale} 
-       uuid={meshGroup.uuid}
-        quaternion={meshGroup.quaternion}>
-            {meshGroup&&
+       <group 
+       {...meshGroup as Group}
+    //    position={meshGroup.position} 
+    //    scale={meshGroup.scale} 
+    //    uuid={meshGroup.uuid}
+    //     quaternion={meshGroup.quaternion}
+        
+        >
+            {meshGroup.children&&
             (
-                <SwitchObject object={meshGroup}/>
+                <SwitchObject objectList={meshGroup.children}/>
             )}
         </group>
     )

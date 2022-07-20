@@ -6,8 +6,14 @@ interface ISkinnedMeshProps{
 
 const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
     return(
-        <skinnedMesh {...skinnedMeshItem}>
 
+    //     <skinnedMesh
+    //     material={skinnedMeshItem.material}
+    //     geometry={skinnedMeshItem.geometry}
+    //     skeleton={skinnedMeshItem.skeleton}
+    //   />
+
+        <skinnedMesh {...skinnedMeshItem}>
         </skinnedMesh>
     )
 }

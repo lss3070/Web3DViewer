@@ -45,8 +45,40 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const [meshGroup,setMeshGroup]=useState<Group>();
     const [bone,setBone]=useState<Bone>();
 
+    const [tempBone,setTempBone]=useState<Bone>();
     const threeDMLoader = new Rhino3dmLoader();
     const threeMFLoader = new ThreeMFLoader();
+
+   
+    const findBone=(group:Object3D<THREE.Event>)=>{
+        if(group.children.length>0){
+            return group.children.find((item)=>{
+                if(item.type==='Bone'){
+                    console.log('!')
+                    console.log(item);
+                    setBone(item as Bone)
+                } 
+            })
+        }
+    }
+    console.log(bone);
+
+
+    // const findBone=(group:Object3D<THREE.Event>)=>{
+    //     if(group.children.length>0){
+    //         return group.children.find((item)=>{
+    //             if(item.type==='Bone'){
+    //                 console.log('!')
+    //                 console.log(item);
+    //                 setBone(item as Bone)
+    //                 return item
+    //             }else{
+                    
+    //             }
+               
+    //         })
+    //     }
+    // }
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
   
@@ -58,17 +90,28 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     
                 const boneIndex=object.children.findIndex((item)=>item.type==='Bone');
               
-                if(boneIndex>-1){
-                    const bone = object.children.splice(boneIndex,1)[0];
-                    setBone(bone as Bone);
-                }
+         
+                // const bone=object.children.find((item)=>item.type==='Bone');
+                // setBone(bone as Bone);
+                
+         
+                // if(boneIndex>-1){
+                //     const bone = object.children.splice(boneIndex,1)[0];
+                    
+                //     setBone(bone as Bone);
+                // }
+                // const ee=  findBone(object);
+                // console.log(ee);
+                // console.log('~')
 
                 const group = groupLoop(object);
+                 
         
                 setGroupList(group);
+                
                 setMeshGroup(object);
         
-                // const box = new Box3().setFromObject(object);
+                const box = new Box3().setFromObject(object);
                       
                 setFileLoad(true);
                 // setMeshBox(box);
