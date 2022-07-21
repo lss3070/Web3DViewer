@@ -21,28 +21,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     const {commonState}=useCommonSWR();
     const {setSelectMeshBox}=useCameraSWR()
 
-    const [point,setPoint]=useState<boolean>(false);
-
-    const [plane,setPlane]=useState<Plane[]>([
-        new Plane(new Vector3(-1,0,0),0),
-        new Plane(new Vector3(0,-1,0),0),
-        new Plane(new Vector3(0,0,-1),0),
-    ])
-
-    useEffect(()=>{
-        switch(meshState?.meshMode){
-            case MeshMode.Default:
-                // setWire(false)
-                break;
-            case MeshMode.Point:
-                // setPoint(true);
-                break;
-            case MeshMode.Wire:
-                // setWire(true)
-                break;
-        }
-    },[meshState?.meshMode]);
-
     const meshRef=useRef<any>();
 
     useEffect(()=>{
@@ -81,7 +59,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
         switch(material.type){
             case 'MeshPhysicalMaterial':
                 return <meshPhysicalMaterial {...material} 
-                
                 wireframeLinewidth={meshState?.wireWidth}
                 wireframe={meshState?.onWire} 
                  key={index?index:0}/>;
@@ -166,8 +143,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
         return(
             <>
-            {!point?(
-                <mesh ref={meshRef} 
+            <mesh ref={meshRef} 
             onClick={meshOnClick}
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
@@ -192,15 +168,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             quaternion={mesh.quaternion}>
                 {MaterialElements()}
             </mesh>
-            ):(
-                <points
-                geometry={mesh.geometry} >
-                    <PointMaterial
-                      color={"#000000"} 
-                     size={0.2}
-                    />
-                </points>
-            )}
+
 
                     <MeshHtmlComponent 
                     centerPosition={mesh.geometry.boundingSphere?.center!}
