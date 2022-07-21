@@ -17,16 +17,12 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
     const {animationState}=useAnimationSWR();
     const ref=useRef<Group>(null);
     const {actions}=useAnimations(group.animations,ref)
-    const [currentAnimation,setCurrentAnimation]=useState<string>('')
+    const [currentAnimation,setCurrentAnimation]=useState<string[]>([])
     const {setMeshBox}=useCameraSWR();
 
     useEffect(()=>{
-        if(animationState?.customAnimation===''){
-            actions[currentAnimation]?.stop()
-        }else{
-            actions[animationState?.customAnimation!]?.play()
-            setCurrentAnimation(animationState?.customAnimation!);
-        }
+        actions[animationState?.customAnimation?.pre!]?.stop();
+        actions[animationState?.customAnimation?.cur!]?.play();
     },[animationState?.customAnimation]);
 
 

@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 import { Vector3 } from "three";
-import { IAnimationStateProps } from "../interfaces/swr.interface";
+import { CustomAnimationList, IAnimationStateProps } from "../interfaces/swr.interface";
 
 let animationState:IAnimationStateProps
 
@@ -74,7 +74,7 @@ export const useAnimationSWR=()=>{
             }
             return mutate();
         },
-        setCustomAnimation:async(customAnimation:string)=>{
+        setCustomAnimation:async(customAnimation:CustomAnimationList)=>{
             animationState={
                 ...animationState,
                 customAnimation:customAnimation

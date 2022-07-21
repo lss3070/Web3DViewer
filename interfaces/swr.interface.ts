@@ -102,6 +102,10 @@ export interface ILightStateProps{
   color:ThreeColor;
 }
 
+export interface CustomAnimationList{
+  pre:string,
+  cur:string
+}
 export interface IAnimationStateProps{
   onPostion:boolean;
   onRotation:boolean;
@@ -112,7 +116,7 @@ export interface IAnimationStateProps{
   positionSpeed:Vector3;
   rotationSpeed:Vector3;
   scaleSpeed:Vector3;
-  customAnimation?:string
+  customAnimation?:CustomAnimationList
 }
 
 export interface IMenuStateProps{
