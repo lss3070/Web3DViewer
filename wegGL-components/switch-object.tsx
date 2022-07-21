@@ -6,17 +6,20 @@ import { MeshComponent } from "./mesh";
 import SkinnedMeshComponent from "./skin-mesh";
 import BoneComponent from "./bone";
 import { useEffect, useState } from "react";
+import { useThree } from "@react-three/fiber";
 
 interface ISwitchObjectProps{
     objectList:Object3D<THREE.Event>[];
     complete?:Function
-    
+    temp?:string
 }
 
-const SwitchObject=({objectList,complete}:ISwitchObjectProps)=>{
+//temp 상단 컴포넌트 id
+const SwitchObject=({objectList,complete,temp}:ISwitchObjectProps)=>{
 
     const [element,setElement]=useState<JSX.Element[]>()
 
+    const {scene} = useThree();
     useEffect(()=>{
         const component= objectList.map((object,index)=>{
             switch(object.type){

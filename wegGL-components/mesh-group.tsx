@@ -25,7 +25,7 @@ export const MeshGroupComponent = ({meshGroup}:IMeshProps)=>{
         >
             {meshGroup.children&&
             (
-                <SwitchObject objectList={meshGroup.children}/>
+                <SwitchObject objectList={meshGroup.children} />
             )}
         </group>
     )

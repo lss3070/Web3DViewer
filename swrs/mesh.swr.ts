@@ -38,7 +38,10 @@ export const useMeshSWR=()=>{
             return mutate();
         },
         setSelectMesh:async(mesh:ObjectRef[])=>{
+
+            console.log(mesh);
             meshState.selectMesh=mesh
+            console.log(meshState.selectMesh);
             meshState={
                 ...meshState
             }

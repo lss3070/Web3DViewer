@@ -13,27 +13,13 @@ interface IObjectComponentProps{
 }
 
 const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
-    console.log(group)
-    let mixer:AnimationMixer 
-
-    // if (group.animations.length) {
-    //     mixer = new AnimationMixer(group);
-    //     group.animations.forEach(clip => {
-    //         if(clip.name==="mixamo.com"){
-    //             const action = mixer.clipAction(clip);
-    //             action.play();
-    //         }
-    //     });
-    // }
-  
+   
     const {animationState}=useAnimationSWR();
     const ref=useRef<Group>(null);
     const {actions}=useAnimations(group.animations,ref)
     const [currentAnimation,setCurrentAnimation]=useState<string>('')
     const {setMeshBox}=useCameraSWR();
 
-
-    const [load,setOnload]=useState<boolean>(false);
     useEffect(()=>{
         if(animationState?.customAnimation===''){
             actions[currentAnimation]?.stop()
@@ -45,43 +31,21 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
 
 
     useEffect(()=>{
+        const box = new Box3().setFromObject(group);
+        setMeshBox(box);
+    },[group])
+
+    useEffect(()=>{
         new Box3().setFromObject(ref.current!).getCenter(ref.current?.position!)
         .multiplyScalar(-1);
+    },[ref.current])
 
-
-        const box = new Box3().setFromObject(ref.current!);
-        setMeshBox(box);
-
-    },[load])
-
-    // if (ref.current?.animations.length) {
-    //     mixer = new AnimationMixer(ref.current);
-    //     ref.current.animations.forEach(clip => {
-    //         if(clip.name==="mixamo.com"){
-    //             console.log(clip);
-    //             const action = mixer.clipAction(clip);
-    //             action.play();
-    //         }
-    //     });
-    // }
-   
-
-
-//     useFrame((state, delta) => {
-//         if(animationState?.customAnimation){
-// console.log('!!')
-//             mixer?.update(delta)
-//         }
-     
-//     })
-
-    
     return(
         <group ref={ref}
         {...group}
         name="group" >
             {group.children&&(
-                <SwitchObject complete={setOnload} objectList={group.children}/> 
+                <SwitchObject objectList={group.children}/> 
             )}
            
         </group>

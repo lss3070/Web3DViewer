@@ -31,6 +31,7 @@ import CustomFBXLoader from '../loaders/fbxLoader';
 import CustomSTLLoader from '../loaders/stlLoader';
 import CustomPLYLoader from '../loaders/plyLoader';
 import ObjectComponent from './object';
+import { SkeletonUtils } from 'three-stdlib';
 
 interface ICanvasProps{
     setLoadingPercent:Function;

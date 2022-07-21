@@ -4,6 +4,7 @@ export const SwitchMaterial=(
     material:Material,
     wire:boolean,
     index?:number)=>{
+        
     switch(material.type){
         case 'MeshPhysicalMaterial':
             return <meshPhysicalMaterial {...material} 

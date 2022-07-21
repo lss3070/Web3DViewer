@@ -54,7 +54,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             }
         }
     })
-   
 
     const meshOnClick =async (e:any)=>{ 
         if(e.metaKey||e.ctrlKey){
