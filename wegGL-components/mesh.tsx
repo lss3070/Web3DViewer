@@ -10,6 +10,7 @@ import { useCommonSWR } from "../swrs/common.swr";
 import { MeshHtmlComponent } from "./mesh-html";
 import { MeshMode } from "../interfaces/swr.interface";
 import { useCameraSWR } from '../swrs/camera.swr';
+import { MaterialElements } from "../utils/materialElements";
 interface IMeshProps{
     mesh:THREE.Mesh
 }
@@ -18,7 +19,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
     const {animationState}=useAnimationSWR();
-    const {commonState}=useCommonSWR();
     const {setSelectMeshBox}=useCameraSWR()
 
     const meshRef=useRef<any>();
@@ -54,74 +54,9 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             }
         }
     })
-
-    const switchMaterial=(material:Material,index?:number)=>{
-        switch(material.type){
-            case 'MeshPhysicalMaterial':
-                return <meshPhysicalMaterial {...material} 
-                wireframeLinewidth={meshState?.wireWidth}
-                wireframe={meshState?.onWire} 
-                 key={index?index:0}/>;
-            case 'MeshStandardMaterial':
-                return <meshStandardMaterial {...material} 
-                wireframeLinewidth={meshState?.wireWidth}
-                wireframe={meshState?.onWire} 
-                 key={index?index:0}/>;
-            case 'MeshToonMaterial':
-                return <meshToonMaterial {...material}
-                 key={index?index:0}/>;
-            case 'MeshNormalMaterial':
-                return <meshNormalMaterial {...material} 
-                wireframeLinewidth={meshState?.wireWidth}
-                wireframe={meshState?.onWire} 
-                key={index?index:0}/>;
-            case 'MeshDepthMaterial':
-                return <meshDepthMaterial {...material} 
-                wireframeLinewidth={meshState?.wireWidth}
-                wireframe={meshState?.onWire} 
-                 key={index?index:0}/>;
-            case 'MeshDistanceMaterial':
-                return <meshDistanceMaterial
-                {...material} key={index?index:0}/>;
-            case 'MeshBasicMaterial':
-                return <meshBasicMaterial {...material} 
-                wireframeLinewidth={meshState?.wireWidth}
-                wireframe={meshState?.onWire} 
-                key={index?index:0}/>
-            case 'MeshMatcapMaterial':
-                return <meshMatcapMaterial {...material}  
-                key={index?index:0}/>
-            case 'MeshPhongMaterial':
-                return <meshPhongMaterial {...material} 
-                wireframeLinewidth={meshState?.wireWidth}
-                wireframe={meshState?.onWire}  
-                key={index?index:0}/>
-            case 'MeshLambertMaterial':
-                return <meshLambertMaterial {...material}
-                wireframe={meshState?.onWire}  
-                wireframeLinewidth={meshState?.wireWidth}
-                key={index?index:0}/>
-            default:
-            return <meshBasicMaterial {...material} 
-            wireframe={meshState?.onWire}
-            wireframeLinewidth={meshState?.wireWidth}
-            />
-        }
-    }
-
-    const MaterialElements =()=>{
-        if(Array.isArray(mesh.material)){
-            
-            return (mesh.material as Material[]).map((item,index)=>
-                switchMaterial(item,index)
-            )
-        }else{
-            return switchMaterial(mesh.material);
-        }
-    }
+   
 
     const meshOnClick =async (e:any)=>{ 
-
         if(e.metaKey||e.ctrlKey){
             const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===meshRef.current.uuid)!;
             if(index>=0){
@@ -135,7 +70,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             console.log(meshRef.current);
             setSelectMesh([meshRef]);
         }
-        
     }
     const meshDoubleClick=()=>{
         setSelectMeshBox(new Box3().setFromObject(meshRef.current))
@@ -166,10 +100,8 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             scale={mesh.scale}
             position={mesh.position}
             quaternion={mesh.quaternion}>
-                {MaterialElements()}
+                {MaterialElements(mesh.material,meshState?.onWire!)}
             </mesh>
-
-
                     <MeshHtmlComponent 
                     centerPosition={mesh.geometry.boundingSphere?.center!}
                     visible={meshState?.onText!}
