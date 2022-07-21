@@ -49,7 +49,6 @@ const SwitchObject=({objectList,complete}:ISwitchObjectProps)=>{
                     return<></>
             }
         })
-       
 
         setElement(component!)
         complete&&complete(true);

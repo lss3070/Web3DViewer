@@ -49,21 +49,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const threeDMLoader = new Rhino3dmLoader();
     const threeMFLoader = new ThreeMFLoader();
 
-   
-    const findBone=(group:Object3D<THREE.Event>)=>{
-        if(group.children.length>0){
-            return group.children.find((item)=>{
-                if(item.type==='Bone'){
-                    console.log('!')
-                    console.log(item);
-                    setBone(item as Bone)
-                } 
-            })
-        }
-    }
-    console.log(bone);
-
-
     // const findBone=(group:Object3D<THREE.Event>)=>{
     //     if(group.children.length>0){
     //         return group.children.find((item)=>{
@@ -89,20 +74,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                 // new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
     
                 const boneIndex=object.children.findIndex((item)=>item.type==='Bone');
-              
-         
-                // const bone=object.children.find((item)=>item.type==='Bone');
-                // setBone(bone as Bone);
-                
-         
-                // if(boneIndex>-1){
-                //     const bone = object.children.splice(boneIndex,1)[0];
-                    
-                //     setBone(bone as Bone);
-                // }
-                // const ee=  findBone(object);
-                // console.log(ee);
-                // console.log('~')
 
                 const group = groupLoop(object);
                  
@@ -149,7 +120,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     }).then((data)=>{
                        SettingModel(data as Group);
                     })
-
                     break;
                 case 'fbx':
                     CustomFBXLoader({
@@ -230,39 +200,34 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
    
 
 const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
-    let temp:CustomDataNode[]
-    temp=item.children.map((groupItem):CustomDataNode=>{
-        const title = groupItem.name?groupItem.name:'(no name)';
-        switch(groupItem.type){//groupItem.constructor.name
-            case'Mesh':
-            return {
+
+   const result= item.children.reduce((array:CustomDataNode[],object,index)=>{
+        
+        if(object.type==='Mesh'||object.type==='Group'||
+        object.type==='SkinnedMesh'
+        ) {
+            const title = object.name?object.name:'(no name)';
+            const dataNode = {
                 visible:true,
                 select:false,
-                key:groupItem.uuid,
-                type:groupItem.type,
+                key:object.uuid,
+                type:object.type,
                 title,
-                children:groupLoop(groupItem as Mesh)
+                children:groupLoop(object as Mesh)
+            }as CustomDataNode
+
+            //Group객체에 children이 비워져있을 경우 treenode에 보여줄 필요 없음.
+            if(object.type==='Group'){
+                dataNode.children?.length!>0&&array.push(dataNode)
+            }else{
+                array.push(dataNode)
             }
-            case'Group':
-            return {
-                visible:true,
-                select:false,
-                key:groupItem.uuid,
-                type:groupItem.type,
-                title,
-                children:groupLoop(groupItem as Group)
-            }
-            default:
-            return {
-                visible:true,
-                select:false,
-                key:groupItem.uuid,
-                type:groupItem.type,
-                title
-            };
+            
         }
-    })
-    return temp;
+        return array;
+    },[])
+
+    return result;
 }
     useEffect(()=>{
         setScene(sceneRef)
