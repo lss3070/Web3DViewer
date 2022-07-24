@@ -10,12 +10,10 @@ import { useThree } from "@react-three/fiber";
 
 interface ISwitchObjectProps{
     objectList:Object3D<THREE.Event>[];
-    complete?:Function
-    temp?:string
 }
 
 //temp 상단 컴포넌트 id
-const SwitchObject=({objectList,complete,temp}:ISwitchObjectProps)=>{
+const SwitchObject=({objectList}:ISwitchObjectProps)=>{
 
     const [element,setElement]=useState<JSX.Element[]>()
 
@@ -54,7 +52,6 @@ const SwitchObject=({objectList,complete,temp}:ISwitchObjectProps)=>{
         })
 
         setElement(component!)
-        complete&&complete(true);
     },[objectList])
     
 

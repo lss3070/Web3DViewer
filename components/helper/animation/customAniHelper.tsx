@@ -39,23 +39,27 @@ const {animationState,setCustomAnimation}=useAnimationSWR()
         <div>
             {
                 meshState?.animationList?.map((item:AnimationClip)=>{
-                  return  <div className="flex"
+                  return  <div className="grid grid-cols-11"
                   >
-                        <div className=" select-none">{item.name}</div>
+                        <div className=" select-none col-span-10">{item.name}</div>
                         <div  
-                        className="flex w-full cursor-pointer  justify-end items-end "
+                        className="flex w-full  col-span-1   justify-end items-end "
                         onClick={()=>toggleClick(item.name)}>
                             <motion.div 
+                            animate
+                            transition={{
+                                ease:'easeInOut'
+                            }}
                             // whileTap={{rotate: 360}}  
                             onClick={()=>toggleClick(item.name)}>
                                 {animationState?.customAnimation?.cur===item.name?
                                 (<FontAwesomeIcon
                                     icon={['fas','stop']}
-                                    className="w-5 h-5 text-gray-600 "/>
+                                    className="w-5 h-5 text-gray-600 cursor-pointer"/>
                                 ):
                                 (<FontAwesomeIcon
                                     icon={['fas','play']}
-                                    className="w-5 h-5 text-gray-600"/>)
+                                    className="w-5 h-5 text-gray-600 cursor-pointer"/>)
                                 }
                             </motion.div>
                         </div>
