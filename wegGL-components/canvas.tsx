@@ -72,13 +72,12 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
             case 'Group':
                 const object =data as Group;
 
-                // new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
+                new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
     
                 const boneIndex=object.children.findIndex((item)=>item.type==='Bone');
 
                 const group = groupLoop(object);
                  
-        
                 setGroupList(group);
                 
                 setMeshGroup(object);
@@ -272,7 +271,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
                     {/* <color attach="background" 
                     args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 
                     />   */}
-                    <SkyBox/>
+                    {/* <SkyBox/> */}
                     <LightComponent/>                
                     <CameraComponent/>
                     <ControlComponent/> 

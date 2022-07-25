@@ -210,8 +210,10 @@ const MiniControls=()=>{
         setPosition(new Vector3(0,0,59))
     }
     const onFitZoom=()=>{
+        console.log(cameraState?.meshBox);
         setSelectMeshBox(_.cloneDeep(cameraState?.meshBox!))
     }
+
     const cameraVariants={
         down:{
             height:'auto',

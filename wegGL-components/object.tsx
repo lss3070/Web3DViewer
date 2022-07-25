@@ -28,13 +28,9 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
 
     useEffect(()=>{
         const box = new Box3().setFromObject(group);
+
         setMeshBox(box);
     },[group])
-
-    useEffect(()=>{
-        new Box3().setFromObject(ref.current!).getCenter(ref.current?.position!)
-        .multiplyScalar(-1);
-    },[ref.current])
 
     return(
         <group ref={ref}
