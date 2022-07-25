@@ -266,12 +266,13 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
             <Canvas style={{width:'100%',maxHeight:'100vh',
             backgroundColor:commonState?.darkMode?'#2a2b2e':'#f7fafb'
         }}
+        
             className="z-10">   
                 <scene ref={sceneRef} background={new Color()}>   
                     {/* <color attach="background" 
                     args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 
                     />   */}
-                    {/* <SkyBox/> */}
+                    <SkyBox/>
                     <LightComponent/>                
                     <CameraComponent/>
                     <ControlComponent/> 

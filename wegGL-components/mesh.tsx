@@ -55,7 +55,10 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
         }
     })
 
-    const meshOnClick =async (e:any)=>{ 
+    const meshOnClick =async (e: any)=>{ 
+        // console.log(e);
+        // console.log(e.intersections)
+e.stopPropagation()
         if(e.metaKey||e.ctrlKey){
             const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===meshRef.current.uuid)!;
             if(index>=0){

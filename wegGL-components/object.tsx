@@ -39,7 +39,6 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
             {group.children&&(
                 <SwitchObject objectList={group.children}/> 
             )}
-           
         </group>
     )
 }

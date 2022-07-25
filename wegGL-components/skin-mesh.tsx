@@ -13,6 +13,8 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
     const skinnedMesh=useRef<any>()
 
     const meshOnClick =async (e:any)=>{ 
+        
+        e.stopPropagation()
         if(e.metaKey||e.ctrlKey){
        
             const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===skinnedMesh.current.uuid)!;

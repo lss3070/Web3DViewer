@@ -64,14 +64,18 @@ export const ControlComponent=()=>{
         const step=0.05;
         if( onZooming){
             try{
-                if(controlRef.current.object.position.x.toFixed(1)==zoomPosition.x.toFixed(1)&&
+                if(
+                    controlRef.current.object.position.x.toFixed(1)==zoomPosition.x.toFixed(1)&&
                 controlRef.current.object.position.y.toFixed(1)==zoomPosition.y.toFixed(1)&&
-                controlRef.current.object.position.z.toFixed(1)==zoomPosition.z.toFixed(1)){
+                controlRef.current.object.position.z.toFixed(1)==zoomPosition.z.toFixed(1)
+                ){
                     setOnZooming(false);
                 }else{
                     controlRef.current.target.lerp(zoomTarget,0.1)
-                    // controlRef.current.object.lookAt(target)
+                    // controlRef.current.object.lookAt(zoomTarget)
                     controlRef.current.object.position.lerp(zoomPosition,0.1);
+                    
+
                     controlRef.current.update();
                     controlRef.current.object.updateProjectionMatrix();
                 }
