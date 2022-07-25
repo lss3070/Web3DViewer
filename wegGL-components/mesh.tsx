@@ -56,22 +56,22 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     })
 
     const meshOnClick =async (e: any)=>{ 
-        // console.log(e);
-        // console.log(e.intersections)
-e.stopPropagation()
-        if(e.metaKey||e.ctrlKey){
-            const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===meshRef.current.uuid)!;
-            if(index>=0){
-                const meshList = [...meshState?.selectMesh!];
-                meshList.splice(index,1)
-                await setSelectMesh(meshList);
-            }else{
-                await setSelectMesh([...meshState?.selectMesh!,meshRef])
-            }
-        }else{
-            console.log(meshRef.current);
-            setSelectMesh([meshRef]);
-        }
+
+        setSelectMesh([meshRef]);
+        // if(e.metaKey||e.ctrlKey){
+        //     const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===meshRef.current.uuid)!;
+        //     if(index>=0){
+        //         const meshList = [...meshState?.selectMesh!];
+        //         meshList.splice(index,1)
+        //         await setSelectMesh(meshList);
+        //     }else{
+        //         await setSelectMesh([...meshState?.selectMesh!,meshRef])
+        //     }
+        // }else{
+            
+        //     setSelectMesh([meshRef]);
+        // }
+        e.stopPropagation()
     }
     const meshDoubleClick=()=>{
         setSelectMeshBox(new Box3().setFromObject(meshRef.current))
