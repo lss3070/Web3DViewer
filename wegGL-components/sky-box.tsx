@@ -1,15 +1,21 @@
 import { useTexture } from '@react-three/drei';
-import { useThree } from '@react-three/fiber';
+import { ThreeEvent, useThree } from '@react-three/fiber';
 import { useState } from 'react';
 import THREE, { BackSide, FrontSide, DoubleSide, DepthModes } from 'three';
 import { useMeshSWR } from '../swrs/mesh.swr';
 
 const SkyBox=()=>{
-    const {meshState,setInitSelectMesh}=useMeshSWR()
+    const {meshState,setInitSelectMesh,setHoverMesh}=useMeshSWR()
     const {scene}= useThree()
 
     const initList =(e:any)=>{
         e.delta<=1&&setInitSelectMesh();
+    }
+    const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
+
+        setHoverMesh(undefined);
+        e.stopPropagation();
+
     }
 
 
@@ -21,6 +27,8 @@ const SkyBox=()=>{
         // <primitive attach='background'  object={formatted}/>
         // <texture attach={'background'}/>
         <mesh
+        onPointerMove={hoverEvent}
+        onPointerOver={hoverEvent}
         // attach={'background'}
         position={[0,0,0]}
         onClick={initList}

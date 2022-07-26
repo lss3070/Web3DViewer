@@ -1,3 +1,4 @@
+import { ThreeEvent } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { SkinnedMesh } from "three"
 import { useMeshSWR } from "../swrs/mesh.swr";
@@ -40,6 +41,15 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
     //     setSelectMeshBox(new Box3().setFromObject(meshRef.current))
     // }
 
+    const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
+
+        setHoverMesh(undefined);
+        e.stopPropagation();
+
+    }
+
+    
+
     return(
 
     //     <skinnedMesh
@@ -49,18 +59,9 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
     //   />
 
         <skinnedMesh 
-        onPointerMove={(e)=>{
-            console.log('pointermove');
-            setHoverMesh(skinnedMesh);
-        }}
-        onPointerOver={(e)=>{ 
-            console.log('pointover');
-            setHoverMesh(skinnedMesh);
-        }}
-        onPointerLeave={(e)=>{
-            console.log('pointerleave');
-            setHoverMesh(undefined)
-        }}
+        onPointerMove={hoverEvent}
+        onPointerOver={hoverEvent}
+   
         onClick={meshOnClick} ref={skinnedMesh} {...skinnedMeshItem}>
               {MaterialElements(skinnedMeshItem.material,meshState?.onWire!)}
         </skinnedMesh>

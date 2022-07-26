@@ -36,26 +36,24 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
         setSelectMeshBox(new Box3().setFromObject(meshRef.current))
     }
 
+    const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
+        setHoverMesh(meshRef);
+        e.stopPropagation();
+
+    }
+
         return(
             <>
             <mesh ref={meshRef} 
+            
             onClick={meshOnClick}
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
             // }}
             onDoubleClick={meshDoubleClick}
-            onPointerMove={(e)=>{
-                console.log('pointermove');
-                setHoverMesh(meshRef);
-            }}
-            onPointerOver={(e)=>{ 
-                console.log('pointover');
-                setHoverMesh(meshRef);
-            }}
-            onPointerLeave={(e)=>{
-                console.log('pointerleave');
-                setHoverMesh(undefined)
-            }}
+            onPointerMove={hoverEvent}
+            onPointerOver={hoverEvent}
+
             {...mesh}
             
             // type={mesh.type}
