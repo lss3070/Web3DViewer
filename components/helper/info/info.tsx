@@ -36,39 +36,22 @@ const InfoHelper=({}:Helper)=>{
         })
     }
     const onSelectMesh=()=>{
-        let vertex=0;
-        let name=meshState?.selectMesh?.length!>1?
-        `${meshState?.selectMesh[0].current.name} 외 ${meshState?.selectMesh?.length!-1}`
-        :`${meshState?.selectMesh[0].current.name}`
-        let triangle=0
-        let x =0;
-        let y=0;
-        let z=0;
 
-        meshState?.selectMesh.map((item)=>{
-            console.log(item);
-            const mesh = item as MutableRefObject<Mesh>
-            const merge= mergeVertices(mesh.current.geometry);
-            vertex+=mesh.current.geometry.attributes.position.count
-            // vertex+=merge.attributes.position.count
-            triangle+=mesh.current.geometry.attributes.position.count/3
-            x+=Math.abs(mesh.current.geometry.boundingBox?.max.x!-mesh.current.geometry.boundingBox?.min.x!)
-            y+=Math.abs(mesh.current.geometry.boundingBox?.max.y!-mesh.current.geometry.boundingBox?.min.y!)
-            z+=Math.abs(mesh.current.geometry.boundingBox?.max.z!-mesh.current.geometry.boundingBox?.min.z!)
-        });
+        const mesh = meshState?.selectMesh?.current as Mesh
+
         setMeshInfo({
-            name,
-            vertex,
-            triangle,
-            x,
-            y,
-            z
+            name:mesh.name,
+            vertex:mesh.geometry.attributes.position.count,
+            triangle:mesh.geometry.attributes.position.count/3,
+            x:mesh.geometry.boundingBox?.max?.x!-mesh.geometry.boundingBox?.min.x!,
+            y:mesh.geometry.boundingBox?.max?.y!-mesh.geometry.boundingBox?.min.y!,
+            z:mesh.geometry.boundingBox?.max?.z!-mesh.geometry.boundingBox?.min.z!
         })
     }
 
     useEffect(()=>{
 
-        meshState?.selectMesh.length!>0?onSelectMesh():onAllMesh()
+        meshState?.selectMesh?onSelectMesh():onAllMesh()
     },[meshState?.selectMesh]);
     
     return(
