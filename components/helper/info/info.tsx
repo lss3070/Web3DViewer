@@ -40,7 +40,7 @@ const InfoHelper=({}:Helper)=>{
         const mesh = meshState?.selectMesh?.current as Mesh
 
         setMeshInfo({
-            name:mesh.name,
+            name:mesh.name===''?'(no name)':mesh.name,
             vertex:mesh.geometry.attributes.position.count,
             triangle:mesh.geometry.attributes.position.count/3,
             x:mesh.geometry.boundingBox?.max?.x!-mesh.geometry.boundingBox?.min.x!,

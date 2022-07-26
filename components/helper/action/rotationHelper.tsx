@@ -27,18 +27,21 @@ export const RotationHelper=({}:IRotationHelper)=>{
     
 
     const setX=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState.selectMesh.current.rotation.x=e
         }
         setRotation(new Euler(e,rotation.y,rotation.z))
     }
     const setY=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState.selectMesh.current.rotation.y=e
         }
         setRotation(new Euler(rotation.x,e,rotation.z))
     }
     const setZ=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState.selectMesh.current.rotation.z=e
         }

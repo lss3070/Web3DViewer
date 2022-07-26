@@ -21,18 +21,21 @@ export const ScaleHelper=({}:IScaleProps)=>{
         }
     }
     const setX=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState.selectMesh.current.scale.x=e
         }
         setScale(new Vector3(e,scale.y,scale.z))
     }
     const setY=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState.selectMesh.current.scale.y=e
         }
         setScale(new Vector3(scale.x,e,scale.z))
     }
     const setZ=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState.selectMesh.current.scale.z=e
         }

@@ -17,8 +17,6 @@ const SkyBox=()=>{
         e.stopPropagation();
 
     }
-
-
     // const {gl} = useThree();
     // const texture = useTexture('')
     // const formatted = new THREE.WebGLCubeRenderTarget(1200).fromEquirectangularTexture(gl, texture)

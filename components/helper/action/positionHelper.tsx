@@ -27,18 +27,21 @@ export const PositionHelper=({
     }
 
     const setX=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState?.selectMesh.current.position.setX(e)
         }
         setPosition(new Vector3(e,position.y,position.z))
     }
     const setY=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState?.selectMesh.current.position.setY(e)
         }
         setPosition(new Vector3(position.x,e,position.z))
     }
     const setZ=(e:number)=>{
+        e = isNaN(e)?0:e;
         if(meshState?.selectMesh){
             meshState?.selectMesh.current.position.setZ(e)
         }
