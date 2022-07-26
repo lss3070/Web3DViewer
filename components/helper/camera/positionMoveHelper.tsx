@@ -10,8 +10,13 @@ import SliderItem from "../../sliderItem";
 export const PositionMoveHelper=({}:Helper)=>{
     const {cameraState,setPosition}=useCameraSWR();
     const PositionMoveEvent=(x:number,y:number,z:number)=>{
+        x = isNaN(x)?0:x;
+        y = isNaN(y)?0:y;
+        z = isNaN(z)?0:z;
         setPosition(new Vector3(x,y,z));
     }
+
+
     return(
         <div className="w-full">
              <SliderItem

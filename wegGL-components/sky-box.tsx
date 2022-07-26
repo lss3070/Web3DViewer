@@ -15,7 +15,6 @@ const SkyBox=()=>{
 
         setHoverMesh(undefined);
         e.stopPropagation();
-
     }
     // const {gl} = useThree();
     // const texture = useTexture('')

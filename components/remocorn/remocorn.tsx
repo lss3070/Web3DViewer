@@ -57,9 +57,9 @@ const Remocorn =()=>{
                     </div>
                 </div>
                 <div className='grid gap-5 cursor-auto'
-                onMouseDown={disableDrag}
+                // onMouseDown={disableDrag}
                 onMouseLeave={ableDrag}
-                
+                onMouseDownCapture={disableDrag}
                 >
                     <RemocornTabBox 
                     label={'Info'} 

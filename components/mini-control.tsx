@@ -17,7 +17,6 @@ import { useCameraSWR } from '../swrs/camera.swr';
 import { Vector3 } from 'three'
 import _ from 'lodash'
 import { useMeshSWR } from '../swrs/mesh.swr';
-import { Slider } from 'antd'
 import { useThree } from '@react-three/fiber';
 
 

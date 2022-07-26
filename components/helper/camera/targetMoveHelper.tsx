@@ -18,7 +18,7 @@ export const TargetMoveHelper=({}:Helper)=>{
             label='x'
             max={1000}
             min={-1000}
-            value={cameraState?.position?.x!}
+            value={cameraState?.target?.x!}
             sliderChangeEvent={
                 (e:number)=>TargetChangeEvent(e,cameraState?.target?.y!,cameraState?.target?.z!)
             }
@@ -31,7 +31,7 @@ export const TargetMoveHelper=({}:Helper)=>{
             label='y'
             max={1000}
             min={-1000}
-            value={cameraState?.position?.y!}
+            value={cameraState?.target?.y!}
             sliderChangeEvent={
                 (e:number)=>TargetChangeEvent(cameraState?.target?.x!,e,cameraState?.target?.z!)
             }
@@ -44,7 +44,7 @@ export const TargetMoveHelper=({}:Helper)=>{
             label='z'
             max={1000}
             min={-1000}
-            value={cameraState?.position?.z!}
+            value={cameraState?.target?.z!}
             sliderChangeEvent={
                 (e:number)=>TargetChangeEvent(cameraState?.target?.x!,cameraState?.target?.y!,e)
             }
