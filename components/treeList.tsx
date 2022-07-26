@@ -93,21 +93,24 @@ const TreeList=()=>{
     const treeClickEvent=(e:React.MouseEvent<HTMLSpanElement, MouseEvent>
         ,key:string|number)=>{
             const uuid = key as string;
-            const keyIndex= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===uuid)!;
-            const mesh= meshState?.staticMeshList.filter((mesh)=>mesh.current.uuid===uuid)![0]!;
-            
+           
+            console.log(meshState?.staticMeshList)
+            // const keyIndex= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===uuid)!;
+            const mesh= meshState?.staticMeshList.find((mesh)=>mesh.current.uuid===uuid);
+
             if(mesh===undefined)return
-            if(e.ctrlKey||e.metaKey){
-                if(keyIndex>=0){
-                    const meshList = [...meshState?.selectMesh!];
-                    meshList.splice(keyIndex,1);
-                    setSelectMesh([...meshList])
-                }else{
-                    setSelectMesh([...meshState?.selectMesh!,mesh])
-                }
-            }else{
-                setSelectMesh([mesh])
-            }
+            setSelectMesh(mesh)
+            // if(e.ctrlKey||e.metaKey){
+            //     if(keyIndex>=0){
+            //         const meshList = [...meshState?.selectMesh!];
+            //         meshList.splice(keyIndex,1);
+            //         setSelectMesh([...meshList])
+            //     }else{
+            //         setSelectMesh([...meshState?.selectMesh!,mesh])
+            //     }
+            // }else{
+            //     setSelectMesh([mesh])
+            // }
     }
 
 
@@ -178,8 +181,9 @@ const TreeList=()=>{
 
 
         useEffect(()=>{
-            const list = meshState?.selectMesh.map((mesh)=>mesh.current.uuid);
-            setSelectList(list!);
+            // const list = meshState?.selectMesh.map((mesh)=>mesh.current.uuid);
+
+            setSelectList([meshState?.selectMesh?.current.uuid!]);
         },[meshState?.selectMesh])
         //검색시 변경
         useEffect(()=>{
@@ -234,11 +238,11 @@ const TreeList=()=>{
             nativeEvent: MouseEvent;
         })=>{
             if(!info.selected){
-               const result= meshState?.selectMesh.filter((item)=>item.current.uuid!==info.node.key);
-               setSelectMesh(result!);
+                meshState?.selectMesh?.current.uuid!==info.node.key&&setSelectMesh(meshState?.selectMesh!)
+            //    const result= meshState?.selectMesh.filter((item)=>item.current.uuid!==info.node.key);
+            //    setSelectMesh(result!);
             }
-            console.log(meshState?.selectMesh);
-            console.log(info);
+          
         })
 
 interface TitleProps{

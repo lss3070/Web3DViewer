@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
-import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip } from 'three';
+import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip, SkinnedMesh } from 'three';
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 import {Rhino3dmLoader,} from 'three/examples/jsm/loaders/3DMLoader'
@@ -199,7 +199,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     }
    
 
-const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
+const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 
    const result= item.children.reduce((array:CustomDataNode[],object,index)=>{
         
@@ -213,7 +213,7 @@ const groupLoop=(item:Mesh|Group|Bone):CustomDataNode[]=>{
                 key:object.uuid,
                 type:object.type,
                 title,
-                children:groupLoop(object as Mesh)
+                children:groupLoop(object as Object3D<Event>)
             }as CustomDataNode
 
             //Group객체에 children이 비워져있을 경우 treenode에 보여줄 필요 없음.

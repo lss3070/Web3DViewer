@@ -8,7 +8,6 @@ let meshState:IMeshStateProps={
     onInfo:false,
     meshMode:MeshMode.Default,
     staticMeshList:[],
-    selectMesh:[],
 
     onText:false,
     onWire:false,
@@ -37,11 +36,18 @@ export const useMeshSWR=()=>{
             }
             return mutate();
         },
-        setSelectMesh:async(mesh:ObjectRef[])=>{
-
-            console.log(mesh);
-            meshState.selectMesh=mesh
-            console.log(meshState.selectMesh);
+        setSelectMesh:async(mesh:ObjectRef)=>{
+           mesh.current.uuid===meshState.selectMesh?.current.uuid?
+           meshState.selectMesh=undefined:
+           meshState.selectMesh=mesh
+ 
+            meshState={
+                ...meshState
+            }
+            return mutate()
+        },
+        setInitSelectMesh:async()=>{
+            meshState.selectMesh=undefined;
             meshState={
                 ...meshState
             }

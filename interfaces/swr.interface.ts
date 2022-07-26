@@ -21,7 +21,7 @@ export interface EveryMesh{
 
  export interface IMeshStateProps {
     hoverMesh?:ObjectRef;
-    selectMesh:ObjectRef[];
+    selectMesh?:ObjectRef;
     staticMeshList:ObjectRef[];
     onInfo:boolean;
     meshMode:MeshMode;

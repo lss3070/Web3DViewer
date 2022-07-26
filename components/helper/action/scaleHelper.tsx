@@ -1,29 +1,53 @@
 import { Col, Row,Slider } from "antd";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {Vector3} from 'three';
 import { Helper } from "../../../interfaces/app.interface";
 import { useCommonSWR } from "../../../swrs/common.swr";
+import { useMeshSWR } from "../../../swrs/mesh.swr";
 import SliderItem from "../../sliderItem";
 
 
 interface IScaleProps extends Helper{
-    scale:Vector3;
-    setScale:Function;
 }
 
-export const ScaleHelper=({scale,setScale}:IScaleProps)=>{
+export const ScaleHelper=({}:IScaleProps)=>{
+
+    const {meshState}=useMeshSWR()
+    const [scale,setScale]=useState<Vector3>(new Vector3());
     
+    const InitScale=()=>{
+        if(meshState?.selectMesh){
+            setScale(meshState.selectMesh.current.position)
+        }
+    }
     const setX=(e:number)=>{
-        setScale(new Vector3(+e,scale.y,scale.z))
+        if(meshState?.selectMesh){
+            meshState.selectMesh.current.scale.x=e
+        }
+        setScale(new Vector3(e,scale.y,scale.z))
     }
     const setY=(e:number)=>{
-        setScale(new Vector3(scale.x,+e,scale.z))
+        if(meshState?.selectMesh){
+            meshState.selectMesh.current.scale.y=e
+        }
+        setScale(new Vector3(scale.x,e,scale.z))
     }
     const setZ=(e:number)=>{
+        if(meshState?.selectMesh){
+            meshState.selectMesh.current.scale.z=e
+        }
         setScale(new Vector3(scale.x,scale.y,e))
     }
 
+    useEffect(()=>{
+        InitScale()
+    },[]);
 
+    useEffect(()=>{
+        InitScale()
+    },[meshState?.selectMesh])
+
+    
     return(
         <div className="w-full">
             <SliderItem

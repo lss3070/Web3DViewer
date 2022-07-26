@@ -14,12 +14,12 @@ const BoneComponent=({object}:IBoneProps)=>{
             <SwitchObject object={object}/>
         )} */
 
-        <bone {...object as Bone}>
+        <primitive object={object}>
             {object.children&&(
                 <SwitchObject objectList={object.children}/>
             )}
            
-        </bone>
+        </primitive>
     )
 }
 export default BoneComponent

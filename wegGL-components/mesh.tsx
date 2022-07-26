@@ -18,7 +18,6 @@ interface IMeshProps{
 export const MeshComponent=({mesh}:IMeshProps)=>{
     
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
-    const {animationState}=useAnimationSWR();
     const {setSelectMeshBox}=useCameraSWR()
 
     const meshRef=useRef<any>();
@@ -27,50 +26,10 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
         setStaticMeshList(meshRef)
     },[meshRef])
 
-    useFrame(({clock})=>{
-        if(meshState?.selectMesh.some((mesh)=>mesh===meshRef)){
-            if(animationState?.onPostion){
-                if(meshRef.current.position.x<animationState.position.x)
-                    meshRef.current.position.x+=animationState.positionSpeed.x;
-                if(meshRef.current.position.y<animationState.position.y)
-                    meshRef.current.position.y+=animationState.positionSpeed.y;
-                if(meshRef.current.position.y<animationState.position.z)
-                    meshRef.current.position.z+=animationState.positionSpeed.z;
-            }
-            if(animationState?.onRotation){
-                meshRef.current.eulerOrder='YXZ';
-                meshRef.current.rotation.set(
-                    meshRef.current.rotation.x+animationState.rotationSpeed.x,
-                    meshRef.current.rotation.y+animationState.rotationSpeed.y,
-                    meshRef.current.rotation.z+animationState.rotationSpeed.z);
-            }
-            if(animationState?.onScale){
-                if(meshRef.current.scale.x<animationState.scale.x)
-                    meshRef.current.scale.x+=animationState.scaleSpeed.x;
-                if(meshRef.current.scale.y<animationState.scale.y)
-                    meshRef.current.scale.y+=animationState.scaleSpeed.y;
-                if(meshRef.current.scale.y<animationState.scale.z)
-                    meshRef.current.scale.z+=animationState.scaleSpeed.z
-            }
-        }
-    })
 
     const meshOnClick =async (e: any)=>{ 
 
-        setSelectMesh([meshRef]);
-        // if(e.metaKey||e.ctrlKey){
-        //     const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===meshRef.current.uuid)!;
-        //     if(index>=0){
-        //         const meshList = [...meshState?.selectMesh!];
-        //         meshList.splice(index,1)
-        //         await setSelectMesh(meshList);
-        //     }else{
-        //         await setSelectMesh([...meshState?.selectMesh!,meshRef])
-        //     }
-        // }else{
-            
-        //     setSelectMesh([meshRef]);
-        // }
+        setSelectMesh(meshRef);
         e.stopPropagation()
     }
     const meshDoubleClick=()=>{
@@ -86,22 +45,27 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             // }}
             onDoubleClick={meshDoubleClick}
             onPointerMove={(e)=>{
+                console.log('pointermove');
                 setHoverMesh(meshRef);
             }}
             onPointerOver={(e)=>{ 
+                console.log('pointover');
                 setHoverMesh(meshRef);
             }}
             onPointerLeave={(e)=>{
+                console.log('pointerleave');
                 setHoverMesh(undefined)
             }}
-            renderOrder={999}
-            type={mesh.type}
-            name={mesh.name}
-            uuid={mesh.uuid}
-            geometry={mesh.geometry}
-            scale={mesh.scale}
-            position={mesh.position}
-            quaternion={mesh.quaternion}>
+            {...mesh}
+            
+            // type={mesh.type}
+            // name={mesh.name}
+            // uuid={mesh.uuid}
+            // geometry={mesh.geometry}
+            // scale={mesh.scale}
+            // position={mesh.position}
+            // quaternion={mesh.quaternion}
+            >
                 {MaterialElements(mesh.material,meshState?.onWire!)}
             </mesh>
                     <MeshHtmlComponent 

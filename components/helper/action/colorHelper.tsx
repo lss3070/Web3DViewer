@@ -1,37 +1,81 @@
 import { useState, useEffect } from 'react';
 import {HexColorPicker} from 'react-colorful'
-import { Material } from 'three';
+import {   Color, Material, Mesh } from 'three';
 import { Helper } from '../../../interfaces/app.interface';
 import { useMeshSWR } from '../../../swrs/mesh.swr';
+import { isArray } from 'lodash';
+import { SelectMeshComponent } from '../../../wegGL-components/outLineMesh';
 
 
-interface IColorHelperProps extends Helper{
-    color:string;
-    setColor:Function
+interface MaterialInfo{
+    name:string;
+    uuid:string;
 }
 
-export const ColorHelper=({color,setColor}:IColorHelperProps)=>{
+interface IColorHelperProps extends Helper{
+    // color:string;
+    // setColor:Function;
+    // materialList:MaterialInfo[];
+    // setMaterial:Function;
+}
+
+export const ColorHelper=(
+     {
+    // color,
+    // setColor,
+    // materialList,
+    // setMaterial
+}:IColorHelperProps
+    )=>{
 
     const {meshState,setSelectMesh}=useMeshSWR()
 
-    const [materialList,setMaterialList]=useState<Material[]>()
+    const [color,setColor] =useState<string>('#ffffff')
+    const [materialList,setMaterialList]=useState<Material[]>([]);
+
+    const [selectMaterial,setSelectMaterial]=useState<Material>();
+
+    const InitMaterial=()=>{
+        if(meshState?.selectMesh){
+            const mesh = meshState?.selectMesh.current as Mesh
+            
+            isArray(mesh.material)? 
+            setMaterialList(mesh.material)
+            : setMaterialList([mesh.material])
+        }
+    }
+
+    const colorChange=(color:string)=>{
+        if(selectMaterial){
+            (selectMaterial as any).color.set(color);
+        }
+    }
 
     useEffect(()=>{
-        console.log('color!');
-        console.log(meshState?.selectMesh);
-
-        meshState?.selectMesh
+        InitMaterial()
     },[meshState?.selectMesh])
-    
-    return(
-        <div>
 
-        <div></div>
+    useEffect(()=>{
+        InitMaterial()
+    },[])
+
+    useEffect(()=>{
+        materialList&&setSelectMaterial(materialList[0]);
+    },[materialList])
+
+
+    return(
+        <div className='flex'>
+        <div>
+            {materialList.map((item)=>{
+                    return(
+                        <div onClick={()=>setSelectMaterial(item)}>{item.name}</div>
+                    )
+                })}
+        </div>
             <div className='flex items-center justify-center w-full'>
                 <HexColorPicker color={color} 
-                    onChange={(color)=>{
-                        setColor(color);
-                    }}/>
+                    onChange={colorChange}/>
             </div>
         </div>
 

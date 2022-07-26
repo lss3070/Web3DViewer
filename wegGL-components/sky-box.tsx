@@ -5,11 +5,11 @@ import THREE, { BackSide, FrontSide, DoubleSide, DepthModes } from 'three';
 import { useMeshSWR } from '../swrs/mesh.swr';
 
 const SkyBox=()=>{
-    const {meshState,setSelectMesh}=useMeshSWR()
+    const {meshState,setInitSelectMesh}=useMeshSWR()
     const {scene}= useThree()
 
     const initList =(e:any)=>{
-        e.delta<=1&&setSelectMesh([]);
+        e.delta<=1&&setInitSelectMesh();
     }
 
 

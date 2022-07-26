@@ -15,7 +15,6 @@ const AnimationTab=()=>{
         <RemocornTab >
             <PositionAnimationHelper label="Postion" position={position}/>
             <RotationAnimationHelper label="Rotation"/>
-            <ScaleAnimationHelper label="Scale" scale={scale}/>
             <CustomAniHelper label="Custom"/>
         </RemocornTab>
     )

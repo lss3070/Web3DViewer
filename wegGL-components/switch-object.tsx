@@ -39,8 +39,8 @@ const SwitchObject=({objectList}:ISwitchObjectProps)=>{
                         skinnedMeshItem={object as SkinnedMesh}/>)
                 case 'Bone':
                     return (
-                    <primitive object={object}  />
-                    // <BoneComponent key={index} object={object}/>
+                    // <primitive object={object}  />
+                    <BoneComponent key={index} object={object}/>
                     )
                 case 'LineSegments':
                     return (<MeshComponent  
