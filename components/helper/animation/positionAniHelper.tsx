@@ -19,6 +19,32 @@ export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
     const [localPosition,setLocalPosition]=useState<Vector3>(new Vector3());
     const [localPositionSpeed,setLocalPositionSpeed]=useState<Vector3>(new Vector3())
 
+    const setX=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setLocalPosition(new Vector3(+e,localPosition.y,localPosition.z));
+    }
+    const setY=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setLocalPosition(new Vector3(localPosition.x,+e,localPosition.z))
+    }
+    const setZ=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setLocalPosition(new Vector3(localPosition.x,localPosition.y,e))
+    }
+
+    const setXSpeed=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setLocalPositionSpeed(new Vector3(+e,localPositionSpeed.y,localPositionSpeed.z));
+    }
+    const setYSpeed=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setLocalPositionSpeed(new Vector3(localPositionSpeed.x,+e,localPositionSpeed.z));
+    }
+    const setZSpeed=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setLocalPositionSpeed(new Vector3(localPositionSpeed.x,localPositionSpeed.y,e));
+    }
+
     return(
         <div className=" w-full p-2">
             <div>
@@ -29,39 +55,24 @@ export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
             max={1000}
             min={-1000}
             value={localPosition?.x}
-            sliderChangeEvent={
-                (e:number)=>setLocalPosition(new Vector3(+e,localPosition.y,localPosition.z))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPosition(new Vector3(+e.target.value,localPosition.y,localPosition.z))
-            }
+            sliderChangeEvent={setX}
+            inputChangeEvent={(e)=>setX(+e.target.value)}
             />
             <SliderItem
             label='y'
             max={1000}
             min={-1000}
             value={localPosition?.y}
-            sliderChangeEvent={
-                (e:number)=>setLocalPosition(new Vector3(localPosition.x,+e,localPosition.z))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPosition(new Vector3(localPosition.x,+e.target.value,localPosition.z))
-            }
+            sliderChangeEvent={setY}
+            inputChangeEvent={(e)=>setY(+e.target.value)}
             />
             <SliderItem
             label='z'
             max={1000}
             min={-1000}
             value={localPosition?.z}
-            sliderChangeEvent={
-                (e:number)=>setLocalPosition(new Vector3(localPosition.x,localPosition.y,e))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPosition(new Vector3(localPosition.x,localPosition.y,+e.target.value))
-            }
+            sliderChangeEvent={setZ}
+            inputChangeEvent={(e)=>setZ(+e.target.value)}
             />
             <div>
                 Speed
@@ -71,39 +82,24 @@ export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
             max={10}
             min={-10}
             value={localPositionSpeed?.x}
-            sliderChangeEvent={
-                (e:number)=>setLocalPositionSpeed(new Vector3(e,localPositionSpeed.y,localPositionSpeed.z))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPositionSpeed(new Vector3(+e.target.value,localPosition.y,localPosition.z))
-            }
+            sliderChangeEvent={setXSpeed}
+            inputChangeEvent={(e)=>setXSpeed(+e.target.value)}
             />
         <SliderItem
             label='y'
             max={10}
             min={-10}
             value={localPositionSpeed?.y}
-            sliderChangeEvent={
-                (e:number)=>setLocalPositionSpeed(new Vector3(localPositionSpeed.x,e,localPositionSpeed.z))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPositionSpeed(new Vector3(localPosition.x,+e.target.value,localPosition.z))
-            }
+            sliderChangeEvent={setYSpeed}
+            inputChangeEvent={(e)=>setYSpeed(+e.target.value)}
             />
             <SliderItem
             label='z'
             max={10}
             min={-10}
             value={localPositionSpeed?.z}
-            sliderChangeEvent={
-                (e:number)=>setLocalPositionSpeed(new Vector3(localPositionSpeed.x,localPositionSpeed.y,e))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalPositionSpeed(new Vector3(localPosition.x,localPosition.y,+e.target.value))
-            }
+            sliderChangeEvent={setZSpeed}
+            inputChangeEvent={(e)=>setZSpeed(+e.target.value)}
             />
             <div className="flex items-center justify-center">
                 <Button onClick={()=>{

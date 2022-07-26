@@ -18,6 +18,19 @@ export const RotationAnimationHelper=({}:RoationProps)=>{
     const {animationState,onRotation,setRotationSpeed}=useAnimationSWR();
     const [localRotationSpeed,setLocalRotationSpeed]=useState<Vector3>(new Vector3())
     
+    const setXSpeed=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setRotationSpeed(new Vector3(+e,localRotationSpeed.y,localRotationSpeed.z));
+    }
+    const setYSpeed=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setRotationSpeed(new Vector3(localRotationSpeed.x,+e,localRotationSpeed.z));
+    }
+    const setZSpeed=(e:number)=>{
+        e = isNaN(e)?0:e;
+        setRotationSpeed(new Vector3(localRotationSpeed.x,localRotationSpeed.y,e));
+    }
+
     return(
         <div className="w-full">
 
@@ -27,39 +40,24 @@ export const RotationAnimationHelper=({}:RoationProps)=>{
             max={10}
             min={-10}
             value={localRotationSpeed.x}
-            sliderChangeEvent={
-                (e:number)=>setLocalRotationSpeed(new Vector3(e,localRotationSpeed.y,localRotationSpeed.z))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalRotationSpeed(new Vector3(+e.target.value,localRotationSpeed.y,localRotationSpeed.z))
-            }
+            sliderChangeEvent={setXSpeed}
+            inputChangeEvent={(e)=>setXSpeed(+e.target.value)}
             />
             <SliderItem
             label='y'
             max={10}
             min={-10}
             value={localRotationSpeed.y}
-            sliderChangeEvent={
-                (e:number)=>setLocalRotationSpeed(new Vector3(localRotationSpeed.x,e,localRotationSpeed.z))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalRotationSpeed(new Vector3(localRotationSpeed.x,+e.target.value,localRotationSpeed.z))
-            }
+            sliderChangeEvent={setYSpeed}
+            inputChangeEvent={(e)=>setXSpeed(+e.target.value)}
             />
             <SliderItem
             label='z'
             max={10}
             min={-10}
             value={localRotationSpeed.z}
-            sliderChangeEvent={
-                (e:number)=>setLocalRotationSpeed(new Vector3(localRotationSpeed.x,localRotationSpeed.y,e))
-            }
-            inputChangeEvent={
-                (e:ChangeEvent<HTMLInputElement>)=>
-                setLocalRotationSpeed(new Vector3(localRotationSpeed.x,localRotationSpeed.y,+e.target.value))
-            }
+            sliderChangeEvent={setZSpeed}
+            inputChangeEvent={(e)=>setZSpeed(+e.target.value)}
             />
             <Row>
                 <Col>
