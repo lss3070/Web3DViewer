@@ -34,15 +34,18 @@ const MiniButton=({
     return(
         <div className="rounded-md border
         border-gray-50
-        dark:border-transparent
+
+        dark:border-[#64758b]
+        bg-white
+        dark:bg-[#64758b]
+
         shadow-lg">
             <motion.label 
             htmlFor={htmlFor}
             className="
             rounded-md py-1 px-3 
-            bg-white
-            dark:bg-[#64758b]
-            text-gray-600 dark:text-white
+            text-gray-600 
+            dark:text-white
             h-8 flex items-center cursor-pointer
             select-none font-semibold
             "

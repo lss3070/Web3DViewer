@@ -5,6 +5,7 @@ import { Vector3 } from "three";
 import { Helper } from "../../../interfaces/app.interface";
 import { useAnimationSWR } from "../../../swrs/animation.swr";
 import { useCommonSWR } from "../../../swrs/common.swr";
+import MiniButton from "../../mini-button";
 import SliderItem from "../../sliderItem";
 
 interface RoationProps extends Helper{
@@ -29,6 +30,10 @@ export const RotationAnimationHelper=({}:RoationProps)=>{
     const setZSpeed=(e:number)=>{
         e = isNaN(e)?0:e;
         setRotationSpeed(new Vector3(localRotationSpeed.x,localRotationSpeed.y,e));
+    }
+    const onClickEvent=()=>{
+        onRotation(!animationState?.onRotation!)
+        setRotationSpeed(localRotationSpeed)
     }
 
     return(
@@ -59,14 +64,11 @@ export const RotationAnimationHelper=({}:RoationProps)=>{
             sliderChangeEvent={setZSpeed}
             inputChangeEvent={(e)=>setZSpeed(+e.target.value)}
             />
-            <Row>
-                <Col>
-                    <Button onClick={()=>{
-                        onRotation(!animationState?.onRotation!)
-                        setRotationSpeed(localRotationSpeed)
-                    }}>{animationState?.onPostion?`stop`:`action`}</Button>
-                </Col>
-            </Row>
+             <div className="flex items-center justify-center">
+                <MiniButton onClick={onClickEvent}>
+                    {animationState?.onPostion?`stop`:`action`}
+                </MiniButton>
+            </div>
         </div>
     )
 }

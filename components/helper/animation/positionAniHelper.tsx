@@ -5,6 +5,7 @@ import { Vector3 } from "three";
 import { Helper } from "../../../interfaces/app.interface";
 import { useAnimationSWR } from "../../../swrs/animation.swr";
 import { useCommonSWR } from "../../../swrs/common.swr";
+import MiniButton from "../../mini-button";
 import SliderItem from "../../sliderItem";
 
 
@@ -43,6 +44,12 @@ export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
     const setZSpeed=(e:number)=>{
         e = isNaN(e)?0:e;
         setLocalPositionSpeed(new Vector3(localPositionSpeed.x,localPositionSpeed.y,e));
+    }
+
+    const onClickEvent=()=>{
+        onPosition(!animationState?.onPostion!)
+        setPosition(localPosition)
+        setPositionSpeed(localPositionSpeed)
     }
 
     return(
@@ -102,11 +109,14 @@ export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
             inputChangeEvent={(e)=>setZSpeed(+e.target.value)}
             />
             <div className="flex items-center justify-center">
-                <Button onClick={()=>{
+                <MiniButton onClick={onClickEvent}>
+                    {animationState?.onPostion?`stop`:`action`}
+                </MiniButton>
+                {/* <Button onClick={()=>{
                     onPosition(!animationState?.onPostion!)
                     setPosition(localPosition)
                     setPositionSpeed(localPositionSpeed)
-                }}>{animationState?.onPostion?`stop`:`action`}</Button>
+                }}>{animationState?.onPostion?`stop`:`action`}</Button> */}
             </div>
         </div>
     )
