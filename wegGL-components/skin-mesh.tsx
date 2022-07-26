@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { SkinnedMesh } from "three"
 import { useMeshSWR } from "../swrs/mesh.swr";
 import { MaterialElements } from "../utils/materialElements"
+import { MeshHtmlComponent } from "./mesh-html";
 
 interface ISkinnedMeshProps{
     skinnedMeshItem:SkinnedMesh
@@ -52,19 +53,25 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
 
     return(
 
-    //     <skinnedMesh
-    //     material={skinnedMeshItem.material}
-    //     geometry={skinnedMeshItem.geometry}
-    //     skeleton={skinnedMeshItem.skeleton}
-    //   />
 
-        <skinnedMesh 
-        onPointerMove={hoverEvent}
-        onPointerOver={hoverEvent}
-   
-        onClick={meshOnClick} ref={skinnedMesh} {...skinnedMeshItem}>
-              {MaterialElements(skinnedMeshItem.material,meshState?.onWire!)}
-        </skinnedMesh>
+
+            <>
+
+                <skinnedMesh 
+                    onPointerMove={hoverEvent}
+                    onPointerOver={hoverEvent}
+            
+                    onClick={meshOnClick} ref={skinnedMesh} {...skinnedMeshItem}>
+                        {MaterialElements(skinnedMeshItem.material,meshState?.onWire!)}
+                </skinnedMesh>
+                    <MeshHtmlComponent 
+                                centerPosition={skinnedMeshItem.geometry.boundingSphere?.center!}
+                                visible={meshState?.onText!}
+                                name={skinnedMeshItem.name}
+                                uuid={skinnedMeshItem.uuid} 
+                                />
+            </>
+
     )
 }
 export default SkinnedMeshComponent
