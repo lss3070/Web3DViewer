@@ -98,13 +98,13 @@ const Guide=()=>{
         <div className="grid w-full
         gap-4
         text-gray-600 
-        dark:text-white
-        ">
+        dark:text-white">
             <div className=" 
             text-center
-             text-2xl
+            text-2xl
+            min-w-[300px]
              font-bold">
-                Drag and Drop your 3d model here
+                Drag and Drop your 3D model here
             </div>
                 <div className="
                 flex 

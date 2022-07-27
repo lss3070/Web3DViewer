@@ -19,6 +19,7 @@ import React from 'react'
 import Portal from '../HOC/portal'
 import Guide from '../components/guide'
 import { motion } from 'framer-motion'
+import useIsMobile from '../hooks/useIsMobile'
 
 library.add(fab,far,fas);
 
@@ -26,6 +27,8 @@ const Home: NextPage = () => {
   const { menuState,setDragArea} =useMenuSWR();
   const {commonState}=useCommonSWR()
   const dragArea = useRef<HTMLDivElement>(null)
+
+  const isMobile=useIsMobile()
 
   const fileDrag=useRef<HTMLDivElement>(null);
   
@@ -76,8 +79,13 @@ const Home: NextPage = () => {
           className='absolute top-[5%] left-0  w-full h-[95%]'>
             {commonState?.fileLoad?(
              <>
-              <TreeList/>
-              <Remocorn/>
+             {!isMobile&&(
+              <>
+                <TreeList/>
+                <Remocorn/>
+              </>
+             )}
+              
               <MiniControls/>
             </>
             ):(
@@ -95,7 +103,7 @@ const Home: NextPage = () => {
           </div>
           {!loadingComplete&&(
           <LoadingComponent/>
-          )}
+           )} 
         </main>
       </div>
     </>

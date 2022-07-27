@@ -1,5 +1,6 @@
 import { AnimatePresence, DragControls, motion, useDragControls, useMotionValue } from "framer-motion"
 import { useEffect, useState } from "react"
+import useIsMobile from "../hooks/useIsMobile";
 import { useMenuSWR } from '../swrs/menu.swr';
 
 interface IModalLayoutProps{
@@ -38,10 +39,13 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
     const staticPosition=()=>{
         switch(type){
             case 'Control':
-            return menuState?.control.position&&'right-[0%] top-[120px]'
+                y.set('-50%')
+            return menuState?.control.position&&'right-[0%] top-[50%]'
             case 'TreeList':
-            return menuState?.treeList.position&&'left-[0px] top-[100px]'
+                y.set('-50%')
+            return menuState?.treeList.position&&'left-[0px] top-[50%]'
             case 'SimpleControl':
+                x.set('-50%')
             return menuState?.simpleControl.position&&'left-[50%] top-[5%]'
         }
     }
@@ -105,6 +109,7 @@ const ModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
                 dark:text-white
                 dark:bg-slate-600
                 dark:border-transparent
+                 
 
                  ${staticPosition()}
                 `}

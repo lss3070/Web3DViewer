@@ -18,6 +18,7 @@ import { Vector3 } from 'three'
 import _ from 'lodash'
 import { useMeshSWR } from '../swrs/mesh.swr';
 import { useThree } from '@react-three/fiber';
+import useIsMobile from '../hooks/useIsMobile'
 
 
 

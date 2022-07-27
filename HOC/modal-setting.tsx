@@ -28,7 +28,7 @@ const ModalSetting=({onClose}:IInfoProps)=>{
             style={{gap:'10px',padding:'10px 10px',left:'40%'}} 
             className={`
             absolute
-            translate-x-[50%]
+            translate-x-[-50%]
             rounded-md
             overflow-hidden
             grid

@@ -50,9 +50,12 @@ const LoadingComponent=()=>{
         bg-[#000000]/30
         z-50
        '>
-         <div className=' text-2xl text-black dark:text-white'>
-           Loading
-         </div>
+         <motion.div className='flex'
+         
+         >
+            <div className=' text-2xl text-black dark:text-white'>
+              Loading
+            </div>
             <motion.div
             style={loadingContainer}
             variants={loadingContainerVariants}
@@ -75,6 +78,8 @@ const LoadingComponent=()=>{
                 transition={loadingCircleTransition}
             />
             </motion.div>
+          </motion.div>
+
        </div>
     )
 }

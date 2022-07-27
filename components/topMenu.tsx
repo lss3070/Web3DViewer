@@ -5,8 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Eye from '../public/eye.svg'
 import { useCommonSWR } from '../swrs/common.swr';
 import RightMenuManager from "./rightMenuManager";
+import useIsMobile from '../hooks/useIsMobile';
 
 export const TopMenu=()=>{
+
+    const isMobile = useIsMobile()
     const {commonState}=useCommonSWR()
 
 
@@ -21,7 +24,7 @@ export const TopMenu=()=>{
                 </div>
                 <div className=" col-span-5 flex gap-5">
                     <FileManager/>
-                    {commonState?.fileLoad&&(
+                    {!isMobile&&commonState?.fileLoad&&(
                         <MenuManager/>
                     )}
                 </div>

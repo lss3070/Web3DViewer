@@ -39,8 +39,7 @@ const Remocorn =()=>{
              w-72 h-auto px-4 pb-4">
                 <div className='w-full flex items-center justify-center h-12
                  '>
-                    <div className='
-                    w-full text-base font-semibold'>
+                    <div className='w-full text-base font-semibold'>
                         <FontAwesomeIcon
                                 icon={['fas','screwdriver-wrench']}
                                 className="w-8 h-8 cursor-pointer"/>
