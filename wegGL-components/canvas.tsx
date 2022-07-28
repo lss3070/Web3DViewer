@@ -24,12 +24,12 @@ import { SelectMeshComponent } from "./outLineMesh";
 import { Box, PerspectiveCamera, Sky, TrackballControls, useHelper } from "@react-three/drei";
 import Gizmo from './gizmo';
 import SkyBox from './sky-box';
-import CustomGLTFLoader from '../loaders/gltfLoader';
+import CustomGLTFLoader from '../utils/loaders/gltfLoader';
 import { useMeshSWR } from '../swrs/mesh.swr';
-import CustomOBJLoader from '../loaders/objLoader';
-import CustomFBXLoader from '../loaders/fbxLoader';
-import CustomSTLLoader from '../loaders/stlLoader';
-import CustomPLYLoader from '../loaders/plyLoader';
+import CustomOBJLoader from '../utils/loaders/objLoader';
+import CustomFBXLoader from '../utils/loaders/fbxLoader';
+import CustomSTLLoader from '../utils/loaders/stlLoader';
+import CustomPLYLoader from '../utils/loaders/plyLoader';
 import ObjectComponent from './object';
 import { SkeletonUtils } from 'three-stdlib';
 
