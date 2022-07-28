@@ -20,51 +20,24 @@ import Portal from '../HOC/portal'
 import Guide from '../components/guide'
 import { motion } from 'framer-motion'
 import useIsMobile from '../hooks/useIsMobile'
+import ModalDragArea from '../components/modal-drag-area'
+import FileDragArea from '../components/file-drag-area'
 
 library.add(fab,far,fas);
 
 const Home: NextPage = () => {
   const { menuState,setDragArea} =useMenuSWR();
   const {commonState}=useCommonSWR()
-  const dragArea = useRef<HTMLDivElement>(null)
 
   const isMobile=useIsMobile()
-
-  const fileDrag=useRef<HTMLDivElement>(null);
   
   const [loadingPercent,setLoadingPercent]=useState<number>(0)
   const [loadingComplete,setLoadingComplte]=useState<boolean>(true);
 
-  useEffect(()=>{
-    setDragArea(dragArea);
-  },[dragArea])
-
-  
-  useEffect(()=>{
-
-    fileDrag.current?.addEventListener('dragover', handleDragOver);
-    fileDrag.current?.addEventListener('drop', handleDrop);
-  
-    return () => {
-      fileDrag.current?.removeEventListener('dragover', handleDragOver);
-      fileDrag.current?.removeEventListener('drop', handleDrop);
-    };
-  },[])
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-  
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const {files} = e.dataTransfer;
-  };
-
+  // const [dragRef]=useRef<HTMLDivElement>(null);
 
   return (  
-    <>
-      <div ref={fileDrag} className="w-full h-full grid fixed">
+      <FileDragArea>
         <main>
           <div className='w-full h-11 grid'>
             <TopMenu/>
@@ -74,10 +47,8 @@ const Home: NextPage = () => {
                 <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
               </Suspense>
           </div>
-          <div 
-          ref={dragArea}
-          className='absolute top-[5%] left-0  w-full h-[95%]'>
-            {commonState?.fileLoad?(
+          <ModalDragArea>
+          {commonState?.fileLoad?(
              <>
              {!isMobile&&(
               <>
@@ -85,7 +56,6 @@ const Home: NextPage = () => {
                 <Remocorn/>
               </>
              )}
-              
               <MiniControls/>
             </>
             ):(
@@ -100,13 +70,12 @@ const Home: NextPage = () => {
               <div className='absolute right-5 bottom-5 w-auto z-20'>
                 <DarkModeSwitch/>
               </div>
-          </div>
+          </ModalDragArea>
           {!loadingComplete&&(
           <LoadingComponent/>
            )} 
         </main>
-      </div>
-    </>
+      </FileDragArea>
   )
 }
 

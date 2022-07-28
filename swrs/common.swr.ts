@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import { FileInfo, ICommonStateProps } from "../interfaces/swr.interface";
-import { CustomDataNode } from "../interfaces/app.interface";
+import { FileInfo, ICommonStateProps } from "../global/interfaces/swr.interface";
+import { CustomDataNode } from "../global/interfaces/app.interface";
 import { RefObject } from "react";
 
 let commonState:ICommonStateProps={

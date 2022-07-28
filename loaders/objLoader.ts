@@ -1,6 +1,6 @@
 
 import { LoadingManager} from 'three'
-import { FileInfo } from "../interfaces/swr.interface"
+import { FileInfo } from "../global/interfaces/swr.interface"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 
 interface IGLTFLoader{

@@ -25,7 +25,7 @@ const ModalSetting=({onClose}:IInfoProps)=>{
 
         <DarkBackGround onClick={onClose}>
             <motion.div
-            style={{gap:'10px',padding:'10px 10px',left:'40%'}} 
+            style={{gap:'10px',padding:'10px 10px',left:'50%'}} 
             className={`
             absolute
             translate-x-[-50%]

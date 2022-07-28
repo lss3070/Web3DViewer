@@ -7,6 +7,7 @@ import {AnimatePresence, motion} from 'framer-motion';
 import Portal from '../HOC/portal';
 import ModalExport from '../HOC/modal-export';
 import MiniButton from './mini-button';
+import FileTransForm from '../utils/fileTransform';
 
 
 const TypeList=['obj','gltf','stl','obj','glb','fbx'];
@@ -33,54 +34,14 @@ const FileManager=()=>{
 
 
     const fileChange =(e:ChangeEvent<HTMLInputElement>)=>{
-        const files= e.currentTarget.files;
-       
-        const fileMap = new Map<string,File>();
+        const file= FileTransForm(e.currentTarget.files!)
 
-        let originExtension:string;
-        let originName:string;
-        let originLink:string;
-        let supportLink:string;
-
-        
-        for(let i=0;i<files?.length!;i++){
-            
-            const file = files?.item(i)!;
-            fileMap.set(file.name,file)
-            const commaIndex = file?.name?.lastIndexOf('.')
-
-            const name = file.name.slice(0,commaIndex)
-            const extension = file?.name?.slice( commaIndex+1,file.name.length);
-            const link = window.URL.createObjectURL(file);
-
-            console.log(extension);
-            if(TypeList.indexOf(extension)>=0){
-                console.log(extension);
-                originExtension=extension;
-                originName=name;
-                originLink=link;
-            }
-        }
-        // setFIleName(originName!);
-        // setFileExtension(originExtension!);
         setFiltPath({
-            originPath:originLink!,
-            originExtension:originExtension!,
-            originName:originName!,
-            fileMap:fileMap!
+            originPath:file.originLink,
+            originExtension:file.originExtension,
+            originName:file.originName,
+            fileMap:file.fileMap
         });
-
-        // const file = e.currentTarget.files![0];
-        // if(file){
-        //     const commaIndex = file?.name?.lastIndexOf('.')
-        //     const fileName = file.name.slice(0,commaIndex)
-        //     const extension = file?.name?.slice( commaIndex+1,file.name.length);
-        //     const link = window.URL.createObjectURL(file);
-
-        //     setFIleName(fileName);
-        //     setFileExtension(extension);
-        //     setFiltPath(link);
-        // }
     }
 
     const closeExporter=()=>{

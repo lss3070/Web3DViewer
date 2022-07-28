@@ -6,7 +6,7 @@ import {Group, LoadingManager} from 'three'
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 
 
-import { FileInfo } from "../interfaces/swr.interface"
+import { FileInfo } from "../global/interfaces/swr.interface"
 import { Dispatch, SetStateAction } from "react";
 
 interface IGLTFLoader{

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {HexColorPicker} from 'react-colorful'
 import {   Color, Material, Mesh } from 'three';
-import { Helper } from '../../../interfaces/app.interface';
+import { Helper } from '../../../global/interfaces/app.interface';
 import { useMeshSWR } from '../../../swrs/mesh.swr';
 import { isArray } from 'lodash';
 import { SelectMeshComponent } from '../../../wegGL-components/outLineMesh';

@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useState } from "react";
 import { Mesh } from "three";
 import { mergeVertices } from "three-stdlib";
-import { Helper } from "../../../interfaces/app.interface";
+import { Helper } from "../../../global/interfaces/app.interface";
 import { useCommonSWR } from "../../../swrs/common.swr";
 import { useMeshSWR } from "../../../swrs/mesh.swr";
 

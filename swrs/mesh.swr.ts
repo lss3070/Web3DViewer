@@ -2,7 +2,7 @@
 
 import useSWR from "swr";
 import { Box3, Group, AnimationClip } from 'three';
-import { IMeshStateProps, MeshMode, ObjectRef } from "../interfaces/swr.interface";
+import { IMeshStateProps, MeshMode, ObjectRef } from "../global/interfaces/swr.interface";
 
 let meshState:IMeshStateProps={
     onInfo:false,

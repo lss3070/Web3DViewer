@@ -8,7 +8,7 @@ import { useAnimationSWR } from "../swrs/animation.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
 import { useCommonSWR } from "../swrs/common.swr";
 import { MeshHtmlComponent } from "./mesh-html";
-import { MeshMode } from "../interfaces/swr.interface";
+import { MeshMode } from "../global/interfaces/swr.interface";
 import { useCameraSWR } from '../swrs/camera.swr';
 import { MaterialElements } from "../utils/materialElements";
 interface IMeshProps{

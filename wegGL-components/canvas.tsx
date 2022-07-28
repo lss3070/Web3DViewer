@@ -17,7 +17,7 @@ import { LightComponent } from "./light";
 import fs from 'fs';
 import { useCommonSWR } from "../swrs/common.swr";
 import { useCameraSWR } from "../swrs/camera.swr";
-import { CustomDataNode } from "../interfaces/app.interface";
+import { CustomDataNode } from "../global/interfaces/app.interface";
 import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
@@ -266,9 +266,9 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
             <Canvas style={{width:'100%',maxHeight:'100vh',
             backgroundColor:commonState?.darkMode?'#2a2b2e':'#f7fafb'
         }}
-        
             className="z-10">   
-                <scene ref={sceneRef} background={new Color()}>   
+                <scene ref={sceneRef} background={new Color()}>  
+                     
                     {/* <color attach="background" 
                     args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 
                     />   */}
@@ -289,8 +289,3 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
         </>
     )
 }
-
-function loadJsonFileSync(arg0: string) {
-    throw new Error("Function not implemented.");
-}
-

@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { Color as ThreeColor, PointLight, Vector3 } from "three";
-import { ILightStateProps } from "../interfaces/swr.interface";
+import { ILightStateProps } from "../global/interfaces/swr.interface";
 
 let lightState:ILightStateProps={
     spotLight:{

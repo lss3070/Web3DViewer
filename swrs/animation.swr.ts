@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
 import { Vector3 } from "three";
-import { CustomAnimationList, IAnimationStateProps } from "../interfaces/swr.interface";
+import { CustomAnimationList, IAnimationStateProps } from "../global/interfaces/swr.interface";
 
 let animationState:IAnimationStateProps
 

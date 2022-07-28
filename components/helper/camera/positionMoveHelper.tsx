@@ -1,7 +1,7 @@
 import { Col, Row, Slider } from "antd"
 import { ChangeEvent } from "react";
 import { Vector3 } from "three";
-import { Helper } from "../../../interfaces/app.interface";
+import { Helper } from "../../../global/interfaces/app.interface";
 import { useCameraSWR } from "../../../swrs/camera.swr";
 import SliderItem from "../../sliderItem";
 

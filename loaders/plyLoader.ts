@@ -1,6 +1,6 @@
 
 import { LoadingManager} from 'three'
-import { FileInfo } from "../interfaces/swr.interface"
+import { FileInfo } from "../global/interfaces/swr.interface"
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader';
 
 interface IPLYLoader{

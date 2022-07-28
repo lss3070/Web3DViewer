@@ -1,7 +1,7 @@
 
 import { LoadingManager} from 'three'
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader'
-import { FileInfo } from "../interfaces/swr.interface"
+import { FileInfo } from "../global/interfaces/swr.interface"
 
 interface ISTLLoader{
     fileInfo:FileInfo

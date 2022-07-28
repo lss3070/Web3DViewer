@@ -5,7 +5,7 @@ import { Box3, Group, Mesh } from "three"
 import { Key } from "antd/lib/table/interface";
 import { useCommonSWR } from "../swrs/common.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
-import { CustomDataNode } from "../interfaces/app.interface";
+import { CustomDataNode } from "../global/interfaces/app.interface";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DataNode, EventDataNode } from "antd/lib/tree";

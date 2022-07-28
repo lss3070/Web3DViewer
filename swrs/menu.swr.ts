@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-import { IMenuModal, IMenuStateProps } from "../interfaces/swr.interface";
+import { IMenuModal, IMenuStateProps } from "../global/interfaces/swr.interface";
 import { RefObject } from "react";
 
 

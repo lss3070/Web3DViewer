@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { Box3, Sphere, Vector3 } from "three";
-import { ICameraStateProps, ObjectRef } from "../interfaces/swr.interface";
+import { ICameraStateProps, ObjectRef } from "../global/interfaces/swr.interface";
 
 let cameraState:ICameraStateProps={
     zoom:1,
