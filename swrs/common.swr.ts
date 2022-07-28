@@ -5,7 +5,6 @@ import { RefObject } from "react";
 
 let commonState:ICommonStateProps={
     onMobile:false,
-    darkMode:true,
     fileLoad:false
 }
 

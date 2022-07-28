@@ -69,7 +69,7 @@ export interface ICommonStateProps{
   fileLoad:boolean;
   // fileName?:string;
   fileUuid?:string;
-  darkMode:boolean;
+  darkMode?:boolean;
 }
 interface IAmbientLight{
   able:boolean;

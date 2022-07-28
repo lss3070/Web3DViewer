@@ -2,7 +2,7 @@ import { Button, Col, Input, Row, Slider } from "antd"
 // import {Slider as MobileSlider} from 'antd-mobile'
 import { ChangeEvent, useState } from "react";
 import { Vector3 } from "three";
-import { Helper } from "../../../interfaces/app.interface";
+import { Helper } from "../../../global/interfaces/app.interface";
 import { useAnimationSWR } from "../../../swrs/animation.swr";
 import { useCommonSWR } from "../../../swrs/common.swr";
 import MiniButton from "../../mini-button";

@@ -43,28 +43,13 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const {setMeshBox}=useCameraSWR();
     const {meshState,setAnimationList}=useMeshSWR()
     const sceneRef = useRef<Scene>(null)
+    
     const [meshGroup,setMeshGroup]=useState<Group>();
     const [bone,setBone]=useState<Bone>();
 
-    const [tempBone,setTempBone]=useState<Bone>();
     const threeDMLoader = new Rhino3dmLoader();
     const threeMFLoader = new ThreeMFLoader();
 
-    // const findBone=(group:Object3D<THREE.Event>)=>{
-    //     if(group.children.length>0){
-    //         return group.children.find((item)=>{
-    //             if(item.type==='Bone'){
-    //                 console.log('!')
-    //                 console.log(item);
-    //                 setBone(item as Bone)
-    //                 return item
-    //             }else{
-                    
-    //             }
-               
-    //         })
-    //     }
-    // }
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
   
@@ -263,12 +248,12 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 
     return(
         <>
-            <Canvas style={{width:'100%',maxHeight:'100vh',
+            <Canvas style={{
             backgroundColor:commonState?.darkMode?'#2a2b2e':'#f7fafb'
         }}
-            className="z-10">   
+            className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]">   
                 <scene ref={sceneRef} background={new Color()}>  
-                     
+                    
                     {/* <color attach="background" 
                     args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 
                     />   */}
