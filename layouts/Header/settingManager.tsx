@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import ModalSetting from "../../HOC/modal-setting";
+import ModalSetting from "../../components/modal/modal-setting";
+
 import Portal from "../../HOC/portal";
 
 

@@ -45,8 +45,9 @@ export const CameraComponent =()=>{
         makeDefault// mesh깨짐
         position={cameraState?.position!} 
         zoom={zoom}
-        near={1}
-        far={100000}
+        
+        near={0.1}
+        far={20000}
         />
     )
 }

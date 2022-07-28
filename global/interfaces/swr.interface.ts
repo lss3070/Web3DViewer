@@ -40,7 +40,7 @@ export interface EveryMesh{
  export interface ICameraStateProps {
   control?:ObjectRef;
   camera?:ObjectRef;
-  zoom:number,
+  onZoom:boolean,
   position:Vector3,
   moveMode:boolean
   fov:number;

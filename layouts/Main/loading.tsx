@@ -9,37 +9,43 @@ const LoadingComponent=()=>{
       }
     const loadingCircleVariants = {
         start: {
-          y: "0%",
+         top:'150px',
+          height:'10px'
+          // y: "0%",
         },
         end: {
-          y: "100%",
+          top:'0px',
+          height:'150px'
+          // y: "100%",
         },
       }
     const loadingContainerVariants = {
         start: {
           transition: {
-            staggerChildren: 0.2,
+            staggerChildren: 0.9,
           },
         },
         end: {
           transition: {
-            staggerChildren: 0.2,
+            staggerChildren: 0.9,
           },
         },
       }
 
       const loadingContainer = {
-        width: "4rem",
+        
+        width: "auto",
         height: "2rem",
-        display: "flex",
+        display: "contents",
         justifyContent: "space-around"
       };
       const loadingCircle = {
         display: "block",
+        marginLeft:'10px',
         width: "1rem",
-        height: "1rem",
+        height: "2rem",
         backgroundColor: "black",
-        borderRadius: "50%"
+        borderRadius: "10px",
       };
       
 
@@ -50,12 +56,12 @@ const LoadingComponent=()=>{
         bg-[#000000]/30
         z-50
        '>
-         <motion.div className='flex'
-         
+         <div className='grid gap-5'>
+         <motion.div className='flex 
+          h-32 items-center justify-center
+         '
          >
-            <div className=' text-2xl text-black dark:text-white'>
-              Loading
-            </div>
+
             <motion.div
             style={loadingContainer}
             variants={loadingContainerVariants}
@@ -77,9 +83,28 @@ const LoadingComponent=()=>{
                 variants={loadingCircleVariants}
                 transition={loadingCircleTransition}
             />
+             <motion.span
+                style={loadingCircle}
+                variants={loadingCircleVariants}
+                transition={loadingCircleTransition}
+            />
+             <motion.span
+                style={loadingCircle}
+                variants={loadingCircleVariants}
+                transition={loadingCircleTransition}
+            />
+             <motion.span
+                style={loadingCircle}
+                variants={loadingCircleVariants}
+                transition={loadingCircleTransition}
+            />
             </motion.div>
           </motion.div>
-
+          <div className='text-2xl text-black dark:text-white text-center'>
+              Loading
+            </div>
+         </div>
+         
        </div>
     )
 }

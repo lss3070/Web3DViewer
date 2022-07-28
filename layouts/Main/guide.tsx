@@ -1,8 +1,6 @@
-import useSWR from "swr"
+
 import { useCommonSWR } from '../../swrs/common.swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from "framer-motion";
-import { useState } from "react";
 import CircleButton from "../../components/common/circle-button";
 
 const Guide=()=>{

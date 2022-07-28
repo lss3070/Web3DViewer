@@ -15,10 +15,11 @@
       [
         "babel-plugin-styled-components",
         {
+          "ssr":true,
           "fileName": true,
           "displayName": true,
           "pure": true
-      }
+        }
       ]
     ]
   }

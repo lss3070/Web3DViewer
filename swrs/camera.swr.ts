@@ -3,7 +3,7 @@ import { Box3, Sphere, Vector3 } from "three";
 import { ICameraStateProps, ObjectRef } from "../global/interfaces/swr.interface";
 
 let cameraState:ICameraStateProps={
-    zoom:1,
+    onZoom:false,
     position:new Vector3(0,0,400),
     moveMode:true,
     aspect:1,
@@ -22,10 +22,10 @@ export const useCameraSWR=()=>{
     return{
         cameraState:data,
 
-        setZoom:async(zoom:number)=>{
+        setOnZoom:async(onZoom:boolean)=>{
             cameraState={
                 ...cameraState,
-                zoom:zoom
+                onZoom:onZoom
             }
             return mutate();
         },

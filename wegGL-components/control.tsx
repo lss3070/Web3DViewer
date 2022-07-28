@@ -10,10 +10,11 @@ export const ControlComponent=()=>{
         setPosition,
         setTarget,
         setSelectMeshBox,
-        setAxes
+        setAxes,
+        setOnZoom
     }= useCameraSWR();
 
-    const [onZooming,setOnZooming]=useState<boolean>(false);
+    // const [onZooming,setOnZooming]=useState<boolean>(false);
 
     const [zoomTarget,setZoomTarget]=useState<Vector3>(new Vector3());
     const [zoomPosition,setZoomPosition]=useState<Vector3>(new Vector3());
@@ -28,6 +29,7 @@ export const ControlComponent=()=>{
     },[cameraState?.moveMode])
 
     useEffect(()=>{
+        console.log(controlRef.current?.up?.multiplyScalar(-1))
         setControlRef(controlRef)
     },[controlRef]);
 
@@ -56,24 +58,24 @@ export const ControlComponent=()=>{
 
         setZoomPosition(position.copy(controlRef.current.target).sub(direction))
          
-        setOnZooming(true);
+        setOnZoom(true);
     },[cameraState?.selectMeshBox]);
 
 
-    useFrame(()=>{
+    useFrame((e,q)=>{
         const step=0.05;
-        if( onZooming){
+        if( cameraState?.onZoom){
             try{
                 if(
                     controlRef.current.object.position.x.toFixed(1)==zoomPosition.x.toFixed(1)&&
                 controlRef.current.object.position.y.toFixed(1)==zoomPosition.y.toFixed(1)&&
                 controlRef.current.object.position.z.toFixed(1)==zoomPosition.z.toFixed(1)
                 ){
-                    setOnZooming(false);
+                    setOnZoom(false);
                 }else{
-                    controlRef.current.target.lerp(zoomTarget,0.1)
+                    controlRef.current.target.lerp(zoomTarget,0.05)
                     // controlRef.current.object.lookAt(zoomTarget)
-                    controlRef.current.object.position.lerp(zoomPosition,0.1);
+                    controlRef.current.object.position.lerp(zoomPosition,0.05);
                     
 
                     controlRef.current.update();
@@ -98,8 +100,9 @@ export const ControlComponent=()=>{
     return(
         <TrackballControls 
         enabled={true}
-        maxDistance={20000}
+        maxDistance={200000}
         noPan={false}
+        
         // onChange={onChangeEvent}
         // onEnd={onChangeEvent}
         ref={controlRef} 

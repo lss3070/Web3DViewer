@@ -37,7 +37,7 @@ export const useMeshSWR=()=>{
             return mutate();
         },
         setSelectMesh:async(mesh:ObjectRef)=>{
-           mesh.current.uuid===meshState.selectMesh?.current.uuid?
+           mesh?.current.uuid===meshState.selectMesh?.current.uuid?
            meshState.selectMesh=undefined:
            meshState.selectMesh=mesh
  

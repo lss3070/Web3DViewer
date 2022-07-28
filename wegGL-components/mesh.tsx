@@ -28,7 +28,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
 
     const meshOnClick =async (e: any)=>{ 
-
         setSelectMesh(meshRef);
         e.stopPropagation()
     }

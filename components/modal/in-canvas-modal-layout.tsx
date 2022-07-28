@@ -16,6 +16,7 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
         setControlPosition,
         setTreeListPosition
     }=useMenuSWR();
+    console.log(type);
     
 
     const x =useMotionValue<string|number>(0);
@@ -39,13 +40,10 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
     const staticPosition=()=>{
         switch(type){
             case 'Control':
-                y.set('-50%')
             return menuState?.control.position&&'right-[0%] top-[50%]'
             case 'TreeList':
-                y.set('-50%')
-            return menuState?.treeList.position&&'left-[0px] top-[50%]'
+            return menuState?.treeList.position&&'left-[0px] top-[50%] '
             case 'SimpleControl':
-                x.set('-50%')
             return menuState?.simpleControl.position&&'left-[50%] top-[5%]'
         }
     }
@@ -55,6 +53,7 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
     const onDragEnd=()=>{
         console.log('drop');
     }
+
 
     useEffect(()=>{
         if(onModal===undefined) return
@@ -82,6 +81,26 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
                     break;
             }
     },[onModal])
+
+    useEffect(()=>{
+        switch(type){
+            case 'SimpleControl':
+                if(!menuState?.simpleControl?.position){
+                    x.set('-50%')
+                }
+                break;
+            case 'Control':
+                if(!menuState?.control?.position){
+                    y.set('-50%')
+                }
+                break;
+            case 'TreeList':
+                if(!menuState?.treeList?.position){
+                    y.set('-50%')
+                }
+                break;
+        }
+    },[])
 
     return(
         <AnimatePresence>

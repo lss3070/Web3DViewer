@@ -1,7 +1,6 @@
 import { Suspense, useState } from "react";
 import DarkModeSwitch from "../../components/darkModeSwitch";
 import FileDragArea from "./file-drag-area";
-import Guide from "./guide";
 import MiniControls from "../../components/mini-remocorn";
 import DragAndDropArea from "./modal-drag-area";
 import Remocorn from "../../components/remocorn";
@@ -9,12 +8,15 @@ import TreeList from "../../components/tree-list";
 import useIsMobile from "../../hooks/useIsMobile";
 import { useCommonSWR } from "../../swrs/common.swr";
 import { CanvasComponent } from "../../wegGL-components/canvas";
-import Header from "../Header";
+import Header from "../Header/header";
 import LoadingComponent from "./loading";
+import Guide from "./guide";
+import { useCameraSWR } from '../../swrs/camera.swr';
 
 
 const Main = () => {
   const {commonState}=useCommonSWR()
+  const {cameraState,setOnZoom}=useCameraSWR()
 
   const isMobile=useIsMobile()
   
@@ -25,10 +27,10 @@ const Main = () => {
   return (  
       <FileDragArea>
         <main>
-          <div className='w-full h-11 grid'>
+          <div className='w-full h-11 grid '>
             <Header/>
           </div>
-          <div className={`w-full h-full grid absolute`}>
+          <div className={`w-full h-full grid absolute`} >
               <Suspense fallback={null}>
                 <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
               </Suspense>
@@ -53,7 +55,7 @@ const Main = () => {
               </div>
             )
             }
-              <div className='absolute right-5 bottom-5 w-auto z-20'>
+              <div className='absolute right-5 bottom-5 w-auto z-20 qweqwe'>
                 <DarkModeSwitch/>
               </div>
           </DragAndDropArea>

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { motion } from "framer-motion"
-import DarkBackGround from '../components/modal/dark-background';
+import DarkBackGround from "./dark-background"
 
 interface IInfoProps{
     onClose:()=>void;

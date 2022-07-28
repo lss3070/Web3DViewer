@@ -104,6 +104,7 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
     return(
         <group ref={ref}
         {...group}
+       
         name="group" >
             {group.children&&(
                 <SwitchObject objectList={group.children}/> 

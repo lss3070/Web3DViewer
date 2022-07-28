@@ -19,7 +19,7 @@ const DragAndDropArea=({children}:IDragAndDropAreaProps)=>{
       },[dragArea])    
 
     return(
-        <div ref={dragArea} className={`absolute top-[5%] left-0  w-full h-[95%]`}>
+        <div ref={dragArea} className={`absolute left-0  w-full h-[95%]`}>
             {children}
         </div>
     )

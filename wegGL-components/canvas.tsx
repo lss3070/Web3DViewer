@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
-import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip, SkinnedMesh } from 'three';
+import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip, SkinnedMesh, PlaneHelper } from 'three';
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 import {Rhino3dmLoader,} from 'three/examples/jsm/loaders/3DMLoader'
@@ -46,6 +46,9 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     
     const [meshGroup,setMeshGroup]=useState<Group>();
     const [bone,setBone]=useState<Bone>();
+    const [color,setColor] =useState<string>('#2a2b2e');
+
+   
 
     const threeDMLoader = new Rhino3dmLoader();
     const threeMFLoader = new ThreeMFLoader();
@@ -183,6 +186,9 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
         return blob.arrayBuffer
     }
    
+    useEffect(()=>{
+        commonState?.darkMode?setColor('#2a2b2e'):setColor('#f7fafb')
+    },[commonState?.darkMode])
 
 const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 
@@ -246,17 +252,17 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
     //     mixer?.update(delta)
     // })
 
+
+
     return(
         <>
             <Canvas style={{
-            backgroundColor:commonState?.darkMode?'#2a2b2e':'#f7fafb'
+            backgroundColor:color
         }}
             className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]">   
-                <scene ref={sceneRef} background={new Color()}>  
+                <scene ref={sceneRef}>  
                     
-                    {/* <color attach="background" 
-                    args={[commonState?.darkMode?"#2a2b2e":'#f7fafb']} 
-                    />   */}
+               
                     <SkyBox/>
                     <LightComponent/>                
                     <CameraComponent/>
@@ -268,7 +274,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                             <Gizmo/>
                         </>
                     )}
-                  
+                  {/* <gridHelper args={[1000,1000,1000]}/>  */}
                 </scene>
             </Canvas>
         </>
