@@ -9,7 +9,7 @@ interface IPLYLoader{
 
 const CustomPLYLoader=({fileInfo}:IPLYLoader)=>{
 
-    const baseURL = 'blob:http://localhost:3000/'
+    const baseURL = `blob:${window.location.host}`
 //https://gltf-viewer.donmccurdy.com/ code ㅊㅏㅁ조
         const manager = new LoadingManager()
             return new Promise((resolve,reject)=>{

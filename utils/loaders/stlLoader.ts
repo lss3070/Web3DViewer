@@ -9,7 +9,7 @@ interface ISTLLoader{
 
 const CustomSTLLoader=({fileInfo}:ISTLLoader)=>{
 
-    const baseURL = 'blob:http://localhost:3000/'
+    const baseURL = `blob:${window.location.host}`
         const manager = new LoadingManager()
             return new Promise((resolve,reject)=>{
             manager.setURLModifier((url)=>{

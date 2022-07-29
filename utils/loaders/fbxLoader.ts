@@ -8,8 +8,8 @@ interface IFBXLoader{
 }
 
 const CustomFBXLoader=({fileInfo}:IFBXLoader)=>{
-
-    const baseURL = 'blob:http://localhost:3000/'
+    const baseURL = `blob:${window.location.host}`
+    //http://localhost:3000/
 //https://gltf-viewer.donmccurdy.com/ code ㅊㅏㅁ조
         const manager = new LoadingManager()
             return new Promise((resolve,reject)=>{

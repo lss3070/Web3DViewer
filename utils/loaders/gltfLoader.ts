@@ -14,8 +14,7 @@ interface IGLTFLoader{
 }
 
 const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
-    console.log('!!');
-    const baseURL = 'blob:http://localhost:3000/'
+    const baseURL = `blob:${window.location.host}`
     const manager = new LoadingManager()
 
             return new Promise((resolve,reject)=>{
