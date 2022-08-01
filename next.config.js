@@ -18,8 +18,24 @@ module.exports = withAntdLess({
   },
   // for Next.js ONLY
   nextjs: {
-    localIdentNameFollowDev: true, // default false, for easy to debug on PROD mode
-    reactStrictMode: true,
+   // default false, for easy to debug on PROD mode
+    reactStrictMode: false,
+    async rewrites(){
+      return [
+        {
+          source:'/get/:path*',
+          destination:'http://web3dviewer_worker.lss3070.workers.dev/:path*'
+        },
+        {
+          source:'/test',
+          destination:'https://naver.com'
+        },
+        {
+          source:'/test2',
+          destination:'/api/hello'
+        },
+      ]
+    }
   },
   // Other Config Here...
   webpack:(config)=>{

@@ -12,14 +12,13 @@ const Header=()=>{
 
 
     return(
-            <div className="w-full grid grid-cols-7 h-full gap-5
+            <div className="w-full grid grid-cols-7 h-full space-x-3
             bg-white
-            dark:bg-[#3d3e42]
-            ">
+            dark:bg-[#3d3e42]">
                 <div className="flex col-span-1 items-center justify-center">
                     Web 3D Viewer
                 </div>
-                <div className=" col-span-5 flex gap-5">
+                <div className=" col-span-5 space-x-3 flex items-center ">
                     <FileManager/>
                     {!isMobile&&commonState?.fileLoad&&(
                         <MenuManager/>

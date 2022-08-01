@@ -24,7 +24,7 @@ const MenuManager=()=>{
     }
 
     return(
-        <div className='flex items-center gap-5'>
+        <>
         <MiniButton 
         onClick={onTreeClick} 
         pressState={menuState?.treeList.on}>
@@ -55,7 +55,7 @@ const MenuManager=()=>{
                 <span>SimpleControl</span>
             </>
         </MiniButton>
-        </div>
+        </>
     )
 }
 export default MenuManager
