@@ -258,7 +258,7 @@ const MiniControls=()=>{
             <div 
             className="
             rounded-lg w-auto h-auto p-2
-            flex gap-5 
+            flex space-x-2
             ">
                 <motion.div className='w-8 h-8 p-1 cursor-pointer rounded-full 
                 dark:bg-gray-400

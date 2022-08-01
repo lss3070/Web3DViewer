@@ -56,7 +56,7 @@ const LoadingComponent=()=>{
         bg-[#000000]/30
         z-50
        '>
-         <div className='grid gap-5'>
+         <div className='grid space-x-5'>
          <motion.div className='flex 
           h-32 items-center justify-center
          '

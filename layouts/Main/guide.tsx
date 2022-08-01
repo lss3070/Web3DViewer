@@ -7,7 +7,7 @@ const Guide=()=>{
     const {commonState,setFiltPath}=useCommonSWR();
 
     const openTree=()=>{
-        fetch('api/staticdata/tree').then(async(file)=>{
+        fetch(process.env.NEXT_PUBLIC_ENV_TREE!).then(async(file)=>{
             return await file.blob()
         }).then((blob)=>{
             
@@ -26,68 +26,85 @@ const Guide=()=>{
     }
 
     const openHelmet=()=>{
-       Promise.all([
-            fetch('api/staticdata/helmet/DamagedHelmet.bin'),
-            fetch('api/staticdata/helmet/DamagedHelmet.gltf'),
-            fetch('api/staticdata/helmet/Default_albedo.jpg'),
-            fetch('api/staticdata/helmet/Default_AO.jpg'),
-            fetch('api/staticdata/helmet/Default_emissive.jpg'),
-            fetch('api/staticdata/helmet/Default_metalRoughness.jpg'),
-            fetch('api/staticdata/helmet/Default_normal.jpg')
-        ]).then(async(result)=>{
-            return [
-                await result[0].blob(),
-                await result[1].blob(),
-                await result[2].blob(),
-                await result[3].blob(),
-                await result[4].blob(),
-                await result[5].blob(),
-                await result[6].blob()
-            ]
-        }).then(result=>{
-
-            const fileMap = new Map<string,File>();
-     
-            fileMap.set('DamagedHelmet.bin'
-            ,new File([result[0]],'DamagedHelmet.bin'));
-            fileMap.set('DamagedHelmet.gltf'
-            ,new File([result[1]],'DamagedHelmet.gltf'));
-            fileMap.set('Default_albedo.jpg'
-            ,new File([result[2]],'Default_albedo.jpg'));
-            fileMap.set('Default_AO.jpg'
-            ,new File([result[3]],'Default_AO.jpg'));
-            fileMap.set('Default_emissive.jpg'
-            ,new File([result[4]],'Default_emissive.jpg'));
-            fileMap.set('Default_metalRoughness.jpg'
-            ,new File([result[5]],'Default_metalRoughness.jpg'));
-            fileMap.set('Default_normal.jpg'
-            ,new File([result[6]],'Default_normal.jpg'));
-
-            const objectURL= URL.createObjectURL(result[1]);
-
-            setFiltPath({
-                originPath:objectURL!,
-                originExtension:'gltf',
-                originName:'helmet',
-                fileMap:fileMap!
-            })
-        })
-    }
-
-    const openMannequin=()=>{
-        fetch('api/staticdata/mannequin').then(async(file)=>{
+        fetch(process.env.NEXT_PUBLIC_ENV_HELMET!).then(async(file)=>{
             return await file.blob()
         }).then((blob)=>{
             
             const fileMap=new Map<string,File>();
             const objectURL= URL.createObjectURL(blob);
 
-            const file=new File([blob],'Samba Dancing.fbx');
-            fileMap.set('Samba Dancing.fbx',file);
+            const file=new File([blob],'DamagedHelmet.glb');
+            fileMap.set('DamagedHelmet.glb',file);
+            setFiltPath({
+                originPath:objectURL!,
+                originExtension:'glb',
+                originName:'DamagedHelmet',
+                fileMap:fileMap!
+            })
+        })
+    //    Promise.all([
+    //         fetch(process.env.NEXT_PUBLIC_ENV_TREE_HELMET_BIN!),
+    //         fetch(process.env.NEXT_PUBLIC_ENV_TREE_HELMET_GLTF!),
+    //         fetch(process.env.NEXT_PUBLIC_ENV_TREE_HELMET_ALBEDO!),
+    //         fetch(process.env.NEXT_PUBLIC_ENV_TREE_HELMET_AO!),
+    //         fetch(process.env.NEXT_PUBLIC_ENV_TREE_HELMET_EMISSIVE!),
+    //         fetch(process.env.NEXT_PUBLIC_ENV_TREE_HELMET_METALROUGHNESS!),
+    //         fetch(process.env.NEXT_PUBLIC_ENV_TREE_HELMET_NORMAL!)
+    //     ]).then(async(result)=>{
+    //         return [
+    //             await result[0].blob(),
+    //             await result[1].blob(),
+    //             await result[2].blob(),
+    //             await result[3].blob(),
+    //             await result[4].blob(),
+    //             await result[5].blob(),
+    //             await result[6].blob()
+    //         ]
+    //     }).then(result=>{
+    //         console.log(result);
+
+    //         const fileMap = new Map<string,File>();
+     
+    //         fileMap.set('DamagedHelmet.bin'
+    //         ,new File([result[0]],'DamagedHelmet.bin'));
+    //         fileMap.set('DamagedHelmet.gltf'
+    //         ,new File([result[1]],'DamagedHelmet.gltf'));
+    //         fileMap.set('Default_albedo.jpg'
+    //         ,new File([result[2]],'Default_albedo.jpg'));
+    //         fileMap.set('Default_AO.jpg'
+    //         ,new File([result[3]],'Default_AO.jpg'));
+    //         fileMap.set('Default_emissive.jpg'
+    //         ,new File([result[4]],'Default_emissive.jpg'));
+    //         fileMap.set('Default_metalRoughness.jpg'
+    //         ,new File([result[5]],'Default_metalRoughness.jpg'));
+    //         fileMap.set('Default_normal.jpg'
+    //         ,new File([result[6]],'Default_normal.jpg'));
+
+    //         const objectURL= URL.createObjectURL(result[1]);
+
+    //         setFiltPath({
+    //             originPath:objectURL!,
+    //             originExtension:'gltf',
+    //             originName:'helmet',
+    //             fileMap:fileMap!
+    //         })
+    //     })
+    }
+
+    const openMannequin=()=>{
+        fetch(process.env.NEXT_PUBLIC_ENV_MANNEQUIN!).then(async(file)=>{
+            return await file.blob()
+        }).then((blob)=>{
+            
+            const fileMap=new Map<string,File>();
+            const objectURL= URL.createObjectURL(blob);
+
+            const file=new File([blob],'Samba_Dancing.fbx');
+            fileMap.set('Samba_Dancing.fbx',file);
             setFiltPath({
                 originPath:objectURL!,
                 originExtension:'fbx',
-                originName:'Samba Dancing',
+                originName:'Samba_Dancing',
                 fileMap:fileMap!
             })
         })
@@ -95,7 +112,7 @@ const Guide=()=>{
     
     return(
         <div className="grid w-full
-        gap-4
+        space-y-4
         text-gray-600 
         dark:text-white">
             <div className=" 
@@ -113,7 +130,7 @@ const Guide=()=>{
                 " >
                     Example Models
                 </div>
-                <div className="flex gap-5 items-center justify-center">
+                <div className="flex space-x-3 items-center justify-center">
                     <CircleButton onClick={openTree}>
                         <FontAwesomeIcon
                         icon={['fas','tree']}

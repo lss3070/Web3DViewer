@@ -22,7 +22,7 @@ const SettingManager=()=>{
     }
     
     return(
-        <div className="flex gap-3">
+        <div className="flex space-x-3 mr-3">
             <div className='flex items-center justify-center'>
                 <FontAwesomeIcon
                     onClick={openGithub}

@@ -53,8 +53,8 @@ const FileManager=()=>{
     }
 
     return(
-        <div className='flex gap-5 items-center'>
-            <div className="flex items-center justify-center">
+        <>
+            <div className="contents items-center justify-center">
                 <input className="w-0 h-0 opacity-0" type="file" name="file" id="file" 
                 multiple
                 onChange={fileChange}/>
@@ -82,7 +82,7 @@ const FileManager=()=>{
                     {isExport&&( <ModalExport onClose={closeExporter}/>)}
                 </AnimatePresence>
            </Portal>
-        </div>
+        </>
     )
 }
 
