@@ -3,9 +3,11 @@ import { ThreeEvent, useThree } from '@react-three/fiber';
 import { useState } from 'react';
 import THREE, { BackSide, FrontSide, DoubleSide, DepthModes } from 'three';
 import { useMeshSWR } from '../swrs/mesh.swr';
+import useIsMobile from '../hooks/useIsMobile';
 
 const SkyBox=()=>{
     const {meshState,setInitSelectMesh,setHoverMesh}=useMeshSWR()
+    const isMobile =useIsMobile()
     const {scene}= useThree()
 
     const initList =(e:any)=>{
@@ -16,8 +18,9 @@ const SkyBox=()=>{
         setHoverMesh(undefined);
         e.stopPropagation();
     }
-    const onTouch=()=>{
-        setInitSelectMesh();
+    const onTouch=(e:ThreeEvent<PointerEvent>)=>{
+        isMobile&&e.delta<=1&&setInitSelectMesh();
+        
     }
     // const {gl} = useThree();
     // const texture = useTexture('')

@@ -31,6 +31,7 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label,onClick})=>{
     const {meshState,setOnText,setOnWire}=useMeshSWR();
     const [onDown,setOnDown]=useState<boolean>(false);
     const [onSelect,setOnSelect]=useState<boolean>(false);
+ 
 
     const OnActive=()=>{
         switch(label){
@@ -69,9 +70,19 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label,onClick})=>{
         setOnDown(false)
     }
 
+    const onTouch=()=>{
+        setOnDown(true);
+    }
+    const onTouchEnd=()=>[
+        setOnDown(false)
+    ]
+
+
     return(
         <div className='rounded-full shadow-md'>
             <motion.div
+             onTouchStart={onTouch}
+             onTouchEnd={onTouchEnd}
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
             animate={{boxShadow:`${onSelect?`inset 1px 3px 1px rgba(0, 0, 0, 0.2)`
@@ -229,8 +240,10 @@ const MiniControls=()=>{
     useEffect(()=>{
         if(onCameraPositionList){
             document.addEventListener('click',closeCameraPositionList)
+            document.addEventListener('touchend',closeCameraPositionList)
             return ()=>{
                 document.removeEventListener('click',closeCameraPositionList)
+                document.removeEventListener('touchend',closeCameraPositionList)
             } 
         }
     },[onCameraPositionList])
@@ -258,7 +271,7 @@ const MiniControls=()=>{
             <div 
             className="
             rounded-lg w-auto h-auto p-2
-            flex space-x-2
+            flex space-x-2 ml-0
             ">
                 <motion.div className='w-8 h-8 p-1 cursor-pointer rounded-full 
                 dark:bg-gray-400
@@ -276,6 +289,7 @@ const MiniControls=()=>{
                 <AnimatePresence>
                     {onCameraPositionList&&(
                     <motion.div 
+                    style={{margin:0}}
                     animate={'down'}
                     variants={cameraVariants}
                     exit={ 'up'}

@@ -56,8 +56,8 @@ export const ControlComponent=()=>{
 
         const position = _.cloneDeep(controlRef.current.object.position)
 
-        // setZoomPosition(position.copy(controlRef.current.target).sub(direction))
-        setZoomPosition(cameraState?.selectMeshBox.max)
+        setZoomPosition(position.copy(controlRef.current.target).sub(direction))
+        // setZoomPosition(cameraState?.selectMeshBox.max)
          
         setOnZoom(true);
     },[cameraState?.selectMeshBox]);
