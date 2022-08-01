@@ -53,6 +53,8 @@ const MiniCircleButton:React.FC<MiniCircleButtonProps>=({label,onClick})=>{
     return(
         <div className='rounded-full shadow-md'>
             <motion.div
+            onTouchStart={onMouseDown}
+            onTouchEnd={onMouseUp}
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
             animate={{boxShadow:`${onSelect?`inset 1px 3px 1px rgba(0, 0, 0, 0.2)`

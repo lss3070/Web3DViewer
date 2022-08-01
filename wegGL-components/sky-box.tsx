@@ -16,6 +16,9 @@ const SkyBox=()=>{
         setHoverMesh(undefined);
         e.stopPropagation();
     }
+    const onTouch=()=>{
+        setInitSelectMesh();
+    }
     // const {gl} = useThree();
     // const texture = useTexture('')
     // const formatted = new THREE.WebGLCubeRenderTarget(1200).fromEquirectangularTexture(gl, texture)
@@ -24,6 +27,8 @@ const SkyBox=()=>{
         // <primitive attach='background'  object={formatted}/>
         // <texture attach={'background'}/>
         <mesh
+
+        onPointerUp={onTouch}
         onPointerMove={hoverEvent}
         onPointerOver={hoverEvent}
         // attach={'background'}

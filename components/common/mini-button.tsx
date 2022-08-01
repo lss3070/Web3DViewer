@@ -51,7 +51,9 @@ const MiniButton=({
             "
             onClick={onMouseClick}
             onMouseDown={onMouseDown}
+            onTouchStart={onMouseDown}
             onMouseUp={onMouseUp}
+            onTouchEnd={onMouseUp}
             animate={{boxShadow:`${mouseDown?
                 `inset 3px 5px rgba(0, 0, 0, 0.2)`
                 :`inset 0px 0px rgba(0, 0, 0, 0.2)`}`,

@@ -24,6 +24,8 @@ const CircleButton=({
     return(
       <div className='shadow-lg rounded-full'>
         <motion.div
+        onTouchStart={onMouseDown}
+        onTouchEnd={onMouseUp}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onClick={onClick}

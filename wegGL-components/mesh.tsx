@@ -11,6 +11,7 @@ import { MeshHtmlComponent } from "./mesh-html";
 import { MeshMode } from "../global/interfaces/swr.interface";
 import { useCameraSWR } from '../swrs/camera.swr';
 import { MaterialElements } from "../utils/materialElements";
+import useIsMobile from '../hooks/useIsMobile';
 interface IMeshProps{
     mesh:THREE.Mesh
 }
@@ -18,6 +19,7 @@ interface IMeshProps{
 export const MeshComponent=({mesh}:IMeshProps)=>{
     
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
+    const isMobile = useIsMobile()
     const {setSelectMeshBox}=useCameraSWR()
 
     const meshRef=useRef<any>();
@@ -28,31 +30,41 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
 
     const meshOnClick =async (e: any)=>{ 
-        setSelectMesh(meshRef);
-        e.stopPropagation()
+        if(!isMobile){
+            setSelectMesh(meshRef);
+            e.stopPropagation()
+        }
     }
     const meshDoubleClick=()=>{
         setSelectMeshBox(new Box3().setFromObject(meshRef.current))
     }
 
     const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
-        setHoverMesh(meshRef);
-        e.stopPropagation();
-
+        if(!isMobile){
+            setHoverMesh(meshRef);
+            e.stopPropagation();
+        }
     }
-
+    const onTouch=async(e:ThreeEvent<PointerEvent>)=>{
+        if(isMobile){
+            setSelectMesh(meshRef);
+            e.stopPropagation()
+        }
+    }
+    
         return(
             <>
             <mesh ref={meshRef} 
-            
+            onPointerUp={onTouch}
+            onPointerOver={hoverEvent}
+
             onClick={meshOnClick}
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
             // }}
             onDoubleClick={meshDoubleClick}
             onPointerMove={hoverEvent}
-            onPointerOver={hoverEvent}
-
+           
             {...mesh}
             
             // type={mesh.type}

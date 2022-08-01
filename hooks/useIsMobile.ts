@@ -1,13 +1,12 @@
 import { debounce } from "lodash";
-import { useState, useLayoutEffect, useEffect } from 'react';
+import {useState, useLayoutEffect } from 'react';
 import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
 
 
 const useIsMobile=()=>{
     const [isMobile,setIsMobile]=useState<boolean>(false);
 
-
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const updateSize = (): void => {
           setIsMobile(window.innerWidth < 768);
         };
