@@ -30,9 +30,9 @@ module.exports = withAntdLess({
           source:'/test',
           destination:'https://naver.com'
         },
-        {
-          source:'/test2',
-          destination:'/api/hello'
+               {
+          source:'/test',
+          destination:'https://naver.com'
         },
       ]
     }

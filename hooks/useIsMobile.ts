@@ -1,17 +1,18 @@
 import { debounce } from "lodash";
-import {useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
 import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
 
 
 const useIsMobile=()=>{
     const [isMobile,setIsMobile]=useState<boolean>(false);
 
-    useIsomorphicLayoutEffect(() => {
+
+    useEffect(() => {
         const updateSize = (): void => {
           setIsMobile(window.innerWidth < 768);
         };
-        window.addEventListener('resize', debounce(updateSize, 250));
-        // updateSize();
+        window.addEventListener('resize', debounce(updateSize, 100));
+        updateSize();
         return (): void => window.removeEventListener('resize', updateSize);
       }, []);
     

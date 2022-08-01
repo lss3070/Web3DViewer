@@ -23,7 +23,8 @@ const Main = () => {
   const [loadingPercent,setLoadingPercent]=useState<number>(0)
   const [loadingComplete,setLoadingComplte]=useState<boolean>(true);
 
-
+  console.log('ismobile');
+  console.log(isMobile);
   return (  
       <FileDragArea>
         <main>
