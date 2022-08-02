@@ -5,7 +5,6 @@ import { Box3, Euler, Quaternion, Vector3,CameraHelper } from "three";
 import { useCameraSWR } from "../swrs/camera.swr";
 
 export const CameraComponent =()=>{
-
     const { cameraState,setPosition,setCameraRef,setTarget }= useCameraSWR();
     const [zoom,setZoom]=useState<number>(1);
 
@@ -29,23 +28,15 @@ export const CameraComponent =()=>{
         setCameraRef(cameraRef);
     },[cameraRef])
     
-    useEffect(()=>{
-        console.log('change');
-    },[cameraRef?.current?.position])
-
-    // useFrame(()=>{
-    //     console.log(cameraRef?.current?.position);
-    // })
 
     return(
         <PerspectiveCamera
         // rotation={new Euler(0,0,0)}
         // up={new Vector3(0,0,0)}
         ref={cameraRef} 
-        makeDefault// mesh깨짐
+         makeDefault// mesh깨짐
         position={cameraState?.position!} 
         zoom={zoom}
-        
         near={0.1}
         far={20000}
         />

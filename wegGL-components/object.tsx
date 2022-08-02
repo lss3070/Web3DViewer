@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, useEffect, useState } from 'react';
 import { AnimationMixer, Bone, Box3, Group, Mesh } from "three"
 import SwitchObject from './switch-object';
-import { useAnimations } from '@react-three/drei';
+import { Bounds, useAnimations, useBounds } from '@react-three/drei';
 import { useMenuSWR } from '../swrs/menu.swr';
 import { useAnimationSWR } from '../swrs/animation.swr';
 import { useCameraSWR } from "../swrs/camera.swr";
@@ -21,6 +21,7 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
     const {actions}=useAnimations(group.animations,ref)
     const [onAnimation,setOnAnimation]=useState<boolean>(false);
     const {setMeshBox}=useCameraSWR();
+    const api = useBounds()
 
     const [curSelectMesh,setCurSelectMesh]=useState<Mesh>();
 
@@ -34,6 +35,7 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
         const box = new Box3().setFromObject(group);
 
         setMeshBox(box);
+
     },[group])
 
 
@@ -102,14 +104,16 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
 
 
     return(
-        <group ref={ref}
-        {...group}
-       
-        name="group" >
-            {group.children&&(
-                <SwitchObject objectList={group.children}/> 
-            )}
-        </group>
+            <group ref={ref}
+            {...group}
+            onDoubleClick={(e)=>{
+                api.refresh(e.object).fit()
+                }}
+            name="group" >
+                {group.children&&(
+                    <SwitchObject objectList={group.children}/> 
+                )}
+            </group>
     )
 }
 export default ObjectComponent

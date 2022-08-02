@@ -21,7 +21,7 @@ import { CustomDataNode } from "../global/interfaces/app.interface";
 import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
-import { Box, PerspectiveCamera, Sky, TrackballControls, useHelper } from "@react-three/drei";
+import { Bounds, Box, PerspectiveCamera, Sky, TrackballControls, useHelper } from "@react-three/drei";
 import Gizmo from './gizmo';
 import SkyBox from './sky-box';
 import CustomGLTFLoader from '../utils/loaders/gltfLoader';
@@ -260,7 +260,9 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
             <Canvas style={{
             backgroundColor:color
         }}
-            className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]">   
+            className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]"
+
+            >   
                 <scene ref={sceneRef}>  
                     
                
@@ -270,7 +272,10 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                     <ControlComponent/> 
                     {meshGroup&&(
                         <>
+                            <Bounds margin={1.5}>
                             <ObjectComponent group={meshGroup} bone={bone}/>
+                            </Bounds>
+                           
                             <SelectMeshComponent/>
                             <Gizmo/>
                             {/* <Point/> */}

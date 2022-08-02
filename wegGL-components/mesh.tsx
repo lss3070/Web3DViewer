@@ -1,4 +1,4 @@
-import { Html, PointMaterial } from "@react-three/drei";
+import { Html, PointMaterial, useBounds } from "@react-three/drei";
 import { useEffect, useMemo, useState, useRef, memo } from 'react';
 import { BackSide, Box3, Color, DoubleSide, FrontSide, Material, Matrix4, Mesh, PlaneGeometry, Vector3,EdgesGeometry, MeshBasicMaterial, MeshPhongMaterial, MeshStandardMaterial, MeshStandardMaterialParameters, MeshToonMaterial, Plane } from "three";
 
@@ -20,6 +20,7 @@ interface IMeshProps{
 export const MeshComponent=({mesh}:IMeshProps)=>{
     
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
+    const api = useBounds()
     const {measureState,setPoint}=useMeasureSWR()
     const isMobile = useIsMobile()
     const {setSelectMeshBox}=useCameraSWR()
@@ -40,9 +41,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
            
         }
-    }
-    const meshDoubleClick=()=>{
-        setSelectMeshBox(new Box3().setFromObject(meshRef.current))
     }
 
     const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
@@ -68,7 +66,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
             // }}
-            onDoubleClick={meshDoubleClick}
+            
             onPointerMove={hoverEvent}
            
             {...mesh}

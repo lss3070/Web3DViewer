@@ -18,7 +18,6 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
     },[skinnedMesh])
 
     const meshOnClick =async (e:any)=>{ 
-        
         setSelectMesh(skinnedMesh);
 
         e.stopPropagation()
