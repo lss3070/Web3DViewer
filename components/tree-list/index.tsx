@@ -26,7 +26,7 @@ const TreeList=()=>{
     const {menuState}=useMenuSWR()
     const { commonState,setGroupList }= useCommonSWR();
     const {meshState,setSelectMesh}= useMeshSWR();
-    const {setSelectMeshBox}=useCameraSWR()
+    const {setZoomBox}=useCameraSWR()
 
     const [treeData,setTreeData]=useState<CustomNode[]>();
     const [expandedKeys,setExpandedKeys]=useState<(string)[]>();
@@ -167,7 +167,9 @@ const TreeList=()=>{
     const onTitleDoubleClick=(key:string)=>{
         const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',key+'') as Mesh;
 
-        setSelectMeshBox(new Box3().setFromObject(mesh))
+        setZoomBox({
+            box:new Box3().setFromObject(mesh)
+        })
     }
 
     const onCloseTreeList=()=>{

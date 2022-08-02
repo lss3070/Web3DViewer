@@ -15,10 +15,11 @@ import useIsMobile from '../../hooks/useIsMobile'
 import MiniCircleButton from '../common/mini-circle-button'
 import { useMeasureSWR } from '../../swrs/measure.swr';
 import CameraPositionBox, { CustomCameraFocus } from './camera-position-box';
+import { useBounds } from '@react-three/drei';
 
 
 const MiniControls=()=>{
-    const {cameraState,setSelectMeshBox,setTarget,setPosition}=useCameraSWR()
+    const {cameraState,setZoomBox}=useCameraSWR()
     const {menuState} =useMenuSWR();
     const {meshState,setOnText,setOnWire}=useMeshSWR()
     const {measureState,setOnMeasure}=useMeasureSWR()
@@ -37,13 +38,19 @@ const MiniControls=()=>{
     }
 
     const cameraInit=()=>{
-        cameraState?.camera?.current.up.set(0,1,0);
-        setTarget(new Vector3(0,0,0));
-        setPosition(new Vector3(0,0,59))
+        // cameraState?.camera?.current.up.set(0,1,0);
+        // setTarget(new Vector3(0,0,0));
+        // setPosition(new Vector3(0,0,59))
+        cameraState?.camera?.current.up.set(0,1,0)
+        setZoomBox({
+            target:new Vector3(0,0,0),
+            position:new Vector3(0,0,cameraState?.meshBox.max.z!*3)
+        })
     }
     const onFitZoom=()=>{
-        console.log(cameraState?.meshBox);
-        setSelectMeshBox(_.cloneDeep(cameraState?.meshBox!))
+        setZoomBox({
+            box:_.cloneDeep(cameraState?.meshBox!)
+        })
     }
 
     const cameraVariants={

@@ -21,25 +21,7 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
         setSelectMesh(skinnedMesh);
 
         e.stopPropagation()
-        // if(e.metaKey||e.ctrlKey){
-       
-        //     const index= meshState?.selectMesh?.findIndex((mesh)=>mesh.current.uuid===skinnedMesh.current.uuid)!;
-        //     if(index>=0){
-        //         const meshList = [...meshState?.selectMesh!];
-        //         meshList.splice(index,1)
-        //         await setSelectMesh(meshList);
-        //     }else{
-               
-        //         await setSelectMesh([...meshState?.selectMesh!,skinnedMesh])
-        //     }
-        // }else{
-        //     console.log(skinnedMesh.current);
-        //     setSelectMesh([skinnedMesh]);
-        // }
     }
-    // const meshDoubleClick=()=>{
-    //     setSelectMeshBox(new Box3().setFromObject(meshRef.current))
-    // }
 
     const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
 

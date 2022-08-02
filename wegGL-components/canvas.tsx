@@ -42,7 +42,7 @@ interface ICanvasProps{
 export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
     const {commonState,setGroupList,setScene,setFileLoad,setFileUuid}=useCommonSWR();
-    const {setMeshBox}=useCameraSWR();
+    const {setMeshBox,setOnZoom}=useCameraSWR();
     const {meshState,setAnimationList}=useMeshSWR()
     const sceneRef = useRef<Scene>(null)
     
@@ -224,6 +224,10 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
     useEffect(()=>{
         setScene(sceneRef)
     },[sceneRef])
+
+    const offZoom=()=>{
+        setOnZoom(false)
+    }
     
 //     const mixer = new AnimationMixer(three.scene);
 //     const clip= AnimationClip.findByName(meshState?.animationList!,'Take 001');
@@ -257,7 +261,8 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 
     return(
         <>
-            <Canvas style={{
+            <Canvas onClick={offZoom} onWheel={offZoom}
+            style={{
             backgroundColor:color
         }}
             className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]"

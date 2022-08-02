@@ -5,8 +5,9 @@ import Left from '../../assets/cube-left.svg'
 import Right from '../../assets/cube-right.svg'
 import Top from '../../assets/cube-top.svg'
 import Bottom from '../../assets/cube-down.svg'
-import { Vector3 } from "three"
+import { Box3, Vector3 } from "three"
 import { motion } from "framer-motion"
+import _ from "lodash"
 
 export enum CustomCameraFocus{
     Front,Back,Left,Right,Top,Bottom
@@ -17,7 +18,7 @@ interface BoxProps{
 
 const CameraPositionBox:React.FC<BoxProps> =({type})=>{
 
-    const {cameraState,setTarget,setPosition}=useCameraSWR()
+    const {cameraState,setTarget,setPosition,setZoomBox}=useCameraSWR()
     const switchBox=()=>{
         switch(type){
             case CustomCameraFocus.Front:
@@ -41,41 +42,49 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
         switch(type){
             case CustomCameraFocus.Front:
                 cameraState?.camera?.current.up.set(0,1,0)
-                setPosition(new Vector3(
-                                0,0,cameraState?.meshBox.max.z!*2
-                                ))
+                setZoomBox({
+                    target:new Vector3(0,0,0),
+                    position:new Vector3(0,0,cameraState?.meshBox.max.z!*3)
+                })
+               
                 break;
             case CustomCameraFocus.Back:
                 cameraState?.camera?.current.up.set(0,1,0)
-                setPosition(new Vector3(
-                                0,0,cameraState?.meshBox.min.z!*2
-                                ))
+                setZoomBox({
+                    target:new Vector3(0,0,0),
+                    position:new Vector3(0,0,cameraState?.meshBox.min.z!*3)
+                })
+   
                 break;
             case CustomCameraFocus.Left:
                 cameraState?.camera?.current.up.set(0,1,0)
-                setPosition(new Vector3(
-                                    cameraState?.meshBox.max.x!*2,
-                                0,0
-                                ))
+                setZoomBox({
+                    target:new Vector3(0,0,0),
+                    position:new Vector3(cameraState?.meshBox.max.x!*2,0,0)
+                })
                 break;
             case CustomCameraFocus.Right:
                 cameraState?.camera?.current.up.set(0,1,0)
-                setPosition(new Vector3(
-                                    cameraState?.meshBox.min.x!*2,
-                                0,0
-                                ))
+                setZoomBox({
+                    target:new Vector3(0,0,0),
+                    position:new Vector3(cameraState?.meshBox.min.x!*2,0,0)
+                })
+    
                 break;
             case CustomCameraFocus.Top:
                 cameraState?.camera?.current.up.set(0,0,1)
-                setPosition(new Vector3(
-                                    0,cameraState?.meshBox.max.y!*4,0
-                                    ))
+                setZoomBox({
+                    target:new Vector3(0,0,0),
+                    position:new Vector3(0,cameraState?.meshBox.max.y!*4,0)
+                })
+  
                 break;
             case CustomCameraFocus.Bottom:
                 cameraState?.camera?.current.up.set(0,0,1)
-                setPosition(new Vector3(
-                                    0,cameraState?.meshBox.min.y!*4,0
-                                    ))
+                setZoomBox({
+                    target:new Vector3(0,0,0),
+                    position:new Vector3(0,cameraState?.meshBox.min.y!*4,0)
+                })
                 break;
         }    
     }

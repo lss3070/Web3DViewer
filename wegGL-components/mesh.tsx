@@ -23,7 +23,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     const api = useBounds()
     const {measureState,setPoint}=useMeasureSWR()
     const isMobile = useIsMobile()
-    const {setSelectMeshBox}=useCameraSWR()
 
     const meshRef=useRef<any>();
 

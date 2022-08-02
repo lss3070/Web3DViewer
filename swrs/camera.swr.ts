@@ -1,17 +1,12 @@
 import useSWR from "swr";
 import { Box3, Sphere, Vector3 } from "three";
-import { ICameraStateProps, ObjectRef } from "../global/interfaces/swr.interface";
+import { ICameraStateProps, ObjectRef, ZoomBox } from '../global/interfaces/swr.interface';
 
 let cameraState:ICameraStateProps={
     onZoom:false,
     position:new Vector3(0,0,400),
-    moveMode:true,
-    aspect:1,
-    fov:50,
     meshBox:new Box3(new Vector3()),
     target:new Vector3(0,0,0),
-    axes:new Vector3(0,0,0),
-    
 };
 
 
@@ -36,27 +31,6 @@ export const useCameraSWR=()=>{
             }
             return mutate();
         },
-        setMoveMode:async(value:boolean)=>{
-            cameraState={
-                ...cameraState,
-                moveMode:value
-            }
-            return mutate();
-        },
-        setFov:async(value:number)=>{
-            cameraState={
-                ...cameraState,
-                fov:value
-            }
-            return mutate();
-        },
-        setAspect:async(value:number)=>{
-            cameraState={
-                ...cameraState,
-                aspect:value
-            }
-            return mutate();
-        },
         setMeshBox:async(meshBox:Box3)=>{
             cameraState={
                 ...cameraState,
@@ -70,13 +44,6 @@ export const useCameraSWR=()=>{
                 selectMeshBox
             }
             return mutate();
-        },
-        setSphere:async(sphere:Sphere)=>{
-            cameraState={
-                ...cameraState,
-                sphere:sphere,
-            }
-            return mutate()
         },
         setTarget:async(target:Vector3)=>{
             cameraState={
@@ -99,12 +66,13 @@ export const useCameraSWR=()=>{
             }
             return mutate();
         },
-        setAxes:async(axes:Vector3)=>{
+        setZoomBox:async(zoomBox:ZoomBox)=>{
             cameraState={
                 ...cameraState,
-                axes
+                zoomBox
             }
             return mutate();
-        },
+        }
+
     }
 }

@@ -36,20 +36,21 @@ export interface EveryMesh{
     animationList?:AnimationClip[]
   }
   
+export interface ZoomBox{
+  box?:Box3
+  target?:Vector3
+  position?:Vector3
+}
 
  export interface ICameraStateProps {
   control?:ObjectRef;
   camera?:ObjectRef;
   onZoom:boolean,
   position:Vector3,
-  moveMode:boolean
-  fov:number;
-  aspect:number;
   meshBox:Box3;
   selectMeshBox?:Box3;
-  sphere?:Sphere;
+  zoomBox?:ZoomBox
   target?:Vector3;
-  axes:Vector3;
 }
 
 export interface FileInfo{

@@ -6,12 +6,7 @@ import _ from 'lodash'
 import { useCameraSWR } from "../swrs/camera.swr";
 
 export const ControlComponent=()=>{
-    const { cameraState,setControlRef,
-        setPosition,
-        setTarget,
-        setSelectMeshBox,
-        setAxes,
-        setOnZoom
+    const { cameraState,setControlRef,setOnZoom
     }= useCameraSWR();
 
     const [zoomTarget,setZoomTarget]=useState<Vector3>(new Vector3());
@@ -20,56 +15,65 @@ export const ControlComponent=()=>{
 
     const controlRef=useRef<any>()
 
-    useEffect(()=>{
-        if(cameraState){
-            controlRef.current.enabled=cameraState?.moveMode;
-        }
-    },[cameraState?.moveMode])
+    // useEffect(()=>{
+    //     if(cameraState){
+    //         controlRef.current.enabled=cameraState?.moveMode;
+    //     }
+    // },[cameraState?.moveMode])
 
     useEffect(()=>{
         console.log(controlRef.current?.up?.multiplyScalar(-1))
         setControlRef(controlRef)
     },[controlRef]);
 
+
+
     useEffect(()=>{
-        if(!cameraState?.selectMeshBox) return
-        const size= cameraState?.selectMeshBox?.getSize(new Vector3());
-        const center = cameraState?.selectMeshBox?.getCenter(new Vector3());
+        if(!cameraState?.zoomBox) return
+       
+        const center =cameraState.zoomBox.target?cameraState.zoomBox.target:
+        cameraState?.zoomBox.box?.getCenter(new Vector3())
 
-        const maxSize = Math.max(size!.x,size!.y,size!.z);
-        const fitHeightDistance= maxSize/(2*Math.atan((Math.PI*controlRef.current.object.fov)/360));
-        const fitWidthDistance = fitHeightDistance / controlRef.current.object.aspect;
-        const distance = 1.2*Math.max(fitHeightDistance,fitWidthDistance);
-
-        const direction= controlRef.current.target
-        .clone()
-        .sub(controlRef.current.object.position)
-        .normalize()
-        .multiplyScalar(distance);
-
-        // center.applyMatrix4(controlRef.current.object.matrixWorldInverse);
-
-        setZoomTarget(center);
-
-        controlRef.current.object.near = distance/1000;
-        controlRef.current.object.far = distance*1000;
-        controlRef.current.object.updateProjectionMatrix();
-
-        const position = _.cloneDeep(controlRef.current.object.position)
-
-        setZoomPosition(position.copy(controlRef.current.target).sub(direction))
+        if(!cameraState.zoomBox.position){
+            const size= cameraState?.zoomBox?.box?.getSize(new Vector3());
+            const maxSize = Math.max(size!.x,size!.y,size!.z);
+            const fitHeightDistance= maxSize/(2*Math.atan((Math.PI*controlRef.current.object.fov)/360));
+            const fitWidthDistance = fitHeightDistance / controlRef.current.object.aspect;
+            const distance = 1.2*Math.max(fitHeightDistance,fitWidthDistance);
+    
+            const direction= controlRef.current.target
+            .clone()
+            .sub(controlRef.current.object.position)
+            .normalize()
+            .multiplyScalar(distance);
+    
+            // center.applyMatrix4(controlRef.current.object.matrixWorldInverse);
+    
+            setZoomTarget(center!);
+    
+            controlRef.current.object.near = distance/1000;
+            controlRef.current.object.far = distance*1000;
+            controlRef.current.object.updateProjectionMatrix();
+    
+            const position = _.cloneDeep(controlRef.current.object.position)
+    
+            setZoomPosition(position.copy(controlRef.current.target).sub(direction))
+        }else{
+            setZoomPosition(cameraState.zoomBox.position)
+        }
+      
         // setZoomPosition(position.copy(controlRef.current.target).sub(direction))
         
         // setZoomPosition(cameraState?.selectMeshBox.max)
          
         setOnZoom(true);
-    },[cameraState?.selectMeshBox]);
-
+    },[cameraState?.zoomBox])
 
 
     useFrame((e,q)=>{
         const step=0.05;
         if( cameraState?.onZoom){
+            console.log(e);
             try{
                 
                 if(
