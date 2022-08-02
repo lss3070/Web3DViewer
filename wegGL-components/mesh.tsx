@@ -12,6 +12,7 @@ import { MeshMode } from "../global/interfaces/swr.interface";
 import { useCameraSWR } from '../swrs/camera.swr';
 import { MaterialElements } from "../utils/materialElements";
 import useIsMobile from '../hooks/useIsMobile';
+import { useMeasureSWR } from '../swrs/measure.swr';
 interface IMeshProps{
     mesh:THREE.Mesh
 }
@@ -19,6 +20,7 @@ interface IMeshProps{
 export const MeshComponent=({mesh}:IMeshProps)=>{
     
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
+    const {measureState,setPoint}=useMeasureSWR()
     const isMobile = useIsMobile()
     const {setSelectMeshBox}=useCameraSWR()
 
@@ -30,9 +32,13 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
 
     const meshOnClick =async (e: any)=>{ 
+
         if(!isMobile){
+            setPoint(e.point);
             setSelectMesh(meshRef);
             e.stopPropagation()
+
+           
         }
     }
     const meshDoubleClick=()=>{

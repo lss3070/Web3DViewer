@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useRef, useState, useEffect } from 'react';
-import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip, SkinnedMesh, PlaneHelper } from 'three';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip, SkinnedMesh, PlaneHelper, BufferAttribute } from 'three';
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 import {Rhino3dmLoader,} from 'three/examples/jsm/loaders/3DMLoader'
@@ -32,6 +32,8 @@ import CustomSTLLoader from '../utils/loaders/stlLoader';
 import CustomPLYLoader from '../utils/loaders/plyLoader';
 import ObjectComponent from './object';
 import { SkeletonUtils } from 'three-stdlib';
+import Point from './point';
+import { useMeasureSWR } from '../swrs/measure.swr';
 
 interface ICanvasProps{
     setLoadingPercent:Function;
@@ -48,7 +50,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const [bone,setBone]=useState<Bone>();
     const [color,setColor] =useState<string>('#2a2b2e');
 
-   
 
     const threeDMLoader = new Rhino3dmLoader();
     const threeMFLoader = new ThreeMFLoader();
@@ -272,6 +273,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                             <ObjectComponent group={meshGroup} bone={bone}/>
                             <SelectMeshComponent/>
                             <Gizmo/>
+                            <Point/>
                         </>
                     )}
                   {/* <gridHelper args={[1000,1000,1000]}/>  */}
