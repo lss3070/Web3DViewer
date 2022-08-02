@@ -16,7 +16,6 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
         setControlPosition,
         setTreeListPosition
     }=useMenuSWR();
-    console.log(type);
     
 
     const x =useMotionValue<string|number>(0);
