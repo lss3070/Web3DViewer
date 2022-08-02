@@ -273,7 +273,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                             <ObjectComponent group={meshGroup} bone={bone}/>
                             <SelectMeshComponent/>
                             <Gizmo/>
-                            <Point/>
+                            {/* <Point/> */}
                         </>
                     )}
                   {/* <gridHelper args={[1000,1000,1000]}/>  */}

@@ -143,11 +143,11 @@ const MiniControls=()=>{
                 <MiniCircleButton onClick={onWire} pressState={meshState?.onWire}>
                     {'Wire'}
                 </MiniCircleButton>
-                <MiniCircleButton onClick={onMeasure} pressState={measureState?.onMeasure}>
+                {/* <MiniCircleButton onClick={onMeasure} pressState={measureState?.onMeasure}>
                     <FontAwesomeIcon
                         icon={['fas','ruler']}
                         className="w-10 h-10"/>
-                </MiniCircleButton>
+                </MiniCircleButton> */}
             </div>
         </ModalLayout>
 
