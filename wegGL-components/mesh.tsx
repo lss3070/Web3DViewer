@@ -33,18 +33,23 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
     const meshOnClick =async (e: any)=>{ 
 
-        if(!isMobile){
-            setPoint(e.point);
-            setSelectMesh(meshRef);
-            e.stopPropagation()
 
-           
+        if(!isMobile){
+
+            measureState?.onMeasure?
+            setPoint(e.point):
+            setSelectMesh(meshRef);
+            
+            e.stopPropagation()
         }
     }
 
     const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
         if(!isMobile){
+
+            !measureState?.onMeasure&&
             setHoverMesh(meshRef);
+            
             e.stopPropagation();
         }
     }

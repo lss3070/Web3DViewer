@@ -22,9 +22,7 @@ export const useMeasureSWR=()=>{
             return mutate();
         },
         setPoint:async(point:Vector3)=>{
-            measureState.point.push(point.x);
-            measureState.point.push(point.y);
-            measureState.point.push(point.z);
+            measureState.point.push(point);
             measureState={
                 ...measureState,
                 point:[...measureState.point]

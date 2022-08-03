@@ -32,8 +32,12 @@ import CustomSTLLoader from '../utils/loaders/stlLoader';
 import CustomPLYLoader from '../utils/loaders/plyLoader';
 import ObjectComponent from './object';
 import { SkeletonUtils } from 'three-stdlib';
-import Point from './point';
+import Point from './measure/sprite';
 import { useMeasureSWR } from '../swrs/measure.swr';
+
+import SpriteComponent from './measure/sprite';
+import LineComponent from './measure/line';
+import MeasureComponent from './measure/measure';
 
 interface ICanvasProps{
     setLoadingPercent:Function;
@@ -269,8 +273,6 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 
             >   
                 <scene ref={sceneRef}>  
-                    
-               
                     <SkyBox/>
                     <LightComponent/>                
                     <CameraComponent/>
@@ -278,12 +280,11 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                     {meshGroup&&(
                         <>
                             <Bounds margin={1.5}>
-                            <ObjectComponent group={meshGroup} bone={bone}/>
+                                <ObjectComponent group={meshGroup} bone={bone}/>
                             </Bounds>
-                           
                             <SelectMeshComponent/>
                             <Gizmo/>
-                            {/* <Point/> */}
+                            <MeasureComponent/>
                         </>
                     )}
                   {/* <gridHelper args={[1000,1000,1000]}/>  */}

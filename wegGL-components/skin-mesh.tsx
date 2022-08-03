@@ -1,6 +1,7 @@
 import { ThreeEvent } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { SkinnedMesh } from "three"
+import { useMeasureSWR } from "../swrs/measure.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
 import { MaterialElements } from "../utils/materialElements"
 import { MeshHtmlComponent } from "./mesh-html";
@@ -10,6 +11,7 @@ interface ISkinnedMeshProps{
 }
 
 const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
+    const {measureState,setPoint}=useMeasureSWR()
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
     
     const skinnedMesh=useRef<any>()
@@ -18,6 +20,8 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
     },[skinnedMesh])
 
     const meshOnClick =async (e:any)=>{ 
+
+        measureState?.onMeasure&&setPoint(e.point);
         setSelectMesh(skinnedMesh);
 
         e.stopPropagation()

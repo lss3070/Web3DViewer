@@ -139,6 +139,6 @@ export interface IMenuModal{
 
 export interface IMeasureSWR{
   onMeasure:boolean
-  point:number[]
+  point:Vector3[]
   line?:any;
 }
