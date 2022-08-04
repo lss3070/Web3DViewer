@@ -28,8 +28,8 @@ const TreeTitle =({
              <div className={`
               ${node.select?`bg-slate-500`:`bg-none`}
              `}
-             onClick={(e)=>clickEvent(e,node.key)}
-             onDoubleClick={()=>doubleClickEvent(node.key)}
+             onClick={(e)=>node.type!=='Bone'&&clickEvent(e,node.key)}
+             onDoubleClick={()=>node.type!=='Bone'&&doubleClickEvent(node.key)}
              >
                 {node.title as React.ReactNode}
              </div>

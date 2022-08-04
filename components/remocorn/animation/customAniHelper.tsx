@@ -6,6 +6,7 @@ import { useMeshSWR } from '../../../swrs/mesh.swr';
 import { useAnimationSWR } from '../../../swrs/animation.swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from "framer-motion";
+import shortId from 'shortid';
 
 
 const CustomAniHelper=({}:Helper)=>{
@@ -39,7 +40,7 @@ const {animationState,setCustomAnimation}=useAnimationSWR()
         <div>
             {
                 meshState?.animationList?.map((item:AnimationClip)=>{
-                  return  <div className="grid grid-cols-11"
+                  return  <div className="grid grid-cols-11" key={shortId.generate()}
                   >
                         <div className=" select-none col-span-10">{item.name}</div>
                         <div  
