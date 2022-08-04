@@ -20,7 +20,6 @@ interface IMeshProps{
 export const MeshComponent=({mesh}:IMeshProps)=>{
     
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
-    const api = useBounds()
     const {measureState,setPoint}=useMeasureSWR()
     const isMobile = useIsMobile()
 
@@ -32,10 +31,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
 
     const meshOnClick =async (e: any)=>{ 
-
-
         if(!isMobile){
-
             measureState?.onMeasure?
             setPoint(e.point):
             setSelectMesh(meshRef);
@@ -49,13 +45,16 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
             !measureState?.onMeasure&&
             setHoverMesh(meshRef);
-            
+
             e.stopPropagation();
         }
     }
     const onTouch=async(e:ThreeEvent<PointerEvent>)=>{
         if(isMobile){
+            measureState?.onMeasure?
+            setPoint(e.point):
             setSelectMesh(meshRef);
+            
             e.stopPropagation()
         }
     }

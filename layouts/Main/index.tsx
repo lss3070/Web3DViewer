@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import DarkModeSwitch from "../../components/darkModeSwitch";
 import FileDragArea from "./file-drag-area";
 import MiniControls from "../../components/mini-remocorn";
@@ -12,17 +12,25 @@ import Header from "../Header/header";
 import LoadingComponent from "./loading";
 import Guide from "./guide";
 import { useCameraSWR } from '../../swrs/camera.swr';
+import { useMeasureSWR } from '../../swrs/measure.swr';
+import DeleteKeyPress from "../../hooks/useKeyPress";
 
 
 const Main = () => {
   const {commonState}=useCommonSWR()
   const {cameraState,setOnZoom}=useCameraSWR()
+  const {measureState,deleteSelectMeasure}=useMeasureSWR()
 
   const isMobile=useIsMobile()
   
   const [loadingPercent,setLoadingPercent]=useState<number>(0)
   const [loadingComplete,setLoadingComplte]=useState<boolean>(true);
+  // const deleteMeasure=()=>{
 
+  //  deleteSelectMeasure()
+  // }
+
+  DeleteKeyPress(deleteSelectMeasure)
 
   return (  
       <FileDragArea>
@@ -30,7 +38,9 @@ const Main = () => {
           <div className='w-full h-11 grid '>
             <Header/>
           </div>
-          <div className={`w-full h-full grid absolute`} >
+          <div className={`w-full h-full grid absolute 
+          ${measureState?.onMeasure&&` cursor-crosshair`}
+          `} >
               <Suspense fallback={null}>
                 <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
               </Suspense>

@@ -17,16 +17,24 @@ const SpriteComponent=({points}:ISpriteProps)=>{
 
     const loader = new TextureLoader();
 
-    const target = loader.load("target.png");
+    const circle = new Path2D();
+    circle.moveTo(125, 35);
+    circle.arc(100, 35, 25, 0, 2 * Math.PI);
+
+
+    const target = loader.load("target2.png");
 
     return(
         <>{
                 points.map((item)=>{
                     return(
-                        <sprite position={item}>
-                            <spriteMaterial attach={'material'} map={target}
+                        <sprite position={item} scale={0.01}>
+                            <spriteMaterial attach={'material'} 
+                            sizeAttenuation={false}    
+                            map={target}
                             depthTest={false}
                             depthWrite={false}
+                        
                             />
                         </sprite>
                     )

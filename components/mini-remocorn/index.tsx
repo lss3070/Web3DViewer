@@ -21,7 +21,7 @@ import { useBounds } from '@react-three/drei';
 const MiniControls=()=>{
     const {cameraState,setZoomBox}=useCameraSWR()
     const {menuState} =useMenuSWR();
-    const {meshState,setOnText,setOnWire}=useMeshSWR()
+    const {meshState,setOnText,setOnWire,setHoverMesh,setInitSelectMesh}=useMeshSWR()
     const {measureState,setOnMeasure}=useMeasureSWR()
     const isMobile = useIsMobile()
 
@@ -82,6 +82,11 @@ const MiniControls=()=>{
         setOnText(!meshState?.onText!)
     }
     const onMeasure=()=>{
+        if(!measureState?.onMeasure){
+            setInitSelectMesh();
+            setHoverMesh(undefined)
+        }
+     
         setOnMeasure(!measureState?.onMeasure!)
     }
 

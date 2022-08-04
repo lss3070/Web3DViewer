@@ -140,5 +140,6 @@ export interface IMenuModal{
 export interface IMeasureSWR{
   onMeasure:boolean
   point:Vector3[]
-  line?:any;
+  selectPoint?:Vector3[]
+  hoverPoint:number[]
 }

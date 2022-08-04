@@ -9,7 +9,7 @@ const MeasureComponent=()=>{
     return(
         <>
             {
-                measureState?.onMeasure&&measureState?.point!.length>0&&(
+                measureState?.onMeasure&&(
                     <>
                         <SpriteComponent points={measureState?.point!}/>
                         <LineComponent points={measureState?.point!}/>

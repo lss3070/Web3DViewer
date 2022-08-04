@@ -5,7 +5,9 @@ import { CustomAnimationList, IMeasureSWR } from "../global/interfaces/swr.inter
 
 let measureState:IMeasureSWR={
     point:[],
-    onMeasure:false
+    onMeasure:false,
+    selectPoint:[],
+    hoverPoint:[0,0,0]
 }
 
 export const useMeasureSWR=()=>{
@@ -15,9 +17,11 @@ export const useMeasureSWR=()=>{
     return{
         measureState:data,
         setOnMeasure:async(onMeasure:boolean)=>{
+            const selectPoint= []
             measureState={
                 ...measureState,
-                onMeasure
+                onMeasure,
+                selectPoint
             }
             return mutate();
         },
@@ -26,6 +30,36 @@ export const useMeasureSWR=()=>{
             measureState={
                 ...measureState,
                 point:[...measureState.point]
+            }
+            return mutate();
+        },
+        setHoverPoint:async(point:number[])=>{
+            measureState={
+                ...measureState,
+                hoverPoint:point
+            }
+            return mutate();
+        },
+        setSelectMeasure:async(selectPoint:Vector3[])=>{
+            // const list= measureState.point.filter((item)=>!(item.equals(selectPoint[0])||item.equals(selectPoint[1])));
+            measureState={
+                ...measureState,
+                selectPoint
+            }
+            return mutate();
+        },
+        deleteSelectMeasure:async()=>{
+         
+            const point =measureState.selectPoint!;
+            if(point?.length>1){
+                const list= measureState.point.filter((item)=>
+                !(item.equals(point[0])||item.equals(point[1])));
+
+                measureState={
+                    ...measureState,
+                    point:[...list],
+                    selectPoint:undefined
+                }
             }
             return mutate();
         }
