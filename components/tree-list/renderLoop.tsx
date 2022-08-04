@@ -22,6 +22,7 @@ const RenderLoop =(data:CustomDataNode[],searchValue:string):CustomNode[]=>{
             return {
                 visible:item.visible,
                 title:title,
+                type:item.type,
                 key:item.key,
                 children:RenderLoop(item.children,searchValue),
                 select:item.select,
@@ -32,6 +33,7 @@ const RenderLoop =(data:CustomDataNode[],searchValue:string):CustomNode[]=>{
             visible:item.visible,
             title:title, 
             key:item.key,
+            type:item.type
         }
     })
 }

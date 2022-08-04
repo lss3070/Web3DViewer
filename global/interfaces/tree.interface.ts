@@ -3,7 +3,8 @@ import { MouseEventHandler } from "react";
 
 export interface CustomNode extends DataNode {
     select:boolean;
-    visible:boolean
+    visible:boolean;
+    type:string;
 }
 
 

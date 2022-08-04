@@ -41,7 +41,6 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     }
 
     const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
-        console.log(meshRef)
         if(!isMobile){
 
             !measureState?.onMeasure&&
