@@ -73,7 +73,6 @@ export const ControlComponent=()=>{
     useFrame((e,q)=>{
         const step=0.05;
         if( cameraState?.onZoom){
-            console.log(e);
             try{
                 
                 if(
