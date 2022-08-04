@@ -23,7 +23,7 @@ const SettingManager=()=>{
     
     return(
         <div className="flex space-x-3 mr-3">
-            <div className='flex items-center justify-center'>
+            {/* <div className='flex items-center justify-center'>
                 <FontAwesomeIcon
                     onClick={openGithub}
                     icon={['fab','github']}
@@ -32,7 +32,7 @@ const SettingManager=()=>{
                         hover:text-blue-500
                     "    
                 />
-            </div>
+            </div> */}
             <div className='flex items-center justify-center'>
                 <FontAwesomeIcon
                     onClick={openSetting}
