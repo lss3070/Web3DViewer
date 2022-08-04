@@ -12,25 +12,28 @@ const Header=()=>{
 
 
     return(
-            <div className="w-full grid grid-cols-7 h-full space-x-3
+            <div className="w-full block space-x-3
             bg-white
-            dark:bg-[#3d3e42]">
-                <div className="flex col-span-1 items-center justify-center
-                dark:text-white text-gray-500 font-bold
+            dark:bg-[#3d3e42] ">
+                <div className="flex float-left h-full items-center select-none
+                dark:text-white text-gray-500 font-bold justify-start pl-2 w-40
                 ">
-                    Web 3D Viewer
+                    <img src='test.png' className='w-10'/>
+                    <span>Web 3D Viewer</span>
                 </div>
-                <div className=" col-span-5 space-x-3 flex items-center ">
+                <div className="float-left h-full  space-x-3 flex items-center ">
                     <FileManager/>
                     {!isMobile&&commonState?.fileLoad&&(
                         <MenuManager/>
                     )}
                 </div>
-                <div className="flex col-span-1 items-center justify-end mr-4
-                text-gray-600 dark:text-white
-                ">
-                    <SettingManager/>
-                </div>
+                {!isMobile&&(
+                    <div className="h-full float-right flex items-center justify-end
+                    text-gray-600 dark:text-white">
+                        <SettingManager/>
+                    </div>
+                )}
+               
             </div>
     )
 }
