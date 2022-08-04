@@ -149,9 +149,9 @@ const MiniControls=()=>{
                         icon={['fas','arrows-to-eye']}
                         className="w-10 h-10"/>
                 </MiniCircleButton>
-                <MiniCircleButton onClick={onText} pressState={meshState?.onText}>
+                {/* <MiniCircleButton onClick={onText} pressState={meshState?.onText}>
                     {'Text'}
-                </MiniCircleButton>
+                </MiniCircleButton> */}
                 <MiniCircleButton onClick={onWire} pressState={meshState?.onWire}>
                     {'Wire'}
                 </MiniCircleButton>

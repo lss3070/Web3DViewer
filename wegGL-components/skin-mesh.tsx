@@ -54,12 +54,12 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
                     onClick={meshOnClick} ref={skinnedMesh} {...skinnedMeshItem}>
                         {MaterialElements(skinnedMeshItem.material,meshState?.onWire!)}
                 </skinnedMesh>
-                    <MeshHtmlComponent 
+                    {/* <MeshHtmlComponent 
                                 centerPosition={skinnedMeshItem.geometry.boundingSphere?.center!}
                                 visible={meshState?.onText!}
                                 name={skinnedMeshItem.name}
                                 uuid={skinnedMeshItem.uuid} 
-                                />
+                                /> */}
             </>
 
     )
