@@ -66,13 +66,13 @@ export const ColorHelper=(
 
     return(
         <div className='flex'>
-        <div>
+        {/* <div className=''>
             {materialList.map((item)=>{
                     return(
                         <div onClick={()=>setSelectMaterial(item)}>{item.name}</div>
                     )
                 })}
-        </div>
+        </div> */}
             <div className='flex items-center justify-center w-full'>
                 <HexColorPicker color={color} 
                     onChange={colorChange}/>
