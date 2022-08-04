@@ -72,7 +72,9 @@ const Guide=()=>{
             text-center
             text-2xl
             min-w-[300px]
-             font-bold">
+             font-bold
+             select-none
+             ">
                 Drag and Drop your 3D model here
             </div>
                 <div className="
@@ -80,6 +82,7 @@ const Guide=()=>{
                 items-center 
                 justify-center
                  text-base
+                 select-none
                 " >
                     Example Models
                 </div>

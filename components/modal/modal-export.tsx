@@ -104,7 +104,7 @@ const ModalExport=({onClose}:IExportProps)=>{
                 text-gray-600
                 bg-[#f7fafb]
                 dark:text-white
-                dark:bg-[#64758b]
+                dark:bg-[#4b5766]
                 dark:border-transparent
                 shadow-2xl
                 gap-3

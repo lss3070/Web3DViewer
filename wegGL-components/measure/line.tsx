@@ -50,7 +50,7 @@ const LineComponent=({points}:ILineProps)=>{
               
 
                 return(
-                    <Line points={item}
+                    <Line key={index} points={item}
                     lineWidth={1}
                     color={0x64758b} 
                     depthWrite={false} 

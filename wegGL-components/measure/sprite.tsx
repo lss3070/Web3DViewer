@@ -26,9 +26,9 @@ const SpriteComponent=({points}:ISpriteProps)=>{
 
     return(
         <>{
-                points.map((item)=>{
+                points.map((item,index)=>{
                     return(
-                        <sprite position={item} scale={0.01}>
+                        <sprite key={index} position={item} scale={0.01}>
                             <spriteMaterial attach={'material'} 
                             sizeAttenuation={false}    
                             map={target}

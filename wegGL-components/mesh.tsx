@@ -84,12 +84,12 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             >
                 {MaterialElements(mesh.material,meshState?.onWire!)}
             </mesh>
-                    <MeshHtmlComponent 
+                    {/* <MeshHtmlComponent 
                     centerPosition={mesh.geometry.boundingSphere?.center!}
                     visible={meshState?.onText!}
                     name={mesh.name}
                     uuid={mesh.uuid} 
-                    />
+                    /> */}
            
             </>
             

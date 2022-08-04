@@ -36,7 +36,7 @@ const SettingManager=()=>{
             <div className='flex items-center justify-center'>
                 <FontAwesomeIcon
                     onClick={openSetting}
-                    icon={['fas','gear']}
+                    icon={['fas','circle-info']}
                     size="lg"
                     className="cursor-pointer 
                     hover:text-blue-500"/>
