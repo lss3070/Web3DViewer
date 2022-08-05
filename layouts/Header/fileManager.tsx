@@ -36,7 +36,8 @@ const FileManager=()=>{
 
 
     const fileChange =(e:ChangeEvent<HTMLInputElement>)=>{
-        if(e.currentTarget.files?.length!<0) return
+        console.log(e.currentTarget.files);
+        if(e.currentTarget.files?.length!<=0) return
         const file= FileTransForm(e.currentTarget.files!)
 
         setFiltPath({
