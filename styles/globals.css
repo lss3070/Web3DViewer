@@ -30,6 +30,27 @@ a {
 #__next{
     height: 100%;
 }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner{
+  border:1px;
+  width: 84px;
+  height: 84px;
+  border: 8px solid;
+  border-color: #64758b transparent #64758b transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
+
 .ant-tree{
   background:transparent !important
 }

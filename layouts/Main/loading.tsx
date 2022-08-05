@@ -56,12 +56,9 @@ const LoadingComponent=()=>{
         bg-[#000000]/30
         z-50
        '>
-         <div className='grid space-x-5'>
-         <motion.div className='flex 
-          h-32 items-center justify-center
-         '
-         >
-
+         <div className='grid'>
+         {/* <motion.div className='flex 
+          h-32 items-center justify-center'>
             <motion.div
             style={loadingContainer}
             variants={loadingContainerVariants}
@@ -99,9 +96,12 @@ const LoadingComponent=()=>{
                 transition={loadingCircleTransition}
             />
             </motion.div>
-          </motion.div>
-          <div className='text-2xl text-black dark:text-white text-center'>
-              Loading
+          </motion.div> */}
+          <div className='flex items-center justify-center'>
+            <div className='spinner'></div>
+          </div>
+          <div className='text-2xl text-black dark:text-white mt-3'>
+              LOADING
             </div>
          </div>
          
