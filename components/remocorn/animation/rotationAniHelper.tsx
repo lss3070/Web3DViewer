@@ -21,15 +21,15 @@ export const RotationAnimationHelper=({}:RoationProps)=>{
     
     const setXSpeed=(e:number)=>{
         e = isNaN(e)?0:e;
-        setRotationSpeed(new Vector3(+e,localRotationSpeed.y,localRotationSpeed.z));
+        setLocalRotationSpeed(new Vector3(+e,localRotationSpeed.y,localRotationSpeed.z));
     }
     const setYSpeed=(e:number)=>{
         e = isNaN(e)?0:e;
-        setRotationSpeed(new Vector3(localRotationSpeed.x,+e,localRotationSpeed.z));
+        setLocalRotationSpeed(new Vector3(localRotationSpeed.x,+e,localRotationSpeed.z));
     }
     const setZSpeed=(e:number)=>{
         e = isNaN(e)?0:e;
-        setRotationSpeed(new Vector3(localRotationSpeed.x,localRotationSpeed.y,e));
+        setLocalRotationSpeed(new Vector3(localRotationSpeed.x,localRotationSpeed.y,e));
     }
     const onClickEvent=()=>{
         onRotation(!animationState?.onRotation!)

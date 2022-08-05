@@ -35,7 +35,6 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
         const box = new Box3().setFromObject(group);
 
         setMeshBox(box);
-
     },[group])
 
 
