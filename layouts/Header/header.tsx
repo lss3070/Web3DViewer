@@ -17,12 +17,13 @@ const Header=()=>{
             bg-white
             dark:bg-[#3d3e42] ">
                 <div className="flex float-left h-full items-center select-none
-                dark:text-white text-gray-500 font-bold justify-start pl-2 w-40
+                dark:text-white text-gray-500 font-bold justify-start pl-2 
+                 
                 ">
                     <img src='test.png' className='w-10'/>
                     <span>Web 3D Viewer</span>
                 </div>
-                <div className="float-left h-full  space-x-3 flex items-center ">
+                <div className={`${isMobile?`float-right pr-2`:`float-left`} h-full  space-x-3 flex items-center `}>
                     <FileManager/>
                     {!isMobile&&commonState?.fileLoad&&(
                         <MenuManager/>

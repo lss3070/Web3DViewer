@@ -8,6 +8,7 @@ import Portal from '../../HOC/portal';
 import ModalExport from '../../components/modal/modal-export';
 import MiniButton from '../../components/common/mini-button';
 import FileTransForm from '../../utils/file/fileTransform';
+import useIsMobile from '../../hooks/useIsMobile';
 
 
 const TypeList=['obj','gltf','stl','obj','glb','fbx'];
@@ -29,6 +30,7 @@ const ExportList =({label}:ExportListProps)=>{
 
 
 const FileManager=()=>{
+    const isMobile = useIsMobile()
     const {setFiltPath}=useCommonSWR();
     const [isExport,setIsExport]=useState<boolean>(false);
 
@@ -69,14 +71,19 @@ const FileManager=()=>{
                     </>
                 </MiniButton>
             </div>
-            <MiniButton onClick={openExporter}>
-                <>
-                    <FontAwesomeIcon
-                        icon={['fas','upload']}
-                        className="w-5 h-5"/>
-                    <span>Save</span>
-                </>
-            </MiniButton>
+            {
+                !isMobile&&(
+                    <MiniButton onClick={openExporter}>
+                    <>
+                        <FontAwesomeIcon
+                            icon={['fas','upload']}
+                            className="w-5 h-5"/>
+                        <span>Save</span>
+                    </>
+                </MiniButton>
+                )
+            }
+          
            <Portal> 
                 <AnimatePresence>
                     {isExport&&( <ModalExport onClose={closeExporter}/>)}
