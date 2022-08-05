@@ -2,11 +2,17 @@
 import { useCommonSWR } from '../../swrs/common.swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CircleButton from "../../components/common/circle-button";
+import { Dispatch, SetStateAction } from 'react';
 
-const Guide=()=>{
+interface IGuideProps{
+    setLoadingComplete: Dispatch<SetStateAction<boolean>>;
+}
+
+const Guide=({setLoadingComplete}:IGuideProps)=>{
     const {commonState,setFiltPath}=useCommonSWR();
 
     const openTree=()=>{
+        setLoadingComplete(false)
         fetch('https://web3dviewer_worker.lss3070.workers.dev/tree/tree.obj').then(async(file)=>{
             return await file.blob()
         }).then((blob)=>{
@@ -22,10 +28,13 @@ const Guide=()=>{
                 originName:'tree',
                 fileMap:fileMap!
             })
+        }).catch(()=>{
+            setLoadingComplete(true)
         })
     }
 
     const openHelmet=()=>{
+        setLoadingComplete(false)
         fetch('https://web3dviewer_worker.lss3070.workers.dev/helmet/DamagedHelmet.glb').then(async(file)=>{
             return await file.blob()
         }).then((blob)=>{
@@ -41,10 +50,13 @@ const Guide=()=>{
                 originName:'DamagedHelmet',
                 fileMap:fileMap!
             })
+        }).catch((err)=>{
+            setLoadingComplete(true)
         })
     }
 
     const openMannequin=()=>{
+        setLoadingComplete(false)
         fetch('https://web3dviewer_worker.lss3070.workers.dev/mannequin/Samba_Dancing.fbx').then(async(file)=>{
             return await file.blob()
         }).then((blob)=>{
@@ -60,6 +72,8 @@ const Guide=()=>{
                 originName:'Samba_Dancing',
                 fileMap:fileMap!
             })
+        }).catch((err)=>{
+            setLoadingComplete(true)
         })
     }
     

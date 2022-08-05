@@ -24,7 +24,7 @@ const Main = () => {
   const isMobile=useIsMobile()
   
   const [loadingPercent,setLoadingPercent]=useState<number>(0)
-  const [loadingComplete,setLoadingComplte]=useState<boolean>(true);
+  const [loadingComplete,setLoadingComplete]=useState<boolean>(true);
   // const deleteMeasure=()=>{
 
   //  deleteSelectMeasure()
@@ -42,7 +42,7 @@ const Main = () => {
           ${measureState?.onMeasure&&` cursor-crosshair`}
           `} >
               <Suspense fallback={null}>
-                <CanvasComponent setLoadingComplete={setLoadingComplte} setLoadingPercent={setLoadingPercent}/>
+                <CanvasComponent setLoadingComplete={setLoadingComplete} setLoadingPercent={setLoadingPercent}/>
               </Suspense>
           </div>
           <DragAndDropArea>
@@ -61,7 +61,7 @@ const Main = () => {
                translate-x-[-50%]
                translate-y-[-50%]
               '>
-                <Guide/>
+                <Guide setLoadingComplete={setLoadingComplete}/>
               </div>
             )
             }

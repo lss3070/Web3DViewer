@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo, Dispatch, SetStateAction } from 'react';
 import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip, SkinnedMesh, PlaneHelper, BufferAttribute } from 'three';
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
@@ -40,8 +40,8 @@ import LineComponent from './measure/line';
 import MeasureComponent from './measure/measure';
 
 interface ICanvasProps{
-    setLoadingPercent:Function;
-    setLoadingComplete:Function;
+    setLoadingPercent:Dispatch<SetStateAction<number>>;
+    setLoadingComplete: Dispatch<SetStateAction<boolean>>;
 }
 export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
