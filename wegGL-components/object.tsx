@@ -1,4 +1,4 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from '@react-three/fiber';
 import { useRef, useEffect, useState } from 'react';
 import { AnimationMixer, Bone, Box3, Group, Mesh } from "three"
 import SwitchObject from './switch-object';
@@ -22,6 +22,7 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
     const [onAnimation,setOnAnimation]=useState<boolean>(false);
     const {setMeshBox}=useCameraSWR();
     const api = useBounds()
+    const three = useThree()
 
     const [curSelectMesh,setCurSelectMesh]=useState<Mesh>();
 
@@ -35,6 +36,7 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
         const box = new Box3().setFromObject(group);
 
         setMeshBox(box);
+
     },[group])
 
 
@@ -106,6 +108,7 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
             <group ref={ref}
             {...group}
             onDoubleClick={(e)=>{
+                console.log(three.gl.info)
                 api.refresh(e.object).fit()
                 }}
             name="group" >

@@ -118,6 +118,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     CustomOBJLoader({
                         fileInfo:commonState?.fileInfo!
                     }).then((data)=>{
+                   
                        SettingModel(data as Group);
                     })
                     break;

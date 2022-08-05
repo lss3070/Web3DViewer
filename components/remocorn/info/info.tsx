@@ -4,15 +4,16 @@ import { mergeVertices } from "three-stdlib";
 import { Helper } from "../../../global/interfaces/app.interface";
 import { useCommonSWR } from "../../../swrs/common.swr";
 import { useMeshSWR } from "../../../swrs/mesh.swr";
+import NumberWithComma from "../../../utils/numberWithCommas";
 
 
 type MeshInfoType={
     name:string;
-    vertex:number;
-    triangle:number;
-    x:number;
-    y:number;
-    z:number;
+    vertex:string;
+    triangle:string;
+    // x:string;
+    // y:string;
+    // z:string;
 
 }
 
@@ -28,11 +29,11 @@ const InfoHelper=({}:Helper)=>{
     
         setMeshInfo({
             name:commonState?.fileInfo?.originName!,
-            vertex:0,
-            triangle:0,
-            x:0,
-            y:0,
-            z:0
+            vertex:'-',
+            triangle:'-',
+            // x:'0',
+            // y:'0',
+            // z:'0'
         })
     }
     const onSelectMesh=()=>{
@@ -41,11 +42,11 @@ const InfoHelper=({}:Helper)=>{
 
         setMeshInfo({
             name:mesh.name===''?'(no name)':mesh.name,
-            vertex:mesh.geometry.attributes.position.count,
-            triangle:mesh.geometry.attributes.position.count/3,
-            x:mesh.geometry.boundingBox?.max?.x!-mesh.geometry.boundingBox?.min.x!,
-            y:mesh.geometry.boundingBox?.max?.y!-mesh.geometry.boundingBox?.min.y!,
-            z:mesh.geometry.boundingBox?.max?.z!-mesh.geometry.boundingBox?.min.z!
+            vertex:NumberWithComma(mesh.geometry.attributes.position.count+''),
+            triangle:NumberWithComma(mesh.geometry.attributes.position.count/3+'') ,
+            // x:NumberWithComma(mesh.geometry.boundingBox?.max?.x!-mesh.geometry.boundingBox?.min.x!+''),
+            // y:NumberWithComma(mesh.geometry.boundingBox?.max?.y!-mesh.geometry.boundingBox?.min.y!+''),
+            // z:NumberWithComma(mesh.geometry.boundingBox?.max?.z!-mesh.geometry.boundingBox?.min.z!+'')
         })
     }
 
@@ -55,32 +56,32 @@ const InfoHelper=({}:Helper)=>{
     },[meshState?.selectMesh]);
     
     return(
-        <div className="w-full h-full px-2
+        <div className="w-full h-full px-2 grid select-none
             ">
-                <div className="flex gap-5">
-                    <div>Name</div>
-                    <div>{meshInfo?.name}</div>
+                <div className="block h-full">
+                    <div className=" float-left">Name</div>
+                    <div className=" float-right">{meshInfo?.name}</div>
                 </div>
-                <div className="flex gap-5">
-                    <div>Vertices</div>
-                    <div>{meshInfo?.vertex}</div>
+                <div className="block h-full">
+                    <div className=" float-left">Vertices</div>
+                    <div className=" float-right">{meshInfo?.vertex}</div>
                 </div>
-                <div className="flex gap-5">
-                    <div>Triangles</div>
-                    <div>{meshInfo?.triangle}</div>
+                <div className="block h-full">
+                    <div className=" float-left">Triangles</div>
+                    <div className=" float-right">{meshInfo?.triangle}</div>
                 </div>
-                <div className="flex">
-                    <div>X</div>
-                    <div>{meshInfo?.x}</div>
+                {/* <div className="block h-full">
+                    <div className=" float-left">X</div>
+                    <div className=" float-right">{meshInfo?.x}</div>
                 </div>
-                <div className="flex">
-                    <div>Y</div>
-                    <div>{meshInfo?.y}</div>
+                <div className="block h-full">
+                    <div className=" float-left">Y</div>
+                    <div className=" float-right">{meshInfo?.y}</div>
                 </div>
-                <div className="flex">
-                    <div>Z</div>
-                    <div>{meshInfo?.z}</div>
-                </div>
+                <div className="block h-full">
+                    <div className=" float-left">Z</div>
+                    <div className=" float-right">{meshInfo?.z}</div>
+                </div> */}
             </div>
     )
 }
