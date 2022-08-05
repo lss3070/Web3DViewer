@@ -30,7 +30,7 @@ const SkyBox=()=>{
         // <primitive attach='background'  object={formatted}/>
         // <texture attach={'background'}/>
         <mesh
-
+        name="skybox"
         onPointerUp={onTouch}
         onPointerMove={hoverEvent}
         onPointerOver={hoverEvent}
