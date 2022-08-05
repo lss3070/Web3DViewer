@@ -2,8 +2,9 @@
 import FileManager from './fileManager';
 import MenuManager from "./menuManager";
 import { useCommonSWR } from '../../swrs/common.swr';
-import SettingManager from "./settingManager";
+
 import useIsMobile from '../../hooks/useIsMobile';
+import SettingManager from './settingManager';
 
 const Header=()=>{
 

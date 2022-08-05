@@ -49,12 +49,24 @@ const ModalSetting=({onClose}:IInfoProps)=>{
             onClick={(e)=>e.stopPropagation()}
             >
                 <div>
-                    <span>language</span>
-                    <select>
-                        <option>English</option>
-                        <option>Korean</option>
-                    </select>
+                    <div className="flex items-center justify-center">
+                    <FontAwesomeIcon
+                    icon={['fas','envelope']}
+                    className="w-5 h-5 "/>
+                       
+                        <div>songseop.tech@gmail.com</div>
+                    </div>
+                    <div className="flex">
+                    <FontAwesomeIcon
+                    icon={['fab','github']}
+                    className="w-5 h-5 "/>
+                        <div>
+                            https://github.com/lss3070
+                        </div>
+
+                    </div>
                 </div>
+                
             </motion.div>
         </DarkBackGround>
 
