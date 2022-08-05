@@ -33,6 +33,7 @@
     "next": "12.1.6",
     "next-plugin-antd-less": "^1.8.0",
     "next-seo": "^5.5.0",
+    "next-sitemap": "^3.1.16",
     "path": "^0.12.7",
     "postcss": "^8.4.14",
     "react": "18.1.0",

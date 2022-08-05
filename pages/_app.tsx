@@ -8,7 +8,7 @@ import { DefaultSeo } from 'next-seo'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const DEFAULT_SEO={
-    title:"Web 3D Viewer | Free Online Viewer",
+    title:"Web 3D Viewer",
     description: "Web 3D Viewer is a browser-based web solution for reading 3d file formats.",
     canonical: "https://www.web3dviewer.net/",
     openGraph:{
