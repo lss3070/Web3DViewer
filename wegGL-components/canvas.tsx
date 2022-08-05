@@ -268,7 +268,9 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 
     return(
         <>
-            <Canvas onClick={offZoom} onWheel={offZoom}
+            <Canvas onClick={offZoom} 
+            onWheel={offZoom} 
+            onTouchEnd={offZoom}
             style={{
             backgroundColor:color
         }}

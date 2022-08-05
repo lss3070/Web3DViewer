@@ -65,7 +65,7 @@ const Main = () => {
               </div>
             )
             }
-              <div className='absolute right-5 bottom-5 w-auto z-20 qweqwe'>
+              <div className={`fixed right-5 bottom-5 w-auto z-20 qweqwe`}>
                 <DarkModeSwitch/>
               </div>
           </DragAndDropArea>
