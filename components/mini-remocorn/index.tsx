@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Front from '../../assets/cube-front.svg'
 
 import { useCameraSWR } from '../../swrs/camera.swr';
-import { Vector3 } from 'three'
+import { PerspectiveCamera, Vector3 } from 'three'
 import _ from 'lodash'
 import { useMeshSWR } from '../../swrs/mesh.swr';
 import useIsMobile from '../../hooks/useIsMobile'
@@ -38,13 +38,16 @@ const MiniControls=()=>{
     }
 
     const cameraInit=()=>{
-        // cameraState?.camera?.current.up.set(0,1,0);
-        // setTarget(new Vector3(0,0,0));
-        // setPosition(new Vector3(0,0,59))
+      
+        const size = cameraState!.meshBox.getSize(new Vector3());
+        const maxDim = Math.max(size.x,size.y,size.z);
+        const fov = (cameraState?.camera?.current as PerspectiveCamera).fov*(Math.PI/180);
+        const cameraZ = Math.abs(maxDim/4*Math.tan(fov*2));
+        
         cameraState?.camera?.current.up.set(0,1,0)
         setZoomBox({
             target:new Vector3(0,0,0),
-            position:new Vector3(0,0,cameraState?.meshBox.max.z!*3)
+            position:new Vector3(0,0,cameraZ)
         })
     }
     const onFitZoom=()=>{

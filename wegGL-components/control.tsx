@@ -57,6 +57,8 @@ export const ControlComponent=()=>{
     
             const position = _.cloneDeep(controlRef.current.object.position)
     
+            const ee =position.copy(controlRef.current.target).sub(direction) as Vector3
+
             setZoomPosition(position.copy(controlRef.current.target).sub(direction))
         }else{
             setZoomPosition(cameraState.zoomBox.position)
@@ -96,6 +98,10 @@ export const ControlComponent=()=>{
             }
         }
     });
+
+    useEffect(()=>{
+
+    },[])
     
 
     return(

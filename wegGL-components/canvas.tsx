@@ -79,7 +79,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                 const box = new Box3().setFromObject(object);
                       
                 setFileLoad(true);
-                // setMeshBox(box);
+                setMeshBox(box);
                 setLoadingComplete(true);
                 setAnimationList(object.animations);
                 setFileUuid(object.uuid);
@@ -109,9 +109,9 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
         cameraState?.camera?.current.up.set(0,1,0)
     }
 
-    useEffect(()=>{
+    useEffect(()=>{ 
+        InitLoad();
         if(commonState?.fileInfo?.originExtension!==undefined){
-            InitLoad();
             setLoadingComplete(false);
             switch(commonState?.fileInfo?.originExtension){
                 case 'obj':
