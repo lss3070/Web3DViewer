@@ -100,7 +100,7 @@ const LoadingComponent=()=>{
           <div className='flex items-center justify-center'>
             <div className='spinner'></div>
           </div>
-          <div className='text-2xl text-black dark:text-white mt-3'>
+          <div className='text-2xl text-black dark:text-white mt-3 font-semibold'>
               LOADING
             </div>
          </div>
