@@ -54,7 +54,8 @@ const ModalExport=({onClose}:IExportProps)=>{
     const onSave=()=>{
        
         const objectData= commonState?.scene?.current?.getObjectByProperty('uuid',
-        commonState.fileUuid!)
+        commonState.fileUuid!);
+        
         switch(select){
             
             case ExportType.OBJ:
@@ -149,7 +150,7 @@ const ModalExport=({onClose}:IExportProps)=>{
                             Save
                         </MiniButton>
                         <MiniButton onClick={onClose}>
-                        Cancel
+                            Cancel
                         </MiniButton>
                     </div>
                 </motion.div>    
