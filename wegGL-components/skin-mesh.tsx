@@ -38,6 +38,16 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
         e.stopPropagation();
 
     }
+    const onTouch=async(e:ThreeEvent<PointerEvent>)=>{
+        if(isMobile){
+            measureState?.onMeasure?
+            setPoint(e.point):
+            setSelectMesh(skinnedMesh);
+            
+            e.stopPropagation()
+        }
+    }
+    
 
     
 
@@ -50,6 +60,7 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
                 <skinnedMesh 
                     onPointerMove={hoverEvent}
                     onPointerOver={hoverEvent}
+                    onPointerUp={onTouch}
             
                     onClick={meshOnClick} ref={skinnedMesh} {...skinnedMeshItem}>
                         {MaterialElements(skinnedMeshItem.material,meshState?.onWire!)}

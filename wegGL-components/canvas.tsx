@@ -46,8 +46,9 @@ interface ICanvasProps{
 export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
     const {commonState,setGroupList,setScene,setFileLoad,setFileUuid}=useCommonSWR();
-    const {setMeshBox,setOnZoom}=useCameraSWR();
-    const {meshState,setAnimationList}=useMeshSWR()
+    const {cameraState,setMeshBox,setOnZoom}=useCameraSWR();
+    const {initMeasure}=useMeasureSWR()
+    const {meshState,setInitSelectMesh,setAnimationList}=useMeshSWR()
     const sceneRef = useRef<Scene>(null)
     
     const [meshGroup,setMeshGroup]=useState<Group>();
@@ -102,9 +103,15 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
         }
     }
 
+    const InitLoad=()=>{
+        initMeasure();
+        setInitSelectMesh()
+        cameraState?.camera?.current.up.set(0,1,0)
+    }
+
     useEffect(()=>{
         if(commonState?.fileInfo?.originExtension!==undefined){
-            console.log(commonState.fileInfo.originExtension);
+            InitLoad();
             setLoadingComplete(false);
             switch(commonState?.fileInfo?.originExtension){
                 case 'obj':
@@ -186,12 +193,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
         }
 
     },[commonState?.fileInfo])
-
-    const converToFile=async(url:string)=>{
-        let response = await fetch(url);
-        let blob = await response.blob();
-        return blob.arrayBuffer
-    }
    
     useEffect(()=>{
         commonState?.darkMode?setColor('#2a2b2e'):setColor('#f7fafb')

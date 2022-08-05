@@ -62,6 +62,15 @@ export const useMeasureSWR=()=>{
                 }
             }
             return mutate();
+        },
+        initMeasure:async()=>{
+            measureState={
+                ...measureState,
+                onMeasure:false,
+                point:[],
+                selectPoint:undefined
+            }
+            return mutate();
         }
     }
 }
