@@ -30,7 +30,7 @@ import CustomOBJLoader from '../utils/loaders/objLoader';
 import CustomFBXLoader from '../utils/loaders/fbxLoader';
 import CustomSTLLoader from '../utils/loaders/stlLoader';
 import CustomPLYLoader from '../utils/loaders/plyLoader';
-import ObjectComponent from './object';
+
 import { SkeletonUtils } from 'three-stdlib';
 import Point from './measure/sprite';
 import { useMeasureSWR } from '../swrs/measure.swr';
@@ -38,6 +38,7 @@ import { useMeasureSWR } from '../swrs/measure.swr';
 import SpriteComponent from './measure/sprite';
 import LineComponent from './measure/line';
 import MeasureComponent from './measure/measure';
+import ModelComponent from './model';
 
 interface ICanvasProps{
     setLoadingPercent:Dispatch<SetStateAction<number>>;
@@ -288,7 +289,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                     {meshGroup&&(
                         <>
                             <Bounds margin={1.5}>
-                                <ObjectComponent group={meshGroup} bone={bone}/>
+                                <ModelComponent group={meshGroup} bone={bone}/>
                             </Bounds>
                             <SelectMeshComponent/>
                             <Gizmo/>

@@ -13,8 +13,9 @@ interface IObjectComponentProps{
     bone?:Bone
 }
 
-const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
+const ModelComponent=({group,bone}:IObjectComponentProps)=>{
    
+    console.log(group);
     const {animationState,onPosition,onRotation}=useAnimationSWR();
     const {meshState}=useMeshSWR()
     const ref=useRef<Group>(null);
@@ -118,4 +119,4 @@ const ObjectComponent=({group,bone}:IObjectComponentProps)=>{
             </group>
     )
 }
-export default ObjectComponent
+export default ModelComponent

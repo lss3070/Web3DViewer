@@ -7,6 +7,7 @@ import SkinnedMeshComponent from "./skin-mesh";
 import { useEffect, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import PrimitiveComponent from "./primitive";
+import ObjectComponent from "./object3d";
 
 interface ISwitchObjectProps{
     objectList:Object3D<THREE.Event>[];
@@ -44,7 +45,7 @@ const SwitchObject=({objectList}:ISwitchObjectProps)=>{
                     )
                 case 'Object3D':
                     return(
-                    <PrimitiveComponent key={index} object={object}/>
+                    <ObjectComponent key={index} object={object}/>
                     )
                     
                 case 'LineSegments':
