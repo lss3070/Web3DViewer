@@ -39,6 +39,7 @@ import SpriteComponent from './measure/sprite';
 import LineComponent from './measure/line';
 import MeasureComponent from './measure/measure';
 import ModelComponent from './model';
+import CustomGLBLoader from '../utils/loaders/glbLoader';
 
 interface ICanvasProps{
     setLoadingPercent:Dispatch<SetStateAction<number>>;
@@ -155,10 +156,9 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     })
                     break;
                 case 'glb':
-                    CustomGLTFLoader({
+                    CustomGLBLoader({
                         fileInfo:commonState?.fileInfo!
                     }).then((data)=>{
-                        console.log(data);
                        SettingModel(data as Group);
                     })
                     break;
