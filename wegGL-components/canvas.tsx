@@ -157,6 +157,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     CustomGLTFLoader({
                         fileInfo:commonState?.fileInfo!
                     }).then((data)=>{
+                        console.log(data);
                        SettingModel(data as Group);
                     })
                     break;
@@ -205,7 +206,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
    const result= item.children.reduce((array:CustomDataNode[],object,index)=>{
         
         if(object.type==='Mesh'||object.type==='Group'||
-        object.type==='SkinnedMesh'||object.type==='Bone'
+        object.type==='SkinnedMesh'||object.type==='Bone'||object.type==='Object3D'
         ) {
             const title = object.name?object.name:'(no name)';
             const dataNode = {

@@ -4,9 +4,9 @@ import { MeshGroupComponent } from "./mesh-group";
 import { MeshComponent } from "./mesh";
 
 import SkinnedMeshComponent from "./skin-mesh";
-import BoneComponent from "./bone";
 import { useEffect, useState } from "react";
 import { useThree } from "@react-three/fiber";
+import PrimitiveComponent from "./primitive";
 
 interface ISwitchObjectProps{
     objectList:Object3D<THREE.Event>[];
@@ -40,8 +40,13 @@ const SwitchObject=({objectList}:ISwitchObjectProps)=>{
                 case 'Bone':
                     return (
                     // <primitive object={object}  />
-                    <BoneComponent key={index} object={object}/>
+                    <PrimitiveComponent key={index} object={object}/>
                     )
+                case 'Object3D':
+                    return(
+                    <PrimitiveComponent key={index} object={object}/>
+                    )
+                    
                 case 'LineSegments':
                     return (<MeshComponent  
                         key={index} 

@@ -1,11 +1,11 @@
-import { Bone, Object3D } from 'three';
+import { Object3D } from 'three';
 import SwitchObject from './switch-object';
 
-interface IBoneProps{
+interface IPrimitiveProps{
     object:Object3D<THREE.Event>
 }
 
-const BoneComponent=({object}:IBoneProps)=>{
+const PrimitiveComponent=({object}:IPrimitiveProps)=>{
     
     return(
         //  <primitive object={object}/>
@@ -22,4 +22,4 @@ const BoneComponent=({object}:IBoneProps)=>{
         </primitive>
     )
 }
-export default BoneComponent
+export default PrimitiveComponent
