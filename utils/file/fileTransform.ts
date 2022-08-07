@@ -2,6 +2,8 @@ import { LoadFileType } from "../../global/enums/file.enum";
 import { IFileTransform } from "../../global/interfaces/file.interface";
 
 
+const TypeList=['obj','gltf','stl','obj','glb','fbx'];
+
 const FileTransForm=(files:FileList):IFileTransform=>{
     let originExtension:string='';
     let originName:string='';
@@ -17,14 +19,13 @@ const FileTransForm=(files:FileList):IFileTransform=>{
         const name = file.name.slice(0,commaIndex)
         const extension = file?.name?.slice( commaIndex+1,file.name.length);
         const link = window.URL.createObjectURL(file);
-
+        
         if(Object.values(LoadFileType).includes(extension as LoadFileType)){
             originExtension=extension;
             originName=name;
             originLink=link;
         }
     }
-
     return {
         originExtension,
         originName,

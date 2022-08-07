@@ -14,15 +14,18 @@ interface IGLTFLoader{
 }
 
 const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
-    const baseURL = `blob:${window.location.host}`
+    console.log(fileInfo);
+    const baseURL = `blob:${window.location.origin}`
     const manager = new LoadingManager()
+    console.log(baseURL);
 
             return new Promise((resolve,reject)=>{
-            manager.setURLModifier((url)=>{
-                const normalizedURL= 
-                url.replace(baseURL,'').replace(/^(\.?\/)/, '');
+                manager.setURLModifier((url)=>{
+                    const normalizedURL= 
+                    url.replace(baseURL,'').replace(/^(\.?\/)/, '');
 
-                console.log(normalizedURL);
+                    console.log(normalizedURL);
+
                 if (fileInfo.fileMap!.has(normalizedURL)) {
                     const blob = fileInfo.fileMap!.get(normalizedURL)!;
                     const blobURL = URL.createObjectURL(blob);

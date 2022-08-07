@@ -62,6 +62,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
   
+        console.log(data);
         switch(data.type){
             case 'Group':
                 const object =data as Group;
