@@ -56,7 +56,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     
     const [meshGroup,setMeshGroup]=useState<Group>();
     const [bone,setBone]=useState<Bone>();
-    const [color,setColor] =useState<string>('#2a2b2e');
+    const [color,setColor] =useState<string>('#f7fafb');
 
 
     const threeDMLoader = new Rhino3dmLoader();
