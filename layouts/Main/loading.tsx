@@ -98,9 +98,12 @@ const LoadingComponent=()=>{
             </motion.div>
           </motion.div> */}
           <div className='flex items-center justify-center'>
-            <div className='spinner'></div>
+            {/* <div className='spinner'></div> */}
+            <div className='loading-bar'></div>
           </div>
-          <div className='text-2xl text-black dark:text-white mt-3 font-semibold'>
+          <div className='text-2xl text-[#64758b]  mt-3 font-semibold
+          loading-text
+          '>
               LOADING
             </div>
          </div>

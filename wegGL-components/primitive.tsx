@@ -1,4 +1,4 @@
-import { Object3D } from 'three';
+import { Bone, Object3D } from 'three';
 import SwitchObject from './switch-object';
 
 interface IPrimitiveProps{
@@ -7,19 +7,26 @@ interface IPrimitiveProps{
 
 const PrimitiveComponent=({object}:IPrimitiveProps)=>{
     
+  
+    // const ee= object as Bone
     return(
+
+
+     
+         <primitive object={object}>
+            {object.children&&(
+                <SwitchObject objectList={object.children}/>
+            )}
+           
+        </primitive>
+     
         //  <primitive object={object}/>
         /* {object&&
         (
             <SwitchObject object={object}/>
         )} */
 
-        <primitive object={object}>
-            {object.children&&(
-                <SwitchObject objectList={object.children}/>
-            )}
-           
-        </primitive>
+       
     )
 }
 export default PrimitiveComponent

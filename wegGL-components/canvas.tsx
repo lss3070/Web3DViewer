@@ -21,7 +21,7 @@ import { CustomDataNode } from "../global/interfaces/app.interface";
 import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
-import { Bounds, Box, PerspectiveCamera, Sky, TrackballControls, useHelper } from "@react-three/drei";
+import { Bounds, Box, PerspectiveCamera, Sky, TrackballControls, useGLTF, useHelper } from "@react-three/drei";
 import Gizmo from './gizmo';
 import SkyBox from './sky-box';
 import CustomGLTFLoader from '../utils/loaders/gltfLoader';
@@ -52,6 +52,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const {initMeasure}=useMeasureSWR()
     const {meshState,setInitSelectMesh,setAnimationList}=useMeshSWR()
     const sceneRef = useRef<Scene>(null)
+
     
     const [meshGroup,setMeshGroup]=useState<Group>();
     const [bone,setBone]=useState<Bone>();
@@ -64,9 +65,9 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
   
-        console.log(data);
         switch(data.type){
             case 'Group':
+                
                 const object =data as Group;
 
                 new Box3().setFromObject(object).getCenter(object.position).multiplyScalar(-1);
@@ -130,7 +131,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         fileInfo:commonState?.fileInfo!
                     }).then((data)=>{
 
-                        console.log(data);
                        SettingModel(data as Group);
                     })
                     break;

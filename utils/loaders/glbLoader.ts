@@ -31,9 +31,12 @@ const CustomGLBLoader=({fileInfo}:IGLTFLoader)=>{
                 return url
             })
 
+            const dracoLoader=new DRACOLoader()
+
             const loader = new GLTFLoader(manager)
             .setCrossOrigin('anonymous')
             .setMeshoptDecoder(MeshoptDecoder)
+            .setDRACOLoader(dracoLoader);
 
             const blobURLs:any[]=[]
 
@@ -43,7 +46,24 @@ const CustomGLBLoader=({fileInfo}:IGLTFLoader)=>{
                 resolve(gltf)
             },undefined,reject)
         }).then((object)=>{
-            const scene= (object as GLTF).scene;
+
+            // const object3d= (object as GLTF).scene.children[0]
+            // const group =new Group();
+            // group.position.set(object3d.position.x,
+            //     object3d.position.y,
+            //     object3d.position.z
+            //     )
+            // group.scale.set(object3d.scale.x,
+            //     object3d.scale.y,
+            //     object3d.scale.z
+            // )
+            // group.rotation.set(object3d.rotation.x,
+            //     object3d.rotation.y,
+            //     object3d.rotation.z
+            // )
+            // group.children=object3d.children;
+            // group.name=object3d.name;
+            const scene= (object as GLTF).scene
             scene.animations=(object as any).animations
             return scene
         }).catch((error)=>{

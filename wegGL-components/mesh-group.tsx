@@ -5,8 +5,9 @@ import { memo, useEffect, useState } from "react";
 import { MeshComponent } from "./mesh";
 import {useRef} from 'react'
 import { Object3D } from 'three';
-import BoneComponent from "./bone";
+
 import SwitchObject from "./switch-object";
+import { useLayoutEffect } from "react";
 
 interface IMeshProps{
     meshGroup:Object3D<THREE.Event>,

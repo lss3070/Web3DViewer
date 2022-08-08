@@ -1,4 +1,4 @@
-import { Object3D } from "three"
+import { Object3D, Vector3 } from "three"
 import SwitchObject from "./switch-object"
 
 interface IObjectProps{
@@ -7,7 +7,8 @@ interface IObjectProps{
 
 const ObjectComponent=({object}:IObjectProps)=>{
     return(
-        <object3D {...object}>
+        <object3D {...object} 
+        scale={object.scale}>
               {object.children&&(
                 <SwitchObject objectList={object.children}/>
             )}
