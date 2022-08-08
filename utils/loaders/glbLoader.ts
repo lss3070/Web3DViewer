@@ -67,10 +67,8 @@ const CustomGLBLoader=({fileInfo}:IGLTFLoader)=>{
             scene.animations=(object as any).animations
             return scene
         }).catch((error)=>{
-            console.log('error');
             console.log(error);
         }).finally(()=>{
-            console.log('finally')
         })
 
 }

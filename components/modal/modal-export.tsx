@@ -37,7 +37,7 @@ const ModalExport=({onClose}:IExportProps)=>{
             transition: { duration: 0.5 }
         },
         up:{
-            top:'-10%',
+            top:'-20%',
             // height:0,
         }
     }
@@ -139,7 +139,7 @@ const ModalExport=({onClose}:IExportProps)=>{
                         border-[#bdbdbd]" 
                         value={select} 
                         onChange={onSelectChange}>
-                            <option value={ExportType.OBJ}>Wavefront(obj)</option>
+                            <option value={ExportType.OBJ}>obj</option>
                             <option value={ExportType.PLY}>ply</option>
                             <option value={ExportType.STL}>stl</option>
                             <option value={ExportType.GLTF}>gltf</option>

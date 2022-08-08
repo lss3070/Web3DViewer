@@ -22,8 +22,6 @@ const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
                     const normalizedURL= 
                     url.replace(baseURL,'').replace(/^(\.?\/)/, '');
 
-                    console.log(normalizedURL);
-
                 if (fileInfo.fileMap!.has(normalizedURL)) {
                     const blob = fileInfo.fileMap!.get(normalizedURL)!;
                     const blobURL = URL.createObjectURL(blob);
@@ -45,14 +43,10 @@ const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
                 resolve(gltf)
             },undefined,reject)
         }).then((object)=>{
-            console.log('object');
-            console.log(object);
             return (object as GLTF).scene
         }).catch((error)=>{
-            console.log('error');
             console.log(error);
         }).finally(()=>{
-            console.log('finally')
         })
 
 }

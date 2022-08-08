@@ -57,7 +57,9 @@ const FileManager=()=>{
     return(
         <>
             <div className="contents items-center justify-center">
-                <input className="w-0 h-0 opacity-0" type="file" name="file" id="file" 
+                <input className="w-0 h-0 opacity-0" type="file" name="file" 
+                id="file"
+                accept='.fbx, .obj, .gltf, .glb, .stl, .ply, .wasm, .js, .jpg, .jpeg, .png, .bin, .mtl'
                 multiple
                 onChange={fileChange}/>
                 <MiniButton onClick={()=>{}} htmlFor="file">
