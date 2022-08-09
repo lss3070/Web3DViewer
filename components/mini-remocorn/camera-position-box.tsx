@@ -35,8 +35,17 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
                 return <Bottom/>
         }    
     }
+    const onTouch=(e:React.TouchEvent<HTMLDivElement>)=>{
+        onSelectEvent()
+        e.stopPropagation();
+    }
+    const onClick=(e:React.MouseEvent<HTMLDivElement>)=>{
+        onSelectEvent()
+        e.stopPropagation();
+    }
 
-    const onClick=()=>{
+
+    const onSelectEvent=()=>{
         setTarget(new Vector3(0,0,0));
 
         const size = cameraState!.meshBox.getSize(new Vector3());
@@ -103,7 +112,8 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
     bg-[#edf1f5]
     shadow-lg
     '
-    onClick={onClick}
+    onTouchStart={onTouch}
+    onClick={(e)=>onClick}
     >
         {switchBox()}
     </motion.div>)
