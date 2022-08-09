@@ -62,6 +62,10 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const threeDMLoader = new Rhino3dmLoader();
     const threeMFLoader = new ThreeMFLoader();
 
+    const ee = new Map()
+
+
+
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
   

@@ -62,13 +62,13 @@ a {
 }
 
 .loading-text {
-  color:'#64758b';
+  /* color:'#64758b'; */
   font-weight: bold;
   font-family: sans-serif;
   font-size: 30px;
   animation:loadingtext 1s linear infinite alternate;
 }
-@keyframes c1 {to{opacity: 0}}
+@keyframes loadingtext {to{opacity: 0}}
 
 
 

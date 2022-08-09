@@ -101,7 +101,9 @@ const LoadingComponent=()=>{
             {/* <div className='spinner'></div> */}
             <div className='loading-bar'></div>
           </div>
-          <div className='text-2xl text-[#64758b]  mt-3 font-semibold
+          <div className='
+          text-2xl text-[#64758b] 
+          mt-3 font-semibold
           loading-text
           '>
               LOADING

@@ -10,6 +10,9 @@ const Header=()=>{
 
     const isMobile = useIsMobile()
     const {commonState}=useCommonSWR()
+    const ToHome =()=>{
+        window.location.href=window.location.host
+    }
 
 
     return(
@@ -17,9 +20,9 @@ const Header=()=>{
             bg-white
             dark:bg-[#3d3e42] ">
                 <div className="flex float-left h-full items-center select-none
-                dark:text-white text-gray-500 font-bold justify-start pl-2 
-                 
-                ">
+                dark:text-white text-gray-500 font-bold justify-start pl-2 cursor-pointer"
+                onClick={ToHome}
+                >
                     <img src='test.png' className='w-8'/>
                     <span>Web 3D Viewer</span>
                 </div>
