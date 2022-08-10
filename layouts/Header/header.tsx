@@ -11,7 +11,7 @@ const Header=()=>{
     const isMobile = useIsMobile()
     const {commonState}=useCommonSWR()
     const ToHome =()=>{
-        window.location.href=window.location.host
+        window.location.reload();
     }
 
 
