@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.web3dviewer.net/
+
+# Sitemaps
+Sitemap: https://www.web3dviewer.net/sitemap.xml
