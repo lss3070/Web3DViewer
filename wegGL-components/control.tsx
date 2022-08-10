@@ -22,7 +22,7 @@ export const ControlComponent=()=>{
     // },[cameraState?.moveMode])
 
     useEffect(()=>{
-        console.log(controlRef.current?.up?.multiplyScalar(-1))
+      
         setControlRef(controlRef)
     },[controlRef]);
 

@@ -74,8 +74,8 @@ const ModalExport=({onClose}:IExportProps)=>{
                 break
             case ExportType.GLTF:
                 gltfExporter.parse(objectData!,(res)=>{
-                    console.log(res);
-                    // saveString(res,'.gltf')
+                  
+                    saveString(res.slice(''),'.gltf')
                 },(error)=>{
                     console.log(error);
                 })
@@ -84,8 +84,7 @@ const ModalExport=({onClose}:IExportProps)=>{
         onClose();
     }
     const onSelectChange=(e: React.ChangeEvent<HTMLSelectElement>)=>{
-        console.log('change');
-        console.log(commonState?.scene?.current?.children);
+     
         setSelect(+e.target.value as ExportType)
     }
 

@@ -20,7 +20,7 @@ const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
             const group = groupLoop(object);
     
 
-            console.log(object);
+          
             setGroupList(group);
             setMeshGroup(object);
     
