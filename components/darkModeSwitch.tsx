@@ -17,7 +17,6 @@ const DarkModeSwitch=()=>{
     }
 
     useEffect(()=>{
-        console.log(localStorage.getItem('theme'))
         if(localStorage.getItem('theme')==='dark'){
             setDarkMode(false);
         }else{

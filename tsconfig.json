@@ -17,6 +17,6 @@
     "incremental": true,
     "noImplicitAny":false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next-sitemap.config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next-sitemap.config.js", "lib/gtag.js"],
   "exclude": ["node_modules"]
 }

@@ -168,7 +168,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     break;
                 case '3dm':
                     threeDMLoader.load(commonState.fileInfo.originPath!,(load)=>{
-                        console.log(load)
+                     
                     },(pro)=>{
 
                     },(error)=>{
