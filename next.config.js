@@ -26,14 +26,6 @@ module.exports = withAntdLess({
           source:'/get/:path*',
           destination:'http://web3dviewer_worker.lss3070.workers.dev/:path*'
         },
-        {
-          source:'/test',
-          destination:'https://naver.com'
-        },
-               {
-          source:'/test',
-          destination:'https://naver.com'
-        },
       ]
     }
   },
