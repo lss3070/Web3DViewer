@@ -39,9 +39,6 @@ module.exports = withAntdLess({
   },
   // Other Config Here...
   webpack:(config,{isServer})=>{
-    if(isServer){
-      require("./scripts/sitemap-generator");
-    }
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],

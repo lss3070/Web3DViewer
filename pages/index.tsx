@@ -8,12 +8,17 @@ import {fas} from '@fortawesome/free-solid-svg-icons'
 
 import React from 'react'
 import Main from '../layouts/Main'
+import { NextSeo } from 'next-seo';
 
 library.add(fab,far,fas);
 
 const Home: NextPage = () => {
   return (  
+    <> 
       <Main/>
+    </>
+
+     
   )
 }
 
