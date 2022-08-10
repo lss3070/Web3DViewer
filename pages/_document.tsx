@@ -34,7 +34,9 @@ export default class MyDocument extends Document {
     render():ReactElement {
       return (
         <Html>
-          <Head/>
+          <Head>
+            <meta name="naver-site-verification" content="06e7a97929fd9b608409463f8548427d62f8bdc3" />
+          </Head>
           <body>
             <Main />
             <div id="portal" />
