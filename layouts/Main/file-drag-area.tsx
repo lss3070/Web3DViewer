@@ -47,7 +47,7 @@ const FileDragArea=({children})=>{
         onDragLeave={onDragLeave}
         onDragEnter={onDragEnter}
         onDrop={onDrop}
-        className="w-full h-full grid fixed">
+        className="w-full h-full fixed">
             {children}
         </div>
     )

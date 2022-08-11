@@ -14,13 +14,8 @@ library.add(fab,far,fas);
 
 const Home: NextPage = () => {
   return (  
-    <> 
       <Main/>
-    </>
-
-     
   )
 }
-
 
 export default Home

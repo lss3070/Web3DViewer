@@ -34,10 +34,10 @@ const Main = () => {
 
   return (  
       <FileDragArea>
-        <main>
-          <div className='w-full h-11 grid '>
+         <header className='w-full h-11 grid '>
             <Header/>
-          </div>
+          </header>
+        <main className="h-full">
           <div className={`w-full h-full grid absolute 
           ${measureState?.onMeasure&&` cursor-crosshair`}
           `} >
