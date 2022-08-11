@@ -28,7 +28,8 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
                 originName:'tree',
                 fileMap:fileMap!
             })
-        }).catch(()=>{
+        }).catch((err)=>{
+            console.log(err);
             setLoadingComplete(true)
         })
     }
@@ -51,6 +52,7 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
                 fileMap:fileMap!
             })
         }).catch((err)=>{
+            console.log(err);
             setLoadingComplete(true)
         })
     }
@@ -73,6 +75,7 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
                 fileMap:fileMap!
             })
         }).catch((err)=>{
+            console.log(err);
             setLoadingComplete(true)
         })
     }

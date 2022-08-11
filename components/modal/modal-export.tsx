@@ -43,16 +43,20 @@ const ModalExport=({onClose}:IExportProps)=>{
     }
 
     const saveString =(text:string,extension:string)=>{
+        const name =commonState?.fileInfo?.originName?
+        commonState?.fileInfo?.originName
+        :'(no_name)'
         const link = document.createElement('a');
         const blob = new Blob([text])
         link.href=URL.createObjectURL(blob);
-        link.download=commonState?.fileInfo!+extension;
+        link.download=name+extension;
         link.click();
         link.remove();
     }
 
     const onSave=()=>{
        
+        if( !commonState?.fileUuid)return
         const objectData= commonState?.scene?.current?.getObjectByProperty('uuid',
         commonState.fileUuid!);
         
