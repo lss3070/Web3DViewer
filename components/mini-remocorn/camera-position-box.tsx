@@ -113,7 +113,7 @@ const CameraPositionBox:React.FC<BoxProps> =({type})=>{
     shadow-lg
     '
     onTouchStart={onTouch}
-    onClick={(e)=>onClick}
+    onClick={onClick}
     >
         {switchBox()}
     </motion.div>)
