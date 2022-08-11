@@ -23,7 +23,7 @@ const Header=()=>{
                 dark:text-white text-gray-500 font-bold justify-start pl-2 cursor-pointer"
                 onClick={ToHome}
                 >
-                    <img src='test.png' className='w-8'/>
+                    <img src='logo.png'/>
                     <span>Web 3D Viewer</span>
                 </div>
                 <div className={`${isMobile?`float-right pr-2`:`float-left`} h-full  space-x-3 flex items-center `}>

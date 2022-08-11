@@ -22,7 +22,7 @@ const SpriteComponent=({points}:ISpriteProps)=>{
     circle.arc(100, 35, 25, 0, 2 * Math.PI);
 
 
-    const target = loader.load("target2.png");
+    const target = loader.load("target.png");
 
     return(
         <>{
