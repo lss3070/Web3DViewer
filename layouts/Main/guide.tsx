@@ -78,12 +78,12 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
                         size='2x'
                         />
                     </CircleButton>
-                    <CircleButton onClick={()=>openFile('mannequin/Samba_Dancing.fbx')}>
+                    {/* <CircleButton onClick={()=>openFile('mannequin/Samba_Dancing.fbx')}>
                         <FontAwesomeIcon
                         icon={['fas','person']}
                         size='2x'
                         />
-                    </CircleButton>
+                    </CircleButton> */}
                     <CircleButton onClick={()=>openFile('Flamingo.glb')}>
                         <FontAwesomeIcon
                         icon={['fas','dove']}
