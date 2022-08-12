@@ -1,11 +1,10 @@
 
 ## Web 3D Viewer
----
 
-![png](https://github.com/lss3070/Web3DViewer/tree/master/public/readme.gif)
+<img src="/public/readme.gif"/>
+
 ## ****🤔 About****
 
----
 
 Web 3D Viewer is a free and open source web solution that allows you to import, visualize and simply edit models from the web.
 
@@ -18,7 +17,6 @@ Supported file formats
 
 ## ****💻**** Feature
 
----
 
 - Import,export 3D model
 - Visualization of model structure in tree list format
@@ -30,8 +28,6 @@ Supported file formats
 
 ## ****👨‍💻 Tech Inside****
 
----
-
 - Framewrok:Reactjs(Nextjs)
 - State Management:SWR
 - Languages: Typescript
@@ -39,6 +35,5 @@ Supported file formats
 
 ## 📖License
 
----
 
 The Project is under license: MIT
