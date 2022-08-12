@@ -12,8 +12,9 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
     const {commonState,setFiltPath}=useCommonSWR();
    
     const openFile=(path:string)=>{
-        const fileName = path.split('/').pop();
-        const extension = fileName?.split('.').pop();
+        const fullName = path.split('/').pop();
+        const fileName=fullName?.split('.').shift();
+        const extension = fullName?.split('.').pop();
 
         setLoadingComplete(false)
         fetch('https://web3dviewer_worker.lss3070.workers.dev/'+path).then(async(file)=>{
@@ -23,12 +24,12 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
             const fileMap=new Map<string,File>();
             const objectURL= URL.createObjectURL(blob);
 
-            const file=new File([blob],'Samba_Dancing.fbx');
-            fileMap.set('Samba_Dancing.fbx',file);
+            const file=new File([blob],fullName!);
+            fileMap.set(fullName!,file);
             setFiltPath({
                 originPath:objectURL!,
-                originExtension:'fbx',
-                originName:'Samba_Dancing',
+                originExtension:extension!,
+                originName:fileName!,
                 fileMap:fileMap!
             })
         }).catch((err)=>{
