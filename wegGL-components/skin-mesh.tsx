@@ -12,7 +12,6 @@ interface ISkinnedMeshProps{
 }
 
 const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
-   
     const {measureState,setPoint}=useMeasureSWR()
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
     const isMobile = useIsMobile()
@@ -58,7 +57,6 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
                     onClick={meshOnClick} ref={skinnedMesh} 
                     
                     {...skinnedMeshItem}
-                    skeleton={skinnedMeshItem.skeleton!}
                     >
                         {MaterialElements(skinnedMeshItem.material,meshState?.onWire!)}
                 </skinnedMesh>

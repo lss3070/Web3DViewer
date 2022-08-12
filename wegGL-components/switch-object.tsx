@@ -16,8 +16,6 @@ interface ISwitchObjectProps{
 const SwitchObject=({objectList}:ISwitchObjectProps)=>{
 
     const [element,setElement]=useState<JSX.Element[]>()
-
-    const {scene} = useThree();
     useEffect(()=>{
         const component= objectList.map((object,index)=>{
             switch(object.type){

@@ -7,8 +7,7 @@ interface IObjectProps{
 
 const ObjectComponent=({object}:IObjectProps)=>{
     return(
-        <object3D {...object} 
-        scale={object.scale}>
+        <object3D {...object} >
               {object.children&&(
                 <SwitchObject objectList={object.children}/>
             )}

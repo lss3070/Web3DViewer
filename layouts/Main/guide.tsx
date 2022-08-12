@@ -10,56 +10,13 @@ interface IGuideProps{
 
 const Guide=({setLoadingComplete}:IGuideProps)=>{
     const {commonState,setFiltPath}=useCommonSWR();
+   
+    const openFile=(path:string)=>{
+        const fileName = path.split('/').pop();
+        const extension = fileName?.split('.').pop();
 
-    const openTree=()=>{
         setLoadingComplete(false)
-        fetch('https://web3dviewer_worker.lss3070.workers.dev/tree/tree.obj').then(async(file)=>{
-            return await file.blob()
-        }).then((blob)=>{
-            
-            const fileMap=new Map<string,File>();
-            const objectURL= URL.createObjectURL(blob);
-
-            const file=new File([blob],'tree.obj');
-            fileMap.set('tree.obj',file);
-            setFiltPath({
-                originPath:objectURL!,
-                originExtension:'obj',
-                originName:'tree',
-                fileMap:fileMap!
-            })
-        }).catch((err)=>{
-            console.log(err);
-            setLoadingComplete(true)
-        })
-    }
-
-    const openHelmet=()=>{
-        setLoadingComplete(false)
-        fetch('https://web3dviewer_worker.lss3070.workers.dev/helmet/DamagedHelmet.glb').then(async(file)=>{
-            return await file.blob()
-        }).then((blob)=>{
-            
-            const fileMap=new Map<string,File>();
-            const objectURL= URL.createObjectURL(blob);
-
-            const file=new File([blob],'DamagedHelmet.glb');
-            fileMap.set('DamagedHelmet.glb',file);
-            setFiltPath({
-                originPath:objectURL!,
-                originExtension:'glb',
-                originName:'DamagedHelmet',
-                fileMap:fileMap!
-            })
-        }).catch((err)=>{
-            console.log(err);
-            setLoadingComplete(true)
-        })
-    }
-
-    const openMannequin=()=>{
-        setLoadingComplete(false)
-        fetch('https://web3dviewer_worker.lss3070.workers.dev/mannequin/Samba_Dancing.fbx').then(async(file)=>{
+        fetch('https://web3dviewer_worker.lss3070.workers.dev/'+path).then(async(file)=>{
             return await file.blob()
         }).then((blob)=>{
             
@@ -108,21 +65,27 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
                     Example Models
                 </div>
                 <div className="flex space-x-3 items-center justify-center">
-                    <CircleButton onClick={openTree}>
+                    <CircleButton onClick={()=>openFile('tree/tree.obj')}>
                         <FontAwesomeIcon
                         icon={['fas','tree']}
                         size='2x'
                         />
                     </CircleButton>
-                    <CircleButton onClick={openHelmet}>
+                    <CircleButton onClick={()=>openFile('helmet/DamagedHelmet.glb')}>
                         <FontAwesomeIcon
                         icon={['fas','helmet-safety']}
                         size='2x'
                         />
                     </CircleButton>
-                    <CircleButton onClick={openMannequin}>
+                    <CircleButton onClick={()=>openFile('mannequin/Samba_Dancing.fbx')}>
                         <FontAwesomeIcon
                         icon={['fas','person']}
+                        size='2x'
+                        />
+                    </CircleButton>
+                    <CircleButton onClick={()=>openFile('Flamingo.glb')}>
+                        <FontAwesomeIcon
+                        icon={['fas','dove']}
                         size='2x'
                         />
                     </CircleButton>
