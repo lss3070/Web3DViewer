@@ -134,7 +134,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     CustomFBXLoader({
                         fileInfo:commonState?.fileInfo!
                     }).then((data)=>{
-
+                       
                        SettingModel(data as Group);
                     })
                     break;

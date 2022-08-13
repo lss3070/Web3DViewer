@@ -16,7 +16,7 @@ interface IMeshProps{
 export const MeshGroupComponent = ({meshGroup}:IMeshProps)=>{
 
     return(
-       <group 
+       <group
        {...meshGroup as Group}
     //    position={meshGroup.position} 
     //    scale={meshGroup.scale} 

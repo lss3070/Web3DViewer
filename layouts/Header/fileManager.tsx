@@ -85,7 +85,6 @@ const FileManager=()=>{
                 </MiniButton>
                 )
             }
-          
            <Portal> 
                 <AnimatePresence>
                     {isExport&&( <ModalExport onClose={closeExporter}/>)}

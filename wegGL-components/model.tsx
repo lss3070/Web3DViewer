@@ -104,7 +104,7 @@ const ModelComponent=({group,bone}:IObjectComponentProps)=>{
 
 
     return(
-            <group ref={ref}
+            <group ref={ref} dispose={null}
             {...group}
             onDoubleClick={(e)=>{
                 api.refresh(e.object).fit()
