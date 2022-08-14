@@ -35,8 +35,8 @@ const CustomGLBLoader=({fileInfo}:IGLTFLoader)=>{
 
             const loader = new GLTFLoader(manager)
             .setCrossOrigin('anonymous')
-            .setMeshoptDecoder(MeshoptDecoder)
-            .setDRACOLoader(dracoLoader);
+            .setMeshoptDecoder(typeof MeshoptDecoder === 'function' ? MeshoptDecoder() : MeshoptDecoder)
+            .setDRACOLoader(dracoLoader)
 
             const blobURLs:any[]=[]
 

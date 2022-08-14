@@ -1,5 +1,5 @@
 import { useFrame, useThree } from '@react-three/fiber';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, memo } from 'react';
 import { AnimationMixer, Bone, Box3, Group, Mesh, Vector3 } from "three"
 import SwitchObject from './switch-object';
 import { Bounds, useAnimations, useBounds } from '@react-three/drei';
@@ -22,6 +22,7 @@ const ModelComponent=({group,bone}:IObjectComponentProps)=>{
     const [onAnimation,setOnAnimation]=useState<boolean>(false);
     const {setMeshBox}=useCameraSWR();
     const api = useBounds()
+    const three = useThree();
 
     const [curSelectMesh,setCurSelectMesh]=useState<Mesh>();
 
@@ -102,6 +103,11 @@ const ModelComponent=({group,bone}:IObjectComponentProps)=>{
         }
     }
 
+    useEffect(()=>{
+        console.log(three.gl);
+
+    },[])
+
 
     return(
             <group ref={ref} dispose={null}
@@ -116,4 +122,4 @@ const ModelComponent=({group,bone}:IObjectComponentProps)=>{
             </group>
     )
 }
-export default ModelComponent
+export default memo(ModelComponent) 

@@ -12,7 +12,7 @@ import { MeshMode } from "../global/interfaces/swr.interface";
 import { useCameraSWR } from '../swrs/camera.swr';
 import { MaterialElements } from "../utils/materialElements";
 import useIsMobile from '../hooks/useIsMobile';
-import { useMeasureSWR } from '../swrs/measure.swr';
+import useMeasureStore from "../store/measure.store";
 interface IMeshProps{
     mesh:THREE.Mesh
 }
@@ -20,7 +20,10 @@ interface IMeshProps{
 export const MeshComponent=({mesh}:IMeshProps)=>{
     
     const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
-    const {measureState,setPoint}=useMeasureSWR()
+
+    const [onMeasure,setPoint]=useMeasureStore(state=>[
+        state.onMeasure,
+        state.setPoint]);
     const isMobile = useIsMobile()
 
     const meshRef=useRef<any>();
@@ -32,7 +35,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
 
     const meshOnClick =async (e: any)=>{ 
         if(!isMobile){
-            measureState?.onMeasure?
+            onMeasure?
             setPoint(e.point):
             setSelectMesh(meshRef);
             
@@ -43,7 +46,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
         if(!isMobile){
 
-            !measureState?.onMeasure&&
+            !onMeasure&&
             setHoverMesh(meshRef);
 
             e.stopPropagation();
@@ -51,7 +54,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
     }
     const onTouch=async(e:ThreeEvent<PointerEvent>)=>{
         if(isMobile){
-            measureState?.onMeasure?
+            onMeasure?
             setPoint(e.point):
             setSelectMesh(meshRef);
             

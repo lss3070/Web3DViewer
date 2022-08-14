@@ -6,6 +6,7 @@ import {Group, LoadingManager} from 'three'
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 
 
+
 import { FileInfo } from "../../global/interfaces/swr.interface"
 import { Dispatch, SetStateAction } from "react";
 
@@ -31,9 +32,11 @@ const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
                 return url
             })
 
+            const dracoLoader = new DRACOLoader()
             const loader = new GLTFLoader(manager)
             .setCrossOrigin('anonymous')
-            .setMeshoptDecoder(MeshoptDecoder)
+            .setMeshoptDecoder(typeof MeshoptDecoder === 'function' ? MeshoptDecoder() : MeshoptDecoder)
+            .setDRACOLoader(dracoLoader)
 
             const blobURLs:any[]=[]
 

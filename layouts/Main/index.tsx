@@ -14,12 +14,13 @@ import Guide from "./guide";
 import { useCameraSWR } from '../../swrs/camera.swr';
 import { useMeasureSWR } from '../../swrs/measure.swr';
 import DeleteKeyPress from "../../hooks/useKeyPress";
+import useMeasureStore from '../../store/measure.store';
 
 
 const Main = () => {
   const {commonState}=useCommonSWR()
   const {cameraState,setOnZoom}=useCameraSWR()
-  const {measureState,deleteSelectMeasure}=useMeasureSWR()
+  const [onMeasure,deleteSelectMeasure]=useMeasureStore(state=>[state.onMeasure,state.deleteMeasure])
 
   const isMobile=useIsMobile()
   
@@ -39,7 +40,7 @@ const Main = () => {
           </header>
         <main className="h-full">
           <div className={`w-full h-full grid absolute 
-          ${measureState?.onMeasure&&` cursor-crosshair`}
+          ${onMeasure&&` cursor-crosshair`}
           `} >
               <Suspense fallback={null}>
                 <CanvasComponent setLoadingComplete={setLoadingComplete} setLoadingPercent={setLoadingPercent}/>

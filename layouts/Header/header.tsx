@@ -16,9 +16,9 @@ const Header=()=>{
 
 
     return(
-            <div className="w-full block space-x-3
+            <div className="w-full inline-flex space-x-3
             bg-white
-            dark:bg-[#3d3e42] ">
+            dark:bg-[#3d3e42]">
                 <div className="flex float-left h-full items-center select-none
                 dark:text-white text-gray-500 font-bold justify-start pl-2 cursor-pointer"
                 onClick={ToHome}

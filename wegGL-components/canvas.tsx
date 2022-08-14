@@ -21,7 +21,7 @@ import { CustomDataNode } from "../global/interfaces/app.interface";
 import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
 import { SelectMeshComponent } from "./outLineMesh";
-import { Bounds, Box, PerspectiveCamera, Sky, TrackballControls, useGLTF, useHelper } from "@react-three/drei";
+import { Bounds, Box, PerspectiveCamera, Sky, Stats, TrackballControls, useGLTF, useHelper } from "@react-three/drei";
 import Gizmo from './gizmo';
 import SkyBox from './sky-box';
 import CustomGLTFLoader from '../utils/loaders/gltfLoader';
@@ -40,6 +40,7 @@ import LineComponent from './measure/line';
 import MeasureComponent from './measure/measure';
 import ModelComponent from './model';
 import CustomGLBLoader from '../utils/loaders/glbLoader';
+import useMeasureStore from '../store/measure.store';
 
 interface ICanvasProps{
     setLoadingPercent:Dispatch<SetStateAction<number>>;
@@ -49,7 +50,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     const {commonState,setGroupList,setScene,setFileLoad,setFileUuid}=useCommonSWR();
     const {cameraState,setMeshBox,setOnZoom}=useCameraSWR();
-    const {initMeasure}=useMeasureSWR()
+    const initMeasure=useMeasureStore((state)=>state.initMeasure)
     const {meshState,setInitSelectMesh,setAnimationList}=useMeshSWR()
     const sceneRef = useRef<Scene>(null)
 
@@ -63,8 +64,6 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const threeMFLoader = new ThreeMFLoader();
 
     const ee = new Map()
-
-
 
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
@@ -202,7 +201,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     },[commonState?.fileInfo])
    
-    useLayoutEffect(()=>{
+    useEffect(()=>{
         commonState?.darkMode?setColor('#2a2b2e'):setColor('#f7fafb')
     },[commonState?.darkMode])
 
@@ -272,8 +271,6 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
     //     mixer?.update(delta)
     // })
 
-
-
     return(
         <>
             <Canvas onClick={offZoom} 
@@ -281,6 +278,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
             onTouchEnd={offZoom}
             style={{
             backgroundColor:color
+            
         }}
             className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]"
 
@@ -291,13 +289,16 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                     <CameraComponent/>
                     <ControlComponent/> 
                     {meshGroup&&(
+                       
                         <>
+                        {/* <primitive object={meshGroup}/> */}
                             <Bounds margin={1.5}>
                                 <ModelComponent group={meshGroup} bone={bone}/>
                             </Bounds>
                             <SelectMeshComponent/>
                             <Gizmo/>
                             <MeasureComponent/>
+                            <Stats/>
                         </>
                     )}
                   {/* <gridHelper args={[1000,1000,1000]}/>  */}

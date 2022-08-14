@@ -13,16 +13,18 @@ import _ from 'lodash'
 import { useMeshSWR } from '../../swrs/mesh.swr';
 import useIsMobile from '../../hooks/useIsMobile'
 import MiniCircleButton from '../common/mini-circle-button'
-import { useMeasureSWR } from '../../swrs/measure.swr';
 import CameraPositionBox, { CustomCameraFocus } from './camera-position-box';
 import { useBounds } from '@react-three/drei';
+import useMeasureStore from '../../store/measure.store';
 
 
 const MiniControls=()=>{
     const {cameraState,setZoomBox}=useCameraSWR()
     const {menuState} =useMenuSWR();
     const {meshState,setOnText,setOnWire,setHoverMesh,setInitSelectMesh}=useMeshSWR()
-    const {measureState,setOnMeasure}=useMeasureSWR()
+    const [measure,toggleMeasure]=useMeasureStore((state)=>[
+        state.onMeasure,state.toggleMeasure
+    ]);
     const isMobile = useIsMobile()
 
     const [onCameraPositionList,setOnCameraPositionList]=useState<boolean>(false);
@@ -85,12 +87,11 @@ const MiniControls=()=>{
         setOnText(!meshState?.onText!)
     }
     const onMeasure=()=>{
-        if(!measureState?.onMeasure){
+        if(!measure){
             setInitSelectMesh();
             setHoverMesh(undefined)
         }
-     
-        setOnMeasure(!measureState?.onMeasure!)
+        toggleMeasure()
     }
 
     return (
@@ -158,7 +159,7 @@ const MiniControls=()=>{
                 <MiniCircleButton onClick={onWire} pressState={meshState?.onWire}>
                     {'Wire'}
                 </MiniCircleButton>
-                <MiniCircleButton onClick={onMeasure} pressState={measureState?.onMeasure}>
+                <MiniCircleButton onClick={onMeasure} pressState={measure}>
                     <FontAwesomeIcon
                         icon={['fas','ruler']}
                         className="w-10 h-10"/>

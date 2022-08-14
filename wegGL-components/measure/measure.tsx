@@ -1,18 +1,19 @@
-import { useMeasureSWR } from "../../swrs/measure.swr";
+
+import useMeasureStore from "../../store/measure.store";
 import LineComponent from "./line"
 import SpriteComponent from "./sprite"
 
 const MeasureComponent=()=>{
-    const {measureState}=useMeasureSWR();
-
+    const [onMeasure,points] = useMeasureStore(state=>[state.onMeasure,state.points]);
+    // const points=useMeasureStore(state=>state.points);
 
     return(
         <>
             {
-                measureState?.onMeasure&&(
+                onMeasure&&(
                     <>
-                        <SpriteComponent points={measureState?.point!}/>
-                        <LineComponent points={measureState?.point!}/>
+                        <SpriteComponent points={points}/>
+                        <LineComponent points={points}/>
                     </>
                 )
             }

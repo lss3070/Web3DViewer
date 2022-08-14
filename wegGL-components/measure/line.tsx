@@ -3,7 +3,7 @@ import { Html, Line } from "@react-three/drei";
 import _ from "lodash";
 import { useMemo } from "react"
 import { BufferGeometry, Vector3 } from "three";
-import { useMeasureSWR } from "../../swrs/measure.swr";
+import useMeasureStore from "../../store/measure.store";
 
 
 interface ILineProps{
@@ -12,7 +12,10 @@ interface ILineProps{
 
 const LineComponent=({points}:ILineProps)=>{
 
-    const {setSelectMeasure,measureState}=useMeasureSWR()
+    const [selectPoints,setSelectMeasure]=useMeasureStore((state)=>[
+        state.selectPoints,
+        state.setSelectMeasure
+    ]);
 
 
     const lineVectors = useMemo(()=>{
@@ -33,6 +36,7 @@ const LineComponent=({points}:ILineProps)=>{
            return result;
         }
     },[points])
+
     return(
         <>
         {
@@ -44,9 +48,9 @@ const LineComponent=({points}:ILineProps)=>{
                 )
                 const distance= (item[0].distanceTo(item[1])).toFixed(2)
                 const angle = (item[0].angleTo(item[1])*10).toFixed(2)
-                const select = measureState?.selectPoint?.length!>1&&
-                measureState?.selectPoint![0].equals(item[0])&&
-                measureState?.selectPoint![1].equals(item[1])
+                const select = selectPoints.length!>1&&
+                selectPoints[0].equals(item[0])&&
+                selectPoints[1].equals(item[1])
               
 
                 return(
