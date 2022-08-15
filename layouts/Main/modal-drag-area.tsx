@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useRef } from "react";
 import useMenuStore from "../../store/menu.store";
-import { useCommonSWR } from "../../swrs/common.swr";
 
 interface IDragAndDropAreaProps{
     children:JSX.Element|JSX.Element[];
@@ -11,7 +10,6 @@ const DragAndDropArea=({children}:IDragAndDropAreaProps)=>{
 
 
     const setDragArea =useMenuStore((state)=>state.setDragArea)
-    const {setFiltPath}=useCommonSWR();
 
     const dragArea = useRef<HTMLDivElement>(null);
     

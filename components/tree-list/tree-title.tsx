@@ -1,10 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactNode } from "react";
-import { Box3, Group, Mesh } from "three";
 import { TitleProps } from "../../global/interfaces/tree.interface";
-import { useCameraSWR } from "../../swrs/camera.swr";
-import { useCommonSWR } from '../../swrs/common.swr';
-import { useMeshSWR } from '../../swrs/mesh.swr';
 
 const TreeTitle =({
     node,

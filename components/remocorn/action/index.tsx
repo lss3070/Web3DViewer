@@ -1,6 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
 import { BufferGeometry, Euler, Material, Mesh, Vector3 } from "three"
-import { useCommonSWR } from "../../../swrs/common.swr"
 import { useMeshSWR } from "../../../swrs/mesh.swr"
 import { ColorHelper } from "./colorHelper"
 import { PositionHelper } from "./positionHelper"
@@ -11,7 +10,6 @@ import RemocornTab from "../common/remocornTab"
 
 const ActionTab=()=>{
     const {meshState}=useMeshSWR()
-    const {commonState}=useCommonSWR()
     const [position,setPosition]=useState<Vector3>(new Vector3());
     const [rotation,setRotation]=useState<Euler>(new Euler());
     const [rotationAxis,setRotationAxis]=useState<Vector3>(new Vector3(0,0,0))

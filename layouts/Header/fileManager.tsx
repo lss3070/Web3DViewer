@@ -2,13 +2,13 @@
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { ChangeEvent, useState, useEffect, useRef } from 'react';
-import { useCommonSWR } from '../../swrs/common.swr';
 import {AnimatePresence, motion} from 'framer-motion';
 import Portal from '../../HOC/portal';
 import ModalExport from '../../components/modal/modal-export';
 import MiniButton from '../../components/common/mini-button';
 import FileTransForm from '../../utils/file/fileTransform';
 import useIsMobile from '../../hooks/useIsMobile';
+import useFileStore from '../../store/file.store';
 
 
 const TypeList=['obj','gltf','stl','obj','glb','fbx'];
@@ -31,7 +31,7 @@ const ExportList =({label}:ExportListProps)=>{
 
 const FileManager=()=>{
     const isMobile = useIsMobile()
-    const {setFiltPath}=useCommonSWR();
+    const setFileInfo = useFileStore((state)=>state.setFileInfo)
     const [isExport,setIsExport]=useState<boolean>(false);
 
 
@@ -39,7 +39,7 @@ const FileManager=()=>{
         if(e.currentTarget.files?.length!<=0) return
         const file= FileTransForm(e.currentTarget.files!)
 
-        setFiltPath({
+        setFileInfo({
             originPath:file.originLink,
             originExtension:file.originExtension,
             originName:file.originName,

@@ -1,21 +1,21 @@
 import { EffectComposer, Outline } from "@react-three/postprocessing"
 import { useEffect, useState } from "react";
 import { useMeshSWR } from "../swrs/mesh.swr";
-import { useCommonSWR } from '../swrs/common.swr';
+import useDarkStore from '../store/dark.store';
 
 
 export const SelectMeshComponent=()=>{
 
-    const {commonState}=useCommonSWR();
+    const darkMode = useDarkStore((state)=>state.darkMode)
     const {meshState}=useMeshSWR();
     
     const [selectColor,setSelectColor]=useState<number>();
     const [hoverColor,setHoverColor]=useState<number>()
 
     useEffect(()=>{
-        setHoverColor(commonState?.darkMode?0xffffff:0x0026ff)
-        setSelectColor(commonState?.darkMode?0xffffff:0x0026ff)
-    },[commonState?.darkMode])
+        setHoverColor(darkMode?0xffffff:0x0026ff)
+        setSelectColor(darkMode?0xffffff:0x0026ff)
+    },[darkMode])
     
     return(
         <EffectComposer 

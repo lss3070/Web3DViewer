@@ -6,7 +6,7 @@ import DragAndDropArea from "./modal-drag-area";
 import Remocorn from "../../components/remocorn";
 import TreeList from "../../components/tree-list";
 import useIsMobile from "../../hooks/useIsMobile";
-import { useCommonSWR } from "../../swrs/common.swr";
+
 import { CanvasComponent } from "../../wegGL-components/canvas";
 import Header from "../Header/header";
 import LoadingComponent from "./loading";
@@ -15,12 +15,14 @@ import { useCameraSWR } from '../../swrs/camera.swr';
 import { useMeasureSWR } from '../../swrs/measure.swr';
 import DeleteKeyPress from "../../hooks/useKeyPress";
 import useMeasureStore from '../../store/measure.store';
+import useFileStore from "../../store/file.store";
 
 
 const Main = () => {
-  const {commonState}=useCommonSWR()
+
   const {cameraState,setOnZoom}=useCameraSWR()
   const [onMeasure,deleteSelectMeasure]=useMeasureStore(state=>[state.onMeasure,state.deleteMeasure])
+  const fileLoad=useFileStore((state)=>state.fileLoad)
 
   const isMobile=useIsMobile()
   
@@ -47,7 +49,7 @@ const Main = () => {
               </Suspense>
           </div>
           <DragAndDropArea>
-          {commonState?.fileLoad?(
+          {fileLoad?(
              <>
              {!isMobile&&(
               <>

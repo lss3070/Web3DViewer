@@ -1,8 +1,7 @@
 import { Html } from "@react-three/drei"
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Vector3 } from "three";
-import { useMeshSWR } from "../swrs/mesh.swr";
-import { useCommonSWR } from '../swrs/common.swr';
+import useDarkStore from "../store/dark.store";
 
 
 interface IMeshHtmlProps{
@@ -15,8 +14,7 @@ interface IMeshHtmlProps{
 export const MeshHtmlComponent=({centerPosition,name,uuid,visible}:IMeshHtmlProps)=>{
 
     // mesh.geometry.computeBoundingSphere();
-    const { meshState,setMeshTextScale }= useMeshSWR();
-    const {commonState}= useCommonSWR()
+    const darkMode = useDarkStore((state)=>state.darkMode)
 
     const [selected,setSelected]= useState<boolean>(false);
     const [hovered,setHovered]=useState<boolean>(false);
@@ -40,7 +38,7 @@ export const MeshHtmlComponent=({centerPosition,name,uuid,visible}:IMeshHtmlProp
             className={`
             select-none
             ${selected?'text-red-400':hovered?'text-orange-300':
-            commonState?.darkMode?`text-white`:`text-black`}
+            darkMode?`text-white`:`text-black`}
             `}
             // center={true}
             // fullscreen={true}

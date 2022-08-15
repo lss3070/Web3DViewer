@@ -1,15 +1,16 @@
 
-import { useCommonSWR } from '../../swrs/common.swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CircleButton from "../../components/common/circle-button";
 import { Dispatch, SetStateAction } from 'react';
+import useFileStore from '../../store/file.store';
 
 interface IGuideProps{
     setLoadingComplete: Dispatch<SetStateAction<boolean>>;
 }
 
 const Guide=({setLoadingComplete}:IGuideProps)=>{
-    const {commonState,setFiltPath}=useCommonSWR();
+
+    const setFileInfo = useFileStore((state)=>state.setFileInfo)
    
     const openFile=(path:string)=>{
         const fullName = path.split('/').pop();
@@ -26,7 +27,7 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
 
             const file=new File([blob],fullName!);
             fileMap.set(fullName!,file);
-            setFiltPath({
+            setFileInfo({
                 originPath:objectURL!,
                 originExtension:extension!,
                 originName:fileName!,

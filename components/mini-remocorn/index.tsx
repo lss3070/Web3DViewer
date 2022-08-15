@@ -1,7 +1,6 @@
 
 import {AnimatePresence, LayoutGroup, motion, MotionValue, useMotionValue} from 'framer-motion';
 import { useRef, useState, useEffect, MouseEventHandler } from 'react';
-import { useCommonSWR } from '../../swrs/common.swr';
 import ModalLayout from '../modal/in-canvas-modal-layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Front from '../../assets/cube-front.svg'

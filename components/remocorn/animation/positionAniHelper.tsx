@@ -4,7 +4,6 @@ import { ChangeEvent, useState } from "react";
 import { Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
 import { useAnimationSWR } from "../../../swrs/animation.swr";
-import { useCommonSWR } from "../../../swrs/common.swr";
 import MiniButton from "../../common/mini-button";
 import SliderItem from "../common/sliderItem";
 
@@ -14,7 +13,6 @@ interface IPositionAnimationProps extends Helper{
 }
 
 export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
-    const {commonState}=useCommonSWR()
     const {animationState,onPosition,setPosition,setPositionSpeed}= useAnimationSWR()
     
     const [localPosition,setLocalPosition]=useState<Vector3>(new Vector3());

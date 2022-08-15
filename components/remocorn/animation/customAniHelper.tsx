@@ -1,7 +1,6 @@
 import { useAnimations } from "@react-three/drei";
 import { AnimationClip, AnimationMixer } from "three";
 import { Helper } from "../../../global/interfaces/app.interface"
-import { useCommonSWR } from '../../../swrs/common.swr';
 import { useMeshSWR } from '../../../swrs/mesh.swr';
 import { useAnimationSWR } from '../../../swrs/animation.swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

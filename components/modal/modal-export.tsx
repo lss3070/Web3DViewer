@@ -4,10 +4,11 @@ import {OBJExporter} from 'three/examples/jsm/exporters/OBJExporter';
 import {PLYExporter, PLYExporterOptions} from 'three/examples/jsm/exporters/PLYExporter';
 import {STLExporter} from 'three/examples/jsm/exporters/STLExporter';
 import {GLTFExporter} from 'three/examples/jsm/exporters/GLTFExporter';
-import { useCommonSWR } from "../../swrs/common.swr";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MiniButton from "../common/mini-button";
+import useFileStore from "../../store/file.store";
+import useSceneStore from "../../store/scene.store";
 
 enum ExportType{
     OBJ,
@@ -21,7 +22,8 @@ interface IExportProps{
 }
 
 const ModalExport=({onClose}:IExportProps)=>{
-    const {commonState}=useCommonSWR()
+    const [fileInfo,fileUuid]=useFileStore((state)=>[state.fileInfo,state.fileUuid]);
+    const scene=useSceneStore((state)=>state.scene)
     const [select,setSelect]=useState<ExportType>(ExportType.OBJ)
 
     const objExporter = new OBJExporter()
@@ -43,8 +45,8 @@ const ModalExport=({onClose}:IExportProps)=>{
     }
 
     const saveString =(text:string,extension:string)=>{
-        const name =commonState?.fileInfo?.originName?
-        commonState?.fileInfo?.originName
+        const name =fileInfo?.originName?
+        fileInfo?.originName
         :'(no_name)'
         const link = document.createElement('a');
         const blob = new Blob([text])
@@ -56,9 +58,9 @@ const ModalExport=({onClose}:IExportProps)=>{
 
     const onSave=()=>{
        
-        if( !commonState?.fileUuid)return
-        const objectData= commonState?.scene?.current?.getObjectByProperty('uuid',
-        commonState.fileUuid!);
+        if( !fileUuid)return
+        const objectData= scene?.current?.getObjectByProperty('uuid',
+        fileUuid!);
         
         switch(select){
             

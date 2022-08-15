@@ -4,7 +4,6 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import { Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
 import { useAnimationSWR } from "../../../swrs/animation.swr";
-import { useCommonSWR } from "../../../swrs/common.swr";
 import SliderItem from "../common/sliderItem";
 
 interface IScaleAnimationProps extends Helper{
@@ -13,7 +12,6 @@ interface IScaleAnimationProps extends Helper{
 
 export const ScaleAnimationHelper=({scale}:IScaleAnimationProps)=>{
 
-    const {commonState,}=useCommonSWR();
 
     const {animationState,onScale,setScale,setScaleSpeed}=useAnimationSWR();
     const [localScale,setLocalScale]=useState<Vector3>(scale);

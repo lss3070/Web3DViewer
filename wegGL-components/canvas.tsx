@@ -15,7 +15,6 @@ import { CameraComponent } from "./camera"
 import { LightComponent } from "./light";
 
 import fs from 'fs';
-import { useCommonSWR } from "../swrs/common.swr";
 import { useCameraSWR } from "../swrs/camera.swr";
 import { CustomDataNode } from "../global/interfaces/app.interface";
 import { ControlComponent } from "./control";
@@ -41,6 +40,10 @@ import MeasureComponent from './measure/measure';
 import ModelComponent from './model';
 import CustomGLBLoader from '../utils/loaders/glbLoader';
 import useMeasureStore from '../store/measure.store';
+import useFileStore from '../store/file.store';
+import useDarkStore from '../store/dark.store';
+import useSceneStore from '../store/scene.store';
+import useTreeStore from '../store/tree.store';
 
 interface ICanvasProps{
     setLoadingPercent:Dispatch<SetStateAction<number>>;
@@ -48,7 +51,16 @@ interface ICanvasProps{
 }
 export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
-    const {commonState,setGroupList,setScene,setFileLoad,setFileUuid}=useCommonSWR();
+    const fileInfo=useFileStore((state)=>state.fileInfo)
+    const darkMode = useDarkStore((state)=>state.darkMode);
+    const setScene= useSceneStore((state)=>state.setScene);
+    const setGroupList = useTreeStore((state)=>state.setGroupList)
+
+
+    const [setFileLoad,setFileUuid]=useFileStore((state)=>[
+        state.setFileLoad,
+        state.setFileUuid
+    ])
     const {cameraState,setMeshBox,setOnZoom}=useCameraSWR();
     const initMeasure=useMeasureStore((state)=>state.initMeasure)
     const {meshState,setInitSelectMesh,setAnimationList}=useMeshSWR()
@@ -118,12 +130,12 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
 
     useEffect(()=>{ 
         InitLoad();
-        if(commonState?.fileInfo?.originExtension!==undefined){
+        if(fileInfo?.originExtension!==undefined){
             setLoadingComplete(false);
-            switch(commonState?.fileInfo?.originExtension){
+            switch(fileInfo?.originExtension){
                 case 'obj':
                     CustomOBJLoader({
-                        fileInfo:commonState?.fileInfo!
+                        fileInfo:fileInfo
                     }).then((data)=>{
                    
                        SettingModel(data as Group);
@@ -131,7 +143,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     break;
                 case 'fbx':
                     CustomFBXLoader({
-                        fileInfo:commonState?.fileInfo!
+                        fileInfo:fileInfo
                     }).then((data)=>{
                        
                        SettingModel(data as Group);
@@ -139,34 +151,34 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     break;
                 case 'stl':
                     CustomSTLLoader({
-                        fileInfo:commonState?.fileInfo!
+                        fileInfo:fileInfo
                     }).then((data)=>{
                        SettingModel(data as Group);
                     })
                     break;
                 case 'ply':
                     CustomPLYLoader({
-                        fileInfo:commonState?.fileInfo!
+                        fileInfo:fileInfo
                     }).then((data)=>{
                        SettingModel(data as Group);
                     })
                     break;
                 case 'gltf':
                     CustomGLTFLoader({
-                        fileInfo:commonState?.fileInfo!
+                        fileInfo:fileInfo
                     }).then((data)=>{
                        SettingModel(data as Group);
                     })
                     break;
                 case 'glb':
                     CustomGLBLoader({
-                        fileInfo:commonState?.fileInfo!
+                        fileInfo:fileInfo
                     }).then((data)=>{
                        SettingModel(data as Group);
                     })
                     break;
                 case '3dm':
-                    threeDMLoader.load(commonState.fileInfo.originPath!,(load)=>{
+                    threeDMLoader.load(fileInfo.originPath!,(load)=>{
                      
                     },(pro)=>{
 
@@ -185,7 +197,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     // })
                     break;
                 case '3mf':
-                    threeMFLoader.load(commonState.fileInfo.originPath!,(load)=>{
+                    threeMFLoader.load(fileInfo.originPath!,(load)=>{
                         // SettingModel(load);
                     },(progress)=>{
                         setLoadingComplete(false);
@@ -195,15 +207,13 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                         setLoadingComplete(true);
                     })
                     break;
-                }
-                
+                }   
         }
-
-    },[commonState?.fileInfo])
+    },[fileInfo])
    
     useEffect(()=>{
-        commonState?.darkMode?setColor('#2a2b2e'):setColor('#f7fafb')
-    },[commonState?.darkMode])
+        darkMode?setColor('#2a2b2e'):setColor('#f7fafb')
+    },[darkMode])
 
 const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 

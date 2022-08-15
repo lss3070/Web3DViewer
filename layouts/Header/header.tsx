@@ -1,19 +1,18 @@
 
 import FileManager from './fileManager';
 import MenuManager from "./menuManager";
-import { useCommonSWR } from '../../swrs/common.swr';
 
 import useIsMobile from '../../hooks/useIsMobile';
 import SettingManager from './settingManager';
+import useFileStore from '../../store/file.store';
 
 const Header=()=>{
 
     const isMobile = useIsMobile()
-    const {commonState}=useCommonSWR()
+    const fileLoad=useFileStore((state)=>state.fileLoad)
     const ToHome =()=>{
         window.location.reload();
     }
-
 
     return(
             <div className="w-full inline-flex space-x-3
@@ -28,7 +27,7 @@ const Header=()=>{
                 </div>
                 <div className={`${isMobile?`float-right pr-2`:`float-left`} h-full  space-x-3 flex items-center `}>
                     <FileManager/>
-                    {!isMobile&&commonState?.fileLoad&&(
+                    {!isMobile&&fileLoad&&(
                         <MenuManager/>
                     )}
                 </div>

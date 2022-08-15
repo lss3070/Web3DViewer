@@ -6,7 +6,6 @@ import { Outline } from '@react-three/postprocessing';
 import { MeshStandardMaterialProps, ThreeEvent, useFrame } from "@react-three/fiber";
 import { useAnimationSWR } from "../swrs/animation.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
-import { useCommonSWR } from "../swrs/common.swr";
 import { MeshHtmlComponent } from "./mesh-html";
 import { MeshMode } from "../global/interfaces/swr.interface";
 import { useCameraSWR } from '../swrs/camera.swr';

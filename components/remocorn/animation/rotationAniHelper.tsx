@@ -4,7 +4,6 @@ import { ChangeEvent, useState } from "react";
 import { Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
 import { useAnimationSWR } from "../../../swrs/animation.swr";
-import { useCommonSWR } from "../../../swrs/common.swr";
 import MiniButton from "../../common/mini-button";
 import SliderItem from "../common/sliderItem";
 
@@ -13,8 +12,6 @@ interface RoationProps extends Helper{
 }
 
 export const RotationAnimationHelper=({}:RoationProps)=>{
-
-    const {commonState}=useCommonSWR();
 
     const {animationState,onRotation,setRotationSpeed}=useAnimationSWR();
     const [localRotationSpeed,setLocalRotationSpeed]=useState<Vector3>(new Vector3())

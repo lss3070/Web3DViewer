@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import {motion} from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCommonSWR } from '../swrs/common.swr';
+import useDarkStore from '../store/dark.store';
 
 const DarkModeSwitch=()=>{
 
     // const [isOn,setIsOn]=useState<boolean>(false);
 
-    const {commonState,setDarkMode}=useCommonSWR()
-    const toggleSwitch = () => setDarkMode(!commonState?.darkMode!)
+    const [darkMode,setDarkMode]=useDarkStore((state)=>[
+        state.darkMode,
+        state.setDarkMode
+    ])
+    const toggleSwitch = () => setDarkMode(!darkMode)
     
     const spring = {
         type: 'spring',
@@ -25,7 +28,7 @@ const DarkModeSwitch=()=>{
     },[])
 
     useEffect(()=>{
-        if (commonState?.darkMode) {
+        if (darkMode) {
             document.documentElement.classList.remove('dark')
             localStorage.setItem('theme', 'light')
           } else {
@@ -40,7 +43,7 @@ const DarkModeSwitch=()=>{
             else {
               document.documentElement.classList.remove('dark')
           }
-    },[commonState?.darkMode]);
+    },[darkMode]);
 
  
     return(
@@ -52,7 +55,7 @@ const DarkModeSwitch=()=>{
             border 
             border-gray-100 
             dark:border-transparent
-            ${ commonState?.darkMode && 'place-content-end'}`}>
+            ${ darkMode && 'place-content-end'}`}>
                 <motion.div
                     className="flex h-[20px] 
                     w-[20px] items-center justify-center rounded-full 
@@ -63,7 +66,7 @@ const DarkModeSwitch=()=>{
                     transition={spring}
                 >
                     <motion.div whileTap={{rotate: 360}} className="shadow-lg rounded-full">
-                        {commonState?.darkMode? 
+                        {darkMode? 
                         (<FontAwesomeIcon
                             icon={['fas','moon']}
                             className="w-5 h-5 text-yellow-200"/>

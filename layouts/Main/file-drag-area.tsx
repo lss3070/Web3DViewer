@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useCommonSWR } from '../../swrs/common.swr';
+import useFileStore from "../../store/file.store";
 import FileTransForm from "../../utils/file/fileTransform";
 
 const FileDragArea=({children})=>{
 
 
-    const {setFiltPath}=useCommonSWR()
+    const setFileInfo = useFileStore((state)=>state.setFileInfo)
     const [onFileDrag,setOnFileDrag]=useState<boolean>(false);
     
     const onDragEnter=(e: React.DragEvent<HTMLDivElement>)=>{
@@ -18,7 +18,7 @@ const FileDragArea=({children})=>{
     const onDrop=(e: React.DragEvent<HTMLDivElement>)=>{
         const file= FileTransForm(e.dataTransfer.files)
 
-        setFiltPath({
+        setFileInfo({
             originPath:file.originLink,
             originExtension:file.originExtension,
             originName:file.originName,

@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect, useState } from "react";
 import { Mesh } from "three";
 import { mergeVertices } from "three-stdlib";
 import { Helper } from "../../../global/interfaces/app.interface";
-import { useCommonSWR } from "../../../swrs/common.swr";
+import useFileStore from "../../../store/file.store";
 import { useMeshSWR } from "../../../swrs/mesh.swr";
 import NumberWithComma from "../../../utils/numberWithCommas";
 
@@ -20,7 +20,7 @@ type MeshInfoType={
 
 const InfoHelper=({}:Helper)=>{
 
-    const {commonState}=useCommonSWR()
+    const fileInfo=useFileStore((state)=>state.fileInfo)
     const {meshState}=useMeshSWR();
 
     const [meshInfo,setMeshInfo]=useState<MeshInfoType>()
@@ -28,7 +28,7 @@ const InfoHelper=({}:Helper)=>{
     const onAllMesh=()=>{
     
         setMeshInfo({
-            name:commonState?.fileInfo?.originName!,
+            name:fileInfo?.originName!,
             vertex:'-',
             triangle:'-',
             // x:'0',

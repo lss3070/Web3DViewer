@@ -3,7 +3,6 @@ import { Col, Row, Slider } from "antd";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Euler, Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
-import { useCommonSWR } from "../../../swrs/common.swr";
 import { useMeshSWR } from "../../../swrs/mesh.swr";
 import SliderItem from "../common/sliderItem";
 

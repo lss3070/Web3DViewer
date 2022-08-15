@@ -3,7 +3,6 @@ import { Tree } from "antd";
 import React, { useEffect, useRef, useState, ReactChild, ReactNode, Children } from "react";
 import { Box3, Group, Mesh } from "three"
 import { Key } from "antd/lib/table/interface";
-import { useCommonSWR } from "../../swrs/common.swr";
 import { useMeshSWR } from "../../swrs/mesh.swr";
 import { CustomDataNode } from "../../global/interfaces/app.interface";
 
@@ -20,6 +19,9 @@ import visibleChangeLoop from "../../utils/tree/visibleChangeLoop";
 import TreeSearchBox from "./inputBox";
 import ModalHeader from '../common/modal-header';
 import useMenuStore from "../../store/menu.store";
+import useDarkStore from "../../store/dark.store";
+import useTreeStore from "../../store/tree.store";
+import useSceneStore from '../../store/scene.store';
 
 const TreeList=()=>{
   
@@ -31,8 +33,11 @@ const TreeList=()=>{
         state.toggleTree
     ]);
 
-
-    const { commonState,setGroupList }= useCommonSWR();
+    const darkMode =useDarkStore((state)=>state.darkMode)
+    const [gropupList,setGroupList] = useTreeStore((state)=>[
+        state.groupList,
+        state.setGroupList])
+    const scene = useSceneStore((state)=>state.scene)
     const {meshState,setSelectMesh}= useMeshSWR();
     const {setZoomBox}=useCameraSWR()
 
@@ -72,7 +77,7 @@ const TreeList=()=>{
         
         generateList?.forEach((item)=>{
             if(item.title!.indexOf(value) >-1){
-                list.push(GetParentKey(item.key,commonState!.groupList!))
+                list.push(GetParentKey(item.key,gropupList!))
             }
         });
 
@@ -125,22 +130,22 @@ const TreeList=()=>{
 
     //검색시 변경
     useEffect(()=>{
-        if(commonState?.groupList!==undefined){
-            const list = RenderLoop(commonState?.groupList,searchValue);
+        if(gropupList!==undefined){
+            const list = RenderLoop(gropupList,searchValue);
             setTreeData(list);
         }
-    },[commonState,searchValue])
+    },[searchValue])
 
     //groupList가져올때 tree에 그려질 데이터 리 렌더링
     useEffect(()=>{
-        if(commonState?.groupList!==undefined){
-            generateLoop(commonState.groupList);
+        if(gropupList!==undefined){
+            generateLoop(gropupList);
         }
-    },[commonState?.groupList]);
+    },[gropupList]);
 
     //visible 버튼 클릭시 이벤트
     const visibleChange=(uuid:string)=>{
-        let copy = _.cloneDeep(commonState?.groupList);
+        let copy = _.cloneDeep(gropupList);
         const result= copy?.map((item)=>{
             return visibleChangeLoop(uuid,item);
         })
@@ -164,7 +169,7 @@ const TreeList=()=>{
     const onTitleIconClick=(e:React.MouseEvent<SVGSVGElement, MouseEvent>
         ,key:string,visible:boolean
         )=>{    
-        const object = commonState?.scene?.current?.getObjectByProperty('uuid',key+'') as Mesh|Group
+        const object =scene?.current?.getObjectByProperty('uuid',key+'') as Mesh|Group
         if(object){
             object.visible=!visible;
             visibleChange(key);
@@ -173,7 +178,7 @@ const TreeList=()=>{
     }
 
     const onTitleDoubleClick=(key:string)=>{
-        const mesh= commonState?.scene?.current?.getObjectByProperty('uuid',key+'') as Mesh;
+        const mesh= scene?.current?.getObjectByProperty('uuid',key+'') as Mesh;
 
         setZoomBox({
             box:new Box3().setFromObject(mesh)
@@ -221,8 +226,8 @@ const TreeList=()=>{
                         text-white h-[330px] p-1">
                             <Tree
                                 style={{backgroundColor:
-                                    commonState?.darkMode?'#9ca3af':'#f7fafb',
-                                color:commonState?.darkMode?'white':'#4b5663',
+                                    darkMode?'#9ca3af':'#f7fafb',
+                                color:darkMode?'white':'#4b5663',
                                 border:'none'
                                 }}
                                 className=" overflow-scroll h-full"
@@ -243,7 +248,7 @@ const TreeList=()=>{
                                 onExpand={onExpand}
                                 expandedKeys={expandedKeys!}
                                 autoExpandParent={autoExpandParent}
-                                height={commonState?.onMobile?200:undefined}
+                                // height={commonState?.onMobile?200:undefined}
                             >
                             </Tree>
                         </div>
