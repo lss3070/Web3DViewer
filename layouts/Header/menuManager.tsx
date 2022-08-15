@@ -1,33 +1,43 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useMenuSWR } from '../../swrs/menu.swr';
 import MiniButton from '../../components/common/mini-button';
 import { useEffect } from 'react';
+import useMenuStore from '../../store/menu.store';
 
 
 const MenuManager=()=>{
-    const {menuState,onControl,onTreeList,onSimpleControl}= useMenuSWR();
 
-    useEffect(()=>{
+    const [
+        onTree,
+        onControl,
+        onMiniControl,
+        toggleControl,
+        toggleTree,
+        toggleMiniControl
+    ] = useMenuStore((state)=>[
+        state.onTree,
+        state.onControl,
+        state.onMiniControl,
+        state.toggleControl,
+        state.toggleTree,
+        state.toggleMiniControl
+    ])
 
-    },[menuState?.treeList.on]);
-    useEffect(()=>{
 
-    },[menuState?.control.on]);
     const onTreeClick=()=>{
-        onTreeList(!menuState?.treeList.on);
+        toggleTree()
     }
     const onControlClick=()=>{
-        onControl(!menuState?.control.on);
+        toggleControl()
     }
     const onSimpleControlClick=()=>{
-        onSimpleControl(!menuState?.simpleControl.on);
+        toggleMiniControl()
     }
 
     return(
         <>
         <MiniButton 
         onClick={onTreeClick} 
-        pressState={menuState?.treeList.on}>
+        pressState={onTree}>
             <>
                 <FontAwesomeIcon
                     icon={['fas','folder-tree']} 
@@ -37,7 +47,7 @@ const MenuManager=()=>{
         </MiniButton>
         <MiniButton 
         onClick={onControlClick} 
-        pressState={menuState?.control.on}>
+        pressState={onControl}>
             <>
                 <FontAwesomeIcon
                     icon={['fas','screwdriver-wrench']} 
@@ -47,7 +57,7 @@ const MenuManager=()=>{
         </MiniButton>
         <MiniButton 
         onClick={onSimpleControlClick} 
-        pressState={menuState?.simpleControl.on}>
+        pressState={onMiniControl}>
             <>
                 <FontAwesomeIcon
                     icon={['fas','wrench']} 

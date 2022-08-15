@@ -9,7 +9,6 @@ import { CustomDataNode } from "../../global/interfaces/app.interface";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  EventDataNode } from "antd/lib/tree";
-import { useMenuSWR } from '../../swrs/menu.swr';
 import ModalLayout from "../modal/in-canvas-modal-layout";
 import _ from "lodash";
 import { useCameraSWR } from '../../swrs/camera.swr';
@@ -20,10 +19,19 @@ import RenderLoop from "./renderLoop";
 import visibleChangeLoop from "../../utils/tree/visibleChangeLoop";
 import TreeSearchBox from "./inputBox";
 import ModalHeader from '../common/modal-header';
+import useMenuStore from "../../store/menu.store";
 
 const TreeList=()=>{
-    const {onTreeList}=useMenuSWR()
-    const {menuState}=useMenuSWR()
+  
+    const [
+        onTree,
+        toggleTree
+    ]= useMenuStore((state)=>[
+        state.onTree,
+        state.toggleTree
+    ]);
+
+
     const { commonState,setGroupList }= useCommonSWR();
     const {meshState,setSelectMesh}= useMeshSWR();
     const {setZoomBox}=useCameraSWR()
@@ -173,12 +181,12 @@ const TreeList=()=>{
     }
 
     const onCloseTreeList=()=>{
-        onTreeList(false);
+        toggleTree();
     }
 
     return(
         <ModalLayout type="TreeList" 
-        onModal={menuState?.treeList.on!}
+        onModal={onTree}
         drag={drag}
         >
             <div className={`h-auto w-72 rounded-md px-4 pb-4`}>

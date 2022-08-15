@@ -134,7 +134,6 @@ export interface IMenuModal{
     x:number|string;
     y:number|string;
   }
-
 }
 
 export interface IMeasureSWR{

@@ -3,20 +3,26 @@ import { motion, LayoutGroup,AnimatePresence, useDragControls } from 'framer-mot
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalLayout from '../modal/in-canvas-modal-layout';
-import { useMenuSWR } from '../../swrs/menu.swr';
 import shortId from 'shortid';
 import RemocornTabBox from './common/remocornTabBox';
 import ActionTab from './action';
 import AnimationTab from './animation';
 import CameraTab from './camera';
 import InfoTab from './info';
+import useMenuStore from '../../store/menu.store';
 
 const Remocorn =()=>{
     const [openId,setOpenId]=useState<string>('');
-    const {menuState,onControl}=useMenuSWR()
 
+    const [
+        onControl,
+        toggleControl
+    ] = useMenuStore((state)=>[
+        state.onControl,
+        state.toggleControl
+    ])
     const closeRemocorn=()=>{
-        onControl(false);
+        toggleControl();
     }
 
     const [drag,setDrag]=useState<boolean>(true)
@@ -32,7 +38,7 @@ const Remocorn =()=>{
     
     return(
         <ModalLayout type="Control" 
-        onModal={menuState?.control.on!}
+        onModal={onControl}
         drag={drag}>
             <div 
             className="rounded-lg 

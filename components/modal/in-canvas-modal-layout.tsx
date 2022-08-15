@@ -1,6 +1,7 @@
 import { AnimatePresence, DragControls, motion, useDragControls, useMotionValue } from "framer-motion"
 import { useEffect, useState } from "react"
 import useIsMobile from "../../hooks/useIsMobile";
+import useMenuStore from "../../store/menu.store";
 import { useMenuSWR } from '../../swrs/menu.swr';
 
 interface IModalLayoutProps{
@@ -11,11 +12,26 @@ interface IModalLayoutProps{
 }
 
 const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
-    const {menuState,
-        setSimpleControlPosition,
+
+
+    const [
+        treePosition,
+        controlPosition,
+        miniControlPosition,
+        dragArea,
+        setTreeListPosition,
         setControlPosition,
-        setTreeListPosition
-    }=useMenuSWR();
+        setSimpleControlPosition
+    ]=useMenuStore((state)=>[
+        state.treePosition,
+        state.controlPosition,
+        state.miniControlPosition,
+        state.dragArea,
+
+        state.setTreePosition,
+        state.setControlPosition,
+        state.setMiniControlPosition
+    ])
     
 
     const x =useMotionValue<string|number>(0);
@@ -39,11 +55,11 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
     const staticPosition=()=>{
         switch(type){
             case 'Control':
-            return menuState?.control.position&&'right-[0%] top-[50%]'
+            return controlPosition&&'right-[0%] top-[50%]'
             case 'TreeList':
-            return menuState?.treeList.position&&'left-[0px] top-[50%] '
+            return treePosition&&'left-[0px] top-[50%] '
             case 'SimpleControl':
-            return menuState?.simpleControl.position&&'left-[50%] top-[5%]'
+            return miniControlPosition&&'left-[50%] top-[5%]'
         }
     }
     // const onDragStart=()=>{
@@ -58,25 +74,34 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
         if(onModal===undefined) return
             switch(type){
                 case 'Control':
-                    menuState?.control?.position&&onModal?
+                    controlPosition&&onModal?
                         setPosition(
-                            menuState?.control.position?.x!,
-                            menuState?.control.position?.y!):
-                        setControlPosition(x.get(),y.get());
+                            controlPosition.x!,
+                            controlPosition.y!):
+                        setControlPosition({
+                            x:x.get(),
+                            y:y.get()
+                        });
                     break;
                 case 'TreeList':
-                    menuState?.treeList?.position&&onModal?
+                    treePosition&&onModal?
                         setPosition(
-                            menuState?.treeList.position?.x!,
-                            menuState?.treeList.position?.y!):
-                        setTreeListPosition(x.get(),y.get());
+                            treePosition.x!,
+                            treePosition.y!):
+                        setTreeListPosition({
+                            x:x.get(),
+                            y:y.get()
+                        });
                     break;
                 case 'SimpleControl':
-                    menuState?.simpleControl?.position&&onModal?
+                    miniControlPosition&&onModal?
                         setPosition(
-                            menuState?.simpleControl.position?.x!,
-                            menuState?.simpleControl.position?.y!):
-                        setSimpleControlPosition(x.get(),y.get());
+                            miniControlPosition.x!,
+                            miniControlPosition.y!):
+                        setSimpleControlPosition({
+                            x:x.get(),
+                            y:y.get()
+                        });
                     break;
             }
     },[onModal])
@@ -84,17 +109,17 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
     useEffect(()=>{
         switch(type){
             case 'SimpleControl':
-                if(!menuState?.simpleControl?.position){
+                if(!miniControlPosition){
                     x.set('-50%')
                 }
                 break;
             case 'Control':
-                if(!menuState?.control?.position){
+                if(!controlPosition){
                     y.set('-50%')
                 }
                 break;
             case 'TreeList':
-                if(!menuState?.treeList?.position){
+                if(!treePosition){
                     y.set('-50%')
                 }
                 break;
@@ -108,7 +133,7 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
                 drag={drag}
                 // onDragStart={onDragStart}
                 // onDragEnd={onDragEnd}
-                dragConstraints={menuState?.dragArea}
+                dragConstraints={dragArea}
                 animate={'show'}
                 exit={'hide'}
                 variants={modalVariants}

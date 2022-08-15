@@ -3,7 +3,6 @@ import { useRef, useEffect, useState, memo } from 'react';
 import { AnimationMixer, Bone, Box3, Group, Mesh, Vector3 } from "three"
 import SwitchObject from './switch-object';
 import { Bounds, useAnimations, useBounds } from '@react-three/drei';
-import { useMenuSWR } from '../swrs/menu.swr';
 import { useAnimationSWR } from '../swrs/animation.swr';
 import { useCameraSWR } from "../swrs/camera.swr";
 import { useMeshSWR } from "../swrs/mesh.swr";
