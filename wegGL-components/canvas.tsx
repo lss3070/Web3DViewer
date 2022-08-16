@@ -306,7 +306,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                             <SelectMeshComponent/>
                             <Gizmo/>
                             <MeasureComponent/>
-                            <Stats/>
+                            {/* <Stats/> */}
                         </>
                     )}
                   {/* <gridHelper args={[1000,1000,1000]}/>  */}

@@ -27,6 +27,7 @@ export const CameraComponent =()=>{
 
             setPosition(new Vector3(0,0,cameraZ));            
         }},[meshBox]);
+
     useEffect(()=>{
         setCamera(cameraRef.current)
     },[cameraRef.current])
@@ -36,7 +37,7 @@ export const CameraComponent =()=>{
         // rotation={new Euler(0,0,0)}
         // up={new Vector3(0,0,0)}
         ref={cameraRef} 
-        //  makeDefault// mesh깨짐
+         makeDefault// mesh깨짐
         position={position} 
         near={0.1}
         far={200000}
