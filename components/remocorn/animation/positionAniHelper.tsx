@@ -19,7 +19,7 @@ export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
         setPosition,
         setPositionSpeed
     ]=useAnimationStore((state)=>[
-        state.onPostion,
+        state.onPosition,
         state.setOnPosition,
         state.setPosition,
         state.setPositionSpeed
