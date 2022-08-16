@@ -3,14 +3,12 @@ import { Tree } from "antd";
 import React, { useEffect, useRef, useState, ReactChild, ReactNode, Children } from "react";
 import { Box3, Group, Mesh } from "three"
 import { Key } from "antd/lib/table/interface";
-import { useMeshSWR } from "../../swrs/mesh.swr";
 import { CustomDataNode } from "../../global/interfaces/app.interface";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  EventDataNode } from "antd/lib/tree";
 import ModalLayout from "../modal/in-canvas-modal-layout";
 import _ from "lodash";
-import { useCameraSWR } from '../../swrs/camera.swr';
 import { CustomNode } from "../../global/interfaces/tree.interface";
 import TreeTitle from "./tree-title";
 import GetParentKey from "../../utils/tree/getParentKey";
@@ -22,6 +20,9 @@ import useMenuStore from "../../store/menu.store";
 import useDarkStore from "../../store/dark.store";
 import useTreeStore from "../../store/tree.store";
 import useSceneStore from '../../store/scene.store';
+import useMeshStore from "../../store/mesh.store";
+import { stat } from "fs";
+import useCameraStore from '../../store/camera.store';
 
 const TreeList=()=>{
   
@@ -36,10 +37,21 @@ const TreeList=()=>{
     const darkMode =useDarkStore((state)=>state.darkMode)
     const [gropupList,setGroupList] = useTreeStore((state)=>[
         state.groupList,
-        state.setGroupList])
+        state.setGroupList]);
     const scene = useSceneStore((state)=>state.scene)
-    const {meshState,setSelectMesh}= useMeshSWR();
-    const {setZoomBox}=useCameraSWR()
+
+    const [
+        staticMeshList,
+        setSelectMesh,
+        selectMesh
+    
+    ]=useMeshStore((state)=>[
+        state.staticMeshList,
+        state.setSelectMesh,
+        state.selectMesh
+    ])
+
+    const setZoomBox=useCameraStore((state)=>state.setZoomBox)
 
     const [treeData,setTreeData]=useState<CustomNode[]>();
     const [expandedKeys,setExpandedKeys]=useState<(string)[]>();
@@ -96,7 +108,7 @@ const TreeList=()=>{
         ,key:string|number)=>{
             const uuid = key as string;
            
-            const mesh= meshState?.staticMeshList.find((mesh)=>mesh.current.uuid===uuid);
+            const mesh= staticMeshList?.find((mesh)=>mesh.current.uuid===uuid);
 
             if(mesh===undefined)return
             setSelectMesh(mesh)
@@ -125,8 +137,8 @@ const TreeList=()=>{
 
 
     useEffect(()=>{
-        setSelectList([meshState?.selectMesh?.current.uuid!]);
-    },[meshState?.selectMesh])
+        setSelectList([selectMesh?.current.uuid!]);
+    },[selectMesh])
 
     //검색시 변경
     useEffect(()=>{
@@ -161,7 +173,7 @@ const TreeList=()=>{
         nativeEvent: MouseEvent;
     })=>{
         if(!info.selected){
-            meshState?.selectMesh?.current.uuid!==info.node.key&&setSelectMesh(meshState?.selectMesh!)
+            selectMesh?.current.uuid!==info.node.key&&setSelectMesh(selectMesh!)
         }
         
     })

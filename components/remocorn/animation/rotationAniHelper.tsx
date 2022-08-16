@@ -3,7 +3,7 @@ import { Button, Col, Input, Row, Slider } from "antd"
 import { ChangeEvent, useState } from "react";
 import { Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
-import { useAnimationSWR } from "../../../swrs/animation.swr";
+import useAnimationStore from "../../../store/animation.store";
 import MiniButton from "../../common/mini-button";
 import SliderItem from "../common/sliderItem";
 
@@ -13,7 +13,17 @@ interface RoationProps extends Helper{
 
 export const RotationAnimationHelper=({}:RoationProps)=>{
 
-    const {animationState,onRotation,setRotationSpeed}=useAnimationSWR();
+    const [
+        onRotation,
+        setOnRotation,
+        setRotationSpeed
+    ]=useAnimationStore((state)=>[
+        state.onRotation,
+        state.setOnRotation,
+        state.setRotationSpeed
+    ])
+
+    
     const [localRotationSpeed,setLocalRotationSpeed]=useState<Vector3>(new Vector3())
     
     const setXSpeed=(e:number)=>{
@@ -29,7 +39,7 @@ export const RotationAnimationHelper=({}:RoationProps)=>{
         setLocalRotationSpeed(new Vector3(localRotationSpeed.x,localRotationSpeed.y,e));
     }
     const onClickEvent=()=>{
-        onRotation(!animationState?.onRotation!)
+        setOnRotation(!onRotation!)
         setRotationSpeed(localRotationSpeed)
     }
 
@@ -51,7 +61,7 @@ export const RotationAnimationHelper=({}:RoationProps)=>{
             min={-10}
             value={localRotationSpeed.y}
             sliderChangeEvent={setYSpeed}
-            inputChangeEvent={(e)=>setXSpeed(+e.target.value)}
+            inputChangeEvent={(e)=>setYSpeed(+e.target.value)}
             />
             <SliderItem
             label='z'
@@ -63,7 +73,7 @@ export const RotationAnimationHelper=({}:RoationProps)=>{
             />
              <div className="flex items-center justify-center">
                 <MiniButton onClick={onClickEvent}>
-                    {animationState?.onPostion?`stop`:`action`}
+                    {onRotation?`stop`:`action`}
                 </MiniButton>
             </div>
         </div>

@@ -3,7 +3,7 @@ import { Button, Col, Input, Row,Slider } from "antd"
 import { useState, useEffect, ChangeEvent } from 'react';
 import { Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
-import { useAnimationSWR } from "../../../swrs/animation.swr";
+import useAnimationStore from "../../../store/animation.store";
 import SliderItem from "../common/sliderItem";
 
 interface IScaleAnimationProps extends Helper{
@@ -13,7 +13,19 @@ interface IScaleAnimationProps extends Helper{
 export const ScaleAnimationHelper=({scale}:IScaleAnimationProps)=>{
 
 
-    const {animationState,onScale,setScale,setScaleSpeed}=useAnimationSWR();
+    const [
+        onScale,
+        setOnScale,
+        setScale,
+        setScaleSpeed
+    ]=useAnimationStore((state)=>[
+        state.onScale,
+        state.setOnScale,
+        state.setScale,
+        state.setScaleSpeed
+    ])
+
+    
     const [localScale,setLocalScale]=useState<Vector3>(scale);
     const [localScaleSpeed,setLocalScaleSpeed]=useState<Vector3>(new Vector3());
 
@@ -102,10 +114,10 @@ export const ScaleAnimationHelper=({scale}:IScaleAnimationProps)=>{
             <Row>
                 <Col>
                     <Button onClick={()=>{
-                        onScale(!animationState?.onScale!)
+                        setOnScale(!onScale!)
                         setScale(localScale)
                         setScaleSpeed(localScaleSpeed)
-                    }}>{animationState?.onScale?`stop`:`action`}</Button>
+                    }}>{onScale?`stop`:`action`}</Button>
                 </Col>
             </Row>
         </div>

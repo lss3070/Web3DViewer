@@ -3,11 +3,20 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, useEffect, useState, ChangeEvent } from 'react';
 import { Vector3,PerspectiveCamera, Mesh } from "three";
 import _ from 'lodash'
-import { useCameraSWR } from "../swrs/camera.swr";
+import useCameraStore from '../store/camera.store';
 
 export const ControlComponent=()=>{
-    const { cameraState,setControlRef,setOnZoom
-    }= useCameraSWR();
+
+    const [zoomBox,onZoom,setOnZoom]=useCameraStore((state)=>[
+        state.zoomBox,
+        state.onZoom,
+        state.setOnZoom
+    ])
+
+
+    const [target]=useCameraStore((state)=>[state.target])
+
+    const setControlRef=useCameraStore((state)=>state.setControlRef)
 
     const [zoomTarget,setZoomTarget]=useState<Vector3>(new Vector3());
     const [zoomPosition,setZoomPosition]=useState<Vector3>(new Vector3());
@@ -22,20 +31,17 @@ export const ControlComponent=()=>{
     // },[cameraState?.moveMode])
 
     useEffect(()=>{
-      
-        setControlRef(controlRef)
+        setControlRef(controlRef.current)
     },[controlRef]);
 
-
-
     useEffect(()=>{
-        if(!cameraState?.zoomBox) return
+        if(!zoomBox) return
        
-        const center =cameraState.zoomBox.target?cameraState.zoomBox.target:
-        cameraState?.zoomBox.box?.getCenter(new Vector3())
+        const center =zoomBox.target?zoomBox.target:
+        zoomBox.box?.getCenter(new Vector3())
 
-        if(!cameraState.zoomBox.position){
-            const size= cameraState?.zoomBox?.box?.getSize(new Vector3());
+        if(!zoomBox.position){
+            const size= zoomBox?.box?.getSize(new Vector3());
             const maxSize = Math.max(size!.x,size!.y,size!.z);
             const fitHeightDistance= maxSize/(2*Math.atan((Math.PI*controlRef.current.object.fov)/360));
             const fitWidthDistance = fitHeightDistance / controlRef.current.object.aspect;
@@ -61,7 +67,7 @@ export const ControlComponent=()=>{
 
             setZoomPosition(position.copy(controlRef.current.target).sub(direction))
         }else{
-            setZoomPosition(cameraState.zoomBox.position)
+            setZoomPosition(zoomBox.position)
         }
       
         // setZoomPosition(position.copy(controlRef.current.target).sub(direction))
@@ -69,12 +75,12 @@ export const ControlComponent=()=>{
         // setZoomPosition(cameraState?.selectMeshBox.max)
          
         setOnZoom(true);
-    },[cameraState?.zoomBox])
+    },[zoomBox])
 
 
     useFrame((e,q)=>{
         const step=0.05;
-        if( cameraState?.onZoom){
+        if( onZoom){
             try{
                 
                 if(
@@ -99,9 +105,6 @@ export const ControlComponent=()=>{
         }
     });
 
-    useEffect(()=>{
-
-    },[])
     
 
     return(
@@ -112,7 +115,7 @@ export const ControlComponent=()=>{
         // onChange={onChangeEvent}
         // onEnd={onChangeEvent}
         ref={controlRef} 
-        target={cameraState?.target}
+        target={target}
         makeDefault
         />
     )

@@ -2,11 +2,15 @@ import { useTexture } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
 import { useState } from 'react';
 import THREE, { BackSide, FrontSide, DoubleSide, DepthModes } from 'three';
-import { useMeshSWR } from '../swrs/mesh.swr';
 import useIsMobile from '../hooks/useIsMobile';
+import useMeshStore from '../store/mesh.store';
 
 const SkyBox=()=>{
-    const {meshState,setInitSelectMesh,setHoverMesh}=useMeshSWR()
+
+    const [setInitSelectMesh,setHoverMesh]=useMeshStore((state)=>[
+        state.setInitSelectMesh,
+        state.setHoverMesh
+    ])
     const isMobile =useIsMobile()
     const {scene}= useThree()
 

@@ -3,7 +3,7 @@ import { Col, Row, Slider } from "antd";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Euler, Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
-import { useMeshSWR } from "../../../swrs/mesh.swr";
+import useMeshStore from "../../../store/mesh.store";
 import SliderItem from "../common/sliderItem";
 
 interface IRotationHelper extends Helper{
@@ -14,12 +14,12 @@ interface IRotationHelper extends Helper{
 
 export const RotationHelper=({}:IRotationHelper)=>{
 
-    const {meshState}=useMeshSWR()
+    const selectMesh =useMeshStore((state)=>state.selectMesh)
     const [rotation,setRotation]=useState<Euler>(new Euler());
     
     const InitRosition=()=>{
-        if(meshState?.selectMesh){
-            setRotation(meshState.selectMesh.current.rotation)
+        if(selectMesh){
+            setRotation(selectMesh.current.rotation)
         }
     }
 
@@ -27,22 +27,22 @@ export const RotationHelper=({}:IRotationHelper)=>{
 
     const setX=(e:number)=>{
         e = isNaN(e)?0:e;
-        if(meshState?.selectMesh){
-            meshState.selectMesh.current.rotation.x=e
+        if(selectMesh){
+            selectMesh.current.rotation.x=e
         }
         setRotation(new Euler(e,rotation.y,rotation.z))
     }
     const setY=(e:number)=>{
         e = isNaN(e)?0:e;
-        if(meshState?.selectMesh){
-            meshState.selectMesh.current.rotation.y=e
+        if(selectMesh){
+            selectMesh.current.rotation.y=e
         }
         setRotation(new Euler(rotation.x,e,rotation.z))
     }
     const setZ=(e:number)=>{
         e = isNaN(e)?0:e;
-        if(meshState?.selectMesh){
-            meshState.selectMesh.current.rotation.z=e
+        if(selectMesh){
+            selectMesh.current.rotation.z=e
         }
         setRotation(new Euler(rotation.x,rotation.y,e))
     }
@@ -53,7 +53,7 @@ export const RotationHelper=({}:IRotationHelper)=>{
 
     useEffect(()=>{
         InitRosition()
-    },[meshState?.selectMesh])
+    },[selectMesh])
 
     return(
         <div className="w-full">

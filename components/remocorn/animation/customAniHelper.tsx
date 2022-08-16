@@ -1,32 +1,40 @@
 import { useAnimations } from "@react-three/drei";
 import { AnimationClip, AnimationMixer } from "three";
 import { Helper } from "../../../global/interfaces/app.interface"
-import { useMeshSWR } from '../../../swrs/mesh.swr';
-import { useAnimationSWR } from '../../../swrs/animation.swr';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from "framer-motion";
 import shortId from 'shortid';
+import useMeshStore from "../../../store/mesh.store";
+import useAnimationStore from '../../../store/animation.store';
 
 
 const CustomAniHelper=({}:Helper)=>{
-const {meshState}=useMeshSWR()
-const {animationState,setCustomAnimation}=useAnimationSWR()
+    
+    const selectMesh = useMeshStore((state)=>state.selectMesh)
+
+
+    const [animationList,
+        customAnimation,
+        setCustomAnimation]=useAnimationStore((state)=>[
+            state.customAnimationList,
+            state.customAnimation,
+            state.setCustomAnimation])
 
 
     const toggleClick=(name:string)=>{
 
-        if(animationState?.customAnimation?.cur===''){
+        if(customAnimation?.cur===''){
             setCustomAnimation({
                 pre:'',
                 cur:name
             })
         }else{
-            animationState?.customAnimation?.cur===name?setCustomAnimation({
+            customAnimation?.cur===name?setCustomAnimation({
                 pre:name,
                 cur:''
             }):
             setCustomAnimation({
-                pre:animationState?.customAnimation?.cur!,
+                pre:customAnimation?.cur!,
                 cur:name
             })
         }
@@ -38,7 +46,7 @@ const {animationState,setCustomAnimation}=useAnimationSWR()
     return(
         <div>
             {
-                meshState?.animationList?.map((item:AnimationClip)=>{
+                animationList?.map((item:AnimationClip)=>{
                   return  <div className="grid grid-cols-11" key={shortId.generate()}
                   >
                         <div className=" select-none col-span-10">{item.name}</div>
@@ -52,7 +60,7 @@ const {animationState,setCustomAnimation}=useAnimationSWR()
                             }}
                             // whileTap={{rotate: 360}}  
                             onClick={()=>toggleClick(item.name)}>
-                                {animationState?.customAnimation?.cur===item.name?
+                                {customAnimation?.cur===item.name?
                                 (<FontAwesomeIcon
                                     icon={['fas','stop']}
                                     className="w-5 h-5 text-gray-600 cursor-pointer"/>

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import {HexColorPicker} from 'react-colorful'
 import {   Color, Material, Mesh } from 'three';
 import { Helper } from '../../../global/interfaces/app.interface';
-import { useMeshSWR } from '../../../swrs/mesh.swr';
 import { isArray } from 'lodash';
 import { SelectMeshComponent } from '../../../wegGL-components/outLineMesh';
+import useMeshStore from '../../../store/mesh.store';
 
 
 interface MaterialInfo{
@@ -28,7 +28,7 @@ export const ColorHelper=(
 }:IColorHelperProps
     )=>{
 
-    const {meshState,setSelectMesh}=useMeshSWR()
+    const selectMesh = useMeshStore((state)=>state.selectMesh)
 
     const [color,setColor] =useState<string>('#ffffff')
     const [materialList,setMaterialList]=useState<Material[]>([]);
@@ -36,8 +36,8 @@ export const ColorHelper=(
     const [selectMaterial,setSelectMaterial]=useState<Material>();
 
     const InitMaterial=()=>{
-        if(meshState?.selectMesh){
-            const mesh = meshState?.selectMesh.current as Mesh
+        if(selectMesh){
+            const mesh = selectMesh.current as Mesh
             
             isArray(mesh.material)? 
             setMaterialList(mesh.material)
@@ -53,7 +53,7 @@ export const ColorHelper=(
 
     useEffect(()=>{
         InitMaterial()
-    },[meshState?.selectMesh])
+    },[selectMesh])
 
     useEffect(()=>{
         InitMaterial()

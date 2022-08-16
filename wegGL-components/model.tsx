@@ -3,9 +3,10 @@ import { useRef, useEffect, useState, memo } from 'react';
 import { AnimationMixer, Bone, Box3, Group, Mesh, Vector3 } from "three"
 import SwitchObject from './switch-object';
 import { Bounds, useAnimations, useBounds } from '@react-three/drei';
-import { useAnimationSWR } from '../swrs/animation.swr';
-import { useCameraSWR } from "../swrs/camera.swr";
-import { useMeshSWR } from "../swrs/mesh.swr";
+import useMeshStore from '../store/mesh.store';
+import useCameraStore from '../store/camera.store';
+import useAnimationStore from '../store/animation.store';
+import _ from 'lodash';
 
 interface IObjectComponentProps{
     group:Group;
@@ -14,46 +15,57 @@ interface IObjectComponentProps{
 
 const ModelComponent=({group,bone}:IObjectComponentProps)=>{
 
-    const {animationState,onPosition,onRotation}=useAnimationSWR();
-    const {meshState}=useMeshSWR()
+    const [onPosition,onRotation,
+        position,
+        positionSpeed,
+        rotationSpeed,
+        customAnimation,
+        setOnPosition,
+    ]=useAnimationStore((state)=>[
+        state.onPosition,
+        state.onRotation,
+        state.position,
+        state.positionSpeed,
+        state.rotationSpeed,
+        state.customAnimation,
+        state.setOnPosition
+    ])
+    const {selectMesh} = useMeshStore((state)=>state)
+    const [setMeshBox,setZoomBox] = useCameraStore((state)=>[state.setMeshBox,state.setZoomBox])
     const ref=useRef<Group>(null);
     const {actions}=useAnimations(group.animations,ref)
     const [onAnimation,setOnAnimation]=useState<boolean>(false);
-    const {setMeshBox}=useCameraSWR();
     const api = useBounds()
-    const three = useThree();
 
     const [curSelectMesh,setCurSelectMesh]=useState<Mesh>();
 
     useEffect(()=>{
-        actions[animationState?.customAnimation?.pre!]?.stop();
-        actions[animationState?.customAnimation?.cur!]?.play();
-    },[animationState?.customAnimation]);
+        actions[customAnimation?.pre!]?.stop();
+        actions[customAnimation?.cur!]?.play();
+    },[customAnimation]);
 
 
     useEffect(()=>{
         const box = new Box3().setFromObject(group);
        
         setMeshBox(box);
-
+        setZoomBox({
+            box:_.cloneDeep(box)
+        })
     },[group])
 
 
     useEffect(()=>{
-        const value= animationState?.onPostion||
-        animationState?.onRotation||
-        animationState?.onScale
+        const value= onPosition||onRotation
 
         if(value){
             setOnAnimation(value)
-            setCurSelectMesh(meshState?.selectMesh?.current as Mesh)
+            setCurSelectMesh(selectMesh?.current as Mesh)
         }else{
             setOnAnimation(false)
             setCurSelectMesh(undefined)
         }
-    },[animationState?.onPostion,
-        animationState?.onRotation,
-        animationState?.onScale
+    },[onPosition,onRotation
     ])
 
 
@@ -66,47 +78,40 @@ const ModelComponent=({group,bone}:IObjectComponentProps)=>{
 
 
     const positionAnimation=()=>{
-        if(animationState?.onPostion){
+        if(onPosition){
+            console.log('~~')
             let count=0
-            if(curSelectMesh?.position.x!<animationState.position.x){
+            if(curSelectMesh?.position.x!<position?.x!){
                 curSelectMesh?.position.setX(
                     curSelectMesh?.position.x
-                    +animationState.positionSpeed.x)
+                    +positionSpeed?.x!)
                     count++;
             }
                 
-            if(curSelectMesh?.position.y!<animationState.position.y){
+            if(curSelectMesh?.position.y!<position?.y!){
                 curSelectMesh?.position.setY(
                     curSelectMesh?.position.y
-                    +animationState.positionSpeed.y)
+                    +positionSpeed?.y!)
                     count++;
             }
                 
-            if(curSelectMesh?.position.z!<animationState.position.z){
+            if(curSelectMesh?.position.z!<position?.z!){
                 curSelectMesh?.position.setZ(
                     curSelectMesh?.position.z
-                    +animationState.positionSpeed.z)
+                    +positionSpeed?.z!)
                     count++
             }
-            count===0&&onPosition(false)
+            count===0&&setOnPosition(false)
         }
-
-
     }
     const roationAnimation=()=>{
-        if(animationState?.onRotation){
+        if(onRotation){
             curSelectMesh?.rotation.set(
-                curSelectMesh.rotation.x+animationState.rotationSpeed.x,
-                curSelectMesh.rotation.y+animationState.rotationSpeed.y,
-                curSelectMesh.rotation.z+animationState.rotationSpeed.z);
+                curSelectMesh.rotation.x+rotationSpeed?.x!,
+                curSelectMesh.rotation.y+rotationSpeed?.y!,
+                curSelectMesh.rotation.z+rotationSpeed?.z!);
         }
     }
-
-    useEffect(()=>{
-        console.log(three.gl);
-
-    },[])
-
 
     return(
             <group ref={ref} dispose={null}

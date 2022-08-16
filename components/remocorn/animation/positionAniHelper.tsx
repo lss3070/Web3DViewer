@@ -3,9 +3,9 @@ import { Button, Col, Input, Row,Slider } from "antd";
 import { ChangeEvent, useState } from "react";
 import { Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
-import { useAnimationSWR } from "../../../swrs/animation.swr";
 import MiniButton from "../../common/mini-button";
 import SliderItem from "../common/sliderItem";
+import useAnimationStore from '../../../store/animation.store';
 
 
 interface IPositionAnimationProps extends Helper{
@@ -13,7 +13,17 @@ interface IPositionAnimationProps extends Helper{
 }
 
 export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
-    const {animationState,onPosition,setPosition,setPositionSpeed}= useAnimationSWR()
+    const [
+        onPosition,
+        setOnPosition,
+        setPosition,
+        setPositionSpeed
+    ]=useAnimationStore((state)=>[
+        state.onPostion,
+        state.setOnPosition,
+        state.setPosition,
+        state.setPositionSpeed
+    ])
     
     const [localPosition,setLocalPosition]=useState<Vector3>(new Vector3());
     const [localPositionSpeed,setLocalPositionSpeed]=useState<Vector3>(new Vector3())
@@ -45,7 +55,7 @@ export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
     }
 
     const onClickEvent=()=>{
-        onPosition(!animationState?.onPostion!)
+        setOnPosition(!onPosition!)
         setPosition(localPosition)
         setPositionSpeed(localPositionSpeed)
     }
@@ -108,7 +118,7 @@ export const PositionAnimationHelper=({position}:IPositionAnimationProps)=>{
             />
             <div className="flex items-center justify-center">
                 <MiniButton onClick={onClickEvent}>
-                    {animationState?.onPostion?`stop`:`action`}
+                    {onPosition?`stop`:`action`}
                 </MiniButton>
                 {/* <Button onClick={()=>{
                     onPosition(!animationState?.onPostion!)

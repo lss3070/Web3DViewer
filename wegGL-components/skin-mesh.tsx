@@ -3,9 +3,8 @@ import { useEffect, useRef } from "react";
 import { SkinnedMesh } from "three"
 import useIsMobile from "../hooks/useIsMobile";
 import useMeasureStore from "../store/measure.store";
-import { useMeshSWR } from "../swrs/mesh.swr";
+import useMeshStore from "../store/mesh.store";
 import { MaterialElements } from "../utils/materialElements"
-import { MeshHtmlComponent } from "./mesh-html";
 
 interface ISkinnedMeshProps{
     skinnedMeshItem:SkinnedMesh
@@ -13,10 +12,24 @@ interface ISkinnedMeshProps{
 
 const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
 
-    const [onMeasure,setPoint]=useMeasureStore(state=>[
+    const [
+        onMeasure,
+        setPoint
+    ]=useMeasureStore(state=>[
         state.onMeasure,
         state.setPoint]);
-    const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
+
+    const [
+        onWire,
+        setHoverMesh,
+        setSelectMesh,
+        setStaticMeshList
+    ]= useMeshStore((state)=>[
+        state.onWire,
+        state.setHoverMesh,
+        state.setSelectMesh,
+        state.setStaticMeshList
+    ])
 
     const isMobile = useIsMobile()
     
@@ -62,7 +75,7 @@ const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
                     
                     {...skinnedMeshItem}
                     >
-                        {MaterialElements(skinnedMeshItem.material,meshState?.onWire!)}
+                        {MaterialElements(skinnedMeshItem.material,onWire)}
                 </skinnedMesh>
                     {/* <MeshHtmlComponent 
                                 centerPosition={skinnedMeshItem.geometry.boundingSphere?.center!}

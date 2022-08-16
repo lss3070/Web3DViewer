@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { MouseEventHandler, useEffect, useState } from "react";
-import { useMeshSWR } from "../../swrs/mesh.swr";
 
 interface MiniCircleButtonProps{
     children: JSX.Element|string,

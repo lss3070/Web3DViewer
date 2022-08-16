@@ -1,28 +1,34 @@
-import { Html, PointMaterial, useBounds } from "@react-three/drei";
-import { useEffect, useMemo, useState, useRef, memo } from 'react';
-import { BackSide, Box3, Color, DoubleSide, FrontSide, Material, Matrix4, Mesh, PlaneGeometry, Vector3,EdgesGeometry, MeshBasicMaterial, MeshPhongMaterial, MeshStandardMaterial, MeshStandardMaterialParameters, MeshToonMaterial, Plane } from "three";
 
-import { Outline } from '@react-three/postprocessing';
-import { MeshStandardMaterialProps, ThreeEvent, useFrame } from "@react-three/fiber";
-import { useAnimationSWR } from "../swrs/animation.swr";
-import { useMeshSWR } from "../swrs/mesh.swr";
-import { MeshHtmlComponent } from "./mesh-html";
-import { MeshMode } from "../global/interfaces/swr.interface";
-import { useCameraSWR } from '../swrs/camera.swr';
+import { useEffect,  useRef } from 'react';
+import { ThreeEvent } from "@react-three/fiber";
+
 import { MaterialElements } from "../utils/materialElements";
 import useIsMobile from '../hooks/useIsMobile';
 import useMeasureStore from "../store/measure.store";
+import useMeshStore from "../store/mesh.store";
 interface IMeshProps{
     mesh:THREE.Mesh
 }
 
 export const MeshComponent=({mesh}:IMeshProps)=>{
     
-    const { meshState,setHoverMesh,setSelectMesh,setStaticMeshList }= useMeshSWR();
 
     const [onMeasure,setPoint]=useMeasureStore(state=>[
         state.onMeasure,
         state.setPoint]);
+
+    const [
+        onWire,
+        setHoverMesh,
+        setSelectMesh,
+        setStaticMeshList
+    ]= useMeshStore((state)=>[
+        state.onWire,
+        state.setHoverMesh,
+        state.setSelectMesh,
+        state.setStaticMeshList
+    ])
+    
     const isMobile = useIsMobile()
 
     const meshRef=useRef<any>();
@@ -84,7 +90,7 @@ export const MeshComponent=({mesh}:IMeshProps)=>{
             // position={mesh.position}
             // quaternion={mesh.quaternion}
             >
-                {MaterialElements(mesh.material,meshState?.onWire!)}
+                {MaterialElements(mesh.material,onWire)}
             </mesh>
                     {/* <MeshHtmlComponent 
                     centerPosition={mesh.geometry.boundingSphere?.center!}

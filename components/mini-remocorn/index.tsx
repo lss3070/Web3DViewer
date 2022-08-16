@@ -4,23 +4,42 @@ import { useRef, useState, useEffect, MouseEventHandler } from 'react';
 import ModalLayout from '../modal/in-canvas-modal-layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Front from '../../assets/cube-front.svg'
-
-import { useCameraSWR } from '../../swrs/camera.swr';
 import { PerspectiveCamera, Vector3 } from 'three'
 import _ from 'lodash'
-import { useMeshSWR } from '../../swrs/mesh.swr';
 import useIsMobile from '../../hooks/useIsMobile'
 import MiniCircleButton from '../common/mini-circle-button'
 import CameraPositionBox, { CustomCameraFocus } from './camera-position-box';
-import { useBounds } from '@react-three/drei';
 import useMeasureStore from '../../store/measure.store';
 import useMenuStore from '../../store/menu.store';
+import useMeshStore from '../../store/mesh.store';
+import useCameraStore from '../../store/camera.store';
 
 
 const MiniControls=()=>{
-    const {cameraState,setZoomBox}=useCameraSWR()
 
-    const {meshState,setOnText,setOnWire,setHoverMesh,setInitSelectMesh}=useMeshSWR()
+    const [
+        meshBox,
+        control,
+        camera,
+        setZoomBox
+    ]=useCameraStore((state)=>[
+        state.meshBox,
+        state.control,
+        state.camera,
+        state.setZoomBox
+    ])
+
+    const [
+        onWire,
+        toggleWire,
+        setHoverMesh,
+        setInitSelectMesh
+    ]=useMeshStore((state)=>[
+        state.onWire,
+        state.setToggleWire,
+        state.setHoverMesh,
+        state.setInitSelectMesh
+    ])
     const [measure,toggleMeasure]=useMeasureStore((state)=>[
         state.onMeasure,state.toggleMeasure
     ]);
@@ -41,12 +60,12 @@ const MiniControls=()=>{
 
     const cameraInit=()=>{
       
-        const size = cameraState!.meshBox.getSize(new Vector3());
+        const size = meshBox.getSize(new Vector3());
         const maxDim = Math.max(size.x,size.y,size.z);
-        const fov = (cameraState?.camera?.current as PerspectiveCamera).fov*(Math.PI/180);
+        const fov = camera?.fov!*(Math.PI/180);
         const cameraZ = Math.abs(maxDim/4*Math.tan(fov*2));
         
-        cameraState?.camera?.current.up.set(0,1,0)
+        camera?.up.set(0,1,0)
         setZoomBox({
             target:new Vector3(0,0,0),
             position:new Vector3(0,0,cameraZ)
@@ -54,7 +73,7 @@ const MiniControls=()=>{
     }
     const onFitZoom=()=>{
         setZoomBox({
-            box:_.cloneDeep(cameraState?.meshBox!)
+            box:_.cloneDeep(meshBox)
         })
     }
 
@@ -80,12 +99,8 @@ const MiniControls=()=>{
         }
     },[onCameraPositionList])
 
-    const onWire=()=>{
-        setOnWire(!meshState?.onWire!)
-    }
-    const onText=()=>{
-        setOnText(!meshState?.onText!)
-    }
+
+
     const onMeasure=()=>{
         if(!measure){
             setInitSelectMesh();
@@ -154,7 +169,7 @@ const MiniControls=()=>{
                 {/* <MiniCircleButton onClick={onText} pressState={meshState?.onText}>
                     {'Text'}
                 </MiniCircleButton> */}
-                <MiniCircleButton onClick={onWire} pressState={meshState?.onWire}>
+                <MiniCircleButton onClick={toggleWire} pressState={onWire}>
                     {'Wire'}
                 </MiniCircleButton>
                 <MiniCircleButton onClick={onMeasure} pressState={measure}>

@@ -1,9 +1,6 @@
 import { GizmoHelper, GizmoViewcube, GizmoViewport, TrackballControls } from "@react-three/drei"
-import { Canvas } from "@react-three/fiber"
 import { Suspense, useEffect, useRef } from "react"
-import { useCameraSWR } from '../swrs/camera.swr';
 import {useState} from 'react';
-import { Vector3 } from 'three';
 import useWindowSize from '../hooks/useWindowSize';
 import useIsMobile from '../hooks/useIsMobile';
 
@@ -23,7 +20,8 @@ const Gizmo=()=>{
             
             alignment={'bottom-left'} 
             margin={[margin,margin+20]} 
-            autoClear={false} renderPriority={2}
+            autoClear={false} 
+            renderPriority={2}
             >
                 <GizmoViewcube 
                 color="white" 

@@ -3,7 +3,7 @@ import { Mesh } from "three";
 import { mergeVertices } from "three-stdlib";
 import { Helper } from "../../../global/interfaces/app.interface";
 import useFileStore from "../../../store/file.store";
-import { useMeshSWR } from "../../../swrs/mesh.swr";
+import useMeshStore from "../../../store/mesh.store";
 import NumberWithComma from "../../../utils/numberWithCommas";
 
 
@@ -21,7 +21,7 @@ type MeshInfoType={
 const InfoHelper=({}:Helper)=>{
 
     const fileInfo=useFileStore((state)=>state.fileInfo)
-    const {meshState}=useMeshSWR();
+    const selectMesh = useMeshStore((state)=>state.selectMesh)
 
     const [meshInfo,setMeshInfo]=useState<MeshInfoType>()
 
@@ -38,7 +38,7 @@ const InfoHelper=({}:Helper)=>{
     }
     const onSelectMesh=()=>{
 
-        const mesh = meshState?.selectMesh?.current as Mesh
+        const mesh = selectMesh?.current as Mesh
 
         setMeshInfo({
             name:mesh.name===''?'(no name)':mesh.name,
@@ -52,8 +52,8 @@ const InfoHelper=({}:Helper)=>{
 
     useEffect(()=>{
 
-        meshState?.selectMesh?onSelectMesh():onAllMesh()
-    },[meshState?.selectMesh]);
+        selectMesh?onSelectMesh():onAllMesh()
+    },[selectMesh]);
     
     return(
         <div className="w-full h-full px-2 grid select-none

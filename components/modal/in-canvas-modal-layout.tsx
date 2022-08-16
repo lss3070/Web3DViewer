@@ -1,8 +1,6 @@
 import { AnimatePresence, DragControls, motion, useDragControls, useMotionValue } from "framer-motion"
 import { useEffect, useState } from "react"
-import useIsMobile from "../../hooks/useIsMobile";
 import useMenuStore from "../../store/menu.store";
-import { useMenuSWR } from '../../swrs/menu.swr';
 
 interface IModalLayoutProps{
     type:'TreeList'|'Control'|'Detail'|'SimpleControl'
@@ -12,7 +10,6 @@ interface IModalLayoutProps{
 }
 
 const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=>{
-
 
     const [
         treePosition,

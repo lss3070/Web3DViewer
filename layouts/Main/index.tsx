@@ -11,8 +11,6 @@ import { CanvasComponent } from "../../wegGL-components/canvas";
 import Header from "../Header/header";
 import LoadingComponent from "./loading";
 import Guide from "./guide";
-import { useCameraSWR } from '../../swrs/camera.swr';
-import { useMeasureSWR } from '../../swrs/measure.swr';
 import DeleteKeyPress from "../../hooks/useKeyPress";
 import useMeasureStore from '../../store/measure.store';
 import useFileStore from "../../store/file.store";
@@ -20,7 +18,6 @@ import useFileStore from "../../store/file.store";
 
 const Main = () => {
 
-  const {cameraState,setOnZoom}=useCameraSWR()
   const [onMeasure,deleteSelectMeasure]=useMeasureStore(state=>[state.onMeasure,state.deleteMeasure])
   const fileLoad=useFileStore((state)=>state.fileLoad)
 

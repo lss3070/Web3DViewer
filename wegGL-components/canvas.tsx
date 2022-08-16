@@ -1,21 +1,14 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect, useMemo, Dispatch, SetStateAction, useLayoutEffect } from 'react';
 import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip, SkinnedMesh, PlaneHelper, BufferAttribute } from 'three';
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
-import { FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
+
 import {Rhino3dmLoader,} from 'three/examples/jsm/loaders/3DMLoader'
-import {STLLoader} from 'three/examples/jsm/loaders/STLLoader'
-import {PLYLoader} from 'three/examples/jsm/loaders/PLYLoader'
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {ThreeMFLoader} from 'three/examples/jsm/loaders/3MFLoader'
-import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader';
-import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader';
 
 import { CameraComponent } from "./camera"
 import { LightComponent } from "./light";
 
 import fs from 'fs';
-import { useCameraSWR } from "../swrs/camera.swr";
 import { CustomDataNode } from "../global/interfaces/app.interface";
 import { ControlComponent } from "./control";
 import { MeshGroupComponent } from "./mesh-group";
@@ -24,18 +17,10 @@ import { Bounds, Box, PerspectiveCamera, Sky, Stats, TrackballControls, useGLTF,
 import Gizmo from './gizmo';
 import SkyBox from './sky-box';
 import CustomGLTFLoader from '../utils/loaders/gltfLoader';
-import { useMeshSWR } from '../swrs/mesh.swr';
 import CustomOBJLoader from '../utils/loaders/objLoader';
 import CustomFBXLoader from '../utils/loaders/fbxLoader';
 import CustomSTLLoader from '../utils/loaders/stlLoader';
 import CustomPLYLoader from '../utils/loaders/plyLoader';
-
-import { SkeletonUtils } from 'three-stdlib';
-import Point from './measure/sprite';
-import { useMeasureSWR } from '../swrs/measure.swr';
-
-import SpriteComponent from './measure/sprite';
-import LineComponent from './measure/line';
 import MeasureComponent from './measure/measure';
 import ModelComponent from './model';
 import CustomGLBLoader from '../utils/loaders/glbLoader';
@@ -44,6 +29,9 @@ import useFileStore from '../store/file.store';
 import useDarkStore from '../store/dark.store';
 import useSceneStore from '../store/scene.store';
 import useTreeStore from '../store/tree.store';
+import useMeshStore from '../store/mesh.store';
+import useAnimationStore from '../store/animation.store';
+import useCameraStore from '../store/camera.store';
 
 interface ICanvasProps{
     setLoadingPercent:Dispatch<SetStateAction<number>>;
@@ -61,9 +49,20 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
         state.setFileLoad,
         state.setFileUuid
     ])
-    const {cameraState,setMeshBox,setOnZoom}=useCameraSWR();
+    const setInitSelectMesh=useMeshStore((state)=>state.setInitSelectMesh)
+
+
+    const [camera,setMeshBox,setOnZoom]=useCameraStore((state)=>[
+        state.camera,
+        state.setMeshBox,
+        state.setOnZoom
+    ])
+
     const initMeasure=useMeasureStore((state)=>state.initMeasure)
-    const {meshState,setInitSelectMesh,setAnimationList}=useMeshSWR()
+
+    const setAnimationList=useAnimationStore((state)=>
+        state.setCustomAnimationList
+    )
     const sceneRef = useRef<Scene>(null)
 
     
@@ -125,7 +124,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const InitLoad=()=>{
         initMeasure();
         setInitSelectMesh()
-        cameraState?.camera?.current.up.set(0,1,0)
+        camera?.up.set(0,1,0)
     }
 
     useEffect(()=>{ 
@@ -286,6 +285,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
             <Canvas onClick={offZoom} 
             onWheel={offZoom} 
             onTouchEnd={offZoom}
+            
             style={{
             backgroundColor:color
             
@@ -299,9 +299,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                     <CameraComponent/>
                     <ControlComponent/> 
                     {meshGroup&&(
-                       
                         <>
-                        {/* <primitive object={meshGroup}/> */}
                             <Bounds margin={1.5}>
                                 <ModelComponent group={meshGroup} bone={bone}/>
                             </Bounds>

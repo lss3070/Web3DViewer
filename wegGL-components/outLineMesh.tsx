@@ -1,13 +1,16 @@
 import { EffectComposer, Outline } from "@react-three/postprocessing"
 import { useEffect, useState } from "react";
-import { useMeshSWR } from "../swrs/mesh.swr";
 import useDarkStore from '../store/dark.store';
+import useMeshStore from "../store/mesh.store";
 
 
 export const SelectMeshComponent=()=>{
 
     const darkMode = useDarkStore((state)=>state.darkMode)
-    const {meshState}=useMeshSWR();
+    const [hoverMesh,selectMesh]=useMeshStore((state)=>[
+        state.hoverMesh,
+        state.selectMesh
+    ])
     
     const [selectColor,setSelectColor]=useState<number>();
     const [hoverColor,setHoverColor]=useState<number>()
@@ -21,7 +24,7 @@ export const SelectMeshComponent=()=>{
         <EffectComposer 
         autoClear={false} multisampling={1} >
             {/* hover outline mesh */}
-            <Outline selection={meshState?.hoverMesh!} 
+        <Outline selection={hoverMesh!} 
             visibleEdgeColor={hoverColor} 
             hiddenEdgeColor={hoverColor} 
             blur={true} 
@@ -30,7 +33,7 @@ export const SelectMeshComponent=()=>{
 
             />
             {/* select outline mesh */}
-            <Outline selection={meshState?.selectMesh!} 
+            <Outline selection={selectMesh!} 
             visibleEdgeColor={selectColor} 
             hiddenEdgeColor={selectColor}
             // blur={true} 
