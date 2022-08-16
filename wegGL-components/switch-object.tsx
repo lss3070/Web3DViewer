@@ -21,11 +21,11 @@ const SwitchObject=({objectList}:ISwitchObjectProps)=>{
             switch(object.type){
                 case 'Group':
                     return (<MeshGroupComponent 
-                        key={index} 
+                        key={object.uuid} 
                         meshGroup={object as Group}/>)
                 case 'Mesh':
                     return (<MeshComponent  
-                        key={index} 
+                        key={object.uuid} 
                         mesh={object as Mesh}/>)
                 case 'SkinnedMesh':
                     // return (<MeshComponent  
@@ -33,21 +33,21 @@ const SwitchObject=({objectList}:ISwitchObjectProps)=>{
                     //     mesh={object as Mesh}/>)
 
                     return (<SkinnedMeshComponent  
-                        key={index} 
+                        key={object.uuid} 
                         skinnedMeshItem={object as SkinnedMesh}/>)
                 case 'Bone':
                     return (
                     // <primitive object={object}  />
-                    <PrimitiveComponent key={index} object={object}/>
+                    <PrimitiveComponent key={object.uuid} object={object}/>
                     )
                 case 'Object3D':
                     return(
-                    <PrimitiveComponent key={index} object={object}/>
+                    <PrimitiveComponent key={object.uuid} object={object}/>
                     )
                     
                 case 'LineSegments':
                     return (<MeshComponent  
-                        key={index} 
+                        key={object.uuid} 
                         mesh={object as Mesh}/>)
                 default:
                     return<></>

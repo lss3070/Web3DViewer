@@ -18,21 +18,21 @@ const Header=()=>{
             <div className="w-full inline-flex space-x-3
             bg-white
             dark:bg-[#3d3e42]">
-                <div className="flex float-left h-full items-center select-none
+                <div className="flex min-w-[150px] h-full items-center select-none
                 dark:text-white text-gray-500 font-bold justify-start pl-2 cursor-pointer"
                 onClick={ToHome}
                 >
                     <img src='logo.png'/>
                     <span>Web 3D Viewer</span>
                 </div>
-                <div className={`${isMobile?`float-right pr-2`:`float-left`} h-full  space-x-3 flex items-center `}>
+                <div className={`${isMobile?`pr-2`:`float-left`} h-full w-full space-x-3 flex items-center `}>
                     <FileManager/>
                     {!isMobile&&fileLoad&&(
                         <MenuManager/>
                     )}
                 </div>
                 {!isMobile&&(
-                    <div className="h-full float-right flex items-center justify-end
+                    <div className="w-full h-full float-right flex items-center justify-end
                     text-gray-600 dark:text-white">
                         <SettingManager/>
                     </div>

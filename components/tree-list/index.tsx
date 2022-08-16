@@ -35,16 +35,17 @@ const TreeList=()=>{
     ]);
 
     const darkMode =useDarkStore((state)=>state.darkMode)
-    const [gropupList,setGroupList] = useTreeStore((state)=>[
+
+    const [groupList,setGroupList] = useTreeStore((state)=>[
         state.groupList,
         state.setGroupList]);
+
     const scene = useSceneStore((state)=>state.scene)
 
     const [
         staticMeshList,
         setSelectMesh,
         selectMesh
-    
     ]=useMeshStore((state)=>[
         state.staticMeshList,
         state.setSelectMesh,
@@ -89,7 +90,7 @@ const TreeList=()=>{
         
         generateList?.forEach((item)=>{
             if(item.title!.indexOf(value) >-1){
-                list.push(GetParentKey(item.key,gropupList!))
+                list.push(GetParentKey(item.key,groupList!))
             }
         });
 
@@ -142,25 +143,28 @@ const TreeList=()=>{
 
     //검색시 변경
     useEffect(()=>{
-        if(gropupList!==undefined){
-            const list = RenderLoop(gropupList,searchValue);
+        if(groupList!==undefined){
+            const list = RenderLoop(groupList,searchValue);
             setTreeData(list);
         }
     },[searchValue])
 
     //groupList가져올때 tree에 그려질 데이터 리 렌더링
     useEffect(()=>{
-        if(gropupList!==undefined){
-            generateLoop(gropupList);
+        if(groupList!==undefined){
+            const list = RenderLoop(groupList,'');
+            setTreeData(list);
+            // generateLoop(groupList);
         }
-    },[gropupList]);
+    },[groupList]);
 
     //visible 버튼 클릭시 이벤트
     const visibleChange=(uuid:string)=>{
-        let copy = _.cloneDeep(gropupList);
+        const copy = _.cloneDeep(groupList);
         const result= copy?.map((item)=>{
             return visibleChangeLoop(uuid,item);
         })
+
         setGroupList(result!)
     }
 

@@ -42,7 +42,6 @@ const CustomGLTFLoader=({fileInfo}:IGLTFLoader)=>{
 
             loader.load(fileInfo.originPath,(gltf)=>{
                 blobURLs.forEach(URL.revokeObjectURL);
-                
                 resolve(gltf)
             },undefined,reject)
         }).then((object)=>{
