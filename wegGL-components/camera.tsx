@@ -17,7 +17,6 @@ export const CameraComponent =()=>{
     const cameraRef = useRef<any>();
 
     useEffect(()=>{
-        console.log('!!s')
         if(meshBox){
             const size = meshBox.getSize(new Vector3());
 
