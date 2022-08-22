@@ -32,6 +32,7 @@ import useTreeStore from '../store/tree.store';
 import useMeshStore from '../store/mesh.store';
 import useAnimationStore from '../store/animation.store';
 import useCameraStore from '../store/camera.store';
+import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 interface ICanvasProps{
     setLoadingPercent:Dispatch<SetStateAction<number>>;
@@ -210,7 +211,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
         }
     },[fileInfo])
    
-    useEffect(()=>{
+    useIsomorphicLayoutEffect(()=>{
         darkMode?setColor('#2a2b2e'):setColor('#f7fafb')
     },[darkMode])
 

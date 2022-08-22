@@ -11,6 +11,7 @@ interface IRemocornTabBox{
 
 const RemocornTabBox=({label,id,openId,setOpenId,children}:IRemocornTabBox)=>{
 
+
     const toggleOpen = () => {
         id===openId?setOpenId(''):setOpenId(id);
     }

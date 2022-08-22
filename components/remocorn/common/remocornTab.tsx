@@ -1,7 +1,8 @@
 import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 import { motion } from "framer-motion";
 import { isArray } from "lodash";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
+
 
 
 //  export interface IRemocornTabItem{
@@ -19,6 +20,7 @@ const RemocornTab=({children}:IRemocornTabProps)=>{
 
     // const [itemList,setItemList]=useState<IRemocornTabItem[]>();
     
+    const id =useId();
     const [index,setIndex]=useState<number>(0)
 
     // useEffect(()=>{
@@ -59,7 +61,6 @@ const RemocornTab=({children}:IRemocornTabProps)=>{
             {isArray(children)&&
             <motion.nav className='h-9'>
                 <ul className='flex w-full'>
-                
                 {children?.map((item,i)=>{
                     return(
                         <li
@@ -67,7 +68,7 @@ const RemocornTab=({children}:IRemocornTabProps)=>{
                             `w-full cursor-pointer flex items-center justify-center
                             select-none relative`
                         }
-                            key={i}
+                            key={id}
                             onClick={() => setIndex(i)}
                             >
                             {`${item.props.label}`}
