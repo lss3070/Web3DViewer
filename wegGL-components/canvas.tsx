@@ -211,7 +211,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
         }
     },[fileInfo])
    
-    useIsomorphicLayoutEffect(()=>{
+    useLayoutEffect(()=>{
         darkMode?setColor('#2a2b2e'):setColor('#f7fafb')
     },[darkMode])
 

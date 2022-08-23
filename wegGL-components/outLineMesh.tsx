@@ -16,7 +16,7 @@ export const SelectMeshComponent=()=>{
     const [selectColor,setSelectColor]=useState<number>();
     const [hoverColor,setHoverColor]=useState<number>()
 
-    useIsomorphicLayoutEffect(()=>{
+    useLayoutEffect(()=>{
         setHoverColor(darkMode?0xffffff:0x0026ff)
         setSelectColor(darkMode?0xffffff:0x0026ff)
     },[darkMode])
