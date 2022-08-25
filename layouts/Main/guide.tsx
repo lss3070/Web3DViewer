@@ -54,7 +54,7 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
                 Drag and Drop your 3D model here
             </div>
             <div className='text-center text-base font-normal
-            text-gray-500 dark:text-[#bdbdbd] 
+            text-gray-500 dark:text-[#bdbdbd] select-none
             '>
                 FBX,OBJ,GLTF,PLY,STL fromats can be loaded</div>
                 <div className="

@@ -8,6 +8,7 @@ const DarkModeSwitch=()=>{
     // const [isOn,setIsOn]=useState<boolean>(false);
     const {theme,setTheme}=useTheme()
 
+    const [darkMode,setDarkMode]=useState<boolean>();
 
     const toggleSwitch = () => {        
         setTheme(theme==='dark'?"light":"dark")
@@ -19,6 +20,9 @@ const DarkModeSwitch=()=>{
         damping: 30,
     }
 
+    useEffect(()=>{
+        setDarkMode(theme==='dark'?true:false)
+    },[theme])
  
     return(
         <div className='shadow-lg rounded-[50px] h-[30px] w-[50px]'>
@@ -29,7 +33,7 @@ const DarkModeSwitch=()=>{
             border 
             border-gray-100 
             dark:border-transparent
-            ${ theme==='dark' && 'place-content-end'}`}>
+            ${ darkMode&& 'place-content-end'}`}>
                 <motion.div
                     className="flex h-[20px] 
                     w-[20px] items-center justify-center rounded-full 
@@ -40,7 +44,7 @@ const DarkModeSwitch=()=>{
                     transition={spring}
                 >
                     <motion.div whileTap={{rotate: 360}} className="shadow-lg rounded-full">
-                        {theme==='dark'? 
+                        {darkMode? 
                         (<FontAwesomeIcon
                             icon={['fas','moon']}
                             className="w-5 h-5 text-yellow-200"/>
