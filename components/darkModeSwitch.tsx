@@ -1,49 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import {motion} from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useDarkStore from '../store/dark.store';
+import {useTheme} from 'next-themes'
 
 const DarkModeSwitch=()=>{
 
     // const [isOn,setIsOn]=useState<boolean>(false);
+    const {theme,setTheme}=useTheme()
 
-    const [darkMode,setDarkMode]=useDarkStore((state)=>[
-        state.darkMode,
-        state.setDarkMode
-    ])
-    const toggleSwitch = () => setDarkMode(!darkMode)
+
+    const toggleSwitch = () => {        
+        setTheme(theme==='dark'?"light":"dark")
+    }
     
     const spring = {
         type: 'spring',
         stiffness: 700,
         damping: 30,
     }
-
-    useEffect(()=>{
-        if(localStorage.getItem('theme')==='dark'){
-            setDarkMode(false);
-        }else{
-            setDarkMode(true);
-        }
-    },[])
-
-    useEffect(()=>{
-        if (darkMode) {
-            document.documentElement.classList.remove('dark')
-            localStorage.setItem('theme', 'light')
-          } else {
-            document.documentElement.classList.add('dark')
-            localStorage.setItem('theme', 'dark')
-          }
-      
-          if (
-              localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)
-            ) { 
-                document.documentElement.classList.add('dark') } 
-            else {
-              document.documentElement.classList.remove('dark')
-          }
-    },[darkMode]);
 
  
     return(
@@ -55,7 +29,7 @@ const DarkModeSwitch=()=>{
             border 
             border-gray-100 
             dark:border-transparent
-            ${ darkMode && 'place-content-end'}`}>
+            ${ theme==='dark' && 'place-content-end'}`}>
                 <motion.div
                     className="flex h-[20px] 
                     w-[20px] items-center justify-center rounded-full 
@@ -66,7 +40,7 @@ const DarkModeSwitch=()=>{
                     transition={spring}
                 >
                     <motion.div whileTap={{rotate: 360}} className="shadow-lg rounded-full">
-                        {darkMode? 
+                        {theme==='dark'? 
                         (<FontAwesomeIcon
                             icon={['fas','moon']}
                             className="w-5 h-5 text-yellow-200"/>

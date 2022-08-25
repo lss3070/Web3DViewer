@@ -1,13 +1,13 @@
 import { EffectComposer, Outline } from "@react-three/postprocessing"
 import { useEffect, useState, useLayoutEffect } from 'react';
 import useIsomorphicLayoutEffect from "../hooks/useIsomorphicLayoutEffect";
-import useDarkStore from '../store/dark.store';
 import useMeshStore from "../store/mesh.store";
+import { useTheme } from 'next-themes';
 
 
 export const SelectMeshComponent=()=>{
 
-    const darkMode = useDarkStore((state)=>state.darkMode)
+    const {theme,setTheme}=useTheme()
     const [hoverMesh,selectMesh]=useMeshStore((state)=>[
         state.hoverMesh,
         state.selectMesh
@@ -17,9 +17,10 @@ export const SelectMeshComponent=()=>{
     const [hoverColor,setHoverColor]=useState<number>()
 
     useLayoutEffect(()=>{
-        setHoverColor(darkMode?0xffffff:0x0026ff)
-        setSelectColor(darkMode?0xffffff:0x0026ff)
-    },[darkMode])
+
+        setHoverColor(theme==='dark'?0xffffff:0x0026ff)
+        setSelectColor(theme==='dark'?0xffffff:0x0026ff)
+    },[theme])
     
     return(
         <EffectComposer 

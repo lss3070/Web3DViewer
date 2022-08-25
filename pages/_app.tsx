@@ -8,6 +8,7 @@ import SEO from '../seo.config'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import * as gtag from '../lib/gtag'
+import { ThemeProvider } from 'next-themes'
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -25,7 +26,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <DefaultSeo {...SEO}/>
-      <Component {...pageProps} />
+      <ThemeProvider attribute='class'>
+        <Component {...pageProps} />
+      </ThemeProvider>
+     
     </>
   )
 }

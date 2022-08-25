@@ -17,12 +17,12 @@ import visibleChangeLoop from "../../utils/tree/visibleChangeLoop";
 import TreeSearchBox from "./inputBox";
 import ModalHeader from '../common/modal-header';
 import useMenuStore from "../../store/menu.store";
-import useDarkStore from "../../store/dark.store";
 import useTreeStore from "../../store/tree.store";
 import useSceneStore from '../../store/scene.store';
 import useMeshStore from "../../store/mesh.store";
 import { stat } from "fs";
 import useCameraStore from '../../store/camera.store';
+import { useTheme } from "next-themes";
 
 const TreeList=()=>{
   
@@ -33,8 +33,8 @@ const TreeList=()=>{
         state.onTree,
         state.toggleTree
     ]);
-
-    const darkMode =useDarkStore((state)=>state.darkMode)
+ 
+    const {theme,setTheme}=useTheme()
 
     const [groupList,setGroupList] = useTreeStore((state)=>[
         state.groupList,
@@ -242,8 +242,8 @@ const TreeList=()=>{
                         text-white h-[330px] p-1">
                             <Tree
                                 style={{backgroundColor:
-                                    darkMode?'#9ca3af':'#f7fafb',
-                                color:darkMode?'white':'#4b5663',
+                                    theme==='dark'?'#9ca3af':'#f7fafb',
+                                color:theme==='dark'?'white':'#4b5663',
                                 border:'none'
                                 }}
                                 className=" overflow-scroll h-full"

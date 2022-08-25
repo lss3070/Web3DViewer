@@ -26,13 +26,13 @@ import ModelComponent from './model';
 import CustomGLBLoader from '../utils/loaders/glbLoader';
 import useMeasureStore from '../store/measure.store';
 import useFileStore from '../store/file.store';
-import useDarkStore from '../store/dark.store';
 import useSceneStore from '../store/scene.store';
 import useTreeStore from '../store/tree.store';
 import useMeshStore from '../store/mesh.store';
 import useAnimationStore from '../store/animation.store';
 import useCameraStore from '../store/camera.store';
 import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
+import { useTheme } from 'next-themes';
 
 interface ICanvasProps{
     setLoadingPercent:Dispatch<SetStateAction<number>>;
@@ -40,8 +40,9 @@ interface ICanvasProps{
 }
 export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
+    const {theme,setTheme}=useTheme()
+    
     const fileInfo=useFileStore((state)=>state.fileInfo)
-    const darkMode = useDarkStore((state)=>state.darkMode);
     const setScene= useSceneStore((state)=>state.setScene);
     const setGroupList = useTreeStore((state)=>state.setGroupList)
 
@@ -185,16 +186,7 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
                     },(error)=>{
                         console.log(error);
                     })
-                    // threeDMLoader.loadAsync(commonState.filePath!,(progress)=>{
-                    //     setLoadingComplete(false);
-                    //     setLoadingPercent(Math.ceil((progress.loaded/progress.total)*100));
-                    // }).then((dm)=>{
-                    //     console.log(dm);
-                    //     // SettingModel(dm);
-                    // }).catch((err)=>{
-                    //     alert(err)
-                    //     setLoadingComplete(true);
-                    // })
+
                     break;
                 case '3mf':
                     threeMFLoader.load(fileInfo.originPath!,(load)=>{
@@ -212,8 +204,8 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     },[fileInfo])
    
     useLayoutEffect(()=>{
-        darkMode?setColor('#2a2b2e'):setColor('#f7fafb')
-    },[darkMode])
+        theme==='dark'?setColor('#2a2b2e'):setColor('#f7fafb')
+    },[theme])
 
 const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 
@@ -252,34 +244,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
     const offZoom=()=>{
         setOnZoom(false)
     }
-    
-//     const mixer = new AnimationMixer(three.scene);
-//     const clip= AnimationClip.findByName(meshState?.animationList!,'Take 001');
 
-//     const action= mixer.clipAction(clip);
-//     action.play();
-    
-
-//     useFrame((state,delta)=>{
-//         mixer?.update(delta);
-//     })
-
-
-    // const mixer= new AnimationMixer(commonState?.scene?.current!);
-
-    // if(true){
-                  
-    //     const clip=meshState?.animationList![0]!;
-    //     // const clip= AnimationClip.findByName(meshState?.animationList!,"Take 001");
-
-    //     console.log(mixer);
-    //     console.log(clip);
-    //     const action= mixer.clipAction(clip);
-    //     action.play();
-    // }
-    // useFrame((state, delta)=>{
-    //     mixer?.update(delta)
-    // })
 
     return(
         <>
