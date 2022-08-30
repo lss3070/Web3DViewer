@@ -1,19 +1,29 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Color, HemisphereLight, Vector3 } from "three"
-import { useLightSWR } from '../swrs/light.swr';
 
 export const LightComponent=()=>{
 
-    const {lightState}=useLightSWR()
-
+    const [ambientLight,setAmbientLight] = useState<any>({
+        able:true,
+        intensity:1,
+        color:'#A4A4A4'
+    })
+    const [pointLight,setPointLight] = useState<any>({
+        able:true,
+        position:new Vector3(400,0,0),
+        power:100,
+        intensity:1,
+        distance:0,
+        decay:2
+    })
     return(
         <Fragment>
-            <light color={lightState?.ambientLight.color}></light>
+            <light color={ambientLight.color}></light>
                 {/* 모든 오브젝트 전역으로 빚춰줌 */}
-                {lightState?.ambientLight.able?(
+                {ambientLight.able?(
                 <ambientLight 
-                intensity={lightState?.ambientLight.intensity} 
-                color={lightState.ambientLight.color}/>
+                intensity={ambientLight.intensity} 
+                color={ambientLight.color}/>
                 ):null}
                
                 {/* 한방향으로 빛,원뿔모양 빛,그림자 생김*/}
@@ -28,11 +38,11 @@ export const LightComponent=()=>{
                 ):null} */}
 
                 {/* 모든방향으로 빛을 쏴줌,구모양 빛 전구같음*/}
-                {lightState?.pointLight.able?(
+                {pointLight.able?(
                     <pointLight 
-                    position={lightState?.pointLight.position} 
-                    power={lightState?.pointLight.power} 
-                    intensity={lightState?.pointLight.intensity} />
+                    position={pointLight.position} 
+                    power={pointLight.power} 
+                    intensity={pointLight.intensity} />
                 ):null}
                 <directionalLight color={new Color(255,255,255)} intensity={0.001} position={new Vector3(0,400,0)} />
                 <directionalLight color={new Color(255,255,255)} intensity={0.001} position={new Vector3(400,0,0)} />
