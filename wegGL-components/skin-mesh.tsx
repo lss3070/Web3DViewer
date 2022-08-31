@@ -67,8 +67,8 @@ function SkinnedMeshComponent({skinnedMeshItem}:ISkinnedMeshProps){
     return(
             <>
                 <skinnedMesh 
-                    onPointerMove={hoverEvent}
-                    onPointerOver={hoverEvent}
+                    // onPointerMove={hoverEvent}
+                    // onPointerOver={hoverEvent}
                     onPointerUp={onTouch}
             
                     onClick={meshOnClick} ref={skinnedMesh} 

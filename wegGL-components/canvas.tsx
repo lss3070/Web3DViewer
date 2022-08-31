@@ -258,9 +258,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
             backgroundColor:color
             
         }}
-            className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]"
-
-            >   
+            className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]">   
                 <scene ref={sceneRef}>  
                     <SkyBox/>
                     <LightComponent/>                
@@ -277,7 +275,6 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                             <Stats/>
                         </>
                     )}
-                  
                   {/* <gridHelper args={[1000,1000,1000]}/>  */}
                 </scene>
             </Canvas>

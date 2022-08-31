@@ -36,8 +36,8 @@ const SkyBox=()=>{
         <mesh
         name="skybox"
         onPointerUp={onTouch}
-        onPointerMove={hoverEvent}
-        onPointerOver={hoverEvent}
+        // onPointerMove={hoverEvent}
+        // onPointerOver={hoverEvent}
         // attach={'background'}
         position={[0,0,0]}
         onClick={initList}

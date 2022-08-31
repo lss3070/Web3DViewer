@@ -71,14 +71,14 @@ export function MeshComponent({mesh}:IMeshProps){
             <>
             <mesh ref={meshRef} 
             onPointerUp={onTouch}
-            onPointerOver={hoverEvent}
+            // onPointerOver={hoverEvent}
 
             onClick={meshOnClick}
             // onPointerDown={(e)=>{
             //     setSelectMesh([meshRef]);
             // }}
             
-            onPointerMove={hoverEvent}
+            // onPointerMove={hoverEvent}
            
             {...mesh}
             
