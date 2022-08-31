@@ -1,5 +1,5 @@
 import { useFrame, useThree } from '@react-three/fiber';
-import { useRef, useEffect, useState, memo } from 'react';
+import { useRef, useEffect, useState, memo, Suspense } from 'react';
 import { AnimationMixer, Bone, Box3, Group, Mesh, Vector3 } from "three"
 import SwitchObject from './switch-object';
 import { Bounds, useAnimations, useBounds } from '@react-three/drei';
@@ -15,6 +15,7 @@ interface IObjectComponentProps{
 
 const ModelComponent=({group,bone}:IObjectComponentProps)=>{
 
+    console.log('model rerender')
     const [onPosition,onRotation,
         position,
         positionSpeed,
@@ -113,15 +114,24 @@ const ModelComponent=({group,bone}:IObjectComponentProps)=>{
         }
     }
 
+    console.log(group)
+
+    
     return(
-            <group ref={ref} dispose={null}
+            <group 
+            ref={ref} 
+            dispose={null}
+        
             {...group}
             onDoubleClick={(e)=>{
                 api.refresh(e.object).fit()
                 }}
-            name="group" >
+            name="group"
+             >
                 {group.children&&(
-                    <SwitchObject objectList={group.children}/> 
+
+                        <SwitchObject objectList={group.children}/>     
+                    
                 )}
             </group>
     )

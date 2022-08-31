@@ -8,6 +8,7 @@ export const LightComponent=()=>{
         intensity:1,
         color:'#A4A4A4'
     })
+    
     const [pointLight,setPointLight] = useState<any>({
         able:true,
         position:new Vector3(400,0,0),
@@ -16,6 +17,7 @@ export const LightComponent=()=>{
         distance:0,
         decay:2
     })
+
     return(
         <Fragment>
             <light color={ambientLight.color}></light>
@@ -25,7 +27,7 @@ export const LightComponent=()=>{
                 intensity={ambientLight.intensity} 
                 color={ambientLight.color}/>
                 ):null}
-               
+
                 {/* 한방향으로 빛,원뿔모양 빛,그림자 생김*/}
                 {/* {lightState?.spotLight.able?(
                 <spotLight position={lightState?.spotLight.position} 
@@ -36,7 +38,6 @@ export const LightComponent=()=>{
                 decay={1}
                 />
                 ):null} */}
-
                 {/* 모든방향으로 빛을 쏴줌,구모양 빛 전구같음*/}
                 {pointLight.able?(
                     <pointLight 

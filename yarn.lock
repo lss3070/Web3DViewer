@@ -1902,7 +1902,7 @@
     suspend-react "^0.0.8"
     zustand "^3.7.1"
 
-"@react-three/postprocessing@^2.6.1":
+"@react-three/postprocessing@^2.6.2":
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-2.6.2.tgz#fe1484a51ccc0577f67280307a0fc3a9ecb0e070"
   integrity sha512-YvU3oH5Vb2UT+ekhhzHwMTvEYo50VoW8EYMQxmh9TzWaTohSB0GGDanJw5peUMDUgYS1gNjj9cpsk0w/z/7Qpg==

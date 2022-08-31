@@ -10,7 +10,7 @@ interface ISkinnedMeshProps{
     skinnedMeshItem:SkinnedMesh
 }
 
-const SkinnedMeshComponent=({skinnedMeshItem}:ISkinnedMeshProps)=>{
+function SkinnedMeshComponent({skinnedMeshItem}:ISkinnedMeshProps){
 
     const [
         onMeasure,

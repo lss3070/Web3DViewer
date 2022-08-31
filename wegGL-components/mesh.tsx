@@ -10,7 +10,7 @@ interface IMeshProps{
     mesh:THREE.Mesh
 }
 
-export const MeshComponent=({mesh}:IMeshProps)=>{
+export function MeshComponent({mesh}:IMeshProps){
     
 
     const [onMeasure,setPoint]=useMeasureStore(state=>[

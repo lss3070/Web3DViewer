@@ -6,8 +6,7 @@ import DragAndDropArea from "./modal-drag-area";
 import Remocorn from "../../components/remocorn";
 import TreeList from "../../components/tree-list";
 import useIsMobile from "../../hooks/useIsMobile";
-
-import { CanvasComponent } from "../../wegGL-components/canvas";
+import CanvasComponent  from "../../wegGL-components/canvas";
 import Header from "../Header/header";
 import LoadingComponent from "./loading";
 import Guide from "./guide";

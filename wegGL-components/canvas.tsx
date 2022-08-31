@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useRef, useState, useEffect, useMemo, Dispatch, SetStateAction, useLayoutEffect } from 'react';
+import { useRef, useState, useEffect, useMemo, Dispatch, SetStateAction, useLayoutEffect, memo } from 'react';
 import { AnimationMixer, AxesHelper, Bone, Box3, CameraHelper, Color, CubeTexture, Euler, Group, Material, Mesh, ObjectLoader, Scene, Vector3, PlaneGeometry, Plane, BackSide, Side, Texture, DoubleSide, FrontSide, Object3D, BufferGeometry, MeshBasicMaterial, MeshPhysicalMaterial, EquirectangularReflectionMapping, AnimationClip, SkinnedMesh, PlaneHelper, BufferAttribute } from 'three';
 
 import {Rhino3dmLoader,} from 'three/examples/jsm/loaders/3DMLoader'
@@ -38,8 +38,9 @@ interface ICanvasProps{
     setLoadingPercent:Dispatch<SetStateAction<number>>;
     setLoadingComplete: Dispatch<SetStateAction<boolean>>;
 }
-export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
+ const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
 
+    console.log('canvas rerender')
     const {theme,setTheme}=useTheme()
     
     const fileInfo=useFileStore((state)=>state.fileInfo)
@@ -73,11 +74,12 @@ export const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProp
     const [color,setColor] =useState<string>('#f7fafb');
 
 
+    const data = useMemo(()=>{
+        return meshGroup
+    },[meshGroup])
+
     const threeDMLoader = new Rhino3dmLoader();
     const threeMFLoader = new ThreeMFLoader();
-
-    const ee = new Map()
-
 
     const SettingModel =(data:Group|Object3D<Event>|BufferGeometry)=>{
   
@@ -264,20 +266,23 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                     <LightComponent/>                
                     <CameraComponent/>
                     <ControlComponent/> 
-                    {meshGroup&&(
+                    {data&&(
                         <>
                             <Bounds margin={1.5}>
-                                <ModelComponent group={meshGroup} bone={bone}/>
+                                <ModelComponent group={data} bone={bone}/>
                             </Bounds>
                             <SelectMeshComponent/>
                             <Gizmo/>
                             <MeasureComponent/>
-                            {/* <Stats/> */}
+                            <Stats/>
                         </>
                     )}
+                  
                   {/* <gridHelper args={[1000,1000,1000]}/>  */}
                 </scene>
             </Canvas>
         </>
     )
 }
+
+export default memo(CanvasComponent)

@@ -1,5 +1,5 @@
 import { debounce } from "lodash";
-import {useState, useLayoutEffect } from 'react';
+import {useState } from 'react';
 import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
 
 
