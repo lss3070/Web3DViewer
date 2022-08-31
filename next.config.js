@@ -24,7 +24,7 @@ module.exports = withAntdLess({
       return [
         {
           source:'/get/:path*',
-          destination:'http://web3dviewer_worker.lss3070.workers.dev/:path*'
+          destination:process.env.WORKER_URL
         },
       ]
     }

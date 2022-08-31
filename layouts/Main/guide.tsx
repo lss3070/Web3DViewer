@@ -13,15 +13,21 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
     const setFileInfo = useFileStore((state)=>state.setFileInfo)
    
     const openFile=(path:string)=>{
+        console.log(window.origin)
+        console.log(path);
         const fullName = path.split('/').pop();
         const fileName=fullName?.split('.').shift();
         const extension = fullName?.split('.').pop();
 
+       const url = process.env.NODE_ENV==='development'?
+       window.origin+process.env.NEXT_PUBLIC_DOWNLOAD_FOLDER+path:
+       process.env.NEXT_PUBLIC_DOWNLOAD_FOLDER+path;
+       console.log(url)
+//https://web3dviewer_worker.lss3070.workers.dev/
         setLoadingComplete(false)
-        fetch('https://web3dviewer_worker.lss3070.workers.dev/'+path).then(async(file)=>{
+        fetch(url).then(async(file)=>{
             return await file.blob()
         }).then((blob)=>{
-            
             const fileMap=new Map<string,File>();
             const objectURL= URL.createObjectURL(blob);
 
@@ -67,24 +73,24 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
                     Example Models
                 </div>
                 <div className="flex space-x-3 items-center justify-center">
-                    <CircleButton onClick={()=>openFile('tree/tree.obj')}>
+                    <CircleButton onClick={()=>openFile('tree.obj')}>
                         <FontAwesomeIcon
                         icon={['fas','tree']}
                         size='2x'
                         />
                     </CircleButton>
-                    <CircleButton onClick={()=>openFile('helmet/DamagedHelmet.glb')}>
+                    <CircleButton onClick={()=>openFile('DamagedHelmet.glb')}>
                         <FontAwesomeIcon
                         icon={['fas','helmet-safety']}
                         size='2x'
                         />
                     </CircleButton>
-                    {/* <CircleButton onClick={()=>openFile('mannequin/Samba_Dancing.fbx')}>
+                    <CircleButton onClick={()=>openFile('Soldier.glb')}>
                         <FontAwesomeIcon
                         icon={['fas','person']}
                         size='2x'
                         />
-                    </CircleButton> */}
+                    </CircleButton>
                     <CircleButton onClick={()=>openFile('Flamingo.glb')}>
                         <FontAwesomeIcon
                         icon={['fas','dove']}

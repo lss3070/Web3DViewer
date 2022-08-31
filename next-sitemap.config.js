@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-    siteUrl: 'https://www.web3dviewer.net/',
+    siteUrl:process.env.SITE_URL,
     generateRobotsTxt: true,
   };
   

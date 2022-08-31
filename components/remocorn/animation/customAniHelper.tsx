@@ -10,7 +10,6 @@ import { useId } from "react";
 
 const CustomAniHelper=({}:Helper)=>{
     
-    const selectMesh = useMeshStore((state)=>state.selectMesh)
     const id =useId();
 
     const [animationList,

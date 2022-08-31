@@ -7,6 +7,7 @@ import useMeshStore from '../store/mesh.store';
 import { useMeshBoxStore, useZoomBoxStore } from '../store/camera.store';
 import useAnimationStore from '../store/animation.store';
 import _ from 'lodash';
+import { useSelectMehsStore } from '../store/mesh.store';
 
 interface IObjectComponentProps{
     group:Group;
@@ -29,7 +30,8 @@ const ModelComponent=({group}:IObjectComponentProps)=>{
         state.customAnimation,
         state.setOnPosition
     ])
-    const {selectMesh} = useMeshStore((state)=>state)
+    
+    const selectMesh = useSelectMehsStore((state)=>state.selectMesh)
     const setZoomBox = useZoomBoxStore((state)=>state.setZoomBox);
     const setMeshBox=useMeshBoxStore((state)=>state.setMeshBox)
 

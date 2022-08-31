@@ -10,7 +10,6 @@ interface IGLTFLoader{
 const CustomOBJLoader=({fileInfo}:IGLTFLoader)=>{
 
     const baseURL = `blob:${window.location.host}`
-//https://gltf-viewer.donmccurdy.com/ code ㅊㅏㅁ조
         const manager = new LoadingManager()
             return new Promise((resolve,reject)=>{
             manager.setURLModifier((url)=>{

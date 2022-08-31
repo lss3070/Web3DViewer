@@ -1,13 +1,13 @@
 export default {
-    title:"Web 3D Viewer",
-    description: "Web 3D Viewer is a free web solution for reading 3D file formats online.",
-    canonical: "https://www.web3dviewer.net/",
+    title:process.env.SEO_TITLE,
+    description:process.env.SEO_DESCRIPTION,
+    canonical: process.env.SITE_URL,
     openGraph:{
       type:'website',
-      url:'https://www.web3dviewer.net/',
-      title:'Web 3D Viewer',
-      description:"Web 3D Viewer is a free web solution for reading 3D file formats online.",
-      site_name:'Web 3D Viewer',
+      url:process.env.SITE_URL,
+      title:process.env.SEO_TITLE,
+      description:process.env.SEO_DESCRIPTION,
+      site_name:process.env.SEO_TITLE,
       images:[
         {
           url: "/preview.png",
