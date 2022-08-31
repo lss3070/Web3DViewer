@@ -11,34 +11,31 @@ import MiniCircleButton from '../common/mini-circle-button'
 import CameraPositionBox, { CustomCameraFocus } from './camera-position-box';
 import useMeasureStore from '../../store/measure.store';
 import useMenuStore from '../../store/menu.store';
-import useMeshStore from '../../store/mesh.store';
-import useCameraStore from '../../store/camera.store';
+import useMeshStore, { useSelectMehsStore } from '../../store/mesh.store';
+import useCameraStore, { useMeshBoxStore, useZoomBoxStore } from '../../store/camera.store';
 
 
 const MiniControls=()=>{
 
     const [
-        meshBox,
         control,
-        camera,
-        setZoomBox
+        camera
     ]=useCameraStore((state)=>[
-        state.meshBox,
         state.control,
         state.camera,
-        state.setZoomBox
     ])
+    const setZoomBox=useZoomBoxStore((state)=>state.setZoomBox)
+    const meshBox=useMeshBoxStore((state)=>state.meshBox)
+    const setInitSelectMesh=useSelectMehsStore((state)=>state.setInitSelectMesh)
 
     const [
         onWire,
         toggleWire,
-        setHoverMesh,
-        setInitSelectMesh
+        setHoverMesh
     ]=useMeshStore((state)=>[
         state.onWire,
         state.setToggleWire,
-        state.setHoverMesh,
-        state.setInitSelectMesh
+        state.setHoverMesh
     ])
     const [measure,toggleMeasure]=useMeasureStore((state)=>[
         state.onMeasure,state.toggleMeasure

@@ -19,9 +19,9 @@ import ModalHeader from '../common/modal-header';
 import useMenuStore from "../../store/menu.store";
 import useTreeStore from "../../store/tree.store";
 import useSceneStore from '../../store/scene.store';
-import useMeshStore from "../../store/mesh.store";
+import useMeshStore, { useSelectMehsStore } from "../../store/mesh.store";
 import { stat } from "fs";
-import useCameraStore from '../../store/camera.store';
+import  { useZoomBoxStore } from '../../store/camera.store';
 import { useTheme } from "next-themes";
 
 const TreeList=()=>{
@@ -44,15 +44,13 @@ const TreeList=()=>{
 
     const [
         staticMeshList,
-        setSelectMesh,
-        selectMesh
     ]=useMeshStore((state)=>[
         state.staticMeshList,
-        state.setSelectMesh,
-        state.selectMesh
-    ])
 
-    const setZoomBox=useCameraStore((state)=>state.setZoomBox)
+    ])
+    const [selectMesh,setSelectMesh]=useSelectMehsStore((state)=>[state.selectMesh,state.setSelectMesh])
+
+    const setZoomBox=useZoomBoxStore((state)=>state.setZoomBox)
 
     const [treeData,setTreeData]=useState<CustomNode[]>();
     const [expandedKeys,setExpandedKeys]=useState<(string)[]>();

@@ -3,14 +3,12 @@ import { ThreeEvent, useThree } from '@react-three/fiber';
 import { useState } from 'react';
 import THREE, { BackSide, FrontSide, DoubleSide, DepthModes } from 'three';
 import useIsMobile from '../hooks/useIsMobile';
-import useMeshStore from '../store/mesh.store';
+import useMeshStore, { useSelectMehsStore } from '../store/mesh.store';
 
 const SkyBox=()=>{
 
-    const [setInitSelectMesh,setHoverMesh]=useMeshStore((state)=>[
-        state.setInitSelectMesh,
-        state.setHoverMesh
-    ])
+    const setInitSelectMesh=useSelectMehsStore((state)=>state.setInitSelectMesh)
+
     const isMobile =useIsMobile()
     const {scene}= useThree()
 
@@ -18,17 +16,12 @@ const SkyBox=()=>{
         e.delta<=1&&setInitSelectMesh();
     }
     const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
-
-        setHoverMesh(undefined);
         e.stopPropagation();
     }
     const onTouch=(e:ThreeEvent<PointerEvent>)=>{
         isMobile&&e.delta<=1&&setInitSelectMesh();
         
     }
-    // const {gl} = useThree();
-    // const texture = useTexture('')
-    // const formatted = new THREE.WebGLCubeRenderTarget(1200).fromEquirectangularTexture(gl, texture)
    
     return(
         // <primitive attach='background'  object={formatted}/>
@@ -36,11 +29,12 @@ const SkyBox=()=>{
         <mesh
         name="skybox"
         onPointerUp={onTouch}
+        onClick={initList}
         // onPointerMove={hoverEvent}
         // onPointerOver={hoverEvent}
         // attach={'background'}
         position={[0,0,0]}
-        onClick={initList}
+       
         renderOrder={10}
         >
             <boxGeometry args={[10000, 10000, 10000]}/>

@@ -3,28 +3,55 @@ import { CustomDataNode } from "../global/interfaces/app.interface";
 import {Box3, Camera, PerspectiveCamera, Vector3} from 'three';
 import { ObjectRef, ZoomBox } from '../global/interfaces/swr.interface';
 import { TrackballControls } from "three-stdlib";
+import { Box } from "@react-three/drei";
 
 interface ICameraStateProps{
-    onZoom:boolean;
     position:Vector3;
-    meshBox:Box3;
     control?:TrackballControls;
     camera?:PerspectiveCamera;
     target:Vector3;
-    zoomBox?:ZoomBox;
     setControlRef:(control:TrackballControls)=>void;
     setTarget:(target:Vector3)=>void;
-    setZoomBox:(zoomBox:ZoomBox)=>void;
     setPosition:(position:Vector3)=>void;
-    setOnZoom:(onZoom:boolean)=>void;
-    setMeshBox:(meshBox:Box3)=>void;
     setCamera:(camera:PerspectiveCamera)=>void;
 }
+interface IZoomStateProps{
+    onZoom:boolean;
+    setOnZoom:(onZoom:boolean)=>void;
+}
+interface IMeshBoxProps{
+    meshBox:Box3;
+    setMeshBox:(meshBox:Box3)=>void;
+}
+interface IZoomBoxProps{
+    zoomBox?:ZoomBox;
+    setZoomBox:(zoomBox:ZoomBox)=>void;
+} 
+
+export const useZoomBoxStore = create<IZoomBoxProps>((set)=>({
+    setZoomBox:(zoomBox:ZoomBox)=>set((state)=>({
+        ...state,
+        zoomBox
+    }))
+}))
+export const useZoomStore = create<IZoomStateProps>((set)=>({
+    onZoom:false,
+    setOnZoom:(onZoom)=>set((state)=>({
+        ...state,
+        onZoom
+    }))
+}))
+export const useMeshBoxStore=create<IMeshBoxProps>((set)=>({
+    meshBox:new Box3(),
+    setMeshBox:(meshBox:Box3)=>set((state)=>({
+        ...state,
+        meshBox
+    })),
+}))
 
 const useCameraStore= create<ICameraStateProps>((set)=>({
-    onZoom:false,
+   
     position:new Vector3(),
-    meshBox:new Box3(),
     target:new Vector3(0,0,0),
     setTarget:(target:Vector3)=>set((state)=>({
         ...state,
@@ -34,21 +61,10 @@ const useCameraStore= create<ICameraStateProps>((set)=>({
         ...state,
         control
     })),
-    setZoomBox:(zoomBox:ZoomBox)=>set((state)=>({
-        ...state,
-        zoomBox
-    })),
+
     setPosition:(position:Vector3)=>set((state)=>({
         ...state,
         position
-    })),
-    setOnZoom:(onZoom:boolean)=>set((state)=>({
-        ...state,
-        onZoom
-    })),
-    setMeshBox:(meshBox:Box3)=>set((state)=>({
-        ...state,
-        meshBox
     })),
     setCamera:(camera:PerspectiveCamera)=>set((state)=>({
         ...state,

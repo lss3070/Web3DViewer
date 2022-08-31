@@ -4,7 +4,7 @@ import { AnimationMixer, Bone, Box3, Group, Mesh, Vector3 } from "three"
 import SwitchObject from './switch-object';
 import { Bounds, useAnimations, useBounds } from '@react-three/drei';
 import useMeshStore from '../store/mesh.store';
-import useCameraStore from '../store/camera.store';
+import { useMeshBoxStore, useZoomBoxStore } from '../store/camera.store';
 import useAnimationStore from '../store/animation.store';
 import _ from 'lodash';
 
@@ -13,7 +13,7 @@ interface IObjectComponentProps{
     bone?:Bone
 }
 
-const ModelComponent=({group,bone}:IObjectComponentProps)=>{
+const ModelComponent=({group}:IObjectComponentProps)=>{
 
     console.log('model rerender')
     const [onPosition,onRotation,
@@ -32,7 +32,8 @@ const ModelComponent=({group,bone}:IObjectComponentProps)=>{
         state.setOnPosition
     ])
     const {selectMesh} = useMeshStore((state)=>state)
-    const [setMeshBox,setZoomBox] = useCameraStore((state)=>[state.setMeshBox,state.setZoomBox])
+    const setZoomBox = useZoomBoxStore((state)=>state.setZoomBox);
+    const setMeshBox=useMeshBoxStore((state)=>state.setMeshBox)
     const ref=useRef<Group>(null);
     const {actions}=useAnimations(group.animations,ref)
     const [onAnimation,setOnAnimation]=useState<boolean>(false);
@@ -48,7 +49,6 @@ const ModelComponent=({group,bone}:IObjectComponentProps)=>{
 
     useEffect(()=>{
         const box = new Box3().setFromObject(group);
-       
         setMeshBox(box);
         setZoomBox({
             box:_.cloneDeep(box)

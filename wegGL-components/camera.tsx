@@ -1,16 +1,16 @@
 import {PerspectiveCamera,useCamera} from '@react-three/drei'
 import { useEffect, useRef, useState, ChangeEvent } from 'react';
 import { Box3, Euler, Quaternion, Vector3,CameraHelper } from "three";
-import useCameraStore from '../store/camera.store';
+import useCameraStore, { useMeshBoxStore } from '../store/camera.store';
 
 export const CameraComponent =()=>{
 
-    const [meshBox,position,setPosition,setCamera]=useCameraStore((state)=>[
-        state.meshBox,
+    const [position,setPosition,setCamera]=useCameraStore((state)=>[
         state.position,
         state.setPosition,
         state.setCamera
     ])
+    const meshBox=useMeshBoxStore((state)=>state.meshBox)
 
     const offset=1;
 

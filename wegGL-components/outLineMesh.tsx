@@ -1,17 +1,15 @@
 import { EffectComposer, Outline } from "@react-three/postprocessing"
 import { useEffect, useState } from 'react';
 import useIsomorphicLayoutEffect from "../hooks/useIsomorphicLayoutEffect";
-import useMeshStore from "../store/mesh.store";
+import useMeshStore, { useSelectMehsStore } from "../store/mesh.store";
 import { useTheme } from 'next-themes';
 
 
 export const SelectMeshComponent=()=>{
 
     const {theme,setTheme}=useTheme()
-    const [hoverMesh,selectMesh]=useMeshStore((state)=>[
-        state.hoverMesh,
-        state.selectMesh
-    ])
+
+    const selectMesh=useSelectMehsStore((state)=>state.selectMesh)
     
     const [selectColor,setSelectColor]=useState<number>();
     const [hoverColor,setHoverColor]=useState<number>()
@@ -29,14 +27,14 @@ export const SelectMeshComponent=()=>{
         multisampling={8}
          >
             {/* hover outline mesh */}
-        <Outline selection={hoverMesh!} 
+        {/* <Outline selection={hoverMesh!} 
             visibleEdgeColor={hoverColor} 
             hiddenEdgeColor={hoverColor} 
             blur={true} 
             edgeStrength={10} 
             selectionLayer={2}
 
-            />
+            /> */}
             {/* select outline mesh */}
             <Outline selection={selectMesh!} 
             visibleEdgeColor={selectColor} 

@@ -28,9 +28,9 @@ import useMeasureStore from '../store/measure.store';
 import useFileStore from '../store/file.store';
 import useSceneStore from '../store/scene.store';
 import useTreeStore from '../store/tree.store';
-import useMeshStore from '../store/mesh.store';
+import useMeshStore, { useSelectMehsStore } from '../store/mesh.store';
 import useAnimationStore from '../store/animation.store';
-import useCameraStore from '../store/camera.store';
+import useCameraStore, { useMeshBoxStore, useZoomStore } from '../store/camera.store';
 import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import { useTheme } from 'next-themes';
 
@@ -52,14 +52,15 @@ interface ICanvasProps{
         state.setFileLoad,
         state.setFileUuid
     ])
-    const setInitSelectMesh=useMeshStore((state)=>state.setInitSelectMesh)
+    const setInitSelectMesh=useSelectMehsStore((state)=>state.setInitSelectMesh)
 
 
-    const [camera,setMeshBox,setOnZoom]=useCameraStore((state)=>[
+    const [
+        camera]=useCameraStore((state)=>[
         state.camera,
-        state.setMeshBox,
-        state.setOnZoom
     ])
+    const setMeshBox=useMeshBoxStore((state)=>state.setMeshBox)
+    const setOnZoom=useZoomStore((state)=>state.setOnZoom)
 
     const initMeasure=useMeasureStore((state)=>state.initMeasure)
 
@@ -70,7 +71,6 @@ interface ICanvasProps{
 
     
     const [meshGroup,setMeshGroup]=useState<Group>();
-    const [bone,setBone]=useState<Bone>();
     const [color,setColor] =useState<string>('#f7fafb');
 
 
@@ -210,7 +210,6 @@ interface ICanvasProps{
     },[theme])
 
 const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
-
    const result= item.children.reduce((array:CustomDataNode[],object,index)=>{
         
         if(object.type==='Mesh'||object.type==='Group'||
@@ -247,16 +246,13 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
         setOnZoom(false)
     }
 
-
     return(
-        <>
-            <Canvas onClick={offZoom} 
+            <Canvas 
+            onClick={offZoom} 
             onWheel={offZoom} 
             onTouchEnd={offZoom}
-            
             style={{
             backgroundColor:color
-            
         }}
             className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]">   
                 <scene ref={sceneRef}>  
@@ -267,7 +263,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                     {data&&(
                         <>
                             <Bounds margin={1.5}>
-                                <ModelComponent group={data} bone={bone}/>
+                                <ModelComponent group={data}/>
                             </Bounds>
                             <SelectMeshComponent/>
                             <Gizmo/>
@@ -278,7 +274,6 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                   {/* <gridHelper args={[1000,1000,1000]}/>  */}
                 </scene>
             </Canvas>
-        </>
     )
 }
 

@@ -3,16 +3,16 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, useEffect, useState, ChangeEvent } from 'react';
 import { Vector3,PerspectiveCamera, Mesh } from "three";
 import _ from 'lodash'
-import useCameraStore from '../store/camera.store';
+import useCameraStore, { useZoomBoxStore, useZoomStore } from '../store/camera.store';
 
 export const ControlComponent=()=>{
 
-    const [zoomBox,onZoom,setOnZoom]=useCameraStore((state)=>[
-        state.zoomBox,
+
+    const zoomBox=useZoomBoxStore((state)=>state.zoomBox)
+    const [onZoom,setOnZoom]=useZoomStore((state)=>[
         state.onZoom,
         state.setOnZoom
     ])
-
 
     const [target]=useCameraStore((state)=>[state.target])
 
@@ -35,6 +35,7 @@ export const ControlComponent=()=>{
     },[controlRef]);
 
     useEffect(()=>{
+        
         if(!zoomBox) return
        
         const center =zoomBox.target?zoomBox.target:
@@ -69,20 +70,19 @@ export const ControlComponent=()=>{
         }else{
             setZoomPosition(zoomBox.position)
         }
-      
+
         // setZoomPosition(position.copy(controlRef.current.target).sub(direction))
         
         // setZoomPosition(cameraState?.selectMeshBox.max)
-         
         setOnZoom(true);
     },[zoomBox])
 
 
     useFrame((e,q)=>{
+  
         const step=0.05;
         if( onZoom){
             try{
-                
                 if(
                     controlRef.current.object.position.x.toFixed(1)==zoomPosition.x.toFixed(1)&&
                     controlRef.current.object.position.y.toFixed(1)==zoomPosition.y.toFixed(1)&&

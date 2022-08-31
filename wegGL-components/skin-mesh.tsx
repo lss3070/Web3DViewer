@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { SkinnedMesh } from "three"
 import useIsMobile from "../hooks/useIsMobile";
 import useMeasureStore from "../store/measure.store";
-import useMeshStore from "../store/mesh.store";
+import useMeshStore, { useSelectMehsStore } from "../store/mesh.store";
 import { MaterialElements } from "../utils/materialElements"
 
 interface ISkinnedMeshProps{
@@ -19,15 +19,12 @@ function SkinnedMeshComponent({skinnedMeshItem}:ISkinnedMeshProps){
         state.onMeasure,
         state.setPoint]);
 
+    const setSelectMesh=useSelectMehsStore((state)=>state.setSelectMesh)
     const [
         onWire,
-        setHoverMesh,
-        setSelectMesh,
         setStaticMeshList
     ]= useMeshStore((state)=>[
         state.onWire,
-        state.setHoverMesh,
-        state.setSelectMesh,
         state.setStaticMeshList
     ])
 
@@ -46,13 +43,6 @@ function SkinnedMeshComponent({skinnedMeshItem}:ISkinnedMeshProps){
             
             e.stopPropagation()
         }
-    }
-
-    const hoverEvent=(e: ThreeEvent<PointerEvent>)=>{
-
-        setHoverMesh(undefined);
-        e.stopPropagation();
-
     }
     const onTouch=async(e:ThreeEvent<PointerEvent>)=>{
         if(isMobile){

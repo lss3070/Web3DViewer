@@ -1,12 +1,10 @@
 import { GizmoHelper, GizmoViewcube, GizmoViewport, TrackballControls } from "@react-three/drei"
-import { Suspense, useEffect, useRef } from "react"
+import { memo, Suspense, useEffect, useRef } from "react"
 import {useState} from 'react';
 import useWindowSize from '../hooks/useWindowSize';
 import useIsMobile from '../hooks/useIsMobile';
 
 const Gizmo=()=>{
-
-
     const isMobile = useIsMobile()
 
     const [margin,setMargin]=useState<number>(0)

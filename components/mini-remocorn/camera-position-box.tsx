@@ -7,7 +7,7 @@ import Bottom from '../../assets/cube-down.svg'
 import {  PerspectiveCamera, Vector3 } from "three"
 import { motion } from "framer-motion"
 import _ from "lodash"
-import useCameraStore from "../../store/camera.store"
+import useCameraStore, { useMeshBoxStore, useZoomBoxStore } from "../../store/camera.store"
 
 export enum CustomCameraFocus{
     Front,Back,Left,Right,Top,Bottom
@@ -18,12 +18,15 @@ interface BoxProps{
 
 const CameraPositionBox:React.FC<BoxProps> =({type})=>{
 
-    const [meshBox,camera,setTarget,setZoomBox]=useCameraStore((state)=>[
-        state.meshBox,
+    const [camera,setTarget]=useCameraStore((state)=>[
         state.camera,
         state.setTarget,
-        state.setZoomBox
     ])
+    const setZoomBox=useZoomBoxStore((state)=>state.setZoomBox)
+
+    const meshBox=useMeshBoxStore((state)=>state.meshBox)
+
+
     const switchBox=()=>{
         switch(type){
             case CustomCameraFocus.Front:

@@ -5,7 +5,7 @@ import { ThreeEvent } from "@react-three/fiber";
 import { MaterialElements } from "../utils/materialElements";
 import useIsMobile from '../hooks/useIsMobile';
 import useMeasureStore from "../store/measure.store";
-import useMeshStore from "../store/mesh.store";
+import useMeshStore, { useSelectMehsStore } from "../store/mesh.store";
 interface IMeshProps{
     mesh:THREE.Mesh
 }
@@ -20,14 +20,13 @@ export function MeshComponent({mesh}:IMeshProps){
     const [
         onWire,
         setHoverMesh,
-        setSelectMesh,
         setStaticMeshList
     ]= useMeshStore((state)=>[
         state.onWire,
         state.setHoverMesh,
-        state.setSelectMesh,
         state.setStaticMeshList
     ])
+    const setSelectMesh=useSelectMehsStore((state)=>state.setSelectMesh)
     
     const isMobile = useIsMobile()
 
