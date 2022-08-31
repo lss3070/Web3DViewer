@@ -2,7 +2,7 @@ import { Col, Row,Slider } from "antd";
 import { ChangeEvent, useEffect, useState } from "react";
 import {Vector3} from 'three';
 import { Helper } from "../../../global/interfaces/app.interface";
-import useMeshStore from "../../../store/mesh.store";
+import useMeshStore, { useSelectMehsStore } from "../../../store/mesh.store";
 import SliderItem from "../common/sliderItem";
 
 
@@ -11,7 +11,7 @@ interface IScaleProps extends Helper{
 
 export const ScaleHelper=({}:IScaleProps)=>{
 
-    const selectMesh =useMeshStore((state)=>state.selectMesh)
+    const selectMesh =useSelectMehsStore((state)=>state.selectMesh)
     const [scale,setScale]=useState<Vector3>(new Vector3());
     
     const InitScale=()=>{

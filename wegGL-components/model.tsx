@@ -14,8 +14,6 @@ interface IObjectComponentProps{
 }
 
 const ModelComponent=({group}:IObjectComponentProps)=>{
-
-    console.log('model rerender')
     const [onPosition,onRotation,
         position,
         positionSpeed,
@@ -34,6 +32,7 @@ const ModelComponent=({group}:IObjectComponentProps)=>{
     const {selectMesh} = useMeshStore((state)=>state)
     const setZoomBox = useZoomBoxStore((state)=>state.setZoomBox);
     const setMeshBox=useMeshBoxStore((state)=>state.setMeshBox)
+
     const ref=useRef<Group>(null);
     const {actions}=useAnimations(group.animations,ref)
     const [onAnimation,setOnAnimation]=useState<boolean>(false);
@@ -113,9 +112,6 @@ const ModelComponent=({group}:IObjectComponentProps)=>{
                 curSelectMesh.rotation.z+rotationSpeed?.z!);
         }
     }
-
-    console.log(group)
-
     
     return(
             <group 
@@ -130,8 +126,7 @@ const ModelComponent=({group}:IObjectComponentProps)=>{
              >
                 {group.children&&(
 
-                        <SwitchObject objectList={group.children}/>     
-                    
+                        <SwitchObject objectList={group.children}/>
                 )}
             </group>
     )

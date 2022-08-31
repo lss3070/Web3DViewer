@@ -2,8 +2,6 @@ import create from "zustand";
 import { ObjectRef } from "../global/interfaces/swr.interface";
 
 interface IMeshStateProps{
-    hoverMesh?:ObjectRef;
-    selectMesh?:ObjectRef;
     staticMeshList?:ObjectRef[],
     onWire:boolean;
 

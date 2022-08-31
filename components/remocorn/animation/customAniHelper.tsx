@@ -3,15 +3,15 @@ import { AnimationClip, AnimationMixer } from "three";
 import { Helper } from "../../../global/interfaces/app.interface"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from "framer-motion";
-import shortId from 'shortid';
 import useMeshStore from "../../../store/mesh.store";
 import useAnimationStore from '../../../store/animation.store';
+import { useId } from "react";
 
 
 const CustomAniHelper=({}:Helper)=>{
     
     const selectMesh = useMeshStore((state)=>state.selectMesh)
-
+    const id =useId();
 
     const [animationList,
         customAnimation,
@@ -22,7 +22,6 @@ const CustomAniHelper=({}:Helper)=>{
 
 
     const toggleClick=(name:string)=>{
-
         if(customAnimation?.cur===''){
             setCustomAnimation({
                 pre:'',
@@ -46,9 +45,9 @@ const CustomAniHelper=({}:Helper)=>{
     return(
         <div>
             {
-                animationList?.map((item:AnimationClip)=>{
-                  return  <div className="grid grid-cols-11" key={shortId.generate()}
-                  >
+                animationList?.map((item:AnimationClip,index)=>{
+                  return  (
+                    <div className="grid grid-cols-11" key={index} >
                         <div className=" select-none col-span-10">{item.name}</div>
                         <div  
                         className="flex w-full  col-span-1   justify-end items-end "
@@ -72,7 +71,8 @@ const CustomAniHelper=({}:Helper)=>{
                             </motion.div>
                         </div>
                       
-                      </div>
+                    </div>
+                )
                 })
             }
 

@@ -37,7 +37,9 @@ const SliderItem=({
             </div>
             <div className="col-span-2">
                 <input className="w-full text-center rounded-md shadow-md
-                dark:text-gray-600 outline-none
+                bg-white
+                dark:text-gray-600 
+                outline-none
                 "
                  value={value} onChange={inputChangeEvent}/>
             </div>

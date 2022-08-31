@@ -1,7 +1,9 @@
 import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 import { motion } from "framer-motion";
 import { isArray } from "lodash";
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
+import shortid from "shortid";
+
 
 
 
@@ -20,7 +22,7 @@ const RemocornTab=({children}:IRemocornTabProps)=>{
 
     // const [itemList,setItemList]=useState<IRemocornTabItem[]>();
     
-    const id =useId();
+    const key =useId();
     const [index,setIndex]=useState<number>(0)
 
     // useEffect(()=>{
@@ -68,7 +70,7 @@ const RemocornTab=({children}:IRemocornTabProps)=>{
                             `w-full cursor-pointer flex items-center justify-center
                             select-none relative`
                         }
-                            key={id}
+                      key={i}
                             onClick={() => setIndex(i)}
                             >
                             {`${item.props.label}`}

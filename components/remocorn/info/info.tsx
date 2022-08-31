@@ -3,7 +3,7 @@ import { Mesh } from "three";
 import { mergeVertices } from "three-stdlib";
 import { Helper } from "../../../global/interfaces/app.interface";
 import useFileStore from "../../../store/file.store";
-import useMeshStore from "../../../store/mesh.store";
+import useMeshStore, { useSelectMehsStore } from "../../../store/mesh.store";
 import NumberWithComma from "../../../utils/numberWithCommas";
 
 
@@ -21,7 +21,7 @@ type MeshInfoType={
 const InfoHelper=({}:Helper)=>{
 
     const fileInfo=useFileStore((state)=>state.fileInfo)
-    const selectMesh = useMeshStore((state)=>state.selectMesh)
+    const selectMesh = useSelectMehsStore((state)=>state.selectMesh)
 
     const [meshInfo,setMeshInfo]=useState<MeshInfoType>()
 

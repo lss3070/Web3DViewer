@@ -1,5 +1,4 @@
 import { Bone, Group, Mesh, Object3D, SkinnedMesh } from "three";
-import shortId from 'shortid';
 import { MeshGroupComponent } from "./mesh-group";
 import { MeshComponent } from "./mesh";
 

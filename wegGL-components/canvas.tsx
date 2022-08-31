@@ -39,8 +39,7 @@ interface ICanvasProps{
     setLoadingComplete: Dispatch<SetStateAction<boolean>>;
 }
  const CanvasComponent=({setLoadingPercent,setLoadingComplete}:ICanvasProps)=>{
-
-    console.log('canvas rerender')
+    
     const {theme,setTheme}=useTheme()
     
     const fileInfo=useFileStore((state)=>state.fileInfo)

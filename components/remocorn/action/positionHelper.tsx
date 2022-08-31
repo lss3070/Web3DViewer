@@ -3,7 +3,7 @@ import { Col, Row, Slider } from "antd"
 import { ChangeEvent, useMemo, useState, useEffect } from 'react';
 import { Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
-import useMeshStore from "../../../store/mesh.store";
+import useMeshStore, { useSelectMehsStore } from "../../../store/mesh.store";
 import SliderItem from "../common/sliderItem";
 
 interface IPositionHelper extends Helper{
@@ -15,7 +15,7 @@ export const PositionHelper=({
     
 }:IPositionHelper)=>{
     
-    const selectMesh=useMeshStore((state)=>state.selectMesh)
+    const selectMesh=useSelectMehsStore((state)=>state.selectMesh)
     const [position,setPosition]=useState<Vector3>(new Vector3());
 
 

@@ -22,6 +22,8 @@ export const SelectMeshComponent=()=>{
     
     return(
         <EffectComposer 
+        // disableNormalPass={true}
+        // depthBuffer={true}
         stencilBuffer={true}
         autoClear={false} 
         multisampling={8}

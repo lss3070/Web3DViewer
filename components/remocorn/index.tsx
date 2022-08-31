@@ -3,7 +3,6 @@ import { motion, LayoutGroup,AnimatePresence, useDragControls } from 'framer-mot
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalLayout from '../modal/in-canvas-modal-layout';
-import shortId from 'shortid';
 import RemocornTabBox from './common/remocornTabBox';
 import ActionTab from './action';
 import AnimationTab from './animation';
@@ -68,7 +67,7 @@ const Remocorn =()=>{
                 >
                     <RemocornTabBox 
                     label={'Info'} 
-                    id={'0'}
+                    id={'infoId'}
                     openId={openId}
                     setOpenId={setOpenId}
                     >
@@ -76,7 +75,7 @@ const Remocorn =()=>{
                     </RemocornTabBox>
                     <RemocornTabBox 
                     label={'Camera'} 
-                    id={'1'}
+                    id={'cameraId'}
                     openId={openId}
                     setOpenId={setOpenId}
                     >
@@ -84,7 +83,7 @@ const Remocorn =()=>{
                     </RemocornTabBox>
                     <RemocornTabBox 
                     label={'Action'} 
-                    id={'2'}
+                    id={'actionId'}
                     openId={openId}
                     setOpenId={setOpenId}
                     >
@@ -92,7 +91,7 @@ const Remocorn =()=>{
                     </RemocornTabBox>
                     <RemocornTabBox 
                     label={'Animation'} 
-                    id={'3'}
+                    id={'animationId'}
                     openId={openId}
                     setOpenId={setOpenId}
                     >

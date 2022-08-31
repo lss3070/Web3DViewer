@@ -3,7 +3,7 @@ import { Col, Row, Slider } from "antd";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Euler, Vector3 } from "three";
 import { Helper } from "../../../global/interfaces/app.interface";
-import useMeshStore from "../../../store/mesh.store";
+import useMeshStore, { useSelectMehsStore } from "../../../store/mesh.store";
 import SliderItem from "../common/sliderItem";
 
 interface IRotationHelper extends Helper{
@@ -14,7 +14,7 @@ interface IRotationHelper extends Helper{
 
 export const RotationHelper=({}:IRotationHelper)=>{
 
-    const selectMesh =useMeshStore((state)=>state.selectMesh)
+    const selectMesh =useSelectMehsStore((state)=>state.selectMesh)
     const [rotation,setRotation]=useState<Euler>(new Euler());
     
     const InitRosition=()=>{

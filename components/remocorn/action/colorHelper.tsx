@@ -4,7 +4,7 @@ import {   Color, Material, Mesh } from 'three';
 import { Helper } from '../../../global/interfaces/app.interface';
 import { isArray } from 'lodash';
 import { SelectMeshComponent } from '../../../wegGL-components/outLineMesh';
-import useMeshStore from '../../../store/mesh.store';
+import useMeshStore, { useSelectMehsStore } from '../../../store/mesh.store';
 
 
 interface MaterialInfo{
@@ -28,7 +28,7 @@ export const ColorHelper=(
 }:IColorHelperProps
     )=>{
 
-    const selectMesh = useMeshStore((state)=>state.selectMesh)
+    const selectMesh = useSelectMehsStore((state)=>state.selectMesh)
 
     const [color,setColor] =useState<string>('#ffffff')
     const [materialList,setMaterialList]=useState<Material[]>([]);
