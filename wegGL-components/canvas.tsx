@@ -203,10 +203,6 @@ interface ICanvasProps{
                 }   
         }
     },[fileInfo])
-   
-    useLayoutEffect(()=>{
-        theme==='dark'?setColor('#2a2b2e'):setColor('#f7fafb')
-    },[theme])
 
 const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
    const result= item.children.reduce((array:CustomDataNode[],object,index)=>{
