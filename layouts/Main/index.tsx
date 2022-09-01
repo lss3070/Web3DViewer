@@ -40,9 +40,7 @@ const Main = () => {
           <div className={`w-full h-full grid absolute 
           ${onMeasure&&` cursor-crosshair`}
           `} >
-              <Suspense fallback={null}>
                 <CanvasComponent setLoadingComplete={setLoadingComplete} setLoadingPercent={setLoadingPercent}/>
-              </Suspense>
           </div>
           <DragAndDropArea>
           {fileLoad?(
