@@ -3,6 +3,8 @@ import MiniButton from '../../components/common/mini-button';
 import { useEffect } from 'react';
 import useMenuStore from '../../store/menu.store';
 
+import {faFolderTree,faScrewdriverWrench,faWrench} from '@fortawesome/free-solid-svg-icons'
+
 
 const MenuManager=()=>{
 
@@ -40,8 +42,9 @@ const MenuManager=()=>{
         pressState={onTree}>
             <>
                 <FontAwesomeIcon
-                    icon={['fas','folder-tree']} 
-                    className="w-5 h-5 "/>
+                    icon={faFolderTree} 
+                    size='lg'
+                    className="mr-1 "/>
                 <span>TreeList</span>
             </>
         </MiniButton>
@@ -50,8 +53,9 @@ const MenuManager=()=>{
         pressState={onControl}>
             <>
                 <FontAwesomeIcon
-                    icon={['fas','screwdriver-wrench']} 
-                    className="w-5 h-5 "/>
+                    icon={faScrewdriverWrench} 
+                    size='lg'
+                    className="mr-1"/>
                 <span>Control</span>
             </>
         </MiniButton>
@@ -60,8 +64,9 @@ const MenuManager=()=>{
         pressState={onMiniControl}>
             <>
                 <FontAwesomeIcon
-                    icon={['fas','wrench']} 
-                    className="w-5 h-5 "/>
+                    icon={faWrench} 
+                    size='lg'
+                    className="mr-1"/>
                 <span>SimpleControl</span>
             </>
         </MiniButton>

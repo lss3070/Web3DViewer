@@ -1,6 +1,6 @@
 import { debounce } from "lodash";
 import {useState } from 'react';
-import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
+import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 
 
 const useIsMobile=()=>{

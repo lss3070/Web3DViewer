@@ -2,7 +2,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CircleButton from "../../components/common/circle-button";
 import { Dispatch, SetStateAction } from 'react';
+import {faHatHard} from '@fortawesome/free-solid-svg-icons'
 import useFileStore from '../../store/file.store';
+import {faTree,faPerson,faDove} from '@fortawesome/free-solid-svg-icons'
 
 interface IGuideProps{
     setLoadingComplete: Dispatch<SetStateAction<boolean>>;
@@ -72,25 +74,26 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
                 <div className="flex space-x-3 items-center justify-center">
                     <CircleButton onClick={()=>openFile('tree.obj')}>
                         <FontAwesomeIcon
-                        icon={['fas','tree']}
+                        icon={faTree}
                         size='2x'
                         />
                     </CircleButton>
                     <CircleButton onClick={()=>openFile('DamagedHelmet.glb')}>
+                        
                         <FontAwesomeIcon
-                        icon={['fas','helmet-safety']}
+                        icon={faHatHard}
                         size='2x'
                         />
                     </CircleButton>
                     <CircleButton onClick={()=>openFile('Soldier.glb')}>
                         <FontAwesomeIcon
-                        icon={['fas','person']}
+                        icon={faPerson}
                         size='2x'
                         />
                     </CircleButton>
                     <CircleButton onClick={()=>openFile('Flamingo.glb')}>
                         <FontAwesomeIcon
-                        icon={['fas','dove']}
+                        icon={faDove}
                         size='2x'
                         />
                     </CircleButton>

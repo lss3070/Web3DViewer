@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faXmark} from '@fortawesome/free-solid-svg-icons'
 
 interface IModalHeader{
     children:JSX.Element|JSX.Element[]
@@ -12,7 +13,7 @@ const ModalHeader=({children,onClose}:IModalHeader)=>{
         <div className='w-full flex justify-end'>
             <FontAwesomeIcon
                 onClick={onClose}
-                icon={['fas','xmark']}
+                icon={faXmark}
                 size="lg"
                 className="cursor-pointer"/>
         </div>

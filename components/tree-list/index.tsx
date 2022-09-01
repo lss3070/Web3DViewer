@@ -23,6 +23,7 @@ import useMeshStore, { useSelectMehsStore } from "../../store/mesh.store";
 import { stat } from "fs";
 import  { useZoomBoxStore } from '../../store/camera.store';
 import { useTheme } from "next-themes";
+import {faFolderTree} from '@fortawesome/free-solid-svg-icons'
 
 const TreeList=()=>{
   
@@ -216,8 +217,9 @@ const TreeList=()=>{
                     <ModalHeader onClose={onCloseTreeList}>
                         <div className='w-full text-base font-semibold'>
                         <FontAwesomeIcon
-                                icon={['fas','folder-tree']}
-                                className="w-8 h-8 cursor-pointer"/>
+                                icon={faFolderTree}
+                                size="lg"
+                                className="cursor-pointer mr-1"/>
                         <span>
                             TreeList
                         </span>

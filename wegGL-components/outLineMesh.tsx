@@ -1,6 +1,5 @@
 import { EffectComposer, Outline } from "@react-three/postprocessing"
 import { useEffect, useState } from 'react';
-import useIsomorphicLayoutEffect from "../hooks/useIsomorphicLayoutEffect";
 import useMeshStore, { useSelectMehsStore } from "../store/mesh.store";
 import { useTheme } from 'next-themes';
 

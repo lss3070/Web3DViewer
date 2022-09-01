@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {motion} from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useTheme} from 'next-themes'
+import {faSun,faMoon} from '@fortawesome/free-solid-svg-icons'
 
 const DarkModeSwitch=()=>{
 
@@ -19,6 +20,9 @@ const DarkModeSwitch=()=>{
         stiffness: 700,
         damping: 30,
     }
+    useEffect(()=>{
+        setDarkMode(theme==='dark'?true:false)
+    },[])
 
     useEffect(()=>{
         setDarkMode(theme==='dark'?true:false)
@@ -46,12 +50,14 @@ const DarkModeSwitch=()=>{
                     <motion.div whileTap={{rotate: 360}} className="shadow-lg rounded-full">
                         {darkMode? 
                         (<FontAwesomeIcon
-                            icon={['fas','moon']}
-                            className="w-5 h-5 text-yellow-200"/>
+                            icon={faMoon}
+                            size='1x'
+                            className="text-yellow-200"/>
                         ):
                         (<FontAwesomeIcon
-                            icon={['fas','sun']}
-                            className="w-5 h-5 text-orange-300"/>
+                            icon={faSun}
+                            size='1x'
+                            className="text-orange-300"/>
                             )
                         }
                     </motion.div>

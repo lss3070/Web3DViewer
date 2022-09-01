@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import ModalSetting from "../../components/modal/modal-info";
+import {faCircleInfo} from '@fortawesome/free-solid-svg-icons'
 
 import Portal from "../../HOC/portal";
 
@@ -36,7 +37,7 @@ const SettingManager=()=>{
             <div className='flex items-center justify-center'>
                 <FontAwesomeIcon
                     onClick={openSetting}
-                    icon={['fas','circle-info']}
+                    icon={faCircleInfo}
                     size="lg"
                     className="cursor-pointer 
                     hover:text-blue-500"/>

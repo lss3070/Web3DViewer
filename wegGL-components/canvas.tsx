@@ -31,7 +31,6 @@ import useTreeStore from '../store/tree.store';
 import useMeshStore, { useSelectMehsStore } from '../store/mesh.store';
 import useAnimationStore from '../store/animation.store';
 import useCameraStore, { useMeshBoxStore, useZoomStore } from '../store/camera.store';
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import { useTheme } from 'next-themes';
 
 interface ICanvasProps{
@@ -203,10 +202,6 @@ interface ICanvasProps{
                 }   
         }
     },[fileInfo])
-   
-    useLayoutEffect(()=>{
-        theme==='dark'?setColor('#2a2b2e'):setColor('#f7fafb')
-    },[theme])
 
 const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
    const result= item.children.reduce((array:CustomDataNode[],object,index)=>{

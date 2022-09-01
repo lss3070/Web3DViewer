@@ -13,6 +13,7 @@ import useMeasureStore from '../../store/measure.store';
 import useMenuStore from '../../store/menu.store';
 import useMeshStore, { useSelectMehsStore } from '../../store/mesh.store';
 import useCameraStore, { useMeshBoxStore, useZoomBoxStore } from '../../store/camera.store';
+import {faHouse,faArrowsToEye,faRuler} from '@fortawesome/free-solid-svg-icons'
 
 
 const MiniControls=()=>{
@@ -155,13 +156,14 @@ const MiniControls=()=>{
                 </AnimatePresence>
                 <MiniCircleButton onClick={cameraInit}>
                       <FontAwesomeIcon
-                    icon={['fas','house']}
-                    className="w-5 h-5 "/>
+                    icon={faHouse}
+                    size='lg'/>
                 </MiniCircleButton>
                 <MiniCircleButton onClick={onFitZoom}>
                      <FontAwesomeIcon
-                        icon={['fas','arrows-to-eye']}
-                        className="w-10 h-10"/>
+                        icon={faArrowsToEye}
+                        size='lg'
+                        />
                 </MiniCircleButton>
                 {/* <MiniCircleButton onClick={onText} pressState={meshState?.onText}>
                     {'Text'}
@@ -171,8 +173,8 @@ const MiniControls=()=>{
                 </MiniCircleButton>
                 <MiniCircleButton onClick={onMeasure} pressState={measure}>
                     <FontAwesomeIcon
-                        icon={['fas','ruler']}
-                        className="w-10 h-10"/>
+                        icon={faRuler}
+                        size='lg'/>
                 </MiniCircleButton>
             </div>
         </ModalLayout>
