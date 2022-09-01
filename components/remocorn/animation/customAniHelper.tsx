@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import useMeshStore from "../../../store/mesh.store";
 import useAnimationStore from '../../../store/animation.store';
 import { useId } from "react";
+import {faStop,faPlay} from '@fortawesome/free-solid-svg-icons'
 
 
 const CustomAniHelper=({}:Helper)=>{
@@ -60,12 +61,16 @@ const CustomAniHelper=({}:Helper)=>{
                             onClick={()=>toggleClick(item.name)}>
                                 {customAnimation?.cur===item.name?
                                 (<FontAwesomeIcon
-                                    icon={['fas','stop']}
-                                    className="w-5 h-5 text-gray-600 cursor-pointer"/>
+                                    icon={faStop}
+                                    size="xs"
+                                    className="
+                                    text-gray-600 cursor-pointer"/>
                                 ):
                                 (<FontAwesomeIcon
-                                    icon={['fas','play']}
-                                    className="w-5 h-5 text-gray-600 cursor-pointer"/>)
+                                    icon={faPlay}
+                                    size='xs'
+                                    className="
+                                    text-gray-600 cursor-pointer"/>)
                                 }
                             </motion.div>
                         </div>

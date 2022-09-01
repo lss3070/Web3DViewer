@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactNode } from "react";
 import { TitleProps } from "../../global/interfaces/tree.interface";
+import {faEye} from '@fortawesome/free-solid-svg-icons'
 
 const TreeTitle =({
     node,
@@ -16,9 +17,10 @@ const TreeTitle =({
         className=" font-medium overflow-hidden w-full flex items-center"
          key={node.key}>
              <FontAwesomeIcon
-                  icon={['fas','eye']}
+                  icon={faEye}
+                  size='1x'
                   onClick={(e)=>iconClickEvent(e,node.key,node.visible)}
-                  className={`w-5 h-5
+                  className={`mr-1
                   ${node.visible?`text-black`:`text-gray-300`}
                   `}/>
              <div className={`

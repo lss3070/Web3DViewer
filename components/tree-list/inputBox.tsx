@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 
 interface ITreeSearchBoxProps{
     onChange:Function;
@@ -18,8 +19,9 @@ const TreeSearchBox=({onChange}:ITreeSearchBoxProps)=>{
         onChange={(e)=>onChange(e)}
         />
         <FontAwesomeIcon
-            icon={['fas','magnifying-glass']}
-            className="w-5 h-5 absolute top-2 right-1 "/>
+            icon={faMagnifyingGlass}
+            size='lg'
+            className="absolute top-2 right-2"/>
     </div>
     )
 }

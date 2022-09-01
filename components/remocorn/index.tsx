@@ -9,6 +9,7 @@ import AnimationTab from './animation';
 import CameraTab from './camera';
 import InfoTab from './info';
 import useMenuStore from '../../store/menu.store';
+import {faXmark,faScrewdriverWrench} from '@fortawesome/free-solid-svg-icons';
 
 const Remocorn =()=>{
     const [openId,setOpenId]=useState<string>('');
@@ -46,8 +47,9 @@ const Remocorn =()=>{
                  '>
                     <div className='w-full text-base font-semibold'>
                         <FontAwesomeIcon
-                                icon={['fas','screwdriver-wrench']}
-                                className="w-8 h-8 cursor-pointer"/>
+                                icon={faScrewdriverWrench}
+                                size='lg'
+                                className="mr-1 cursor-pointer"/>
                         <span>
                             Control
                         </span>
@@ -55,7 +57,7 @@ const Remocorn =()=>{
                     <div className='w-full flex justify-end'>
                         <FontAwesomeIcon
                             onClick={closeRemocorn}
-                            icon={['fas','xmark']}
+                            icon={faXmark}
                             size="lg"
                             className="cursor-pointer font-bold"/>
                     </div>

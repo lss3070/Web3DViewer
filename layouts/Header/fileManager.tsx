@@ -9,6 +9,7 @@ import MiniButton from '../../components/common/mini-button';
 import FileTransForm from '../../utils/file/fileTransform';
 import useIsMobile from '../../hooks/useIsMobile';
 import useFileStore from '../../store/file.store';
+import {faDownload,faUpload} from '@fortawesome/free-solid-svg-icons'
 
 
 const TypeList=['obj','gltf','stl','obj','glb','fbx'];
@@ -65,8 +66,10 @@ const FileManager=()=>{
                 <MiniButton onClick={()=>{}} htmlFor="file">
                     <>
                         <FontAwesomeIcon
-                        icon={['fas','download']}
-                        className="w-5 h-5"/>
+                        icon={faDownload}
+                        size="lg"
+                        className='mr-1'
+                        />
                         <span>
                             Open
                         </span>
@@ -78,8 +81,10 @@ const FileManager=()=>{
                     <MiniButton onClick={openExporter}>
                     <>
                         <FontAwesomeIcon
-                            icon={['fas','upload']}
-                            className="w-5 h-5"/>
+                            icon={faUpload}
+                            size="lg"
+                            className='mr-1'
+                            />
                         <span>Save</span>
                     </>
                 </MiniButton>
