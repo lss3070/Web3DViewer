@@ -81,7 +81,6 @@ const ModelComponent=({group}:IObjectComponentProps)=>{
 
     const positionAnimation=()=>{
         if(onPosition){
-            console.log('~~')
             let count=0
             if(curSelectMesh?.position.x!<position?.x!){
                 curSelectMesh?.position.setX(

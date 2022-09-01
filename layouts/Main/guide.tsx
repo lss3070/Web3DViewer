@@ -13,8 +13,6 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
     const setFileInfo = useFileStore((state)=>state.setFileInfo)
    
     const openFile=(path:string)=>{
-        console.log(window.origin)
-        console.log(path);
         const fullName = path.split('/').pop();
         const fileName=fullName?.split('.').shift();
         const extension = fullName?.split('.').pop();
@@ -22,8 +20,7 @@ const Guide=({setLoadingComplete}:IGuideProps)=>{
        const url = process.env.NODE_ENV==='development'?
        window.origin+process.env.NEXT_PUBLIC_DOWNLOAD_FOLDER+path:
        process.env.NEXT_PUBLIC_DOWNLOAD_FOLDER+path;
-       console.log(url)
-//https://web3dviewer_worker.lss3070.workers.dev/
+       
         setLoadingComplete(false)
         fetch(url).then(async(file)=>{
             return await file.blob()

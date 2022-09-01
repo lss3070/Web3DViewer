@@ -29,7 +29,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThemeProvider attribute='class'>
         <Component {...pageProps} />
       </ThemeProvider>
-     
     </>
   )
 }

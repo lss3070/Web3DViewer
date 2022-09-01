@@ -1,8 +1,18 @@
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 const Portal=({children})=>{
-    const element =
-    typeof window !== "undefined" && document.querySelector("#portal");
-  return element && children ? ReactDOM.createPortal(children, element) : null;
+  const [element,setElement]=useState<HTMLElement|null>(null);
+
+  useEffect(()=>{
+    setElement(document.getElementById('portal'))
+  },[])
+
+  if(!element){
+    return <></>
+  }
+
+   
+  return ReactDOM.createPortal(children,element)
 }
 export default Portal;
