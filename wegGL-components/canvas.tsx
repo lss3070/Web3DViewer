@@ -31,7 +31,6 @@ import useTreeStore from '../store/tree.store';
 import useMeshStore, { useSelectMehsStore } from '../store/mesh.store';
 import useAnimationStore from '../store/animation.store';
 import useCameraStore, { useMeshBoxStore, useZoomStore } from '../store/camera.store';
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import { useTheme } from 'next-themes';
 
 interface ICanvasProps{
