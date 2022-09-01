@@ -20,6 +20,9 @@ const DarkModeSwitch=()=>{
         stiffness: 700,
         damping: 30,
     }
+    useEffect(()=>{
+        setDarkMode(theme==='dark'?true:false)
+    },[])
 
     useEffect(()=>{
         setDarkMode(theme==='dark'?true:false)
