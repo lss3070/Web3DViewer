@@ -17,7 +17,6 @@ import {faHouse,faArrowsToEye,faRuler} from '@fortawesome/free-solid-svg-icons'
 
 
 const MiniControls=()=>{
-
     const [
         control,
         camera

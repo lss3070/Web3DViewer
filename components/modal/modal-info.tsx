@@ -20,6 +20,10 @@ const ModalSetting=({onClose}:IInfoProps)=>{
         }
     }
 
+    const gitOpen=()=>{
+        window.open(process.env.NEXT_PUBLIC_GIT_URL,'_blank')?.focus()
+    }
+
     return(
 
 
@@ -48,20 +52,19 @@ const ModalSetting=({onClose}:IInfoProps)=>{
             exit={'up'}
             onClick={(e)=>e.stopPropagation()}
             >
-                <div className=" w-56 px-2">
-                    <div className=" grid grid-cols-6 items-center justify-center ">
+                <div className="w-auto px-2 grid">
+                    <div className="flex items-center justify-center space-x-1">
                     <FontAwesomeIcon
                     icon={['fas','envelope']}
                     className="w-5 h-5  "/>
-                       
                         <div className=" text-right">songseop.tech@gmail.com</div>
                     </div>
-                    <div className=" grid grid-cols-6 items-center justify-center">
+                    <div className=" flex  items-center justify-center space-x-1">
                     <FontAwesomeIcon
                     icon={['fab','github']}
                     className=" w-5 h-5"/>
-                        <div className="text-right">
-                            https://github.com/lss3070
+                        <div className="text-right cursor-pointer" onClick={gitOpen}>
+                            {process.env.NEXT_PUBLIC_GIT_URL}
                         </div>
 
                     </div>
