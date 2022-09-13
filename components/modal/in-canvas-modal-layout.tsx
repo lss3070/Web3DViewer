@@ -1,5 +1,5 @@
 import { AnimatePresence, DragControls, motion, useDragControls, useMotionValue } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import useMenuStore from "../../store/menu.store";
 
 interface IModalLayoutProps{
@@ -52,9 +52,9 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
     const staticPosition=()=>{
         switch(type){
             case 'Control':
-            return controlPosition&&'right-[0%] top-[50%]'
+            return controlPosition&&'right-[0%] top-[30%]'
             case 'TreeList':
-            return treePosition&&'left-[0px] top-[50%] '
+            return treePosition&&'left-[0px] top-[50%]'
             case 'SimpleControl':
             return miniControlPosition&&'left-[50%] top-[5%]'
         }
@@ -112,7 +112,8 @@ const InCanvasModalLayout=({type,children,onModal,drag=true}:IModalLayoutProps)=
                 break;
             case 'Control':
                 if(!controlPosition){
-                    y.set('-50%')
+                    // y.set('-50%')
+                    // x.set('50%')
                 }
                 break;
             case 'TreeList':
