@@ -2,24 +2,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import ModalSetting from "../../components/modal/modal-info";
-import {faCircleInfo} from '@fortawesome/free-solid-svg-icons'
-
+import {faGithub} from '@fortawesome/free-brands-svg-icons'
 import Portal from "../../HOC/portal";
 
 
 const SettingManager=()=>{
     const [isSetting,setIsSetting]=useState<boolean>(false);
 
-    const openSetting=()=>{
-        setIsSetting(true);
-    }
     const closeSetting=()=>{
         setIsSetting(false);
     }
+
     
-    const openGithub=()=>{
-        window.open('https://github.com/lss3070/react-three-viewer',
-        )
+    const gitOpen=()=>{
+        window.open(process.env.NEXT_PUBLIC_GIT_URL,'_blank')?.focus()
     }
     
     return(
@@ -36,11 +32,15 @@ const SettingManager=()=>{
             </div> */}
             <div className='flex items-center justify-center'>
                 <FontAwesomeIcon
+                    onClick={gitOpen}
+                    icon={faGithub}
+                    className=" w-5 h-5 cursor-pointer"/>
+                {/* <FontAwesomeIcon
                     onClick={openSetting}
                     icon={faCircleInfo}
                     size="lg"
                     className="cursor-pointer 
-                    hover:text-blue-500"/>
+                    hover:text-blue-500"/> */}
             </div>
             <Portal> 
                 <AnimatePresence>
