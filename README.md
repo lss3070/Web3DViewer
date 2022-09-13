@@ -29,7 +29,7 @@ Supported file formats
 ## ****👨‍💻 Tech Inside****
 
 - Framewrok:Reactjs(Nextjs)
-- State Management:SWR
+- State Management:Zustand
 - Languages: Typescript
 - Library: three.js,react-three-fiber,react-three-drei,framer-motioin
 
