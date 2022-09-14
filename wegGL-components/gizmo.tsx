@@ -19,7 +19,7 @@ const Gizmo=()=>{
             alignment={'bottom-left'} 
             margin={[margin,margin+20]} 
             // autoClear={false} 
-            renderPriority={2}
+            // renderPriority={2}
 
             >
                 <GizmoViewcube 

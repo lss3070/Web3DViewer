@@ -250,15 +250,18 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
         }}
             className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]">   
                 <scene ref={sceneRef}>  
+             
                     <SkyBox/>
                     <LightComponent/>                
                     <CameraComponent/>
                     <ControlComponent/> 
                     {data&&(
+                          
                         <>
                             <Bounds margin={1.5}>
+                            {/* <primitive object={data}></primitive> */}
                                 <ModelComponent group={data}/>
-                            </Bounds>
+                             </Bounds>
                             <SelectMeshComponent/>
                             <Gizmo/>
                             <MeasureComponent/>
