@@ -5,7 +5,6 @@ import { useTheme } from 'next-themes';
 // import { EffectComposer, OutlinePass, RenderPass } from 'three-stdlib';
 import { extend, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, OutlinePass,RenderPass} from 'three-stdlib';
-import { Vector2 } from 'three';
 import { EffectComposer as PEffectComposer, Outline } from '@react-three/postprocessing';
 
 
@@ -67,21 +66,11 @@ export const SelectMeshComponent=()=>{
     return(
       <PEffectComposer 
       ref={test}
-      // disableNormalPass={true}
-      // depthBuffer={true}
       stencilBuffer={true}
       autoClear={false} 
       multisampling={8}
        >
-          {/* hover outline mesh */}
-      {/* <Outline selection={hoverMesh!} 
-          visibleEdgeColor={hoverColor} 
-          hiddenEdgeColor={hoverColor} 
-          blur={true} 
-          edgeStrength={10} 
-          selectionLayer={2}
-          /> */}
-          {/* select outline mesh */}
+
           <Outline selection={selectMesh!} 
           visibleEdgeColor={selectColor} 
           hiddenEdgeColor={selectColor}
