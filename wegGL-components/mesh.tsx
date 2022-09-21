@@ -90,16 +90,8 @@ export function MeshComponent({mesh}:IMeshProps){
             // position={mesh.position}
             // quaternion={mesh.quaternion}
             >
-                <Edges/>
                 {MaterialElements(mesh.material,onWire)}
             </mesh>
-                    {/* <MeshHtmlComponent 
-                    centerPosition={mesh.geometry.boundingSphere?.center!}
-                    visible={meshState?.onText!}
-                    name={mesh.name}
-                    uuid={mesh.uuid} 
-                    /> */}
-           
             </>
             
         )
