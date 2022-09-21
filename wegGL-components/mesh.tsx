@@ -6,6 +6,7 @@ import { MaterialElements } from "../utils/materialElements";
 import useIsMobile from '../hooks/useIsMobile';
 import useMeasureStore from "../store/measure.store";
 import useMeshStore, { useSelectMehsStore } from "../store/mesh.store";
+import { Edges } from '@react-three/drei';
 interface IMeshProps{
     mesh:THREE.Mesh
 }
@@ -91,13 +92,6 @@ export function MeshComponent({mesh}:IMeshProps){
             >
                 {MaterialElements(mesh.material,onWire)}
             </mesh>
-                    {/* <MeshHtmlComponent 
-                    centerPosition={mesh.geometry.boundingSphere?.center!}
-                    visible={meshState?.onText!}
-                    name={mesh.name}
-                    uuid={mesh.uuid} 
-                    /> */}
-           
             </>
             
         )

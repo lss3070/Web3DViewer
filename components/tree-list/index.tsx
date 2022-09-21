@@ -239,14 +239,15 @@ const TreeList=()=>{
                         dark:border-transparent
                         bg-[#f7fafb] 
                         dark:bg-[#9ca3af]
-                        text-white h-[330px] p-1">
+                        text-white h-[330px] p-1 ">
                             <Tree
                                 style={{backgroundColor:
                                     theme==='dark'?'#9ca3af':'#f7fafb',
                                 color:theme==='dark'?'white':'#4b5663',
                                 border:'none'
                                 }}
-                                className=" overflow-scroll h-full"
+                                
+                                className=" overflow-auto h-full transparent-scroll"
                                 titleRender={(node)=>TreeTitle({
                                     node:node,
                                     iconClickEvent:onTitleIconClick,

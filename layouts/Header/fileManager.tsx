@@ -11,7 +11,6 @@ import useIsMobile from '../../hooks/useIsMobile';
 import useFileStore from '../../store/file.store';
 import {faDownload,faUpload} from '@fortawesome/free-solid-svg-icons'
 
-
 const TypeList=['obj','gltf','stl','obj','glb','fbx'];
 
 type ExportListProps={
@@ -58,7 +57,7 @@ const FileManager=()=>{
     return(
         <>
             <div className="contents items-center justify-center">
-                <input className="w-0 h-0 opacity-0" type="file" name="file" 
+                <input className="w-0 h-0 opacity-0 cursor-pointer" type="file" name="file" 
                 id="file"
                 accept='.fbx, .obj, .gltf, .glb, .stl, .ply, .wasm, .js, .jpg, .jpeg, .png, .bin, .mtl'
                 multiple

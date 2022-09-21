@@ -18,7 +18,7 @@ const Gizmo=()=>{
             
             alignment={'bottom-left'} 
             margin={[margin,margin+20]} 
-            // autoClear={false} 
+            autoClear={false} 
             renderPriority={2}
 
             >

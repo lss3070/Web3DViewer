@@ -4,7 +4,6 @@ import { MeshComponent } from "./mesh";
 
 import SkinnedMeshComponent from "./skin-mesh";
 import { useEffect, useState } from "react";
-import { useThree } from "@react-three/fiber";
 import PrimitiveComponent from "./primitive";
 
 interface ISwitchObjectProps{

@@ -242,6 +242,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
 
     return(
             <Canvas 
+        
             onClick={offZoom} 
             onWheel={offZoom} 
             onTouchEnd={offZoom}
@@ -250,6 +251,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
         }}
             className="z-10 bg-[#f7fafb] dark:bg-[#2a2b2e]">   
                 <scene ref={sceneRef}>  
+             
                     <SkyBox/>
                     <LightComponent/>                
                     <CameraComponent/>
@@ -258,7 +260,7 @@ const groupLoop=(item:Object3D<Event>|Group):CustomDataNode[]=>{
                         <>
                             <Bounds margin={1.5}>
                                 <ModelComponent group={data}/>
-                            </Bounds>
+                             </Bounds>
                             <SelectMeshComponent/>
                             <Gizmo/>
                             <MeasureComponent/>
